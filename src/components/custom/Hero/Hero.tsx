@@ -1,27 +1,74 @@
 import Container from "../../layout/Container/Container"
-
+import Button from '../../ui/Button/Button.tsx'
+import { Input } from "../../ui/Input/Input.tsx"
+import Peoples from "../Peoples/Peoples.tsx"
 function Hero() {
+
+  const peoples = [
+    {
+      src: 'src/assets/Images/peoples/person2.jpeg',
+      size: 24,
+      className: "w-32"
+    },
+    {
+      src: 'src/assets/Images/peoples/person3.jpg',
+      size: 24,
+    },
+    {
+      src: 'src/assets/Images/peoples/emoji.jpg',
+      size: 24,
+    },
+    {
+      src: 'src/assets/Images/peoples/person4.jpeg',
+      size: 24,
+      className: "w-32"
+    },
+    {
+      src: 'src/assets/Images/peoples/mic.jpg',
+      size: 24,
+      className: "w-20"
+    },
+
+    {
+      src: 'src/assets/Images/peoples/device.avif',
+      size: 24,
+      className: "w-20"
+    },
+
+    {
+      src: 'src/assets/Images/peoples/person5.jpg',
+      size: 24,
+
+    }
+  ]
+
   return (
     <Container className="mx-auto">
-        
-            <div className=" bg-[url('/src/assets/Images/ad.png')] h-[100vh] object-contain bg-no-repeat bg-center " >
-            <div className=" pt-[10vh] p-8 text-center ">
-                <p className=" lg:max-w-[50%] lg:text-6xl  mx-auto text-5xl">
-                   We Take Care Of Your Brand.
-                </p>
-                <p className="text-lg mt-5">we care about you progress and we wil always</p>
 
-                <div>
-                  
-                </div>
-                
+      <div className=" bg-[url('/src/assets/Images/ad.png')] h-[100vh] object-contain bg-no-repeat bg-center " >
+        <div className="lg:max-w-[50%]   mx-auto">
+          <div className=" pt-11 sm:pt-24 px-7 text-center ">
+
+            <p className="lg:text-6xl  text-4xl font-bold">
+              We Take Care Of Your Language
+            </p>
+            <p className="text-sm sm:text-lg mt-5">
+              we care about you progress and we wil always
+            </p>
+
+            <div className="sm:flex items-center justify-center gap-1 mt-4">
+              <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />
+              <Button varient={"primary"} size={"lg"}>Get Started</Button>
             </div>
 
+            <Peoples list={peoples} className="hide-scrollbar mt-10 sm:mt-16" />
+
+          </div>
+
         </div>
-       
-        
-    
-      
+
+      </div>
+
     </Container>
   )
 }

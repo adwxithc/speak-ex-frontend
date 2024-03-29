@@ -14,14 +14,14 @@ const navigation = [
 
 export default function Example() {
 
-const isScrolled:boolean =useScrollDetection(0)
+  const isScrolled: boolean = useScrollDetection(0)
 
   return (
     <Disclosure as="nav" className='bg-white border-b-secondary border-b-2 sticky top-0 w-full z-40'>
       {({ open }) => (
         <>
           <div className="mx-auto   max-w-7xl px-2 sm:px-6 lg:px-8 ">
-            <div className={`relative flex   items-center justify-between ${isScrolled?'h-16 ':'h-24'} transition duration-300 ease`}>
+            <div className={`relative flex   items-center justify-between ${isScrolled ? 'h-16 ' : 'h-24'} transition duration-300 ease`}>
               <div className=" absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-black hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -73,7 +73,7 @@ const isScrolled:boolean =useScrollDetection(0)
                 {/* Profile dropdown */}
                 <ProfileDropdown />
 
-                
+
               </div>
             </div>
           </div>
