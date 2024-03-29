@@ -59,6 +59,8 @@ function Hero() {
             <div className="sm:flex items-center justify-center gap-1 mt-4">
               <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />
               <Button varient={"primary"} size={"lg"}>Get Started</Button>
+             
+
             </div>
 
             <Peoples list={peoples} className="hide-scrollbar mt-10 sm:mt-16" />
