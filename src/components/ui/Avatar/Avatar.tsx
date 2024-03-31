@@ -15,7 +15,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, initials, size = 24, className }) 
       <img
         src={src}
         alt="Avatar"
-        className={cn(`w-${size} h-${size} rounded-full object-cover `,className)}
+        className={cn(`w-24 h-24 rounded-full object-cover `,className)}
       />
     );
   }
