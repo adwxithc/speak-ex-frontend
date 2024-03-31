@@ -12,7 +12,7 @@ const Peoples: React.FC<PeopleProps> = ({ list, className }) => {
     return (
         <div className={cn("flex overflow-x-scroll ", className)}>
             {
-                list.map(item => <Avatar size={item.size} src={item.src} className={item.className} />)
+                list.map(item => <Avatar key={item.src} size={item.size} src={item.src} className={item.className} />)
             }
 
         </div>
