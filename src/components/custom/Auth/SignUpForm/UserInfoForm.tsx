@@ -71,6 +71,7 @@ function UserInfoForm() {
                         error={!!errors.confirm_password}
                         helperText={errors.confirm_password ? errors.confirm_password.message?.toString() : ''}
                     />
+                
 
                 </div>
                 <Button type="submit"  varient={'primary'} size={'md'} >Submit</Button> : 
