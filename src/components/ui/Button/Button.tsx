@@ -10,15 +10,18 @@ const buttonVarients = cva(
         variants: {
             varient: {
                 default: 'bg-gray-200 text-black',
-                primary:
-                    "bg-primary text-white"
+                primary:"bg-primary text-white",
+                'primary-outline':'border border-primary'
+            
             },
             size: {
                 default: "h-16 px-8",
                 sm: "h-9 rounded-full px-4",
+                md:"px-7 py-3 ",
                 lg: "h-14 px-8",
                 icon: "h-10 w-10",
                 actionIcon: "h-7 w-7 p-0 m-0",
+
             },
             defaultVariants: {
                 variant: "default",

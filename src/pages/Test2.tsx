@@ -1,19 +1,15 @@
+import LanguageInfoForm from "../components/custom/Auth/SignUpForm/LanguageInfoForm"
+import UserInfoForm from "../components/custom/Auth/SignUpForm/UserInfoForm"
 import MultiStepForm from "../components/custom/Form/MultiStepForm"
 import SignUpContainer from "../components/layout/SignUpContainer/SignUpContainer"
 
-function Lang(){
-    return <div>lang</div>
-}
 
-function Info(){
-    return <div>info</div>
-}
 
 function Test2() {
   return (
     <div>
-        <SignUpContainer >
-        <MultiStepForm steps={[<Lang/>,<Info/>]} />
+        <SignUpContainer title="Signup" description="lets get stated to the world of language learning" >
+        <MultiStepForm steps={[<LanguageInfoForm/>,<UserInfoForm/>]} />
         </SignUpContainer>
     </div>
   )
