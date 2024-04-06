@@ -1,11 +1,58 @@
 import { TextField } from "@mui/material"
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Button from "../../../ui/Button/Button";
 import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {z} from 'zod';
+
+
+interface formValue{
+    firstName:string;
+    lastName:string;
+    userName:string;
+    email:string;
+    password:string;
+    confirm_password:string;
+}
+
+const schema = z.object({
+    firstName: z.string().min(3,'first name must be minimum 3 character long'),
+    lastName: z.string(),
+    userName: z.string().min(3,'userName must be minimum 3 character long'),
+    email: z.string().email({ message: 'Invalid email' }),
+    password: z.string().min(4,'password must be min 4 character long').max(20,'password must be maximum 20 character long')
+    .refine((s) => /[a-zA-Z]/.test(s), {
+        message: "Password must contain letters.",
+    })
+    .refine((s) => /\d/.test(s), {
+        message: "Password must contain numbers.",
+    })
+    .refine((s) => /[!@#$%^&*(),.?":{}|<>]/.test(s), {
+        message: "Password must contain special characters.",
+    }),
+    confirm_password: z.string()
+
+  })
+  .refine((schema)=>{
+        return schema.password==schema.confirm_password
+  },{
+    message: "Passwords must match",
+    path: ['confirm_password']
+});
+
+
 
 
 function UserInfoForm() {
-    const { register, handleSubmit,control, formState: { errors } } = useFormContext();
+
+    const methods = useForm<formValue>({
+        mode:'onChange',
+        resolver: zodResolver(schema), // zod resolver for form validation
+      });
+
+      const {register,control, handleSubmit,formState}=methods;
+      const {errors} = formState
+
     const onSubmit=(data:any)=>{
         //logic for implementing submit
         console.log(data,'hjgjhghj')
@@ -19,16 +66,16 @@ function UserInfoForm() {
                     <TextField
                         className=" w-full my-3"
                         label="First Name"
-                        {...register('fname')}
-                        error={!!errors.fname}
-                        helperText={errors.fname ? errors.fname.message?.toString() : ''}
+                        {...register('firstName')}
+                        error={!!errors.firstName}
+                        helperText={errors.firstName ? errors.firstName.message?.toString() : ''}
                     />
                     <TextField
                         className=" w-full my-3"
                         label="Last Name"
-                        {...register('lname')}
-                        error={!!errors.lname}
-                        helperText={errors.lname ? errors.lname.message?.toString() : ''}
+                        {...register('lastName')}
+                        error={!!errors.lastName}
+                        helperText={errors.lastName ? errors.lastName.message?.toString() : ''}
                     />
                 </div>
 
@@ -42,10 +89,10 @@ function UserInfoForm() {
                     />
                     <TextField
                         className=" w-full my-3"
-                        label="Phone Number"
-                        {...register('phone')}
-                        error={!!errors.phone}
-                        helperText={errors.phone ? errors.phone.message?.toString() : ''}
+                        label="userName"
+                        {...register('userName')}
+                        error={!!errors.userName}
+                        helperText={errors.userName ? errors.userName.message?.toString() : ''}
                     />
                 </div>
 
@@ -74,7 +121,7 @@ function UserInfoForm() {
                 
 
                 </div>
-                <Button type="submit"  varient={'primary'} size={'md'} >Submit</Button> : 
+                <Button type="submit"  varient={'primary'} size={"lg"} >Submit</Button>
             </form>
             <DevTool control={control} />
         </div>
