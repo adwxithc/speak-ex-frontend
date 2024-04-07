@@ -58,8 +58,8 @@ function UserInfoForm() {
         console.log(data,'hjgjhghj')
     }
     return (
-        <div className="w-full p-5 ">
-            <h2 className='text-2xl font-semibold mb-8'>Set  Personal info</h2>
+        <div className="w-full p-5 text-center">
+            <h2 className='text-2xl font-serif font-semibold mb-10'>Set  Personal info</h2>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="sm:flex gap-1  ">
@@ -69,6 +69,11 @@ function UserInfoForm() {
                         {...register('firstName')}
                         error={!!errors.firstName}
                         helperText={errors.firstName ? errors.firstName.message?.toString() : ''}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: '25px', // Adjust the value for your desired roundness
+                            },
+                          }}
                     />
                     <TextField
                         className=" w-full my-3"
@@ -76,6 +81,11 @@ function UserInfoForm() {
                         {...register('lastName')}
                         error={!!errors.lastName}
                         helperText={errors.lastName ? errors.lastName.message?.toString() : ''}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: '25px', // Adjust the value for your desired roundness
+                            },
+                          }}
                     />
                 </div>
 
@@ -86,6 +96,11 @@ function UserInfoForm() {
                         {...register('email')}
                         error={!!errors.email}
                         helperText={errors.email ? errors.email.message?.toString() : ''}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: '25px', // Adjust the value for your desired roundness
+                            },
+                          }}
                     />
                     <TextField
                         className=" w-full my-3"
@@ -93,6 +108,11 @@ function UserInfoForm() {
                         {...register('userName')}
                         error={!!errors.userName}
                         helperText={errors.userName ? errors.userName.message?.toString() : ''}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: '25px', // Adjust the value for your desired roundness
+                            },
+                          }}
                     />
                 </div>
 
@@ -105,10 +125,15 @@ function UserInfoForm() {
                         {...register('password')}
                         error={!!errors.password}
                         helperText={errors.password ? errors.password.message?.toString() : ''}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: '25px', // Adjust the value for your desired roundness
+                            },
+                          }}
                     />
                 </div>
 
-                <div className="my-3">
+                <div className="my-5">
 
                     <TextField
                         type="password"
@@ -117,11 +142,16 @@ function UserInfoForm() {
                         {...register('confirm_password')}
                         error={!!errors.confirm_password}
                         helperText={errors.confirm_password ? errors.confirm_password.message?.toString() : ''}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: '25px', // Adjust the value for your desired roundness
+                            },
+                          }}
                     />
                 
 
                 </div>
-                <Button type="submit"  varient={'primary'} size={"lg"} >Submit</Button>
+                <Button type="submit"  varient={'primary-full'} size={"lg"} >Submit</Button>
             </form>
             <DevTool control={control} />
         </div>
