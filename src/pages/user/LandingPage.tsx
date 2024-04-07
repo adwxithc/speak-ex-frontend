@@ -46,8 +46,6 @@ function test() {
       <Carosal />
       
       {workflow.map((item, index)=><Section key={item.title} className='md:px-20 bg-secondary' blurHash={item.blurHash} title={item.title} description={item.description} imagePosition={index%2==0?'left':'right'} imageUrl={item.imageUrl}/>)}
-      
-  
       </div>
 
 
