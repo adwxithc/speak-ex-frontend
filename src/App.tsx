@@ -8,6 +8,9 @@ import SignUp from './pages/user/auth/SignUp'
 import SignIn from './pages/user/auth/SignIn';
 import VerifyUser from './pages/user/auth/verifyUser';
 import SignOut from './pages/user/auth/signOut';
+import ForgotPassword from './pages/user/auth/forgot-password/ForgotPassword';
+import VerifyOtp from './pages/user/auth/forgot-password/VerifyOtp';
+import ResetPassword from './pages/user/auth/forgot-password/ResetPassword';
 
 const router= createBrowserRouter([
   {
@@ -33,6 +36,18 @@ const router= createBrowserRouter([
       {
         path:'/signout',
         Component:SignOut
+      },
+      {
+        path:'/verify-otp',
+        Component:VerifyOtp
+      },
+      {
+        path:'/forgot-password',
+        Component:ForgotPassword
+      },
+      {
+        path:'/forgot-password/reset-password',
+        Component:ResetPassword
       }
     ]
 

@@ -79,6 +79,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
             navigate('/signup/verify-user')
           } catch (error) {
             setLoading(false)
+         
             let message:string[];
             if( error.status>=400){
                 const err= error as Ierror

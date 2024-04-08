@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useDispatch} from "react-redux";
 import { logUser } from "../../../redux/features/user/userSlice";
 import { useLoginMutation } from "../../../redux/features/user/userApiSlice";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Ierror } from "../../../types/error";
 
@@ -66,12 +66,14 @@ function SignInForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
         try {
             setLoading(true)
             const res = await login({...data}).unwrap()
-            dispatch(logUser(data));
+            dispatch(logUser({...res.data}));
             
             setLoading(false)
             navigate('/')
         } catch (error) {
             setLoading(false)
+            console.log(error);
+            
             let message:string[];
             if( error.status>=400){
                 const err= error as Ierror
@@ -164,8 +166,17 @@ function SignInForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
 
 
                 </div>
+                    
+                    <div className="flex justify-end px-5">
+                        <NavLink className="text-primary mb-3" to={'/forgot-password'}> Forgot password?</NavLink>
+                    </div>
+                
                 <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
-                <p>don't have an account? <b className="cursor-pointer" onClick={()=>navigate('/signup')}>signup</b></p>
+                
+
+                <p>don't have an account.! <b className="cursor-pointer text-primary" onClick={()=>navigate('/signup')}>Create one</b></p>
+
+                
                 
             </form>
             <DevTool control={control} />

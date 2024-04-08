@@ -3,20 +3,20 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import OtpInput from '../../ui/OtpInput/OtpInput'
 import  Button  from '../../ui/Button/Button'
 import { useDispatch } from 'react-redux';
-import { useVerifyUserMutation } from '../../../redux/features/user/userApiSlice';
+import { useVerifyOtpMutation } from '../../../redux/features/user/userApiSlice';
 import { logUser } from '../../../redux/features/user/userSlice';
 import toast from 'react-hot-toast';
 import { Ierror } from '../../../types/error';
 import { useNavigate } from 'react-router-dom';
 
 
-function VerifyUser({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
+function VerifyOtpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
   const [enteredOtp, setEnteredOtp] = useState('');
   const [error,setError] = useState('')
 
   const dispatch =useDispatch()
-
-  const [verify] = useVerifyUserMutation()
+const [verify] = useVerifyOtpMutation()
+  
   const navigate= useNavigate()
 
   const handleOtpChange = (otp:string[]) => {
@@ -35,9 +35,9 @@ function VerifyUser({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
     const res= await verify({otp:enteredOtp}).unwrap()
     dispatch(logUser(res.data));
     setLoading(false)
-    navigate('/')
+    
+    navigate('/forgot-password/reset-password')
     } catch (error) {
-  
       
       setLoading(false)
             let message:string[];
@@ -72,6 +72,7 @@ function VerifyUser({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
         <OtpInput onOtpChange={handleOtpChange}  />
         <span className='text-red-500'>{error}</span>
         <Button varient={'primary'} size={'md'} >verify</Button>
+        <p>don't have an account.! <b className="cursor-pointer text-primary" onClick={()=>navigate('/signup')}>Create one</b></p>
         </form> 
       </div>
 
@@ -80,4 +81,4 @@ function VerifyUser({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
   )
 }
 
-export default VerifyUser
+export default VerifyOtpForm
