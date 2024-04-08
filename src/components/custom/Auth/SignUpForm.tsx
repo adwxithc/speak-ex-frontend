@@ -4,6 +4,13 @@ import Button from "../../ui/Button/Button";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {z} from 'zod';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSignUpMutation } from "../../../redux/features/user/userApiSlice";
+import { logUser } from "../../../redux/features/user/userSlice";
+import toast from "react-hot-toast";
+import { Ierror } from "../../../types/error";
+import { Dispatch, SetStateAction } from "react";
 
 
 interface formValue{
@@ -43,7 +50,14 @@ const schema = z.object({
 
 
 
-function SignUpForm() {
+function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
+
+  
+  const dispatch =useDispatch()
+  const navigate = useNavigate()
+
+  const [signup] = useSignUpMutation()
+  
 
     const methods = useForm<formValue>({
         mode:'onChange',
@@ -53,9 +67,38 @@ function SignUpForm() {
       const {register,control, handleSubmit,formState}=methods;
       const {errors} = formState
 
-    const onSubmit=(data:any)=>{
-        //logic for implementing submit
-        console.log(data,'hjgjhghj')
+    const onSubmit=async(data:formValue)=>{
+          try {
+            const { confirm_password, ...formData } = data;
+            confirm_password;
+            setLoading(true)
+            const res = await signup({...formData}).unwrap()
+            dispatch(logUser({...(res.data)}))
+         
+            setLoading(false)
+            navigate('/signup/verify-user')
+          } catch (error) {
+            setLoading(false)
+            let message:string[];
+            if( error.status>=400){
+                const err= error as Ierror
+                message=err.data.errors.map(item=>item.message) 
+            }
+
+            toast.custom(() => (
+                <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
+                  <b className="text-red-600">Error</b>
+                  <ul>
+                    {message.map((message) => (
+                      <li key={message}>{message}</li>
+                    ))}
+                  </ul>
+                </div>
+              ),{
+                duration: 6000,
+            });
+            
+          }
     }
     return (
         <div className="w-full p-5 text-center">
@@ -152,6 +195,7 @@ function SignUpForm() {
 
                 </div>
                 <Button type="submit"  varient={'primary-full'} size={"lg"} >Submit</Button>
+                <p className="mt-3">Already have an account? <b className="cursor-pointer" onClick={()=>navigate('/signin')}>signin</b></p>
             </form>
             <DevTool control={control} />
         </div>

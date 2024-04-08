@@ -13,6 +13,7 @@ const userSlice = createSlice({
             state.isAuth = false;
             state.userData = null;
         },
+        
     }
 })
 

@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import {Menu, Transition} from '@headlessui/react'
 import {classNames} from '../../../utils/style-utils'
+import { NavLink } from 'react-router-dom'
 export default function ProfileDropdown() {
   return (
     <Menu as="div" className="relative ml-3">
@@ -47,12 +48,14 @@ export default function ProfileDropdown() {
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
+            <NavLink to={'/signout'}>
             <a
               href="#"
               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
             >
               Sign out
             </a>
+            </NavLink>
           )}
         </Menu.Item>
       </Menu.Items>

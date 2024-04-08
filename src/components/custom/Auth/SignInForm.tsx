@@ -1,11 +1,19 @@
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material"
 import { useForm } from 'react-hook-form';
+import {Dispatch,SetStateAction} from 'react'
 import Button from "../../ui/Button/Button";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from 'zod';
+import {  z } from 'zod';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import { useDispatch} from "react-redux";
+import { logUser } from "../../../redux/features/user/userSlice";
+import { useLoginMutation } from "../../../redux/features/user/userApiSlice";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Ierror } from "../../../types/error";
+
 
 
 interface formValue {
@@ -28,7 +36,15 @@ const schema = z.object({
 
 });
 
-function SignInForm() {
+function SignInForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
+
+
+    const navigate = useNavigate()
+    const dispatch =useDispatch()
+  
+    const [login] = useLoginMutation()
+    
+
     const methods = useForm<formValue>({
         mode: 'onChange',
         resolver: zodResolver(schema), // zod resolver for form validation
@@ -45,9 +61,40 @@ function SignInForm() {
         event.preventDefault();
     };
 
-    const onSubmit = (data: any) => {
-        //logic for implementing submit
-        console.log(data, 'hjgjhghj')
+    const onSubmit = async(data: formValue) => {
+        
+        try {
+            setLoading(true)
+            const res = await login({...data}).unwrap()
+            dispatch(logUser(data));
+            
+            setLoading(false)
+            navigate('/')
+        } catch (error) {
+            setLoading(false)
+            let message:string[];
+            if( error.status>=400){
+                const err= error as Ierror
+                message=err.data.errors.map(item=>item.message) 
+            }
+
+            toast.custom(() => (
+                <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
+                  <b className="text-red-600">Error</b>
+                  <ul>
+                    {message.map((message) => (
+                      <li key={message}>{message}</li>
+                    ))}
+                  </ul>
+                </div>
+              ),{
+                duration: 6000,
+            });
+            
+
+            
+           
+        }
     }
     return (
         <div className="w-full p-5 text-center max-w-[500px] mx-auto">
@@ -118,6 +165,7 @@ function SignInForm() {
 
                 </div>
                 <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
+                <p>don't have an account? <b className="cursor-pointer" onClick={()=>navigate('/signup')}>signup</b></p>
                 
             </form>
             <DevTool control={control} />

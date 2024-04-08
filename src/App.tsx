@@ -1,13 +1,13 @@
 
 
-import './App.css'
-
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 
 import LandingPage from './pages/user/LandingPage'
 import Dashboard from './pages/admin/dashboard/Dashboard';
 import SignUp from './pages/user/auth/SignUp'
 import SignIn from './pages/user/auth/SignIn';
+import VerifyUser from './pages/user/auth/verifyUser';
+import SignOut from './pages/user/auth/signOut';
 
 const router= createBrowserRouter([
   {
@@ -24,7 +24,15 @@ const router= createBrowserRouter([
       },
       {
         path:'/signup',
-        Component:SignUp
+        Component:SignUp,
+      },
+      {
+        path:'/signup/verify-user',
+        Component:VerifyUser
+      },
+      {
+        path:'/signout',
+        Component:SignOut
       }
     ]
 

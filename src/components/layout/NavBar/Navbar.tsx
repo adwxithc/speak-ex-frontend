@@ -5,15 +5,20 @@ import { classNames } from '../../../utils/style-utils'
 import ProfileDropdown from '../../custom/ProfileDropdown/ProfileDropdown'
 import useScrollDetection from '../../../hooks/useScrollDetection'
 
-const navigation = [
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-]
+import {navigation} from './Navigation.ts'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store.ts'
+import Button from '../../ui/Button/Button.tsx'
+import { useNavigate } from 'react-router-dom'
+
 
 
 export default function Example() {
 
+  const {isAuth} =useSelector((state:RootState)=>state.user)
+  const navigate= useNavigate()
+    
+    
   const isScrolled: boolean = useScrollDetection(0)
 
   return (
@@ -44,7 +49,9 @@ export default function Example() {
                 </div>
                 <div className="  hidden sm:ml-[35%] sm:block">
                   <div className="flex space-x-5">
-                    {navigation.map((item) => (
+                    {navigation.filter(item=>(!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
+                     
+                      
                       <a
                         key={item.name}
                         href={item.href}
@@ -56,11 +63,17 @@ export default function Example() {
                       >
                         {item.name}
                       </a>
+                     
+                      
                     ))}
                   </div>
                 </div>
               </div>
+              {
+                
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {isAuth ?
+                <>
                 <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -70,11 +83,14 @@ export default function Example() {
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
 
-                {/* Profile dropdown */}
                 <ProfileDropdown />
-
-
+                </>
+                :
+                <Button varient={'primary-outline'} size={'sm'} onClick={()=>navigate('/signin')}>Login</Button>
+                
+                }
               </div>
+              }
             </div>
           </div>
 
