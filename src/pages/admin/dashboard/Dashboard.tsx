@@ -10,9 +10,8 @@ import {
 import MuiAppBar from '@mui/material/AppBar';
 import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from "react-router-dom";
 import SideList from './Sidelist';
-
 
 
 
@@ -88,9 +87,6 @@ export default function Dashboard() {
 
 
 
-
-
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -100,7 +96,7 @@ export default function Dashboard() {
     <ThemeProvider theme={dark ? darkTheme : lightTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed"  open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -136,7 +132,8 @@ export default function Dashboard() {
 
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-   
+       
+        <Outlet />
 
       </Box>
       </Box>

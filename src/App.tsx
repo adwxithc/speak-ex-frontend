@@ -11,6 +11,15 @@ import SignOut from './pages/user/auth/signOut';
 import ForgotPassword from './pages/user/auth/forgot-password/ForgotPassword';
 import VerifyOtp from './pages/user/auth/forgot-password/VerifyOtp';
 import ResetPassword from './pages/user/auth/forgot-password/ResetPassword';
+import AdminSignin from './pages/admin/auth/AdminSignin';
+import Users from './pages/admin/Users/Users';
+import Main from './pages/admin/Main/Main';
+import Monetization from './pages/admin/Monetization/Monetization'
+import CreditTime from "./pages/admin/CreditTime/CreditTime";
+import SalesReport from "./pages/admin/SalesReport/SalesReport";
+import UsersConcerns from "./pages/admin/UsersConcerns/UsersConcerns";
+import Languages from "./pages/admin/Languages/Languages";
+import AdminPrivateRoute from './pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute';
 
 const router= createBrowserRouter([
   {
@@ -53,14 +62,52 @@ const router= createBrowserRouter([
 
   },
   {
-    path:'/admin',
-    children:[   
+    path:'',
+    Component: AdminPrivateRoute,
+    children:[
       {
-        index:true,
-        Component:Dashboard
+        path:'/admin',
+        Component:Dashboard,
+        children:
+        [   
+          {
+            index:true,
+            Component:Main
+          },
+          {
+            path:'users',
+            Component:Users
+          },
+          {
+            path:'monetisation',
+            Component:Monetization
+          },
+          {
+            path:'credit-time',
+            Component:CreditTime
+          },
+          {
+            path:'sales-report',
+            Component:SalesReport
+          },
+          {
+            path:'users-concern',
+            Component:UsersConcerns
+          },
+          {
+            path:'languages',
+            Component:Languages
+          }
+        ]
       }
     ]
-  }
+
+  },
+
+  {
+    path:'/admin/signin',
+    Component:AdminSignin
+  },
 ])
 
 function App() {

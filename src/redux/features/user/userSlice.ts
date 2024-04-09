@@ -8,12 +8,13 @@ const userSlice = createSlice({
 
             state.userData=action.payload;
             state.isAuth=true
+            localStorage.setItem('userData',JSON.stringify(action.payload))
         },
         logoutUser: (state) => {
             state.isAuth = false;
             state.userData = null;
+            localStorage.removeItem('userData')
         },
-        
         
     }
 })

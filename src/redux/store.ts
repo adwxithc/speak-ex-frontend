@@ -1,11 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit';
-import userReducer from './features/user/userSlice'
+import userReducer from './features/user/userSlice';
+import adminReducer from './features/admin/adminSlice';
+import usersListReducer from './features/admin/usersListSlice';
 import {apiSlice} from './basApiSlice'
 
 
 const store = configureStore({
     reducer:{
         user:userReducer,
+        admin:adminReducer,
+        usersList:usersListReducer,
         [apiSlice.reducerPath]:apiSlice.reducer
         
     },
