@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './features/user/userSlice';
 import adminReducer from './features/admin/adminSlice';
+import languageListReducer from './features/admin/languageSlice'
 import usersListReducer from './features/admin/usersListSlice';
 import {apiSlice} from './basApiSlice'
 
@@ -10,6 +11,7 @@ const store = configureStore({
         user:userReducer,
         admin:adminReducer,
         usersList:usersListReducer,
+        language:languageListReducer,
         [apiSlice.reducerPath]:apiSlice.reducer
         
     },

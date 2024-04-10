@@ -1,21 +1,17 @@
 
 import { useEffect } from 'react'
 import { RiseLoader } from 'react-spinners'
-import { useSignOutMutation } from '../../../redux/features/user/userApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { logoutUser } from '../../../redux/features/user/userSlice'
+import { useAdminSignOutMutation } from '../../../redux/features/admin/adminApiSlice'
+import { logoutAdmin } from '../../../redux/features/admin/adminSlice'
 
 
-
-
-
-
-function SignOut() {
+function AdminSignOut() {
 
   
 
-    const [logout] = useSignOutMutation()
+    const [logout] = useAdminSignOutMutation()
     const dispatch =useDispatch()
 
     const navigate= useNavigate()
@@ -23,14 +19,14 @@ function SignOut() {
     const signoutFunc=async()=>{
         try {
             await logout({}).unwrap()
-            dispatch(logoutUser())
+            dispatch(logoutAdmin())
             navigate('/')
         } catch (error) {
             alert('error')
-            console.log(error);
-            
+            console.log(error);  
         }   
     }
+
     useEffect(()=>{
         signoutFunc()
     },[])
@@ -42,4 +38,4 @@ function SignOut() {
   )
 }
 
-export default SignOut
+export default AdminSignOut

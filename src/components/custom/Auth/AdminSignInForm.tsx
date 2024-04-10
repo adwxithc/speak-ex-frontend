@@ -72,26 +72,28 @@ function AdminSignInForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolea
             setLoading(false)
             
             
-            // let message:string[];
-            // if( error.status>=400){
-            //     const err= error as Ierror
-            //     message=err.data.errors.map(item=>item.message) 
-            // }
+            let message:string[];
+            if( error.status>=400){
+                const err= error as Ierror
+                message=err.data.errors.map(item=>item.message) 
+            }else{
+                message=[error.message]
+            }
 
             
 
-            // toast.custom(() => (
-            //     <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
-            //       <b className="text-red-600">Error</b>
-            //       <ul>
-            //         {message.map((message) => (
-            //           <li key={message}>{message}</li>
-            //         ))}
-            //       </ul>
-            //     </div>
-            //   ),{
-            //     duration: 6000,
-            // });
+            toast.custom(() => (
+                <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
+                  <b className="text-red-600">Error</b>
+                  <ul>
+                    {message.map((message) => (
+                      <li key={message}>{message}</li>
+                    ))}
+                  </ul>
+                </div>
+              ),{
+                duration: 6000,
+            });
             
             console.log(error);
             

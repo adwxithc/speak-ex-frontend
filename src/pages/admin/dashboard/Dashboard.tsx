@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
+import { Brightness4, Brightness7, Home, Logout, Menu } from '@mui/icons-material';
 import { useState } from 'react';
 import { Outlet, useNavigate } from "react-router-dom";
 import SideList from './Sidelist';
@@ -92,6 +92,7 @@ export default function Dashboard() {
   };
 
   const navigate = useNavigate();
+
   return (
     <ThemeProvider theme={dark ? darkTheme : lightTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -123,6 +124,16 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
+            <Tooltip title='logout'>
+              <IconButton 
+              onClick={()=>navigate('/admin/signout')}
+              sx={{marginRight:3}}
+              >
+              <Logout
+              
+               />
+               </IconButton>
+            </Tooltip>
             <IconButton onClick={() => setDark(!dark)}>
               {dark ? <Brightness7 /> : <Brightness4 />}
             </IconButton>

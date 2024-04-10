@@ -6,10 +6,16 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         adminLogin: builder.mutation({
             query: (data) => ({
-                url: `${ADMIN_URl}/sigin`,
+                url: `${ADMIN_URl}/signin`,
                 method: 'POST',
                 body: data,
             }),
+        }),
+        adminSignOut:builder.mutation({
+            query:()=>({
+                url:`${ADMIN_URl}/signout`,
+                method:'POST'
+            })
         }),
         getUsers: builder.mutation({
             query: (data) => ({
@@ -29,7 +35,17 @@ export const adminApiSlice = apiSlice.injectEndpoints({
                 };
             },
         }),
+        addLanguage:builder.mutation({
+            query: (data) => {
+                
+                return {
+                    url: `${ADMIN_URl}/language`,
+                    method: 'POST',
+                    body: data,
+                };
+            },
+        }),
     }),
 });
 
-export const { useAdminLoginMutation, useGetUsersMutation, useUpdateUserMutation } = adminApiSlice;
+export const { useAdminLoginMutation, useGetUsersMutation, useUpdateUserMutation, useAdminSignOutMutation, useAddLanguageMutation } = adminApiSlice;

@@ -15,7 +15,6 @@ const userSlice = createSlice({
             state.userData = null;
             localStorage.removeItem('userData')
         },
-        
     }
 })
 

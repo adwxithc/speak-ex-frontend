@@ -20,6 +20,9 @@ import SalesReport from "./pages/admin/SalesReport/SalesReport";
 import UsersConcerns from "./pages/admin/UsersConcerns/UsersConcerns";
 import Languages from "./pages/admin/Languages/Languages";
 import AdminPrivateRoute from './pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute';
+import AdminSignOut from './pages/admin/auth/AdminSignOut';
+import AddNewLanguage from './pages/admin/Languages/AddNewLanguage';
+
 
 const router= createBrowserRouter([
   {
@@ -97,9 +100,15 @@ const router= createBrowserRouter([
           {
             path:'languages',
             Component:Languages
+          },
+          {
+            path:'add-language',
+            Component: AddNewLanguage
           }
+       
         ]
-      }
+      },
+   
     ]
 
   },
@@ -108,6 +117,10 @@ const router= createBrowserRouter([
     path:'/admin/signin',
     Component:AdminSignin
   },
+  {
+    path:'/admin/signout',
+    Component: AdminSignOut
+  }
 ])
 
 function App() {

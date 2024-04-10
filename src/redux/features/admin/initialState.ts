@@ -28,3 +28,18 @@ export const usersListInitialState:IInitialUsersListState = {
 
 }
 
+export interface IInitialLanguageListState{
+    page:number;
+    languageList:({name:string;basePrice:number})[];
+    limit?:number;
+    key:string
+    
+}
+
+export const languageListInitialState:IInitialLanguageListState = {
+    languageList:[],
+    key:'',
+    page:1,
+
+}
+
