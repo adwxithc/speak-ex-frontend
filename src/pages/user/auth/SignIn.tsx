@@ -1,6 +1,6 @@
 
 import SignUpContainer from '../../../components/layout/SignUpContainer/SignUpContainer'
-import SignInForm from '../../../components/custom/Auth/SignInForm'
+import SignInForm from '../../../components/custom/Form/user/SignInForm'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'

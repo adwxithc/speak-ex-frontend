@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { RiseLoader } from 'react-spinners'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useAdminSignOutMutation } from '../../../redux/features/admin/adminApiSlice'
-import { logoutAdmin } from '../../../redux/features/admin/adminSlice'
+import { useAdminSignOutMutation } from '../../../redux/features/admin/auth/adminApiSlice'
+import { logoutAdmin } from '../../../redux/features/admin/auth/adminSlice'
 
 
 function AdminSignOut() {

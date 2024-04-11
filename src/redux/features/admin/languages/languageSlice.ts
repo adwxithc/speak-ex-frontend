@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { languageListInitialState as initialState } from "./initialState";
+import { languageListInitialState as initialState } from "../initialState";
 const languageListSlice = createSlice({
     name:'languageList',
     initialState,

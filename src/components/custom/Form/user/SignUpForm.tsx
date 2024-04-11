@@ -1,103 +1,49 @@
 import { TextField } from "@mui/material"
 import { useForm } from 'react-hook-form';
-import Button from "../../ui/Button/Button";
+import { Dispatch, SetStateAction } from "react";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {z} from 'zod';
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useSignUpMutation } from "../../../redux/features/user/userApiSlice";
-import { logUser } from "../../../redux/features/user/userSlice";
 import toast from "react-hot-toast";
-import { Ierror } from "../../../types/error";
-import { Dispatch, SetStateAction } from "react";
+import { useNavigate } from "react-router-dom";
 
-
-interface formValue{
-    firstName:string;
-    lastName:string;
-    userName:string;
-    email:string;
-    password:string;
-    confirm_password:string;
-}
-
-const schema = z.object({
-    firstName: z.string().min(3,'first name must be minimum 3 character long'),
-    lastName: z.string(),
-    userName: z.string().min(3,'userName must be minimum 3 character long'),
-    email: z.string().email({ message: 'Invalid email' }),
-    password: z.string().min(4,'password must be min 4 character long').max(20,'password must be maximum 20 character long')
-    .refine((s) => /[a-zA-Z]/.test(s), {
-        message: "Password must contain letters.",
-    })
-    .refine((s) => /\d/.test(s), {
-        message: "Password must contain numbers.",
-    })
-    .refine((s) => /[!@#$%^&*(),.?":{}|<>]/.test(s), {
-        message: "Password must contain special characters.",
-    }),
-    confirm_password: z.string()
-
-  })
-  .refine((schema)=>{
-        return schema.password==schema.confirm_password
-  },{
-    message: "Passwords must match",
-    path: ['confirm_password']
-});
-
-
+import { schema, IformValue } from "./Schema/SignupSchema";
+import { useSignUpMutation } from "../../../../redux/features/user/auth/userApiSlice";
+import Button from "../../../ui/Button/Button";
 
 
 function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
 
-  
-  const dispatch =useDispatch()
   const navigate = useNavigate()
 
   const [signup] = useSignUpMutation()
   
-
-    const methods = useForm<formValue>({
+    const methods = useForm<IformValue>({
         mode:'onChange',
         resolver: zodResolver(schema), // zod resolver for form validation
       });
 
-      const {register,control, handleSubmit,formState}=methods;
+      const {register,control, handleSubmit,formState,setError}=methods;
       const {errors} = formState
 
-    const onSubmit=async(data:formValue)=>{
+    const onSubmit=async(data:IformValue)=>{
           try {
             const { confirm_password, ...formData } = data;
             confirm_password;
             setLoading(true)
-            const res = await signup({...formData}).unwrap()
-            dispatch(logUser({...(res.data)}))
+             await signup({...formData}).unwrap()
+
          
             setLoading(false)
             navigate('/signup/verify-user')
-          } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (error:any) {
             setLoading(false)
-         
-            let message:string[];
-            if( error.status>=400){
-                const err= error as Ierror
-                message=err.data.errors.map(item=>item.message) 
-            }
-
-            toast.custom(() => (
-                <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
-                  <b className="text-red-600">Error</b>
-                  <ul>
-                    {message.map((message) => (
-                      <li key={message}>{message}</li>
-                    ))}
-                  </ul>
-                </div>
-              ),{
-                duration: 6000,
-            });
+            const errorInfo=error.data.errors;
+            if(error.status==400){
+              setError('email',{message:errorInfo[0].message})
+            }else{
+              toast.error(errorInfo[0].message)
+            }          
             
           }
     }
@@ -115,7 +61,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
                         helperText={errors.firstName ? errors.firstName.message?.toString() : ''}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '25px', // Adjust the value for your desired roundness
+                              borderRadius: '20px', 
                             },
                           }}
                     />
@@ -127,7 +73,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
                         helperText={errors.lastName ? errors.lastName.message?.toString() : ''}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '25px', // Adjust the value for your desired roundness
+                              borderRadius: '20px', 
                             },
                           }}
                     />
@@ -142,7 +88,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
                         helperText={errors.email ? errors.email.message?.toString() : ''}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '25px', // Adjust the value for your desired roundness
+                              borderRadius: '20px', 
                             },
                           }}
                     />
@@ -154,7 +100,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
                         helperText={errors.userName ? errors.userName.message?.toString() : ''}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '25px', // Adjust the value for your desired roundness
+                              borderRadius: '20px', 
                             },
                           }}
                     />
@@ -171,7 +117,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
                         helperText={errors.password ? errors.password.message?.toString() : ''}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '25px', // Adjust the value for your desired roundness
+                              borderRadius: '20px', 
                             },
                           }}
                     />
@@ -188,12 +134,10 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
                         helperText={errors.confirm_password ? errors.confirm_password.message?.toString() : ''}
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '25px', // Adjust the value for your desired roundness
+                              borderRadius: '20px', 
                             },
                           }}
                     />
-                
-
                 </div>
                 <Button type="submit"  varient={'primary-full'} size={"lg"} >Submit</Button>
                 <p className="mt-3">Already have an account? <b className="cursor-pointer" onClick={()=>navigate('/signin')}>signin</b></p>
@@ -202,5 +146,4 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
         </div>
     )
 }
-
 export default SignUpForm

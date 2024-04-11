@@ -1,72 +1,49 @@
 import { TextField } from '@mui/material'
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  z } from 'zod';
 import { useForm } from 'react-hook-form';
-import Button from '../../ui/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useForgotPasswordMutation } from '../../../redux/features/user/userApiSlice';
-import { Ierror } from '../../../types/error';
 import toast from 'react-hot-toast';
 import { Dispatch, SetStateAction } from 'react';
 
-interface formValue {
-    email: string;
-    password: string;
-}
+import Button from '../../../ui/Button/Button';
+import { useForgotPasswordMutation } from '../../../../redux/features/user/auth/userApiSlice';
+import { IformValue,schema } from './Schema/forgotPasswordSchema';
 
-const schema = z.object({
-    email: z.string().email({ message: 'Invalid email' }),
 
-});
 
 function ForgotPasswordForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
 
     const navigate = useNavigate()
-    const dispatch =useDispatch()
   
     const [forgotPassword] = useForgotPasswordMutation()
 
-    const methods = useForm<formValue>({
+    const methods = useForm<IformValue>({
         mode: 'onChange',
         resolver: zodResolver(schema), // zod resolver for form validation
     });
-    const { register,  handleSubmit, formState } = methods;
+
+    const { register,  handleSubmit, formState,setError } = methods;
     const { errors } = formState
 
-    const onSubmit = async(data:formValue):Promise<void>=>{
+    const onSubmit = async(data:IformValue):Promise<void>=>{
         try {
             setLoading(true)
             await forgotPassword({...data}).unwrap()
             setLoading(false)
             navigate('/verify-otp')
-        } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error:any) {
             
-            setLoading(false)
          
-            let message:string[];
-            if( error.status>=400){
-                const err= error as Ierror
-                message=err.data.errors.map(item=>item.message) 
-            }
-
-            toast.custom(() => (
-                <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
-                  <b className="text-red-600">Error</b>
-                  <ul>
-                    {message.map((message) => (
-                      <li key={message}>{message}</li>
-                    ))}
-                  </ul>
-                </div>
-              ),{
-                duration: 6000,
-            });
+            setLoading(false)
+            const errorInfo=error.data.errors;
+            if(error.status==400){
+              setError('email',{message:errorInfo[0].message})
+            }else{
+              toast.error(errorInfo[0].message)
+            }   
         }
-
     }
-
-
   return (
     <div className='p-8 '>
       <form onSubmit={handleSubmit(onSubmit)}>

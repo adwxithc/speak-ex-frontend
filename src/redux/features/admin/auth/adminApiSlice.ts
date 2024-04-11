@@ -1,4 +1,4 @@
-import { apiSlice } from '../../basApiSlice';
+import { apiSlice } from '../../../basApiSlice';
 
 const ADMIN_URl = '/api/admin';
 
@@ -45,7 +45,16 @@ export const adminApiSlice = apiSlice.injectEndpoints({
                 };
             },
         }),
+        getLanguages: builder.mutation({
+            query: (data) => ({
+                url: `${ADMIN_URl}/languages-list?page=${data.page || 1}&key=${
+                    data.key || ''
+                }`,
+                method: 'GET',
+            }),
+        }),
+
     }),
 });
 
-export const { useAdminLoginMutation, useGetUsersMutation, useUpdateUserMutation, useAdminSignOutMutation, useAddLanguageMutation } = adminApiSlice;
+export const { useAdminLoginMutation, useGetUsersMutation, useUpdateUserMutation, useAdminSignOutMutation, useAddLanguageMutation,useGetLanguagesMutation } = adminApiSlice;

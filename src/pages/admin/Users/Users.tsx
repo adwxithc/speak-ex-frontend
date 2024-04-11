@@ -1,8 +1,8 @@
 import { Avatar, Box, Typography } from '@mui/material'
 import {DataGrid, GridCellParams,gridClasses } from '@mui/x-data-grid'
 import { useEffect, useMemo, useState } from 'react'
-import {  useGetUsersMutation } from '../../../redux/features/admin/adminApiSlice'
-import { setUsersList } from '../../../redux/features/admin/usersListSlice'
+import {  useGetUsersMutation } from '../../../redux/features/admin/auth/adminApiSlice'
+import { setUserPaginationData, setUsersList } from '../../../redux/features/admin/listUsers/usersListSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import moment from 'moment'
@@ -16,7 +16,7 @@ function Users() {
 
  const [getUsersList]= useGetUsersMutation()
  const dispatch =useDispatch()
- const {usersList} = useSelector((state:RootState)=>state.usersList)
+ const {usersList,totalUsers} = useSelector((state:RootState)=>state.usersList)
 
  
 
@@ -26,7 +26,11 @@ function Users() {
     const getUsers=async()=>{
       try {
           const res =await getUsersList({}).unwrap()
-          dispatch(setUsersList([...res.data.users]));
+          const{users,totalUsers}=res.data
+          dispatch(setUsersList([...users]));
+          dispatch(setUserPaginationData({...{totalUsers}}))
+          console.log(res);
+          
           
       } catch (error) {
         console.log(error);
@@ -35,6 +39,19 @@ function Users() {
     }
     getUsers()
   },[]);
+
+  const handlePageChange =async(newPage: number)=>{
+    try {
+          const res =await getUsersList({page:newPage,limit:3}).unwrap()
+          const{users,page,limit,totalUsers}=res.data
+          dispatch(setUsersList([...users]));
+          dispatch(setUserPaginationData({...{page,limit,totalUsers}}))
+          console.log(res);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
 
@@ -70,13 +87,17 @@ function Users() {
       >
         Manage Users
       </Typography>
-      <DataGrid
-      
-      columns={columns}
 
+      <DataGrid
+  
+      columns={columns}
       rows={usersList}
+      paginationMode="server"
+      paginationModel={{page:2,pageSize:2}}
+      rowCount={totalUsers} // Retrieve from server
+      onPageChange={handlePageChange}
       getRowId={row=>row.id}
-      pageSize={5}
+     
       
       getRowSpacing={params=>({
         top:params.isFirstVisible ? 0:5,
@@ -88,8 +109,6 @@ function Users() {
             theme.palette.mode === "light" ? grey[200] : grey[900],
         },
       }}
-      
-        
         onCellEditStop={(params) => setRowId(params.id.toString())}
         onCellEditStart={(params) => setRowId(params.id.toString())}
         

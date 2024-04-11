@@ -3,7 +3,7 @@ import { Box, CircularProgress, Fab } from '@mui/material'
 import { green } from '@mui/material/colors';
 import { GridCellParams } from '@mui/x-data-grid';
 import React, { useState } from 'react'
-import { useUpdateUserMutation } from '../../../redux/features/admin/adminApiSlice';
+import { useUpdateUserMutation } from '../../../redux/features/admin/auth/adminApiSlice';
 
 function UsersActions({
   params,

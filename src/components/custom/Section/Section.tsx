@@ -16,11 +16,11 @@ function Section({title, blurHash, description, imageUrl, imagePosition, classNa
 
   return (
     <Container>
-    <div className={cn("flex flex-col md:flex-row items-center py-2 ",className)}>
+    <section className={cn("flex flex-col md:flex-row items-center py-2 ",className)}>
 
     {/* image */}
       <div className={cn(`md:w-1/2 mb-4 md:mb-0 order-1 md:order-1 `,imagePosition === 'right' && 'order-1 md:order-2')}>
-        {/* <img loading="lazy" src={imageUrl} alt={title} className="w-full h-auto max-h-[350px] rounded-lg object-contain" /> */}
+        
         <Image height={300} width={500}  src={imageUrl} alt={title} className="w-full h-auto max-h-[350px] rounded-lg object-contain" blurHash={blurHash} />
       </div>
 
@@ -30,7 +30,7 @@ function Section({title, blurHash, description, imageUrl, imagePosition, classNa
         <p >{`"${description}"`}</p>
       </div>
 
-    </div>
+    </section>
     </Container>
   )
 }

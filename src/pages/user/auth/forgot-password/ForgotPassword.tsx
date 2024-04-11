@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import SignUpContainer from '../../../../components/layout/SignUpContainer/SignUpContainer'
-import ForgotPasswordForm from '../../../../components/custom/Auth/ForgotPasswordForm'
+import ForgotPasswordForm from '../../../../components/custom/Form/user/ForgotPasswordForm'
 
 function ForgotPassword() {
     const [loading,setLoading] = useState(false)

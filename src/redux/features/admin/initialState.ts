@@ -19,12 +19,14 @@ export interface IInitialUsersListState{
     usersList:({firstName:string,lastName:string,email:string,blocked:boolean,userName:string}|null)[];
     limit?:number;
     key:string
+    totalUsers:number
 }
 
 export const usersListInitialState:IInitialUsersListState = {
     usersList:[],
     key:'',
     page:1,
+    totalUsers:0
 
 }
 

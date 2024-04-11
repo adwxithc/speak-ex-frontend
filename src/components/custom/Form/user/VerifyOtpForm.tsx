@@ -1,13 +1,14 @@
 
 import { Dispatch, SetStateAction, useState } from 'react'
-import OtpInput from '../../ui/OtpInput/OtpInput'
-import  Button  from '../../ui/Button/Button'
-import { useDispatch } from 'react-redux';
-import { useVerifyOtpMutation } from '../../../redux/features/user/userApiSlice';
-import { logUser } from '../../../redux/features/user/userSlice';
 import toast from 'react-hot-toast';
-import { Ierror } from '../../../types/error';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import OtpInput from '../../../ui/OtpInput/OtpInput'
+import  Button  from '../../../ui/Button/Button'
+import { useVerifyOtpMutation } from '../../../../redux/features/user/auth/userApiSlice';
+import { logUser } from '../../../../redux/features/user/auth/userSlice';
+
 
 
 function VerifyOtpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
@@ -37,33 +38,19 @@ const [verify] = useVerifyOtpMutation()
     setLoading(false)
     
     navigate('/forgot-password/reset-password')
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
       
       setLoading(false)
-            let message:string[];
-            if( error.status >=400){
-                const err= error as Ierror
-                message=err.data.errors.map(item=>item.message) 
-            }
-
-            toast.custom(() => (
-                <div className="px-6 bg-white py-3 border drop-shadow-2xl rounded-md ">
-                  <b className="text-red-600">Error</b>
-                  <ul>
-                    {message.map((message) => (
-                      <li key={message}>{message}</li>
-                    ))}
-                  </ul>
-                </div>
-              ),{
-                duration: 6000,
-            });
-    }
+      const errorInfo=error.data.errors;
+     
+        toast.error(errorInfo[0].message)
+      } 
   }
 
   return (
     <div className="w-full p-5 text-center">
-    <h2 className='text-2xl font-serif font-semibold mb-10'>Verify User</h2>
+    <h2 className='text-2xl font-serif font-semibold mb-10'>Verify Otp</h2>
     
       <div className='max-w-[450px] mx-auto'>
       <p className='mb-5 text-sm text-gray-600'>we have send a verification code to your email please enter the OTP for user verification</p>

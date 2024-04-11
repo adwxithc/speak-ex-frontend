@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
-import userReducer from './features/user/userSlice';
-import adminReducer from './features/admin/adminSlice';
-import languageListReducer from './features/admin/languageSlice'
-import usersListReducer from './features/admin/usersListSlice';
+import userReducer from './features/user/auth/userSlice';
+import adminReducer from './features/admin/auth/adminSlice';
+import languageListReducer from './features/admin/languages/languageSlice'
+import usersListReducer from './features/admin/listUsers/usersListSlice';
 import {apiSlice} from './basApiSlice'
 
 
