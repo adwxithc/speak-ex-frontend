@@ -1,14 +1,14 @@
 
 import { Disclosure, } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { classNames } from '../../../utils/style-utils'
-import ProfileDropdown from '../../custom/ProfileDropdown/ProfileDropdown'
-import useScrollDetection from '../../../hooks/useScrollDetection'
+import { classNames } from '../../../../utils/style-utils.tsx'
+import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
+import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
 
 import {navigation} from './Navigation.ts'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store.ts'
-import Button from '../../ui/Button/Button.tsx'
+import { RootState } from '../../../../redux/store.ts'
+import Button from '../../../ui/Button/Button.tsx'
 import { useNavigate } from 'react-router-dom'
 
 

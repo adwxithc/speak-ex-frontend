@@ -5,7 +5,7 @@ import  { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from '../../../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetLanguagesMutation } from '../../../redux/features/admin/auth/adminApiSlice'
+import { useGetLanguagesMutation } from '../../../redux/features/admin/languages/languagesApiSlice'
 import { setLanguageList } from '../../../redux/features/admin/languages/languageSlice'
 import { grey } from '@mui/material/colors'
 

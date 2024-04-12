@@ -2,7 +2,7 @@ import { Chat, Dashboard, SsidChart , Language, Money, PeopleAlt, HourglassTop }
 
 
 export const list = [
-  { title: 'Main', icon: <Dashboard />, link: '' }, // Use '/' for the main route
+  { title: 'Main', icon: <Dashboard />, link: '' }, 
   { title: 'Users', icon: <PeopleAlt />, link: 'users' },
   { title: 'Monetization', icon: <Money />, link: 'monetisation' },
   { title: 'Credit Time', icon: <HourglassTop />, link: 'credit-time' },

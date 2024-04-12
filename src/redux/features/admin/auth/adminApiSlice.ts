@@ -1,4 +1,4 @@
-import { apiSlice } from '../../../basApiSlice';
+import { apiSlice } from '../../../apiSlice';
 
 const ADMIN_URl = '/api/admin';
 
@@ -17,44 +17,11 @@ export const adminApiSlice = apiSlice.injectEndpoints({
                 method:'POST'
             })
         }),
-        getUsers: builder.mutation({
-            query: (data) => ({
-                url: `${ADMIN_URl}/users-list?page=${data.page || 1}&key=${
-                    data.key || ''
-                }`,
-                method: 'GET',
-            }),
-        }),
-        updateUser: builder.mutation({
-            query: (data) => {
-                const { id, ...userData } = data;
-                return {
-                    url: `${ADMIN_URl}/update-user/${id}`,
-                    method: 'PUT',
-                    body: userData,
-                };
-            },
-        }),
-        addLanguage:builder.mutation({
-            query: (data) => {
-                
-                return {
-                    url: `${ADMIN_URl}/language`,
-                    method: 'POST',
-                    body: data,
-                };
-            },
-        }),
-        getLanguages: builder.mutation({
-            query: (data) => ({
-                url: `${ADMIN_URl}/languages-list?page=${data.page || 1}&key=${
-                    data.key || ''
-                }`,
-                method: 'GET',
-            }),
-        }),
+        
+        
+       
 
     }),
 });
 
-export const { useAdminLoginMutation, useGetUsersMutation, useUpdateUserMutation, useAdminSignOutMutation, useAddLanguageMutation,useGetLanguagesMutation } = adminApiSlice;
+export const { useAdminLoginMutation, useAdminSignOutMutation } = adminApiSlice;

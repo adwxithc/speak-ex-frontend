@@ -16,7 +16,7 @@ export const adminInitialState: IInitialAdminState = {
 
 export interface IInitialUsersListState{
     page:number;
-    usersList:({firstName:string,lastName:string,email:string,blocked:boolean,userName:string}|null)[];
+    usersList:({firstName:string,lastName:string,email:string,blocked:boolean,userName:string,id:string})[];
     limit?:number;
     key:string
     totalUsers:number

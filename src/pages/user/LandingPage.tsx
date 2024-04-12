@@ -1,12 +1,14 @@
 
 import Hero from '../../components/custom/Hero/Hero'
-import Navbar from '../../components/layout/NavBar/Navbar'
+import Navbar from '../../components/layout/NavBar/user/Navbar'
 import Carosal from '../../components/custom/Carosal/AluminiCarosal'
 import Section from '../../components/custom/Section/Section'
 import Footer from '../../components/layout/Footer/Footer'
 
 
+
 function test() {
+
 
   const workflow=[
     {

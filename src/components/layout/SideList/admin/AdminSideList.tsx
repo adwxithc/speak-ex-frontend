@@ -11,7 +11,7 @@ import {list} from './Navigate'
 import { IconButton, Theme,  Tooltip,  styled } from '@mui/material';
 import { CSSObject } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-
+import { DrawerHeader} from '../../NavBar/admin/AppBar'
 
 
 
@@ -39,14 +39,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
+
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({

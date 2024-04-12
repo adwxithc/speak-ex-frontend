@@ -11,10 +11,16 @@ const usersListSlice = createSlice({
             // state.page=action.payload.page;
             state.totalUsers=action.payload.totalUsers;
             // state.limit=action.payload.limit;
+        },
+        updateUserData:(state,action)=>{
+           
+            const updatedUserIndex = state.usersList.findIndex(user => user.id === action.payload.id);
+            state.usersList[updatedUserIndex] = action.payload;
+            
         }
         
     }
 })
 
-export const {setUsersList,setUserPaginationData} =usersListSlice.actions
+export const {setUsersList,setUserPaginationData, updateUserData} =usersListSlice.actions
 export default usersListSlice.reducer

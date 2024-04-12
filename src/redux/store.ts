@@ -3,7 +3,7 @@ import userReducer from './features/user/auth/userSlice';
 import adminReducer from './features/admin/auth/adminSlice';
 import languageListReducer from './features/admin/languages/languageSlice'
 import usersListReducer from './features/admin/listUsers/usersListSlice';
-import {apiSlice} from './basApiSlice'
+import {apiSlice} from './apiSlice'
 
 
 const store = configureStore({
