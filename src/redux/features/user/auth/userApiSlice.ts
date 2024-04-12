@@ -52,7 +52,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method:'POST',
                 body:data
             })
+        }),
+        checkUserNameAvailability:builder.mutation({
+            query:(data)=>({
+                url:`${USER_URL}/check-userName`,
+                method:'POST',
+                body:{userName:data}
+            })
         })
+
     }),
 });
 
@@ -63,5 +71,6 @@ export const {
     useSignOutMutation,
     useForgotPasswordMutation,
     useVerifyOtpMutation,
-    useResetPasswordMutation
+    useResetPasswordMutation,
+    useCheckUserNameAvailabilityMutation
 } = userApiSlice;

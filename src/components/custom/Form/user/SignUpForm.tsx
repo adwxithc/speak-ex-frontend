@@ -6,12 +6,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import { schema, IformValue } from "./Schema/SignupSchema";
+import { SignupSchema, IformValue } from "./Schema/SignupSchema";
 import { useSignUpMutation } from "../../../../redux/features/user/auth/userApiSlice";
 import Button from "../../../ui/Button/Button";
 
 
 function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>}) {
+
+console.log('rendered');
+
+
+
+const schema= SignupSchema()
+  
+
+
 
   const navigate = useNavigate()
 
@@ -27,6 +36,7 @@ function SignUpForm({setLoading}:{setLoading:Dispatch<SetStateAction<boolean>>})
 
     const onSubmit=async(data:IformValue)=>{
           try {
+            
             const { confirm_password, ...formData } = data;
             confirm_password;
             setLoading(true)
