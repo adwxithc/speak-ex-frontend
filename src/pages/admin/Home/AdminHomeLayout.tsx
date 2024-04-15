@@ -14,13 +14,6 @@ function AdminHomeLayout() {
   return (
     <>
     <div className='flex'>
-        
-    <SideBar >
-    {list.map(item=><SideBarItem onClick={()=>{setSelectedLink(`/admin/${item.link}`);navigate(`/admin/${item.link}`)}} key={item.link} text={item.title} icon={item.icon} active={selectedLink=='/admin/'+item.link?true:false}/>)}
-   
-    </SideBar>
-
-    <section className='h-screen w-full overflow-y-scroll relative hide-scrollbar'>
     <AdminNavBar>
         <ul>
             <li className='cursor-pointer'>
@@ -28,8 +21,15 @@ function AdminHomeLayout() {
             </li>
         </ul>
     </AdminNavBar>
-    <div className='h-16 mb-3'></div>
-    <div className='p-5'>{<Outlet/>}</div>
+    <SideBar >
+    {list.map(item=><SideBarItem onClick={()=>{setSelectedLink(`/admin/${item.link}`);navigate(`/admin/${item.link}`)}} key={item.link} text={item.title} icon={item.icon} active={selectedLink=='/admin/'+item.link?true:false}/>)}
+   
+    </SideBar>
+   
+    <section className='h-screen w-full overflow-y-scroll   hide-scrollbar'>
+  
+    <div className='h-16'></div>
+    <div className='p-8 '>{<Outlet/>}</div>
     
     </section>
 

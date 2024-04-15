@@ -8,7 +8,7 @@ function SideBar({ children }: { children: React.ReactNode }) {
 
     return (
         
-        <aside className='h-screen'>
+        <aside className='h-screen z-0'>
             <nav className='h-full flex flex-col bg-white border-r shadow-sm'>
                 <div className='p-4 pb-2 flex justify-between items-center  mb-5 h-16 border-b-2 '>
                     <img src="https://img.logoipsum.com/243.svg" className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`} alt="" />

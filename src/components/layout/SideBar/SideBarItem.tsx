@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { SideBarContext } from './SideBar'
-import { useNavigate } from 'react-router-dom'
 
 interface SideBarItem extends React.HTMLAttributes<HTMLLIElement> {
     icon: React.ReactNode;
@@ -13,13 +12,13 @@ interface SideBarItem extends React.HTMLAttributes<HTMLLIElement> {
 
 function SideBarItem({ icon, text, active=false, alert,...props }: SideBarItem) {
     const { expanded } = useContext(SideBarContext)
-    const navigate = useNavigate()
+    
     return (
         <li
         {...props}
         
          className={` 
-    relative flex items-center  py-3 px-4  my-2    font-medium rounded-md cursor-pointer  text-gray-700
+    relative flex items-center  py-3 px-4  my-2    font-semibold rounded-md cursor-pointer  text-gray-600
     transition-colors group
     ${active ? "bg-primary text-white" :
                 "hover:bg-primary hover:text-white"
