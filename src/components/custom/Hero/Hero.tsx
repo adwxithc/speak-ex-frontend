@@ -3,7 +3,9 @@ import Container from "../../layout/Container/Container"
 import Button from '../../ui/Button/Button.tsx'
 import { Input } from "../../ui/Input/Input.tsx"
 import Peoples from "../Peoples/Peoples.tsx"
+import { useTranslation } from "react-i18next"
 function Hero() {
+  const {t} = useTranslation(['common','landingPage'])
 
   const peoples = [
     {
@@ -53,15 +55,15 @@ function Hero() {
           <div className=" pt-11 sm:pt-24 px-7 text-center ">
 
             <p className="lg:text-6xl  text-4xl font-bold">
-              We Take Care Of Your Language
+              {t('header',{ns:'landingPage'})}
             </p>
             <p className="text-sm sm:text-lg mt-5">
-              we care about you progress and we wil always
+              {t('description',{ns:'landingPage'})}
             </p>
 
             <div className="sm:flex items-center justify-center gap-1 mt-4">
               <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />
-              <Button varient={"primary"} size={"lg"} onClick={()=>navigate('/signup')}>Get Started</Button>
+              <Button varient={"primary"} size={"lg"} onClick={()=>navigate('/signup')}>{t('getStarted',{ns:'common'})}</Button>
              
 
             </div>

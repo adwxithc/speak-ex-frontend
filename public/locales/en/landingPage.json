@@ -1,0 +1,22 @@
+{
+    "header": "We Take Care Of Your Language",
+    "description":"we care about you progress and we wil always",
+    "workflow":{
+        "step1":{
+            "title":"Sign Up and Language Selection",
+            "description":"Get started by signing up and selecting the language you want to learn. You can also choose the languages you're already good at during sign-up. Don't worry, it's easy! "
+        },
+        "step2":{
+                "title":"Earn Extra Talking Credits",
+                "description":"As you engage in conversations with others who want to learn the languages you're good at, you'll earn extra talking credits. It's like earning rewards for chatting!"
+        },
+        "step3":{
+            "title":"Use Credits to Learn",
+            "description":"Use your earned credits to chat with users who know the language you want to learn. It's like unlocking valuable conversations!"
+        },
+       "step4": {
+            "title":"Free Hours and Additional Credits",
+            "description":"Get 5 free hours when you sign up to chat with others. Help them learn to earn more credits for your language journey."
+        }
+    }
+}

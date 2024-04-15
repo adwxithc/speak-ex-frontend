@@ -3,7 +3,6 @@
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 
 import LandingPage from './pages/user/LandingPage'
-import Dashboard from './pages/admin/dashboard/Dashboard';
 import SignUp from './pages/user/auth/SignUp'
 import SignIn from './pages/user/auth/SignIn';
 import VerifyUser from './pages/user/auth/verifyUser';
@@ -22,6 +21,8 @@ import Languages from "./pages/admin/Languages/Languages";
 import AdminPrivateRoute from './pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute';
 import AdminSignOut from './pages/admin/auth/AdminSignOut';
 import AddNewLanguage from './pages/admin/Languages/AddNewLanguage';
+import Test from './pages/Test/Test';
+import AdminHomeLayout from './pages/admin/Home/AdminHomeLayout';
 
 
 const router= createBrowserRouter([
@@ -29,6 +30,10 @@ const router= createBrowserRouter([
     id:'root',
     path:'/',
     children:[
+      {
+        path:'/test',
+        Component:Test
+      },
       {
         index:true,
         Component:LandingPage,
@@ -70,7 +75,7 @@ const router= createBrowserRouter([
     children:[
       {
         path:'/admin',
-        Component:Dashboard,
+        Component:AdminHomeLayout,
         children:
         [   
           {

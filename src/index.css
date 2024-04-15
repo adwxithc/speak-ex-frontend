@@ -24,6 +24,10 @@ body {
   appearance: none;
 }
 
+.clip-bottom {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
 
 
 

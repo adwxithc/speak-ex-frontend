@@ -13,13 +13,14 @@ import { IformValue, schema } from './Schema/SignInSchema'
 import Button from "../../../ui/Button/Button";
 import { logUser } from "../../../../redux/features/user/auth/userSlice";
 import { useLoginMutation } from "../../../../redux/features/user/auth/userApiSlice";
+import { Trans, useTranslation } from "react-i18next";
 
 
 
 
 
 function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
-
+    const {t} = useTranslation(['common','auth'])
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -66,7 +67,7 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
     }
     return (
         <div className="w-full p-5 text-center max-w-[500px] mx-auto">
-            <h2 className='text-2xl font-serif font-semibold mb-10'>Let's Sign in</h2>
+            <h2 className='text-2xl font-serif font-semibold mb-10'>{t('SignInHeader',{ns:'auth'})}</h2>
 
             <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -133,13 +134,18 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
                 </div>
 
                 <div className="flex justify-end px-5">
-                    <NavLink className="text-primary mb-3" to={'/forgot-password'}> Forgot password?</NavLink>
+                    <NavLink className="text-primary mb-3" to={'/forgot-password'}>{t('forgotPassword',{ns:'auth'})}</NavLink>
                 </div>
 
                 <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
 
 
-                <p>don't have an account.! <b className="cursor-pointer text-primary" onClick={() => navigate('/signup')}>Create one</b></p>
+                {/* <p>{t('createAccountDescription',{ns:'auth'})}<b className="cursor-pointer text-primary" onClick={() => navigate('/signup')}>{t('createOne',{ns:'auth'})}</b></p> */}
+                <Trans
+                ns={'auth'}
+                i18nKey={"createAccountDescription"}
+                components={{1:<b className="cursor-pointer text-primary" onClick={() => navigate('/signup')} />}}
+                />
 
 
             </form>

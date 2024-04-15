@@ -10,10 +10,13 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../../redux/store.ts'
 import Button from '../../../ui/Button/Button.tsx'
 import { useNavigate } from 'react-router-dom'
+import LanguageSelector from '../../../custom/LanguageSelector/LanguageSelector.tsx'
+import { useTranslation } from 'react-i18next'
 
 
 
 export default function Example() {
+  const {t} = useTranslation(['common'])
 
   const {isAuth} =useSelector((state:RootState)=>state.user)
   const navigate= useNavigate()
@@ -86,9 +89,10 @@ export default function Example() {
                 <ProfileDropdown />
                 </>
                 :
-                <Button varient={'primary-outline'} size={'sm'} onClick={()=>navigate('/signin')}>Login</Button>
+                <Button varient={'primary-outline'} size={'sm'} onClick={()=>navigate('/signin')}>{t('login',{ns:'common'})}</Button>
                 
                 }
+                <LanguageSelector/>
               </div>
               }
             </div>

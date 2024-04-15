@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 
 function SignIn() {
+  const {t} = useTranslation(['auth'])
   const {isAuth} =useSelector((state:RootState)=>state.user)
   const navigate = useNavigate()
   useEffect(()=>{
@@ -18,7 +20,7 @@ const [loading,setLoading] = useState(false)
 
   return (
     <div>
-    <SignUpContainer title="Unlock a World of Languages!" description="Discover new languages and immerse yourself in different cultures through lively conversations on our interactive platform." loading={loading} >
+    <SignUpContainer title={t('authContainerHeader',{ns:'auth'})} description={t('authContainerDescription',{ns:'auth'})} loading={loading} >
         <SignInForm setLoading={setLoading} />
 
     </SignUpContainer>

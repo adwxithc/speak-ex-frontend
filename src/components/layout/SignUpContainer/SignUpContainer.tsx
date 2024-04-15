@@ -1,8 +1,8 @@
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 import { cn } from "../../../utils/style-utils";
 import Image from "../../ui/Image/Image";
 import {RiseLoader} from 'react-spinners';
-// import '../../../assets/Images/language/english-language.avif'
+
 
 
 interface SignUpProps{
