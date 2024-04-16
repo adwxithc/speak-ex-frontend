@@ -1,5 +1,5 @@
 export interface IUser{
-    id?:string;
+    id:string;
     firstName:string;
     lastName:string;
     userName:string;
@@ -7,6 +7,7 @@ export interface IUser{
     password:string;
     profile?:string;
     blocked?:boolean;
+    createdAt:string;
     focusLanguage?:string;
     proficientLanguage?:string[]
     status?: 'active' | 'freeze';

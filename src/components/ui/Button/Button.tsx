@@ -11,15 +11,19 @@ const buttonVarients = cva(
             varient: {
                 default: 'bg-gray-200 text-black',
                 primary:"bg-primary text-white",
+                danger:"bg-red-500 text-white",
+                'danger-outline':" border border-red-500 text-red-500",
+                'success-outline':" border border-green-500 text-green-500",
+                success:"bg-green-500 text-white",
                 "primary-full":"bg-primary text-white w-full my-4",
                 'primary-outline':'border border-primary'
             
             },
             size: {
                 default: "h-16 px-8",
-                sm: "h-9 rounded-full px-4",
+                sm: "py-1 px-4",
                 md:"px-7 py-3 ",
-                lg: "h-14 px-8",
+                lg: "py-3 px-5",
                 icon: "h-10 w-10",
                 actionIcon: "h-7 w-7 p-0 m-0",
 
@@ -30,7 +34,7 @@ const buttonVarients = cva(
             },
         }
     }
-)
+) 
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVarients> {

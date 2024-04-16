@@ -4,6 +4,8 @@ import Button from '../../ui/Button/Button.tsx'
 import { Input } from "../../ui/Input/Input.tsx"
 import Peoples from "../Peoples/Peoples.tsx"
 import { useTranslation } from "react-i18next"
+import { RootState } from "../../../redux/store.ts"
+import { useSelector } from "react-redux"
 function Hero() {
   const {t} = useTranslation(['common','landingPage'])
 
@@ -44,7 +46,7 @@ function Hero() {
 
     }
   ]
-
+  const {isAuth} =useSelector((state:RootState)=>state.user)
   const navigate = useNavigate()
 
   return (
@@ -60,13 +62,18 @@ function Hero() {
             <p className="text-sm sm:text-lg mt-5">
               {t('description',{ns:'landingPage'})}
             </p>
-
-            <div className="sm:flex items-center justify-center gap-1 mt-4">
+            {
+              isAuth
+              ?<div className="mt-8">
+                <Button varient={"primary"} size={"lg"} >{t('getStarted',{ns:'common'})}</Button>
+              </div>
+              : <div className="sm:flex items-center justify-center gap-1 mt-4">
               <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />
               <Button varient={"primary"} size={"lg"} onClick={()=>navigate('/signup')}>{t('getStarted',{ns:'common'})}</Button>
-             
-
+          
             </div>
+            }
+           
 
             <Peoples list={peoples} className="hide-scrollbar mt-10 sm:mt-16" />
 

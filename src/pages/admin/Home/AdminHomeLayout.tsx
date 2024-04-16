@@ -1,10 +1,10 @@
 
 import AdminNavBar from '../../../components/layout/NavBar/admin/AdminNavBar'
-import SideBar from '../../../components/layout/SideBar/SideBar'
-import SideBarItem from '../../../components/layout/SideBar/SideBarItem'
+import SideBar from '../../../components/layout/SideBar/Admin/SideBar'
+import SideBarItem from '../../../components/layout/SideBar/Admin/SideBarItem'
 import { PiSignOutBold } from "react-icons/pi";
 import ToolTip from '../../../components/ui/ToolTip/ToolTip'
-import {list} from '../../../components/layout/SideBar/Navigate'
+import {list} from '../../../components/layout/SideBar/Admin/Navigate'
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 

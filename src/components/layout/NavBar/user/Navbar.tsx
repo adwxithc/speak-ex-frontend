@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 
 
 
-export default function Example() {
+export default function Navbar() {
   const {t} = useTranslation(['common'])
 
   const {isAuth} =useSelector((state:RootState)=>state.user)
@@ -25,7 +25,7 @@ export default function Example() {
   const isScrolled: boolean = useScrollDetection(0)
 
   return (
-    <Disclosure as="nav" className='bg-white border-b-secondary border-b-2 sticky top-0 w-full z-40'>
+    <Disclosure as="nav" className='bg-white border-b-secondary border-b-2 sticky top-0 w-full z-40 drop-shadow-md'>
       {({ open }) => (
         <>
           <div className="mx-auto   max-w-7xl px-2 sm:px-6 lg:px-8 ">
@@ -42,7 +42,7 @@ export default function Example() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className=" flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className=" flex flex-1 items-center justify-center sm:items-stretch sm:justify-start ">
                 <div className="  flex flex-shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
@@ -50,7 +50,7 @@ export default function Example() {
                     alt="Your Company"
                   />
                 </div>
-                <div className="  hidden sm:ml-[35%] sm:block">
+                <div className="  hidden sm:ml-16 sm:block ">
                   <div className="flex space-x-5">
                     {navigation.filter(item=>(!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
                      
@@ -69,6 +69,7 @@ export default function Example() {
                      
                       
                     ))}
+                    <LanguageSelector/>
                   </div>
                 </div>
               </div>
@@ -92,7 +93,7 @@ export default function Example() {
                 <Button varient={'primary-outline'} size={'sm'} onClick={()=>navigate('/signin')}>{t('login',{ns:'common'})}</Button>
                 
                 }
-                <LanguageSelector/>
+                
               </div>
               }
             </div>
@@ -116,6 +117,7 @@ export default function Example() {
 
 
               ))}
+              <LanguageSelector/>
             </div>
           </Disclosure.Panel>
         </>

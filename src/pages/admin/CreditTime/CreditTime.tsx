@@ -1,72 +1,109 @@
-import { useMemo } from "react"
+import {  useMemo } from "react"
+import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons"
+import useDataFetcher from "./useDataFetcher"
+import moment from 'moment'
+import Button from "../../../components/ui/Button/Button"
+import Avatar from "../../../components/ui/Avatar/Avatar"
+import { useUpdateUserMutation } from "../../../redux/features/admin/listUsers/usersListApiSlice"
 
 
 function CreditTime() {
 
   const columns = useMemo(() => [
-    { field: 'profile', headerName: 'Avatar'},
-    { field: 'firstName', headerName: 'Full Name'},
+    {  headerName: 'Avatar'},
+    {  headerName: 'Full Name'},
     
-    { field: 'email', headerName: 'Email' },
-    { field: 'userName', headerName: 'User Name' },
-    { field: 'blocked', headerName: 'Blocked'},
-    { field: 'createdAt', headerName: 'Created At'},
-    {
-      field: "actions",
-      headerName: "Actions",
-    }
+    {  headerName: 'Email' },
+    {  headerName: 'User Name' },
+    
+    {  headerName: 'Created At'},
+    {  headerName: 'Block'},
   ], [])
+
+  
+
+  const { loading,
+    users,
+    totalPages,
+    currentPage,
+    setUsers,
+    setCurrentPage} = useDataFetcher()
+    const [updateUser] = useUpdateUserMutation()
+    const handleBlock = async(id:string,status:boolean)=>{
+      const data = { id: id, blocked: status }
+      
+      const res = await updateUser(data).unwrap()
+
+      setUsers((prev)=>{
+         return prev.map((user)=>{
+          if(user.id===res.data.id) return res.data
+          return user
+         })
+      })
+      
+      
+    }
 
   return (
     <div className="">
       <h1 className="text-3xl mb-5 font-semibold text-center">Users List</h1>
-      <div className="  border-2 rounded-md  overflow-auto">
+      <div className=" border  rounded-md  overflow-auto">
       <table className="min-w-full divide-y divide-gray-200    ">
-        <thead className=" ">
-          <tr>
+        <thead className=" bg-secondary ">
+          <tr >
             
-            {columns.map(item=>(<th scope="col" className="p-5  text-left  font-medium text-gray-500 uppercase tracking-wider">{item.headerName}</th>))}
+            {columns.map(item=>(<th scope="col" className="p-5  text-left  font-medium  uppercase text-black tracking-wider">{item.headerName}</th>))}
 
             
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          <tr>
+          {loading ?<span className="text-center text-2xl">loading...</span>:
+          <>
+          {users.map((item)=>(<tr key={item.id}>
             <td className="px-6 py-4 whitespace-nowrap">
             
                 <div className="flex-shrink-0 h-10 w-10">
-                  <img className="h-10 w-10 rounded-full" src="https://i.pravatar.cc/150?img=1" alt="" />
+                  
+                  <Avatar className="h-10 w-10 rounded-full" src={`${item.profile || 'http://localhost:3000/Images/profilePlaceholder/profilePlaceholder.jpg'}`} />
                 </div>
               
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
-              <div className="text-sm text-gray-900">Regional Paradigm Technician</div>
+              <div className="text-sm text-gray-900">{item.firstName+' '+item.lastName}</div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              jane.cooper@example.com
+              {item.email}
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
-              <div className="text-sm text-gray-900">ReTechnician</div>
+              <div className="text-sm text-gray-900">{item.userName}</div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                Active
-              </span>
-            </td>
+           
            <td>
-            1414/65625/252
+            {moment(item.createdAt).format('YYYY-MM-DD HH:MM:SS')}
            </td>
             
             <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-              <a href="#" className="text-indigo-600 hover:text-indigo-900">Edit</a>
-              <a href="#" className="ml-2 text-red-600 hover:text-red-900">Delete</a>
+              {
+                item.blocked
+                ?<Button varient={'success-outline'} size={'sm'} className="ml-2" onClick={()=>handleBlock(item.id,false)}>unblock</Button>
+                :<Button varient={'danger-outline'} size={"sm"} onClick={()=>handleBlock(item.id,true)}  className="ml-2 ">block</Button>
+              }
+              
             </td>
-          </tr>
-        
+          </tr>))}
+          </>
+         }
+         
           
 
         </tbody>
       </table>
+      </div>
+      <div>
+        
+      <PaginationButtons totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      
       </div>
       
 
