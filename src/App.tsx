@@ -23,12 +23,16 @@ import AdminSignOut from './pages/admin/auth/AdminSignOut';
 import AddNewLanguage from './pages/admin/Languages/AddNewLanguage';
 import Test from './pages/Test/Test';
 import AdminHomeLayout from './pages/admin/Home/AdminHomeLayout';
+import Profile from './pages/user/Profile/Profile';
+import UserLayout from './components/layout/UserLayout/UserLayout';
+import UsersPosts from './pages/user/Profile/UsersPosts';
 
 
 const router= createBrowserRouter([
   {
     id:'root',
     path:'/',
+    Component:UserLayout,
     children:[
       {
         path:'/test',
@@ -38,6 +42,22 @@ const router= createBrowserRouter([
         index:true,
         Component:LandingPage,
       },
+     
+      {
+        path:'profile',
+        Component:Profile,
+        children:[
+          {
+            index:true,
+            Component:UsersPosts
+          }
+        ]
+      }
+    ]
+
+  },{
+    path:'/',
+    children:[
       {
         path:'/signin',
         Component:SignIn
@@ -65,9 +85,8 @@ const router= createBrowserRouter([
       {
         path:'/forgot-password/reset-password',
         Component:ResetPassword
-      }
+      },
     ]
-
   },
   {
     path:'',

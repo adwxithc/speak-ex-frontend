@@ -5,7 +5,7 @@ import { classNames } from '../../../../utils/style-utils.tsx'
 import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
 import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
 
-import {navigation} from './Navigation.ts'
+import { navigation } from './Navigation.ts'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../redux/store.ts'
 import Button from '../../../ui/Button/Button.tsx'
@@ -16,16 +16,16 @@ import { useTranslation } from 'react-i18next'
 
 
 export default function Navbar() {
-  const {t} = useTranslation(['common'])
+  const { t } = useTranslation(['common'])
 
-  const {isAuth} =useSelector((state:RootState)=>state.user)
-  const navigate= useNavigate()
-    
-    
+  const { isAuth } = useSelector((state: RootState) => state.user)
+  const navigate = useNavigate()
+
+
   const isScrolled: boolean = useScrollDetection(0)
 
   return (
-    <Disclosure as="nav" className='bg-white border-b-secondary border-b-2 sticky top-0 w-full z-40 drop-shadow-md'>
+    <Disclosure as="nav" className='bg-white border-b-secondary  sticky top-0 w-full z-40 drop-shadow-sm'>
       {({ open }) => (
         <>
           <div className="mx-auto   max-w-7xl px-2 sm:px-6 lg:px-8 ">
@@ -52,9 +52,9 @@ export default function Navbar() {
                 </div>
                 <div className="  hidden sm:ml-16 sm:block ">
                   <div className="flex space-x-5">
-                    {navigation.filter(item=>(!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
-                     
-                      
+                    {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
+
+
                       <a
                         key={item.name}
                         href={item.href}
@@ -66,35 +66,35 @@ export default function Navbar() {
                       >
                         {item.name}
                       </a>
-                     
-                      
+
+
                     ))}
-                    <LanguageSelector/>
+                    <LanguageSelector />
                   </div>
                 </div>
               </div>
               {
-                
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {isAuth ?
-                <>
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
 
-                <ProfileDropdown />
-                </>
-                :
-                <Button varient={'primary-outline'} size={'sm'} onClick={()=>navigate('/signin')}>{t('login',{ns:'common'})}</Button>
-                
-                }
-                
-              </div>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  {isAuth ?
+                    <>
+                      <button
+                        type="button"
+                        className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      >
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+
+                      <ProfileDropdown />
+                    </>
+                    :
+                    <Button varient={'primary-outline'} size={'sm'} onClick={() => navigate('/signin')}>{t('login', { ns: 'common' })}</Button>
+
+                  }
+
+                </div>
               }
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function Navbar() {
 
 
               ))}
-              <LanguageSelector/>
+              <LanguageSelector />
             </div>
           </Disclosure.Panel>
         </>
