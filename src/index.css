@@ -16,10 +16,12 @@ body {
 
 
 
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+
 }
 
 .spin-button-none::-webkit-outer-spin-button, .spin-button-none::-webkit-inner-spin-button{
@@ -30,6 +32,97 @@ body {
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
+/* tiptap style */
+
+.tiptap{
+  > * + * {
+    margin-top: 0.75em;
+  }
+  h1{
+    font-size:2.5rem;
+    font-weight: bold;
+  }
+  h2{
+    font-size:2rem;
+    font-weight: bold;
+  }
+  h3{
+    font-size:1.8rem;
+    font-weight: bold;
+  }
+  h4{
+    font-size:1.6rem;
+    font-weight: bold;
+  }
+  h5{
+
+    font-size:1.4rem;
+    font-weight: bold;
+  }
+  h6{
+    font-size: 1.2;
+  }
+  p{
+    font-size:1.1rem;
+    line-height: 1.6;
+  }
+  ul{
+
+    list-style-type: disc;
+    margin-left:1.5rem;
+  }
+  ul li p{
+    margin:0;
+  }
+  ol{
+    list-style-type: decimal;
+    margin-left:1.5rem;
+  }
+  ol li p{
+    margin:0;
+  }
+  pre{
+    border-radius:5px;
+    color:#333
+  }
+  code{
+    display: block;
+    white-space: pre-wrap;
+
+    font-size:0.8;
+    padding:0.75rem 1rem;
+    background-color: #434649;
+    color:#acafb1
+  }
+
+  hr{
+    border: 1px solid #ddd;
+    margin:20px 0;
+  }
+  a{
+    color:#0077cc;
+    text-decoration: underline;
+  }
+  blockquote{
+    border-left:4px solid #0077cc;
+    padding-left:1rem;
+    margin:1rem 0;
+  }
+
+  blockquote p{
+    font-style:italic;
+  }
+
+  img {
+    height: auto;
+    max-width: 100%;
+
+    &.ProseMirror-selectednode {
+      outline: 3px solid #68cef8;
+    }
+  }
+  
+}
 
 
 

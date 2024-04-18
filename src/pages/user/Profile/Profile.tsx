@@ -6,12 +6,13 @@ import { MdOutlineMonetizationOn } from "react-icons/md"
 import { AiOutlinePicture } from "react-icons/ai"
 import { IoWalletOutline } from "react-icons/io5"
 import { Outlet } from "react-router-dom"
+import ProfilePicture from "../../../components/custom/ProfilePicture/ProfilePicture"
 
 function Profile() {
     return (
         <>
       
-        <div className="bg-secondary h-screen overflow-hidden sm:px-10">
+        <div className="bg-secondary h-screen overflow-hidden sm:px-10 mb-8">
   
   
           <div className="flex flex-col sm:flex-row py-5">
@@ -23,7 +24,12 @@ function Profile() {
               <SideBarItem text="Wallet" key='4' icon={<IoWalletOutline />} />
             </UserProfileSideBar>
   
-            <div className="bg-white rounded-xl shadow-sm w-full max-h-screen overflow-x-hidden overflow-y-scroll hide-scrollbar p-8">
+            <div className="bg-white rounded-xl shadow-sm w-full max-h-screen overflow-x-hidden overflow-y-scroll pretty-scrollbar  ">
+
+              <div className="sm:hidden h-52 sm:h-0">
+              <ProfilePicture />
+              </div>
+              
                 <Outlet />
             </div>
   

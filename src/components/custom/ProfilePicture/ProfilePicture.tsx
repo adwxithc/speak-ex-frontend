@@ -9,7 +9,7 @@ interface ProfilePictureProps extends React.HTMLAttributes<HTMLDivElement> {
 const ProfilePicture=forwardRef<HTMLDivElement, ProfilePictureProps>(
     ({className,...props}, ref)=>{
         return (
-            <div ref={ref} className={cn(`h-full   bg-[url('/Images/userProfile/cover.avif')] `,className)} {...props}  >
+            <div ref={ref} className={cn(`h-full   bg-[url('/Images/userProfile/cover.avif')]  bg-no-repeat bg-cover`,className)} {...props}  >
         
             <div className='bg-gradient-to-t from-black to-transparent h-full w-full flex  flex-col justify-center items-center'>
         

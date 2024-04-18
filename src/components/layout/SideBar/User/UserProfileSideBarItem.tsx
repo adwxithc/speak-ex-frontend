@@ -19,7 +19,7 @@ function UserProfileSideBarItem({ icon, text, active = false, alert, ...props }:
             {...props}
 
             className={` 
-            relative flex items-center  py-2 px-2  my-2    font-semibold rounded-md cursor-pointer  text-gray-600
+            relative flex items-center  py-2 px-2  my-2    font-semibold rounded-md cursor-pointer  text-primary
             transition-colors group
             ${active ? "text-black font-semibold" :
                     " hover:text-black hover:font-semibold"
