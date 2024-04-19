@@ -10,7 +10,7 @@ const  PostThumbNail=forwardRef<HTMLDivElement, PostThumbNailProps>(({ className
   return (
     
         
-    <div className={cn(" h-56 overflow-hidden relative rounded-sm",className)} {...props} ref={ref}>
+    <div className={cn(" h-56 overflow-hidden relative rounded-xl",className)} {...props} ref={ref}>
         <img src={imageUrl} className='object-cover h-full w-full' alt="post image" />
         <h1 className="absolute bottom-5 left-8 text-white z-10">{title}</h1>
         <div className='bg-gradient-to-t from-[#000000b5] to-transparent w-full h-full absolute top-0 left-0 bottom-0'></div>

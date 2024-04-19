@@ -1,10 +1,10 @@
 import { ReactNode, useState } from "react"
 
-interface useMultistepForm{
+interface IUseMultistepForm{
   steps:ReactNode[];
 }
 
-export function useMultistepForm({steps}:useMultistepForm) {
+export function useMultistepForm({steps}:IUseMultistepForm) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
     function next () {

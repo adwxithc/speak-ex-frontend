@@ -26,6 +26,7 @@ import AdminHomeLayout from './pages/admin/Home/AdminHomeLayout';
 import Profile from './pages/user/Profile/Profile';
 import UserLayout from './components/layout/UserLayout/UserLayout';
 import UsersPosts from './pages/user/Profile/UsersPosts';
+import CreatePost from './pages/user/CreatePost/CreatePost';
 
 
 const router= createBrowserRouter([
@@ -50,6 +51,10 @@ const router= createBrowserRouter([
           {
             index:true,
             Component:UsersPosts
+          },
+          {
+            path:'new-post',
+            Component:CreatePost
           }
         ]
       }

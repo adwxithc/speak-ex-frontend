@@ -1,5 +1,6 @@
 
 import { type Editor } from "@tiptap/react";
+
 import {
   Bold,
   Strikethrough,
@@ -16,34 +17,61 @@ import {
   TextQuote,
   Undo,
   Redo,
-  Code,
   AlignLeft,
   AlignCenter,
   AlignRight,
-  AlignJustify
+  AlignJustify,
+  ImagePlus
 } from "lucide-react";
 import ToolTip from "../../ui/ToolTip/ToolTip";
+import { useCallback } from "react";
 
 
 type Props = {
   editor: Editor | null;
-  content: string;
 };
 
-const Toolbar = ({ editor, content }: Props) => {
+const Toolbar = ({ editor }: Props) => {
+
+
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
+    const width = '200px';
+    const height = 'auto';
+    const options = {
+      width,
+      height,
+      alt: 'Enter image alt text here',
+      attrs: {
+        className: 'w-[200px]', // Apply a CSS class for sizing
+      },
+    };
+    if (url && editor) {
+      editor.chain().focus().setImage({ src: url, ...options }).run();
+    }
+  }, [editor])
+
+
   if (!editor) {
     return null;
   }
+
   return (
     <div
       className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start
-    gap-5 w-full flex-wrap border border-gray-700"
+    gap-5 w-full flex-wrap border border-input"
     >
       <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
 
-    {/* bold */}
 
-        <button
+        {/* upload image */}
+       
+          <button type="button"  onClick={addImage}><ImagePlus /></button>
+  
+        {/* bold */}
+
+        <button 
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleBold().run();
@@ -54,11 +82,12 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="bold"><Bold className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="bold"><Bold className="w-5 h-5" /></ToolTip>
+
         </button>
         {/* italic */}
-        <button
+        <button 
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleItalic().run();
@@ -73,6 +102,7 @@ const Toolbar = ({ editor, content }: Props) => {
         </button>
         {/* underline */}
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleUnderline().run();
@@ -83,11 +113,12 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="underline"> <Underline className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="underline"> <Underline className="w-5 h-5" /></ToolTip>
+
         </button>
         {/* strick */}
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleStrike().run();
@@ -98,11 +129,12 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="Strike through"> <Strikethrough className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="Strike through"> <Strikethrough className="w-5 h-5" /></ToolTip>
+
         </button>
         {/* heading */}
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 1 }).run();
@@ -113,10 +145,11 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="Heading1"> <Heading1 className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="Heading1"> <Heading1 className="w-5 h-5" /></ToolTip>
+
         </button>
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 2 }).run();
@@ -131,6 +164,7 @@ const Toolbar = ({ editor, content }: Props) => {
         </button>
 
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 3 }).run();
@@ -144,6 +178,7 @@ const Toolbar = ({ editor, content }: Props) => {
           <ToolTip tooltip="Heading3"> <Heading3 className="w-5 h-5" /></ToolTip>
         </button>
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 4 }).run();
@@ -157,6 +192,7 @@ const Toolbar = ({ editor, content }: Props) => {
           <ToolTip tooltip="Heading4"> <Heading4 className="w-5 h-5" /></ToolTip>
         </button>
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 5 }).run();
@@ -170,6 +206,7 @@ const Toolbar = ({ editor, content }: Props) => {
           <ToolTip tooltip="Heading5"> <Heading5 className="w-5 h-5" /></ToolTip>
         </button>
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 6 }).run();
@@ -182,8 +219,9 @@ const Toolbar = ({ editor, content }: Props) => {
         >
           <ToolTip tooltip="Heading6"> <Heading6 className="w-5 h-5" /></ToolTip>
         </button>
-{/* bullet list */}
+        {/* bullet list */}
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleBulletList().run();
@@ -194,11 +232,12 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="list"> <List className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="list"> <List className="w-5 h-5" /></ToolTip>
+
         </button>
         {/* ordered list */}
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleOrderedList().run();
@@ -209,60 +248,65 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="Ordered List"> <ListOrdered className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="Ordered List"> <ListOrdered className="w-5 h-5" /></ToolTip>
+
         </button>
         {/* alignment */}
         {/* left */}
         <button
-        onClick={() => editor.chain().focus().setTextAlign('left').run()}
-        className={
+        type="button"
+          onClick={() => editor.chain().focus().setTextAlign('left').run()}
+          className={
             editor.isActive({ textAlign: 'left' })
               ? "bg-primary text-white p-2 rounded-lg"
               : "text-primary"
           }
-      >
-        <ToolTip tooltip="Align Left"> <AlignLeft /></ToolTip>
-        
-      </button>
-      {/* center */}
-      <button
-        onClick={() => editor.chain().focus().setTextAlign('center').run()}
-        className={
+        >
+          <ToolTip tooltip="Align Left"> <AlignLeft /></ToolTip>
+
+        </button>
+        {/* center */}
+        <button
+        type="button"
+          onClick={() => editor.chain().focus().setTextAlign('center').run()}
+          className={
             editor.isActive({ textAlign: 'center' })
               ? "bg-primary text-white p-2 rounded-lg"
               : "text-primary"
           }
-      >
-              <ToolTip tooltip="Align Center">  <AlignCenter /></ToolTip>
-       
-      </button>
-      {/* right */}
-      <button
-        onClick={() => editor.chain().focus().setTextAlign('right').run()}
-        className={
+        >
+          <ToolTip tooltip="Align Center">  <AlignCenter /></ToolTip>
+
+        </button>
+        {/* right */}
+        <button
+        type="button"
+          onClick={() => editor.chain().focus().setTextAlign('right').run()}
+          className={
             editor.isActive({ textAlign: 'right' })
               ? "bg-primary text-white p-2 rounded-lg"
               : "text-primary"
           }
-      >
-        <ToolTip tooltip="Align Right">  <AlignRight /></ToolTip>
-        
-      </button>
-      {/* justify */}
-      <button
-        onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-         className={
+        >
+          <ToolTip tooltip="Align Right">  <AlignRight /></ToolTip>
+
+        </button>
+        {/* justify */}
+        <button
+        type="button"
+          onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+          className={
             editor.isActive({ textAlign: 'justify' })
               ? "bg-primary text-white p-2 rounded-lg"
               : "text-primary"
           }
-      >
-        <ToolTip tooltip="Align justify">  <AlignJustify /></ToolTip>
-        
-      </button>
-      {/* right */}
+        >
+          <ToolTip tooltip="Align justify">  <AlignJustify /></ToolTip>
+
+        </button>
+        {/* right */}
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().toggleBlockquote().run();
@@ -273,24 +317,12 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary"
           }
         >
-            <ToolTip tooltip="block quote">  <TextQuote className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="block quote">  <TextQuote className="w-5 h-5" /></ToolTip>
+
         </button>
+
         <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setCode().run();
-          }}
-          className={
-            editor.isActive("code")
-              ? "bg-primary text-white p-2 rounded-lg"
-              : "text-primary"
-          }
-        >
-            <ToolTip tooltip="code">  <Code className="w-5 h-5" /></ToolTip>
-          
-        </button>
-        <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().undo().run();
@@ -301,10 +333,11 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary hover:bg-primary hover:text-white p-1 hover:rounded-lg"
           }
         >
-            <ToolTip tooltip="undo">  <Undo className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="undo">  <Undo className="w-5 h-5" /></ToolTip>
+
         </button>
         <button
+        type="button"
           onClick={(e) => {
             e.preventDefault();
             editor.chain().focus().redo().run();
@@ -315,24 +348,14 @@ const Toolbar = ({ editor, content }: Props) => {
               : "text-primary hover:bg-primary hover:text-white p-1 hover:rounded-lg"
           }
         >
-            <ToolTip tooltip="redo">  <Redo className="w-5 h-5" /></ToolTip>
-          
+          <ToolTip tooltip="redo">  <Redo className="w-5 h-5" /></ToolTip>
+
         </button>
 
-
-        
 
       </div>
-      {content && (
-        <button
-          type="submit"
-          className="px-4 bg-primary text-white py-2 rounded-md"
-        >
-          Add
-        </button>
-      )}
 
-      
+
     </div>
   );
 };
