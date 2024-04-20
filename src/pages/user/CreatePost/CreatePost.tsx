@@ -7,8 +7,6 @@ import { FormEvent, useState } from "react";
 import PreviewPost from "./PreviewPost";
 
 
-
-
 export type PostData = {
   title:string,
   description:string,
@@ -22,14 +20,14 @@ const INITIAL_DATA: PostData = {
 }
 
 function CreatePost() {
+
   const [data, setData] = useState(INITIAL_DATA)
+  const [showNext,setShowNext]=useState(false)
   const updateFields = (fields: Partial<PostData>)=> {
     setData(prev => {
       return { ...prev, ...fields }
     })
   }
-
-  
 
   const {
     step,
@@ -38,7 +36,7 @@ function CreatePost() {
     
     next,
     prev,
-  } = useMultistepForm({steps:[<UploadImage {...data} updateFields={updateFields} />,<EnterDatas {...data} updateFields={updateFields} />,<PreviewPost data={data}/>]})
+  } = useMultistepForm({steps:[<UploadImage setShowNext={setShowNext} {...data} updateFields={updateFields} />,<EnterDatas setShowNext={setShowNext} {...data} updateFields={updateFields} />,<PreviewPost data={data}/>]})
 
  const handleSubmit=(e:FormEvent)=>{
     e.preventDefault;
@@ -50,15 +48,17 @@ function CreatePost() {
 
   return (
 
-    <div className="h-[90vh]">
+    <div className="h-full ">
      
       <div className="flex justify-end text-primary ">
        
-        {!isFirstStep && <Button size={"md"} onClick={()=>prev()} >previous</Button>}
-        <Button type="submit" size={"md"} onClick={()=>next()}>{isLastStep?'share':'next'}</Button>
+        {!isFirstStep && <Button  onClick={()=>{setShowNext(true);prev()}} >Previous</Button>}
+        {showNext && <Button type="submit"  onClick={()=>{setShowNext(false);next()}}>{isLastStep?'Share':'Next'}</Button>}
+        
       </div>
       <form onSubmit={handleSubmit} className="h-full w-full ">
       {step}
+      
       </form>
       
     </div>

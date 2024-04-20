@@ -1,37 +1,52 @@
+import PostWraper from "../../../components/layout/PostWraper/PostWraper";
 import Avatar from "../../../components/ui/Avatar/Avatar";
 import { PostData } from "./CreatePost"
 import parse from 'html-react-parser';
 
 
-function PreviewPost({data}:{data:PostData}) {
-    console.log(data);
+function PreviewPost({data:{image,title,description}}:{data:PostData}) {
     
   return (
-    <div className="h-full w-full ">
-        
-        <div className="w-full">
-            <div className="bg-secondary w-full rounded-full p-1 flex items-center mb-3">
-                <Avatar className="h-10 w-10" src="https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg" />
-                <div>
-                <span className="text-sm text-gray-600 ml-3">Adwaith</span>
-                <p className="text-xs text-gray-400 truncate ml-3" style={{ maxWidth: "calc(100% - 3rem)" }}>adwaithjanardhanan0@gmail.com</p>
-                </div>
+    
+        <div className="h-full w-full ">
+   <PostWraper>
+            <div className="p-1.5 border-b flex w-full">
+            <Avatar className="h-10 w-10" src="https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg" />
+            <div className="ml-2">
+            <h3 className="text-gray-800 font-semibold">Adwaith</h3>
+            <p className="text-sm text-gray-400 truncate w-full">adwaithjanardhanan0@gmail.com </p>
+            </div>
+            
+            </div>
+
+            <div className="px-2 font-semibold">
+                {title}
+            
+            </div>
+            <div className=" border-b w-full flex justify-center">
+                {image &&
+                  
+                    <img className="w-full h-full" src={URL.createObjectURL(image)} alt="" />
+                }
                 
             </div>
-            <div>
-            {data.image && <img className="w-full" src={URL.createObjectURL(data.image)} alt="" />}
+
+
+            <div className="p-3">
+           
+
+            <div className="tiptap w-full">
+                {parse(description)}
             </div>
-            <div className="tiptap">
-                { data.description && parse(data.description)}
             </div>
             
-
-            
+       
+        </PostWraper>
         </div>
-        <div>
+     
 
-        </div>
-    </div>
+        
+   
   )
 }
 

@@ -16,13 +16,14 @@ const buttonVarients = cva(
                 'success-outline':" border border-green-500 text-green-500",
                 success:"bg-green-500 text-white",
                 "primary-full":"bg-primary text-white w-full my-4",
-                'primary-outline':'border border-primary'
+                'primary-outline':'border border-primary text-primary',
+                'secondary-outline':'border secondary-primary text-secondary',
             
             },
             size: {
                 default: "h-16 px-8",
                 sm: "py-1 px-4",
-                md:"px-7 py-3 ",
+                md:"px-7 py-2 ",
                 lg: "py-3 px-5",
                 icon: "h-10 w-10",
                 actionIcon: "h-7 w-7 p-0 m-0",

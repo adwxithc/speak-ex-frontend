@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Input } from '../../ui/Input/Input'
+import Button from '../../ui/Button/Button';
+
 
 interface IFileInputProps{
    onImageSelected:(image:string)=>void
@@ -7,9 +9,13 @@ interface IFileInputProps{
 
 function FileInput({onImageSelected}:IFileInputProps) {
 
+    const inputRef= useRef(null)
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
         const selectedFile = e.target.files?.[0];
+        console.log(selectedFile,'selectedFile');
+        
         if (!selectedFile) return;
         const reader = new FileReader();
         
@@ -23,11 +29,14 @@ function FileInput({onImageSelected}:IFileInputProps) {
       
     };
   return (
-    <div className=" p-3 ">
+    <div className=" h-52 px-16 overflow-hidden rounded-md  border-2 border-dashed flex justify-center items-center p-3">
         
-    <label htmlFor="image">
-    <div className='h-10 w-20 bg-primary'>
-        <Input id="image" className="hidden " type="file" onChange={handleImageChange} accept="image/*" />
+    <label  htmlFor="image" ref={inputRef} >
+    <div className=' flex flex-col items-center'>
+        <img className='object-contain max-w-[100px]' src="./src/assets/Images/extras/uploadImg.png" alt="upload image" />
+        <p className='text-gray-500 my-1'>drage and drop image here</p>
+        <Button type='button' varient={'primary-outline'} size={'sm'} onClick={()=>inputRef.current?.click()} >Browse File</Button>
+        <Input id="image" className="hidden " type="file" onChange={handleImageChange} accept="image/*"  />
         
     </div>
     </label>

@@ -5,7 +5,7 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from '@tiptap/extension-text-align'
 import Image from '@tiptap/extension-image'
 
-const Tiptap = ({ onEditerContentSave }: {onEditerContentSave:(html: string) => void}) => {
+const Tiptap = ({ onEditerContentSave,content }: {onEditerContentSave:(html: string) => void,content:string}) => {
   const handleChange = (newContent: string) => {
     onEditerContentSave(newContent);
   };
@@ -29,6 +29,7 @@ const Tiptap = ({ onEditerContentSave }: {onEditerContentSave:(html: string) => 
       handleChange(editor.getHTML());
       // handleChange(JSON.stringify(editor.getJSON()))
     },
+    content
   });
 
 
@@ -41,9 +42,9 @@ const Tiptap = ({ onEditerContentSave }: {onEditerContentSave:(html: string) => 
 
   return (
     <div className="w-full">
-      <Toolbar editor={editor}/>
+      <Toolbar editor={editor} />
       
-      <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor} />
+      <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor}  />
     </div>
   );
 };

@@ -24,7 +24,7 @@ function UsersPosts() {
             </div>
        
   
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 sm:p-3 mt-3 sm:mt-0'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 sm:p-5 mt-3 sm:mt-0'>
             
             <PostThumbNail title="Lorem10 jebrish look " imageUrl="https://media.istockphoto.com/id/1182280267/photo/executive-directors-looking-at-financial-reports.webp?b=1&s=170667a&w=0&k=20&c=hxkYLPlOtIEI3ztOwFoV7JdSw2PQw39kVHZGDv4UhWY=" />
             <PostThumbNail title="Lorem10 jebrish look " imageUrl="https://media.istockphoto.com/id/1182280267/photo/executive-directors-looking-at-financial-reports.webp?b=1&s=170667a&w=0&k=20&c=hxkYLPlOtIEI3ztOwFoV7JdSw2PQw39kVHZGDv4UhWY=" />
