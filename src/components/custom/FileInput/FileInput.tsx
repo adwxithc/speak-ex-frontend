@@ -11,12 +11,13 @@ function FileInput({onImageSelected}:IFileInputProps) {
 
     const inputRef= useRef(null)
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
 
         const selectedFile = e.target.files?.[0];
         console.log(selectedFile,'selectedFile');
-        
+       
         if (!selectedFile) return;
+      
         const reader = new FileReader();
         
         reader.onload = () => {

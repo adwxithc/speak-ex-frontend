@@ -3,7 +3,8 @@ import { PostData } from "./CreatePost";
 import FileInput from "../../../components/custom/FileInput/FileInput";
 import { Dispatch, SetStateAction, useState } from 'react';
 import ImageCroper, { ICropArea } from '../../../components/custom/ImageCroper/ImageCroper';
-import CroppedImage from "../../../components/CroppedImage/CroppedImage";
+import CroppedImage from "../../../components/custom/ImageCroper/CroppedImage";
+
 
 const dataURLtoFile = (dataurl:string, filename:string) => {
     const arr = dataurl.split(',')
@@ -79,9 +80,10 @@ function UploadImage({ image, updateFields,setShowNext }: IUploadImage) {
     const handleCropCanceled = () => {
         setCurrentPage('choose-img')
     }
+ 
 
     return (
-        <div className=" w-full min-w-[500px] p-3 flex justify-center items-center ">
+        <div className=" w-full  p-3 flex justify-center items-center ">
             <div className="pb-5 px-3">
             {
 
@@ -95,6 +97,7 @@ function UploadImage({ image, updateFields,setShowNext }: IUploadImage) {
                 :<CroppedImage setShowNext={setShowNext} imageAfterCrop={imageAfterCrop}  setpic={setpic} setCurrentPage={setCurrentPage}/>)
             }
             </div>
+
             
         </div>
 

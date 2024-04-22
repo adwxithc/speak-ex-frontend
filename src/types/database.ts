@@ -13,3 +13,15 @@ export interface IUser{
     status?: 'active' | 'freeze';
 }
 
+export interface IPost{
+    id:string;
+    title:string
+    content:string;
+    image:string;
+    userId:string;
+    likes?:string[];
+    comments?:string[];
+    createdAt?:string;
+    updatedAt?:string;
+}
+

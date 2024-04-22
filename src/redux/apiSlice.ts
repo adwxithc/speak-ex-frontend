@@ -12,7 +12,7 @@ const baseQueryWithReauth = async <T>(
   const result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 403) {
-    const refreshResult = await api.endpoints.refresh('/api/user/refresh');
+    const refreshResult = await baseQuery('/api/user/refresh',api,extraOptions)
     if (refreshResult.data) {
       
       const result = await baseQuery(args, api, extraOptions); 

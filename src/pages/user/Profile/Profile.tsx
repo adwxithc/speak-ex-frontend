@@ -18,10 +18,10 @@ function Profile() {
           <div className="flex flex-col sm:flex-row py-5">
             <UserProfileSideBar>
               <SideBarItem text="Profile" key='1' icon={<CgProfile />} />
-              <SideBarItem text="User Info" key='1' icon={<IoMdInformationCircleOutline />} />
-              <SideBarItem text="Monetization" key='2' icon={<MdOutlineMonetizationOn />} />
-              <SideBarItem text="Create Post" key='3' icon={<AiOutlinePicture />} />
-              <SideBarItem text="Wallet" key='4' icon={<IoWalletOutline />} />
+              <SideBarItem text="User Info" key='2' icon={<IoMdInformationCircleOutline />} />
+              <SideBarItem text="Monetization" key='3' icon={<MdOutlineMonetizationOn />} />
+              <SideBarItem text="Create Post" key='4' icon={<AiOutlinePicture />} />
+              <SideBarItem text="Wallet" key='5' icon={<IoWalletOutline />} />
             </UserProfileSideBar>
   
             <div className="bg-white rounded-xl shadow-sm w-full max-h-screen overflow-x-hidden overflow-y-scroll pretty-scrollbar  ">

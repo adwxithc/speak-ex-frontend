@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { Input } from '../../../components/ui/Input/Input';
 import Tiptap from '../../../components/custom/Tiptap/Tiptap';
 import { PostData } from './CreatePost';
@@ -6,24 +6,23 @@ import { PostData } from './CreatePost';
 interface IEnterDatas {
   updateFields: (fields: Partial<PostData>) => void;
   title: string;
-  description: string;
+  content: string;
   setShowNext: Dispatch<SetStateAction<boolean>>
 }
 
-function EnterDatas({ title, description, updateFields, setShowNext }: IEnterDatas) {
+function EnterDatas({ title, content, updateFields, setShowNext }: IEnterDatas) {
   
 
   useEffect(()=>{
-    if(title.length>0 && description.length>0) setShowNext(true)
+    if(title.length>0 && content.length>0) setShowNext(true)
     else setShowNext(false)
 
-  },[setShowNext,description,title])
+  },[setShowNext,content,title])
 
-  const [html, setHtml] = useState('')
+
   const handleEditorContentSave = (html: string) => {
 
-    updateFields({ description: html })
-    setHtml(description);
+    updateFields({ content: html })
 
   }
 
@@ -41,7 +40,7 @@ function EnterDatas({ title, description, updateFields, setShowNext }: IEnterDat
           <label htmlFor="description">
             description
           </label>
-          <Tiptap content={description} onEditerContentSave={handleEditorContentSave} />
+          <Tiptap content={content} onEditerContentSave={handleEditorContentSave} />
         </div>
 
       </div>

@@ -34,7 +34,7 @@ function ImageCroper({ image, onCropDone, onCropCancel }: ImageCrperProps) {
     }
     return (
         <>
-            <div className='relative h-[50vh] w-[50vw] border rounded-t-md overflow-hidden flex items-center justify-center'>
+            <div className='relative h-[50vh] sm:w-[50vw] border rounded-t-md overflow-hidden flex items-center justify-center'>
 
                 {/* image cropper component */}
                 <Cropper
