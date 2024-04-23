@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import { useCheckUserNameAvailabilityMutation } from '../../../../../redux/features/user/auth/userApiSlice';
+import { useCheckUserNameAvailabilityMutation } from '../../../../../redux/features/user/user/userApiSlice';
 import { debounce } from 'lodash';
 
 export interface IformValue{

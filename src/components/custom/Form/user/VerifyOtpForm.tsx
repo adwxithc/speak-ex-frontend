@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 
 import OtpInput from '../../../ui/OtpInput/OtpInput'
 import  Button  from '../../../ui/Button/Button'
-import { useVerifyOtpMutation } from '../../../../redux/features/user/auth/userApiSlice';
-import { logUser } from '../../../../redux/features/user/auth/userSlice';
+import { useVerifyOtpMutation } from '../../../../redux/features/user/user/userApiSlice';
+import { logUser } from '../../../../redux/features/user/user/userSlice';
 
 
 

@@ -4,7 +4,7 @@ const POST_URL = '/api/post';
 
 export const postApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        uploadImg: builder.mutation({
+        createPost: builder.mutation({
             query: (data) => ({
                 url: `${POST_URL}/`,
                 method: 'POST',
@@ -32,7 +32,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-useUploadImgMutation,
+useCreatePostMutation,
 useGetUsersPostsMutation,
 useGetPostMutation
 } = postApiSlice;

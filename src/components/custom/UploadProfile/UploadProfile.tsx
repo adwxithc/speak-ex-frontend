@@ -1,20 +1,27 @@
 import { useMemo, useState } from 'react'
+import { Square } from 'lucide-react';
+
 import FileInput from '../FileInput/FileInput'
 import ImageCroper, { ICropArea } from '../ImageCroper/ImageCroper';
-import { Square } from 'lucide-react';
 import CroppedImage from '../ImageCroper/CroppedImage';
 import { dataURLtoFile } from '../../../services/dataURLtoFile';
 import Button from '../../ui/Button/Button';
 
 
-function UploadProfile() {
+
+function UploadProfile({handleImageUpload}:{handleImageUpload:(image:File) => Promise<void>}) {
+
+  const aspectRatios=useMemo(()=>[
+    {ratio:1 / 1,label:'1:1',icon:Square},
+],[])
+
     const [currentPage,setCurrentPage] = useState('choose-img')
     const [newProfile, setNewProfile] = useState('')
     const [imageAfterCrop, setImageAfterCrop] = useState<string>('')
     const [imageFile, setImageFile] = useState<File | null>(null)
-    const aspectRatios=useMemo(()=>[
-        {ratio:1 / 1,label:'1:1',icon:Square},
-    ],[])
+
+ 
+    
     const handleImageSelect = (selectedImage: string)=>{
         setNewProfile(selectedImage);
         setCurrentPage('crop-img')
@@ -58,9 +65,7 @@ function UploadProfile() {
 
     }
 
-    const handleImageUpload=()=>{
-        alert('api call')
-    }
+
     
 
     const handleCropCanceled = () => {
@@ -82,7 +87,7 @@ function UploadProfile() {
             onCropCancel={handleCropCanceled}
             image={newProfile} />
         :<div>
-             <div className='flex justify-end'> <Button onClick={handleImageUpload} className='text-primary' size={'md'}>Share</Button> </div>
+             <div className='flex justify-end'> <Button onClick={()=>handleImageUpload(imageFile as File)} className='text-primary' size={'md'}>Share</Button> </div>
             <CroppedImage imageAfterCrop={imageAfterCrop}  setpic={setNewProfile} setCurrentPage={setCurrentPage}/>
         </div>
         

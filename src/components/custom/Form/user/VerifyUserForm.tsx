@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import OtpInput from '../../../ui/OtpInput/OtpInput'
 import Button from '../../../ui/Button/Button'
 import { useDispatch } from 'react-redux';
-import { useVerifyUserMutation } from '../../../../redux/features/user/auth/userApiSlice';
-import { logUser } from '../../../../redux/features/user/auth/userSlice';
+import { useVerifyUserMutation } from '../../../../redux/features/user/user/userApiSlice';
+import { logUser } from '../../../../redux/features/user/user/userSlice';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 

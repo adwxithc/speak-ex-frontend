@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { Dispatch, SetStateAction } from 'react';
 
 import Button from '../../../ui/Button/Button';
-import { useForgotPasswordMutation } from '../../../../redux/features/user/auth/userApiSlice';
+import { useForgotPasswordMutation } from '../../../../redux/features/user/user/userApiSlice';
 import { IformValue,schema } from './Schema/forgotPasswordSchema';
 
 

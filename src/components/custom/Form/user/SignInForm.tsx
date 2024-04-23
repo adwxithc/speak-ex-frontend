@@ -11,8 +11,8 @@ import toast from "react-hot-toast";
 
 import { IformValue, schema } from './Schema/SignInSchema'
 import Button from "../../../ui/Button/Button";
-import { logUser } from "../../../../redux/features/user/auth/userSlice";
-import { useLoginMutation } from "../../../../redux/features/user/auth/userApiSlice";
+import { logUser } from "../../../../redux/features/user/user/userSlice";
+import { useLoginMutation } from "../../../../redux/features/user/user/userApiSlice";
 import { Trans, useTranslation } from "react-i18next";
 
 

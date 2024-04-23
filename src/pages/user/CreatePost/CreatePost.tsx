@@ -5,7 +5,7 @@ import EnterDatas from "./EnterDatas";
 import Button from "../../../components/ui/Button/Button";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import PreviewPost from "./PreviewPost";
-import { useUploadImgMutation } from "../../../redux/features/user/post/postApiSlice";
+import { useCreatePostMutation } from "../../../redux/features/user/post/postApiSlice";
 import { IPost } from "../../../types/database";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ function CreatePost({setPosts,setLoading,setModalOpen}:ICreatePostProps) {
     prev,
   } = useMultistepForm({steps:[<UploadImage setShowNext={setShowNext} {...data} updateFields={updateFields} />,<EnterDatas setShowNext={setShowNext} {...data} updateFields={updateFields} />,<PreviewPost data={data} setShowNext={setShowNext}/>]})
 
-  const [upload]=useUploadImgMutation()
+  const [upload]=useCreatePostMutation()
 
  const handleSubmit= async(e:FormEvent)=>{
     e.preventDefault();

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 import { SignupSchema, IformValue } from "./Schema/SignupSchema";
-import { useSignUpMutation } from "../../../../redux/features/user/auth/userApiSlice";
+import { useSignUpMutation } from "../../../../redux/features/user/user/userApiSlice";
 import Button from "../../../ui/Button/Button";
 
 

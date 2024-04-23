@@ -1,5 +1,5 @@
 import {FetchBaseQueryError, FetchBaseQueryMeta, createApi,fetchBaseQuery, QueryReturnValue} from '@reduxjs/toolkit/query/react'
-import { logoutUser } from './features/user/auth/userSlice';
+import { logoutUser } from './features/user/user/userSlice';
 
 
 const baseQuery=fetchBaseQuery({baseUrl:''})

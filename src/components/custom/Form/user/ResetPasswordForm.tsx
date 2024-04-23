@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import { useResetPasswordMutation } from "../../../../redux/features/user/auth/userApiSlice";
+import { useResetPasswordMutation } from "../../../../redux/features/user/user/userApiSlice";
 import Button from "../../../ui/Button/Button";
 import { IformValue, schema } from './Schema/ResetPasswordSchema'
 

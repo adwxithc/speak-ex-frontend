@@ -1,10 +1,10 @@
 
 import { useEffect } from 'react'
 import { RiseLoader } from 'react-spinners'
-import { useSignOutMutation } from '../../../redux/features/user/auth/userApiSlice'
+import { useSignOutMutation } from '../../../redux/features/user/user/userApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { logoutUser } from '../../../redux/features/user/auth/userSlice'
+import { logoutUser } from '../../../redux/features/user/user/userSlice'
 
 
 

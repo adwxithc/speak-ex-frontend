@@ -69,7 +69,7 @@ function ImageCroper({ image, onCropDone, onCropCancel,aspectRatios,rounded=fals
                 <div onChange={onAspectRationChange} className='flex gap-5 justify-center p-3  border border-t-0'>
                     
                     {
-                        aspectRatios.map(ratio=>(<div> <input className='hidden' id={ratio.label} type="radio" value={ratio.ratio} name="ratio" /><label htmlFor={ratio.label}><span className='flex flex-col items-center'>{<ratio.icon />} {ratio.label}</span>  </label></div>))
+                        aspectRatios.map(ratio=>(<div key={ratio.ratio}> <input className='hidden' id={ratio.label} type="radio" value={ratio.ratio} name="ratio" /><label htmlFor={ratio.label}><span className='flex flex-col items-center'>{<ratio.icon />} {ratio.label}</span>  </label></div>))
                     }
                  
                 </div>
