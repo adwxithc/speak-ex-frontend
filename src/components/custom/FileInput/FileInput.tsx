@@ -30,7 +30,7 @@ function FileInput({onImageSelected}:IFileInputProps) {
       
     };
   return (
-    <div className=" h-52 px-16 overflow-hidden rounded-md  border-2 border-dashed flex justify-center items-center p-3">
+    <div className=" h-52 px-16 my-4 overflow-hidden rounded-md  border-2 border-dashed flex justify-center items-center p-3">
         
     <label  htmlFor="image" ref={inputRef} >
     <div className=' flex flex-col items-center'>

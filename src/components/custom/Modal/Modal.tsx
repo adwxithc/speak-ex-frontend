@@ -4,6 +4,7 @@ import { ReactNode,FC } from 'react'
 import Backdrop from './Backdrop'
 import { X } from 'lucide-react';
 import { DotLoader } from 'react-spinners';
+import ReactDOM from 'react-dom'
 
 interface ModalProp{
     handleClose: () => void;
@@ -32,8 +33,9 @@ const  Modal:FC<ModalProp> = ({ handleClose, children, loading=false } ) =>{
             opacity: 0,
         },
     }
-    return (
-        <Backdrop onClick={handleClose}>
+    return ReactDOM.createPortal(
+        <>
+         <Backdrop onClick={handleClose}>
             <motion.div
                 className='w-auto h-auto max-h-[100vh] m-auto py-2  rounded-md flex flex-col items-center bg-white '
                 onClick={(e) => e.stopPropagation()}
@@ -61,7 +63,9 @@ const  Modal:FC<ModalProp> = ({ handleClose, children, loading=false } ) =>{
             }
             
         </Backdrop>
+        </>,
+        (document.getElementById("portal")!)
     )
 }
-
+  
 export default Modal

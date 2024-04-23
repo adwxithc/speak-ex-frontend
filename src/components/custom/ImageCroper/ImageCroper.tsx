@@ -1,13 +1,20 @@
 import Cropper, { Area } from 'react-easy-crop'
 import React, { useState } from "react";
-import { RectangleHorizontal, RectangleVertical, Square } from 'lucide-react';
+import { LucideIcon} from 'lucide-react';
 import Button from '../../ui/Button/Button';
 
 
 interface ImageCrperProps {
     image: string;
     onCropDone: (imgCroppedArea: ICropArea) => void;
-    onCropCancel: () => void
+    onCropCancel: () => void,
+    aspectRatios:{
+        ratio: number;
+        label: string;
+        icon: LucideIcon;
+    }[];
+    rounded?:boolean
+
 }
 
 export interface ICropArea {
@@ -17,11 +24,11 @@ export interface ICropArea {
     y: number;
 }
 
-function ImageCroper({ image, onCropDone, onCropCancel }: ImageCrperProps) {
+function ImageCroper({ image, onCropDone, onCropCancel,aspectRatios,rounded=false }: ImageCrperProps) {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1)
     const [croppedArea, setCroppedArea] = useState<ICropArea | null>(null)
-    const [aspectRatio, setAspectRatio] = useState(4 / 3)
+    const [aspectRatio, setAspectRatio] = useState(aspectRatios[0].ratio)
 
 
     const handleCropComplete = (_: Area, CroppedAredPixels: Area) => {
@@ -45,6 +52,7 @@ function ImageCroper({ image, onCropDone, onCropCancel }: ImageCrperProps) {
                     onCropChange={setCrop}
                     onZoomChange={setZoom}
                     onCropComplete={handleCropComplete}
+                    cropShape={ rounded ?'round': 'rect'}
                     style={{
                         containerStyle: {
                             width: "100%",
@@ -60,11 +68,10 @@ function ImageCroper({ image, onCropDone, onCropCancel }: ImageCrperProps) {
             <div className=''>
                 <div onChange={onAspectRationChange} className='flex gap-5 justify-center p-3  border border-t-0'>
                     
-                    <input className='hidden' id='11' type="radio" value={1 / 1} name="ratio" /><label htmlFor="11"><span className='flex flex-col items-center'><Square /> 1:1</span>  </label>
-                    
-                    <input className='hidden' id='43' type="radio" value={4 / 3} name="ratio" /><label htmlFor="43"><span className='flex flex-col items-center'><RectangleVertical /> 4:3</span> </label>
-                   
-                    <input className='hidden' id='69' type="radio" value={16 / 9} name="ratio" /><label htmlFor="69"> <span className='flex flex-col items-center'><RectangleHorizontal /> 6:9</span> </label>
+                    {
+                        aspectRatios.map(ratio=>(<div> <input className='hidden' id={ratio.label} type="radio" value={ratio.ratio} name="ratio" /><label htmlFor={ratio.label}><span className='flex flex-col items-center'>{<ratio.icon />} {ratio.label}</span>  </label></div>))
+                    }
+                 
                 </div>
 
                 <div className='flex justify-center mt-2 rounded-b-md'>

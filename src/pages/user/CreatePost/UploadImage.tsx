@@ -1,24 +1,14 @@
 
 import { PostData } from "./CreatePost";
 import FileInput from "../../../components/custom/FileInput/FileInput";
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import ImageCroper, { ICropArea } from '../../../components/custom/ImageCroper/ImageCroper';
 import CroppedImage from "../../../components/custom/ImageCroper/CroppedImage";
+import { RectangleHorizontal, RectangleVertical, Square } from "lucide-react";
+import { dataURLtoFile } from "../../../services/dataURLtoFile";
 
 
-const dataURLtoFile = (dataurl:string, filename:string) => {
-    const arr = dataurl.split(',')
-        const mimeMatch = arr[0].match(/:(.*?);/);
-        if(!mimeMatch)return
-        const mime=mimeMatch[1]
-        const bstr = atob(arr[1])
-        let n = bstr.length
-        const u8arr = new Uint8Array(n)
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n)
-    }
-    return new File([u8arr], filename, { type: mime })
-}
+
 
 interface IUploadImage {
     updateFields: (fields: Partial<PostData>) => void;
@@ -28,13 +18,18 @@ interface IUploadImage {
 
 function UploadImage({ image, updateFields,setShowNext }: IUploadImage) {
 
+    const aspectRatios=useMemo(()=>[
+        {ratio:1 / 1,label:'1:1',icon:Square},
+        {ratio:4 / 3,label:'4:3',icon:RectangleVertical},
+        {ratio:16 / 9,label:'16:9',icon:RectangleHorizontal}
+    ],[])
+
     const [pic, setpic] = useState('')
     const [currentPage, setCurrentPage] = useState((image?'image-cropped':'choose-img'))
     const [imageAfterCrop, setImageAfterCrop] = useState<string>(image?URL.createObjectURL(image):'')
 
     const handleImageSelected = (selectedImage: string) => {
-      
-        
+
         setpic(selectedImage)
         setCurrentPage('crop-img')
     }
@@ -91,6 +86,7 @@ function UploadImage({ image, updateFields,setShowNext }: IUploadImage) {
             currentPage == 'choose-img' ? <FileInput onImageSelected={handleImageSelected} />
             : (currentPage == 'crop-img' ?
                 <ImageCroper
+                aspectRatios={aspectRatios}
                     onCropDone={handleCropDone}
                     onCropCancel={handleCropCanceled}
                     image={pic} />

@@ -13,12 +13,15 @@ const baseQueryWithReauth = async <T>(
 
   if (result.error && result.error.status === 403) {
     const refreshResult = await baseQuery('/api/user/refresh',api,extraOptions)
+
     if (refreshResult.data) {
       
       const result = await baseQuery(args, api, extraOptions); 
 
       return result
     } else {
+     alert('refresh')
+     console.log(refreshResult);
      
       api.dispatch(logoutUser());
     } 
