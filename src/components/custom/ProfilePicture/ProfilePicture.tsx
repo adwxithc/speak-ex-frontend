@@ -40,7 +40,7 @@ const ProfilePicture=forwardRef<HTMLDivElement, ProfilePictureProps>(
             }
         }
 
-        const { profile } = useSelector((state: RootState) => state.user.userData) as IUser
+        const { profile,email,userName } = useSelector((state: RootState) => state.user.userData) as IUser
         return (
             <>
              <div ref={ref} className={cn(`h-full   bg-[url('/Images/userProfile/cover.avif')]  bg-no-repeat bg-cover`,className)} {...props}  >
@@ -51,8 +51,8 @@ const ProfilePicture=forwardRef<HTMLDivElement, ProfilePictureProps>(
                 <img className='object-cover' src={profile || "https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001877.png"} alt="" />
             </div>
             <div className='text-white flex flex-col items-center'>
-                <h1 className='font-semibold'>Adwaith C</h1>
-                <h2 className='text-sm'>adwaithjanardhanan0@gmail.com</h2>
+                <h1 className='font-semibold'>{userName}</h1>
+                <h2 className='text-sm'>{email}</h2>
             </div>
     
         </div>

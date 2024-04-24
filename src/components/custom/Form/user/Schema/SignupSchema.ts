@@ -13,12 +13,14 @@ export interface IformValue{
 
 export function SignupSchema() {
 
+    const [userNameAvailable] = useCheckUserNameAvailabilityMutation()
+    
     const debouncedCheckUserNameAvailability = debounce(async (username, callback) => {
         const res = await userNameAvailable(username).unwrap();
         callback(res.data.available);
     }, 500);
 
-    const [userNameAvailable] = useCheckUserNameAvailabilityMutation()
+    
 
      const schema = z.object({
         firstName: z.string().min(3,'first name must be minimum 3 character long'),

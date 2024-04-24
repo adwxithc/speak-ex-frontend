@@ -5,10 +5,10 @@ const userSlice = createSlice({
     initialState,
     reducers:{
         logUser:(state, action)=>{
-
-            state.userData=action.payload;
+            const data ={...state.userData,...action.payload}
+            state.userData=data;
             state.isAuth=true
-            localStorage.setItem('userData',JSON.stringify(action.payload))
+            localStorage.setItem('userData',JSON.stringify(data))
         },
         logoutUser: (state) => {
             state.isAuth = false;

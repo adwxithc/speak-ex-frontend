@@ -26,9 +26,10 @@ import AdminHomeLayout from './pages/admin/Home/AdminHomeLayout';
 import Profile from './pages/user/Profile/Profile';
 import UserLayout from './components/layout/UserLayout/UserLayout';
 import UsersPosts from './pages/user/Profile/UsersPosts';
-import CreatePost from './pages/user/CreatePost/CreatePost';
 import UserPrivateRoute from './pages/user/UserPrivateRoute/UserPrivateRoute';
 import Post from './pages/user/Post.ts/Post';
+import UserInfo from './pages/user/Profile/UserInfo';
+
 
 
 const router = createBrowserRouter([
@@ -58,8 +59,8 @@ const router = createBrowserRouter([
               Component: UsersPosts
             },
             {
-              path: 'new-post',
-              Component: CreatePost
+              path: 'user-info',
+              Component: UserInfo
             }
           ]
         },

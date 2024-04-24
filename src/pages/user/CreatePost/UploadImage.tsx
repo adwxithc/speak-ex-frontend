@@ -64,6 +64,7 @@ function UploadImage({ image, updateFields,setShowNext }: IUploadImage) {
 
             setImageAfterCrop(dataURL)
             setCurrentPage('image-cropped')
+            setShowNext(true)
             const blob = dataURLtoFile(dataURL,'jbrish')
           
             
