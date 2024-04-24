@@ -59,7 +59,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 method:'POST',
                 body:{userName:data}
             })
-        })
+        }),
+        
+
 
     }),
 });

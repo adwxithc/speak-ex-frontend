@@ -18,11 +18,18 @@ export const profileApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        getAllLanguages: builder.mutation({
+            query: () => ({
+                url: `${USER_URL}/languages`,
+                method: 'Get',
+            }),
+        }),
     }),
     
 });
 
 export const {
     useUploadProfileMutation,
-    useUpdateUserInfoMutation
+    useUpdateUserInfoMutation,
+    useGetAllLanguagesMutation
 } = profileApiSlice;

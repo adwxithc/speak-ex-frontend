@@ -11,10 +11,12 @@ interface IAutoCompleteDropDownProp extends React.HTMLAttributes<HTMLDivElement>
     }[],
     onItemSelect:React.Dispatch<React.SetStateAction<{ label: string; value: string; } | null>>,
     selectedItem?:{ label: string; value: string; } | null
+    editMode:boolean
 
 }
 
-const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropDownProp>(({ list, className,onItemSelect,selectedItem, ...props }, ref) => {
+const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropDownProp>(({ list, className,onItemSelect,selectedItem,editMode, ...props }, ref) => {
+    
 
     const [inputValue, setInputValue] = useState('')
     const [selected, setSelected] = useState(selectedItem?.label||'')
@@ -29,14 +31,14 @@ const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropD
     return (
         <>
 
-            <div className={cn("border rounded-md overflow-hidden", className)} ref={ref} {...props}>
+            <div className={cn(`border rounded-md overflow-hidden  ${editMode ? 'bg-white' : 'bg-secondary'}`, className)} ref={ref} {...props}>
 
                 <div
-                    onClick={() => { setOpen(prev => !prev); setInputValue('') }}
-                    className={`bg-white  flex items-center p-3 justify-between  ${!selected && 'text-gray-500'} `}>
+                    onClick={() => { editMode && setOpen(prev => !prev); setInputValue('') }}
+                    className={`  flex items-center p-3 justify-between  ${!selected && 'text-gray-500'} `}>
                     <div className="flex justify-between w-full">
                         {selected ? (selected.length > 25 ? selected.substring(0, 20) + '...' : selected) : 'selecte language'}
-                        {selected && <X className="ml-auto text-gray-600" size={20} onClick={() => setSelected('')} />}
+                        {(selected && editMode) && <X className="ml-auto text-gray-600" size={20} onClick={() => setSelected('')} />}
                     </div>
                     <ChevronDown className={`text-gray-600 ${open && 'rotate-180'}`} />
                 </div>

@@ -25,3 +25,9 @@ export interface IPost{
     updatedAt?:string;
 }
 
+export interface ILanguage{
+    id:string;
+    name:string;
+    basePrice:number;
+}
+

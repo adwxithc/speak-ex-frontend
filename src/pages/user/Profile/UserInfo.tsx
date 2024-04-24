@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { LucideIcon, Mail, SquarePen, SquareUser } from "lucide-react"
 import {z} from 'zod';
@@ -11,11 +11,11 @@ import { useCheckUserNameAvailabilityMutation } from "../../../redux/features/us
 import Button from "../../../components/ui/Button/Button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateUserInfoMutation } from "../../../redux/features/user/user/profileApiSlice";
+import { useGetAllLanguagesMutation, useUpdateUserInfoMutation } from "../../../redux/features/user/user/profileApiSlice";
 import { logUser } from "../../../redux/features/user/user/userSlice";
 import { DotLoader } from "react-spinners";
 import AutoCompleteDropDown from "../../../components/ui/AutoCompleteDropDown/AutoCompleteDropDown";
-
+import {ILanguage} from '../../../types/database'
 
 export interface IformValue{
     firstName:string;
@@ -25,12 +25,6 @@ export interface IformValue{
 
 export type IEditUserFields="firstName" | "lastName" | "userName" | 'email'
 
-const list=[
-    {
-        label:'malayalam',
-        value:'djkhkjfhdkjh'
-    }
-]
 
 const INITIAL_VALUE:{label:string;name:IEditUserFields;icon:LucideIcon,editable:boolean}[]=[
     {
@@ -62,8 +56,10 @@ const INITIAL_VALUE:{label:string;name:IEditUserFields;icon:LucideIcon,editable:
 
 
 function UserInfo() {
+
     const [userNameAvailable] = useCheckUserNameAvailabilityMutation()
     const {userData} = useSelector((state:RootState)=>state.user)
+
     const debouncedCheckUserNameAvailability = debounce(async (username, callback) => {
         const res = await userNameAvailable(username).unwrap();
         callback(res.data.available || username==userData?.userName );
@@ -97,13 +93,42 @@ function UserInfo() {
       const { errors } = formState
 
       const [updateUser] = useUpdateUserInfoMutation()
+      const [getLanguages] =useGetAllLanguagesMutation()
       const dispatch = useDispatch()
+      
+      
+      const [languageList,setLanguageList] = useState<{ label: string; value: string; }[] | null>(null)
+     
+   
+      const [focusLang,setfocusLang] = useState<{ label: string; value: string; } | null>(null)      
+
+      useEffect(()=>{
+        const fetchData=async ()=>{
+            try {
+              const res= await getLanguages({}).unwrap()
+              const languages=res.data as ILanguage[]
+            
+              const list= languages.map((lang:ILanguage)=>({label:lang.name,value:lang.id}))
+              const focusLanguage=list?.find(item=>item.value==userData?.focusLanguage) || null
+              setfocusLang(focusLanguage)
+              setLanguageList(list)
+            } catch (error) {
+              console.log(error);
+              
+            }
+        }
+        fetchData()
+
+      },[getLanguages])
 
   const onUpdateUser=async(data: IformValue)=>{
 
     try {
         setLoading(true)
-        const res= await updateUser(data).unwrap()
+        const userInfo:IformValue & {focusLanguage?:string}={...data,focusLanguage:focusLang?.value}
+
+        const res= await updateUser(userInfo).unwrap()
+        
         dispatch(logUser({...res.data}))
         setLoading(false)
         setEditMode(false)
@@ -113,7 +138,7 @@ function UserInfo() {
         
     }
   }
-  const [lang,setLang] = useState<{ label: string; value: string; } | null>(null)
+  
     
   return (
     <div className="h-full p-5">
@@ -144,7 +169,7 @@ function UserInfo() {
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <div className="bg-secondary p-2 rounded-md">
-          <AutoCompleteDropDown selectedItem={{label:'malayalam',value:''}} onItemSelect={setLang} {...{list}} />
+          {languageList && <AutoCompleteDropDown editMode={editMode} selectedItem={focusLang} onItemSelect={setfocusLang} list={languageList} />}
         </div>
 
       
@@ -152,8 +177,8 @@ function UserInfo() {
        </div>
        </div>
       
-       <div className="p-2 mt-5">
-       <h3 className="font-semibold mb-2">Focuse Language</h3>
+       {/* <div className="p-2 mt-5">
+       <h3 className="font-semibold mb-2">Proficient Language</h3>
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
        <div className="bg-secondary p-2 rounded-md">
@@ -169,7 +194,7 @@ function UserInfo() {
       
 
        </div>
-       </div>
+       </div> */}
       <div>
 
       </div>
