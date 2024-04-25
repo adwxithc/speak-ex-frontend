@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { LucideIcon, Mail, SquarePen, SquareUser } from "lucide-react"
+import { LucideIcon, Mail, SquarePen, SquareUser, X } from "lucide-react"
 import {z} from 'zod';
 import { debounce } from 'lodash';
 
@@ -16,6 +16,7 @@ import { logUser } from "../../../redux/features/user/user/userSlice";
 import { DotLoader } from "react-spinners";
 import AutoCompleteDropDown from "../../../components/ui/AutoCompleteDropDown/AutoCompleteDropDown";
 import {ILanguage} from '../../../types/database'
+import Buttton from '../../../components/ui/Button/Button';
 
 export interface IformValue{
     firstName:string;
@@ -97,10 +98,63 @@ function UserInfo() {
       const dispatch = useDispatch()
       
       
-      const [languageList,setLanguageList] = useState<{ label: string; value: string; }[] | null>(null)
+      const [languageList,setLanguageList] = useState<{ label: string; value: string; selected:boolean }[] | null>(null)
      
    
-      const [focusLang,setfocusLang] = useState<{ label: string; value: string; } | null>(null)      
+      const [focusLang,setfocusLang] = useState(userData?.focusLanguage||'')     
+      const  [proficientLanguages,setProficientLanguages]=useState( userData?.proficientLanguage?.length ?userData?.proficientLanguage?.map(item=>({id:item})) : [{id:'_'}])
+   
+      
+
+      
+
+      const removeProficientLanguage=(index:number,lang:string)=>{
+        console.log(proficientLanguages,languageList,'proficientLanguages--proficientLanguages');
+        
+        setLanguageList(prev=>{
+          const list=[...(prev || [])]
+          const newList=list.map(item=>item.value==lang?{...item,selected:false}:item)
+          return newList
+        })
+        
+        setProficientLanguages(prev => {
+          const updatedLanguages=[...prev]
+          return updatedLanguages.filter((_,i)=>i!==index)
+     
+        });
+
+      }
+
+
+      const selectProficientLanguage=(index:number,lang:string)=>{
+        const prevLang=proficientLanguages[index].id
+        setProficientLanguages(prev => {
+          const languageList=[...prev]
+          
+          languageList[index].id=lang
+          return languageList;
+        });
+        
+        setLanguageList(prev=>{
+          const list=[...(prev || [])]
+          const newList=list.map(item=>{
+            if(item.value==lang){
+              return {...item,selected:true}
+            }else if(item.value==prevLang){
+              return {...item,selected:false}
+            }else{
+              return item
+            }
+
+          })
+          return newList
+        })
+
+      
+
+        
+      }
+      
 
       useEffect(()=>{
         const fetchData=async ()=>{
@@ -108,9 +162,8 @@ function UserInfo() {
               const res= await getLanguages({}).unwrap()
               const languages=res.data as ILanguage[]
             
-              const list= languages.map((lang:ILanguage)=>({label:lang.name,value:lang.id}))
-              const focusLanguage=list?.find(item=>item.value==userData?.focusLanguage) || null
-              setfocusLang(focusLanguage)
+              const list= languages.map((lang:ILanguage)=>({label:lang.name,value:lang.id,selected:false}))
+           
               setLanguageList(list)
             } catch (error) {
               console.log(error);
@@ -121,11 +174,23 @@ function UserInfo() {
 
       },[getLanguages])
 
+
   const onUpdateUser=async(data: IformValue)=>{
 
     try {
         setLoading(true)
-        const userInfo:IformValue & {focusLanguage?:string}={...data,focusLanguage:focusLang?.value}
+        const filteredProficientLanguage=proficientLanguages.filter((item, index) =>
+          proficientLanguages.findIndex(i=>i.id==item.id) === index
+        ).filter(item=>item.id && item.id!=='_');
+        console.log(filteredProficientLanguage);
+        
+        const userInfo:IformValue & {focusLanguage?:string,proficientLanguage:string[]}={...data,focusLanguage:focusLang, proficientLanguage:filteredProficientLanguage.map(item=>item.id)}
+      
+        if(!focusLang) setfocusLang(userData?.focusLanguage||'')
+        setProficientLanguages(filteredProficientLanguage)
+        
+         console.log(userInfo);
+         
 
         const res= await updateUser(userInfo).unwrap()
         
@@ -133,16 +198,22 @@ function UserInfo() {
         setLoading(false)
         setEditMode(false)
         
+        
     } catch (error) {
-        console.log(error);
+        console.log(error,'-----------------------');
         
     }
   }
   
     
   return (
-    <div className="h-full p-5">
+    <div className="h-full p-5 transition-all">
     <form onSubmit={handleSubmit(onUpdateUser)}>
+      <div className="p-3 flex justify-end">
+        <Button type="button" varient={'primary-outline'} size={'md'} onClick={()=>setEditMode(prev=>!prev)} >{editMode?'cancel':'edit'}</Button>
+        {editMode && <Button varient={'primary'} size={'md'} >{loading?<DotLoader className="mr-2" color="white" size={20} />:'Save'}</Button> }
+      </div>
+
       <div>
         <h2 className="font-bold mb-3 text-lg">Account Info</h2>
 
@@ -168,8 +239,8 @@ function UserInfo() {
        <h3 className="font-semibold mb-2">Focuse Language</h3>
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <div className="bg-secondary p-2 rounded-md">
-          {languageList && <AutoCompleteDropDown editMode={editMode} selectedItem={focusLang} onItemSelect={setfocusLang} list={languageList} />}
+        <div className="bg-secondary p-3 rounded-lg">
+          {languageList && <AutoCompleteDropDown editMode={editMode} selectedValue={focusLang}  onItemSelect={setfocusLang} list={languageList} />}
         </div>
 
       
@@ -177,32 +248,38 @@ function UserInfo() {
        </div>
        </div>
       
-       {/* <div className="p-2 mt-5">
-       <h3 className="font-semibold mb-2">Proficient Language</h3>
+       <div className="p-2 mt-5">
+       <h3 className="font-semibold mb-2">Proficient Languages</h3>
        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+        {
+       
+          proficientLanguages?.map((lang,index)=>{
+            
+            return(
+            <div className="bg-secondary p-3 rounded-lg" key={index}>
+            {languageList && <AutoCompleteDropDown editMode={editMode} selectedValue={lang.id}  onItemSelect={(selectedItem)=>{selectProficientLanguage(index,selectedItem)}} list={languageList} />}
+            {index>0 && <div className="cursor-pointer" onClick={()=>removeProficientLanguage(index,lang.id)}> <X/></div>}
+            </div>
+          )})
+         
+        }
 
-       <div className="bg-secondary p-2 rounded-md">
-          <AutoCompleteDropDown selectedItem={{label:'malayalam',value:''}} onItemSelect={setLang} {...{list}} />
-        </div>
-        <div className="bg-secondary p-2 rounded-md">
-          <AutoCompleteDropDown selectedItem={{label:'malayalam',value:''}} onItemSelect={setLang} {...{list}} />
-        </div>
-        <div className="bg-secondary p-2 rounded-md">
-          <AutoCompleteDropDown selectedItem={{label:'malayalam',value:''}} onItemSelect={setLang} {...{list}} />
-        </div>
-
-      
+        { editMode && languageList&& languageList?.length>0 &&
+        <div className="">
+       <Buttton type="button" onClick={()=>setProficientLanguages(prev=>[...prev,{id:'_'}])} varient={'primary'} size={'md'} >Add</Buttton>
+       </div>
+        }
 
        </div>
-       </div> */}
+      
+      
+       </div>
       <div>
 
       </div>
 
-      <div className="p-3 flex justify-end">
-        <Button type="button" varient={'primary-outline'} size={'md'} onClick={()=>setEditMode(prev=>!prev)} >{editMode?'cancel':'edit'}</Button>
-        {editMode && <Button varient={'primary'} size={'md'} >{loading?<DotLoader className="mr-2" color="white" size={20} />:'Save'}</Button> }
-      </div>
+    
       </form>
     </div>
    

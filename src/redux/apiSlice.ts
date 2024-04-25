@@ -20,8 +20,8 @@ const baseQueryWithReauth = async <T>(
 
       return result
     } else {
-     alert('refresh')
-     console.log(refreshResult);
+    //  alert('refresh')
+    //  console.log(refreshResult);
      
       api.dispatch(logoutUser());
     } 

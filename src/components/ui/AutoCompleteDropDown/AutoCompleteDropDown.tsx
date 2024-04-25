@@ -7,26 +7,26 @@ import { cn } from "../../../utils/style-utils";
 interface IAutoCompleteDropDownProp extends React.HTMLAttributes<HTMLDivElement> {
     list: {
         label: string,
-        value: string
+        value: string,
+        selected:boolean
     }[],
-    onItemSelect:React.Dispatch<React.SetStateAction<{ label: string; value: string; } | null>>,
-    selectedItem?:{ label: string; value: string; } | null
+    onItemSelect:(item:string)=>void,
+    selectedValue?:string
     editMode:boolean
 
 }
 
-const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropDownProp>(({ list, className,onItemSelect,selectedItem,editMode, ...props }, ref) => {
-    
+const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropDownProp>(({ list, className,onItemSelect,selectedValue,editMode, ...props }, ref) => {
+
 
     const [inputValue, setInputValue] = useState('')
-    const [selected, setSelected] = useState(selectedItem?.label||'')
+    const [selected, setSelected] = useState('')
     const [open, setOpen] = useState(false)
 
 
     useEffect(()=>{
-        const data=list.find(item=>item.label==selected)
-        onItemSelect(data || null)
-    },[selected,onItemSelect,list])
+        setSelected(list.find(item=>item.value==selectedValue)?.label||'')
+    },[selectedValue])
 
     return (
         <>
@@ -38,13 +38,13 @@ const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropD
                     className={`  flex items-center p-3 justify-between  ${!selected && 'text-gray-500'} `}>
                     <div className="flex justify-between w-full">
                         {selected ? (selected.length > 25 ? selected.substring(0, 20) + '...' : selected) : 'selecte language'}
-                        {(selected && editMode) && <X className="ml-auto text-gray-600" size={20} onClick={() => setSelected('')} />}
+                        {(selected && editMode) && <X className="ml-auto text-gray-600" size={20} onClick={() =>{ setSelected('');onItemSelect('')}} />}
                     </div>
-                    <ChevronDown className={`text-gray-600 ${open && 'rotate-180'}`} />
+                    <ChevronDown className={`text-gray-600 ${open && editMode && 'rotate-180'}`} />
                 </div>
 
 
-                <ul className={`bg-white   overflow-y-auto overflow-x-hidden pretty-scrollbar transition-all rounded drop-shadow-md  ${open ? 'max-h-60 ' : 'max-h-0 '}`}>
+                <ul className={`bg-white   overflow-y-auto overflow-x-hidden pretty-scrollbar transition-all rounded drop-shadow-md  ${open &&editMode ? 'max-h-60 ' : 'max-h-0 '}`}>
                     <div className="flex items-center px-2 sticky top-0 bg-white">
                         <Search className="text-gray-500 " size={20} />
                         <input
@@ -57,7 +57,7 @@ const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropD
                     </div>
 
                     {
-                        list.map(item => <li className={`p-3 text-sm hover:bg-primary hover:text-white 
+                        list.map(item =>(item?.selected ?null:<li className={`p-3 text-sm hover:bg-primary hover:text-white 
                         ${item.label.toLowerCase() === selected.toLowerCase() && 'bg-primary text-white'
                             }
                         ${item.label.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
@@ -65,9 +65,11 @@ const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropD
                             onClick={() => {
                                 if (item.label.toLowerCase() !== selected.toLowerCase()) {
                                     setSelected(item.label)
+                                    
+                                    onItemSelect(item.value)
                                 }
                             }}
-                        >{item.label}</li>)
+                        >{item.label}</li>))
                     }
 
 
