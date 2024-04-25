@@ -29,5 +29,7 @@ export interface ILanguage{
     id:string;
     name:string;
     basePrice:number;
+    createdAt?:string;
+    updatedAt?:string;
 }
 

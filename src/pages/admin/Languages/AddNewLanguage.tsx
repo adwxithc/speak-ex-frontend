@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, TextField, Typography } from '@mui/material'
-
 import { useForm } from 'react-hook-form';
 import {z} from 'zod';
+
 import { useAddLanguageMutation } from '../../../redux/features/admin/languages/languagesApiSlice';
 import toast from 'react-hot-toast';
 import { Ierror } from '../../../types/error';
@@ -63,7 +63,7 @@ function AddNewLanguage() {
       const {register, handleSubmit,formState, reset}=methods;
       const {errors} = formState
   return (
-    <div>
+    <div className=''>
          <form onSubmit={handleSubmit(onSubmit)}>
             <Typography variant='h4' component={'h1'} sx={{textAlign:'center', marginBottom:5, marginTop:3}} >Add new Language</Typography>
                <Box sx={{maxWidth:800, marginX:'auto'}} >

@@ -1,83 +1,91 @@
-import { Add } from '@mui/icons-material'
-import { Box, IconButton, Tooltip, Typography } from '@mui/material'
-import { DataGrid, gridClasses } from '@mui/x-data-grid'
-import  { useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { RootState } from '../../../redux/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { useGetLanguagesMutation } from '../../../redux/features/admin/languages/languagesApiSlice'
-import { setLanguageList } from '../../../redux/features/admin/languages/languageSlice'
-import { grey } from '@mui/material/colors'
+import {  useMemo } from "react"
+import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons"
+import useDataFetcher from "./useDataFetcher"
+import Button from "../../../components/ui/Button/Button"
+import { Plus } from "lucide-react"
+import ToolTip from "../../../components/ui/ToolTip/ToolTip"
+import { useNavigate } from "react-router-dom"
+import moment from "moment"
+
+
 
 function Languages() {
 
-  const navigate = useNavigate()
+  const naviage= useNavigate()
 
-const [getLanguageList] = useGetLanguagesMutation()
-const dispatch =useDispatch()
-  const {languageList} = useSelector((state:RootState)=>state.language)
-
-  useEffect(()=>{
-    const getLanguages=async()=>{
-      try {
-          const res =await getLanguageList({}).unwrap()
-          
-          
-          dispatch(setLanguageList([...res.data.languages]));
-          
-      } catch (error) {
-        console.log(error);
-        
-      }
-    }
-    getLanguages()
-  },[]);
-
-  const columns = useMemo(()=>[
-    {field:'id', headerName:'id',width:450},
-    {field:'name', headerName:'Name',width:450},
-    {field:'basePrice', headerName:'basePrice',width:450},
+  const columns = useMemo(() => [
+    {  headerName: 'Id'},
+    {  headerName: 'Name' },
+    {  headerName: 'BasePrice'},
+    {  headerName: 'Created At'},
     
-    
-  ],[])
+  ], [])
+
+  
+
+  const { 
+    loading,
+    languages,
+    totalPages,
+    currentPage,
+    setCurrentPage
+} = useDataFetcher()
+
+
 
   return (
-    <Box
-    sx={{
-      height:400,
-      width:'100%'
-    }}
-    >
-      <Box sx={{display:'flex',justifyContent:'end'}}> <Tooltip title='add new language'><IconButton onClick={()=>navigate('/admin/add-language')} sx={{backgroundColor:(theme)=>theme.palette.primary.main,marginRight:8,marginTop:5}} ><Add /></IconButton></Tooltip></Box>
-      <Typography
-      variant='h3'
-      component='h3'
-      sx={{textAlign:'center', mt:3,mb:3}}
-      >
-         Languages
-      </Typography>
-      <DataGrid
-      
-      columns={columns}
-      rows={languageList}
-      getRowSpacing={params=>({
-        top:params.isFirstVisible ? 0:5,
-        bottom:params.isLastVisible?0:5
-      })}
-      sx={{
-        [`& .${gridClasses.row}`]: {
-          bgcolor: (theme) =>
-            theme.palette.mode === "light" ? grey[200] : grey[900],
-          
-        },
-      }}
-     
-
+    <div className="">
+      <div className="flex justify-end">
+        <ToolTip tooltip="Add Language">
+        <Button type="button" onClick={()=>naviage('/admin/add-language')} varient={'primary'} size={'icon'}><Plus /></Button>
+        </ToolTip>
         
-       />
+      </div>
+      <h1 className="text-3xl mb-5 font-semibold text-center">Users List</h1>
+      <div className=" border  rounded-md  overflow-auto">
+      <table className="min-w-full divide-y divide-gray-200    ">
+        <thead className=" bg-secondary ">
+          <tr >
+            
+            {columns.map(item=>(<th scope="col" className="p-5  text-left  font-medium  uppercase text-black tracking-wider">{item.headerName}</th>))}
 
-    </Box>
+            
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {loading ?<span className="text-center text-2xl">loading...</span>:
+          <>
+          {languages.map((item)=>(<tr key={item.id}>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {item.id}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {item.name}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {item.basePrice}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {moment(item.createdAt).format('YYYY-MM-DD HH:MM:SS')}
+            </td>
+           
+          </tr>))}
+          </>
+         }
+
+        </tbody>
+      </table>
+      </div>
+      <div>
+        
+      <PaginationButtons totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      
+      </div>
+      
+
+    </div>
   )
 }
 
 export default Languages
+

@@ -1,115 +1,114 @@
-import { Avatar, Box, Typography } from '@mui/material'
-import { DataGrid, GridCellParams, gridClasses } from '@mui/x-data-grid'
-import { useEffect, useMemo, useState } from 'react'
-import { useGetUsersMutation } from '../../../redux/features/admin/listUsers/usersListApiSlice'
-import { setUserPaginationData, setUsersList } from '../../../redux/features/admin/listUsers/usersListSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
+import {  useMemo } from "react"
+import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons"
+import useDataFetcher from "../Users/useDataFetcher"
 import moment from 'moment'
-import { grey } from '@mui/material/colors'
-import UsersActions from './UsersActions'
+import Button from "../../../components/ui/Button/Button"
+import Avatar from "../../../components/ui/Avatar/Avatar"
+import { useUpdateUserMutation } from "../../../redux/features/admin/listUsers/usersListApiSlice"
 
 
 function Users() {
 
-  const [rowId, setRowId] = useState<string | null>(null)
-
-
-  const [isLoading, setIsLoading] = useState(false)
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 5,
-  });
-
-  const [getUsersList] = useGetUsersMutation()
-  const dispatch = useDispatch()
-  const { usersList, totalUsers } = useSelector((state: RootState) => state.usersList)
-
-
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        setIsLoading(true)
-        const res = await getUsersList({ page: paginationModel.page + 1, limit: paginationModel.pageSize }).unwrap()
-        setIsLoading(false)
-
-        const { users, totalUsers } = res.data
-        dispatch(setUsersList([...users]));
-        dispatch(setUserPaginationData({ ...{ totalUsers } }))
-        console.log(res);
-
-
-      } catch (error) {
-        console.log(error);
-
-      }
-    }
-    getUsers()
-  }, [paginationModel, dispatch, getUsersList]);
-
-
   const columns = useMemo(() => [
-    { field: 'profile', headerName: 'Avatar', width: 60, renderCell: (params: GridCellParams) => <Avatar src={params.row.profile} />, sortable: false, filterable: false, },
-    { field: 'firstName', headerName: 'First Name', width: 170 },
-    { field: 'lastName', headerName: 'Last Name', width: 160 },
-    { field: 'email', headerName: 'Email', width: 250 },
-    { field: 'userName', headerName: 'User Name', width: 190 },
-    { field: 'blocked', headerName: 'Blocked', width: 190, type: 'boolean', editable: true },
-    { field: 'createdAt', headerName: 'Created At', width: 180, renderCell: (params: GridCellParams) => moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS') },
-    {
-      field: "actions",
-      headerName: "Actions",
-      type: "actions",
-      renderCell: (params: GridCellParams) => (
-        <UsersActions {...{ params, rowId, setRowId }} />
-      )
+    {  headerName: 'Avatar'},
+    {  headerName: 'Full Name'},
+    
+    {  headerName: 'Email' },
+    {  headerName: 'User Name' },
+    
+    {  headerName: 'Created At'},
+    {  headerName: 'Block'},
+  ], [])
+
+  
+
+  const { loading,
+    users,
+    totalPages,
+    currentPage,
+    setUsers,
+    setCurrentPage} = useDataFetcher()
+
+    const [updateUser] = useUpdateUserMutation()
+    const handleBlock = async(id:string,status:boolean)=>{
+      const data = { id: id, blocked: status }
+      
+      const res = await updateUser(data).unwrap()
+
+      setUsers((prev)=>{
+         return prev.map((user)=>{
+          if(user.id===res.data.id) return res.data
+          return user
+         })
+      })
+      
+      
     }
 
-  ], [rowId])
   return (
-    <Box
-      sx={{
-        height: 400,
-        width: '100%'
-      }}
-    >
-      <Typography
-        variant='h3'
-        component='h3'
-        sx={{ textAlign: 'center', mt: 3, mb: 3 }}
-      >
-        Manage Users
-      </Typography>
+    <div className="">
+      <h1 className="text-3xl mb-5 font-semibold text-center">Users List</h1>
+      <div className=" border  rounded-md  overflow-auto">
+      <table className="min-w-full divide-y divide-gray-200    ">
+        <thead className=" bg-secondary ">
+          <tr >
+            
+            {columns.map(item=>(<th scope="col" className="p-5  text-left  font-medium  uppercase text-black tracking-wider">{item.headerName}</th>))}
 
-      <DataGrid
+            
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {loading ?<span className="text-center text-2xl">loading...</span>:
+          <>
+          {users.map((item)=>(<tr key={item.id}>
+            <td className="px-6 py-4 whitespace-nowrap">
+            
+                <div className="flex-shrink-0 h-10 w-10">
+               
+                  <Avatar className="h-10 w-10 rounded-full" src={`${item.profile || 'http://localhost:3000/Images/profilePlaceholder/profilePlaceholder.jpg'}`} />
+                </div>
+              
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="text-sm text-gray-900">{item.firstName+' '+item.lastName}</div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {item.email}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="text-sm text-gray-900">{item.userName}</div>
+            </td>
+           
+           <td>
+            {moment(item.createdAt).format('YYYY-MM-DD HH:MM:SS')}
+           </td>
+            
+            <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
+              {
+                item.blocked
+                ?<Button varient={'success-outline'} size={'sm'} className="ml-2" onClick={()=>handleBlock(item.id,false)}>unblock</Button>
+                :<Button varient={'danger-outline'} size={"sm"} onClick={()=>handleBlock(item.id,true)}  className="ml-2 ">block</Button>
+              }
+              
+            </td>
+          </tr>))}
+          </>
+         }
+         
+          
 
-        columns={columns}
-        rows={usersList}
-        getRowId={row => row.id}
-        rowCount={totalUsers}
-        loading={isLoading}
-        pageSizeOptions={[5]}
-        paginationModel={paginationModel}
-        paginationMode="server"
-        onPaginationModelChange={setPaginationModel}
+        </tbody>
+      </table>
+      </div>
+      <div>
+        
+      <PaginationButtons totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      
+      </div>
+      
 
-        getRowSpacing={params => ({
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5
-        })}
-        sx={{
-          [`& .${gridClasses.row}`]: {
-            bgcolor: (theme) =>
-              theme.palette.mode === "light" ? grey[200] : grey[900],
-          },
-        }}
-        onCellEditStop={(params) => setRowId(params.id.toString())}
-        onCellEditStart={(params) => setRowId(params.id.toString())}
-
-      />
-
-    </Box>
+    </div>
   )
 }
 

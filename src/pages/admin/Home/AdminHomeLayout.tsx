@@ -7,6 +7,7 @@ import ToolTip from '../../../components/ui/ToolTip/ToolTip'
 import {list} from '../../../components/layout/SideBar/Admin/Navigate'
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Button from '../../../components/ui/Button/Button';
 
 function AdminHomeLayout() {
   const [selectedLink, setSelectedLink] = useState<string>(window.location.pathname);
@@ -17,7 +18,7 @@ function AdminHomeLayout() {
     <AdminNavBar>
         <ul>
             <li className='cursor-pointer'>
-            <ToolTip tooltip='logout'> <PiSignOutBold className='' size={20}/> </ToolTip>
+            <ToolTip tooltip='logout'> <Button type='button' className='hover:bg-[#00000071]  bg-transparent' size={'icon'} onClick={()=>navigate('/admin/signout')} > <PiSignOutBold className='' size={20}/> </Button>  </ToolTip>
             </li>
         </ul>
     </AdminNavBar>
