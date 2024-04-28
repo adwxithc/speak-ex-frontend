@@ -3,32 +3,48 @@ import { AnimatePresence } from "framer-motion";
 
 import PostThumbNail from "../../../components/custom/PostThumbNail/PostThumbNail"
 import Button from "../../../components/ui/Button/Button"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "../../../components/custom/Modal/Modal";
 import CreatePost from "../CreatePost/CreatePost";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
 import { useGetUsersPostsMutation } from "../../../redux/features/user/post/postApiSlice";
-import { IPost, IUser } from "../../../types/database";
+import { IPost } from "../../../types/database";
 import { Link } from "react-router-dom";
+import { ProfileContext } from "../Profile/Profile";
+import UserPostsSkelton from "./UserPostsSkelton";
 
 
 function UsersPosts() { 
   const [modalOpen, setModalOpen ] = useState(false)
   const [posts, setPosts]= useState<Partial<IPost>[]>([])
-  const { userName } = useSelector((state: RootState) => state.user.userData) as IUser
+ 
   const [getPosts] = useGetUsersPostsMutation()
   const [loading,setLoading] =  useState(false)
+  const [postLoading, setPostLoading] = useState(true)
+  
+  const {data,self}= useContext(ProfileContext)
   useEffect(()=>{
     const fetchData=async()=>{
-      const res= await getPosts({userName}).unwrap()
-      setPosts(res.data.posts)
+      try {
+        if(!data) return 
+        const res= await getPosts({userName:data?.userName}).unwrap()
+        setPosts(res.data.posts)
+      } catch (error) {
+        console.log();
+        
+      }finally{
+        setPostLoading(false)
+      }
+     
     }
     fetchData();
 
-  },[userName,getPosts])
+  },[data,getPosts])
+  
+
   return (
     <div>
+      {
+        self &&
             <div className="p-2 mb-3 flex justify-end mt-5">
             
               
@@ -37,13 +53,27 @@ function UsersPosts() {
               </Button>
             
             </div>
+      }
        
-  
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 sm:p-5 mt-3 sm:mt-0'>
+        {
+          postLoading
+          ?
+            <UserPostsSkelton />
+          
+          :
+         
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 sm:p-5 mt-3 sm:mt-0'>
             {
               posts.map(post=><Link  key={post.id} to={`/post/${post.id}`} > <PostThumbNail imageUrl={post.image as string} title={post.title as string} /></Link>)
             }
-        </div>
+            
+          </div>
+          
+        }
+        
+        
+        
+       
 
 
         <AnimatePresence

@@ -18,7 +18,7 @@ function UserProfileSideBar({ children }: { children: React.ReactNode }) {
 
     return (
 
-        <aside className={`w-full sm:w-auto z-0 sm:mr-8 ${expanded && 'h-screen sm:h-full'} bg-white  shadow-md rounded-xl  overflow-hidden `}>
+        <aside className={`w-full sm:w-auto z-0 sm:mr-5 ${expanded && 'h-screen sm:h-full'} bg-white  shadow-md sm:rounded-xl  overflow-hidden `}>
 
 
             <div className='relative'>

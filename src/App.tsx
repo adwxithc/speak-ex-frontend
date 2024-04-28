@@ -25,10 +25,10 @@ import Test from './pages/Test/Test';
 import AdminHomeLayout from './pages/admin/Home/AdminHomeLayout';
 import Profile from './pages/user/Profile/Profile';
 import UserLayout from './components/layout/UserLayout/UserLayout';
-import UsersPosts from './pages/user/Profile/UsersPosts';
+import UsersPosts from './pages/user/UsersPosts/UsersPosts';
 import UserPrivateRoute from './pages/user/UserPrivateRoute/UserPrivateRoute';
 import Post from './pages/user/Post.ts/Post';
-import UserInfo from './pages/user/Profile/UserInfo';
+import UserInfo from './pages/user/UserInfo/UserInfo';
 
 
 
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       Component:UserPrivateRoute,
       children:[
         {
-          path: 'profile',
+          path: 'profile/:userName',
           Component: Profile,
           children: [
             {

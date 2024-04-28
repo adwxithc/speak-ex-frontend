@@ -9,10 +9,11 @@ import ReactDOM from 'react-dom'
 interface ModalProp{
     handleClose: () => void;
     children: ReactNode;
-    loading:boolean
+    loading:boolean;
+    position?:string
 }
 
-const  Modal:FC<ModalProp> = ({ handleClose, children, loading=false } ) =>{
+const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false } ) =>{
     
     const dropIn = {
         hidden: {
@@ -37,7 +38,7 @@ const  Modal:FC<ModalProp> = ({ handleClose, children, loading=false } ) =>{
         <>
          <Backdrop onClick={handleClose}>
             <motion.div
-                className='w-auto h-auto max-h-[100vh] m-auto py-2  rounded-md flex flex-col items-center bg-white '
+                className={`w-auto h-auto max-h-[100vh] m-auto py-2  rounded-md flex flex-col items-center bg-white absolute ${position}`}
                 onClick={(e) => e.stopPropagation()}
                 variants={dropIn}
                 initial="hidden"

@@ -5,18 +5,26 @@ import { classNames } from '../../../../utils/style-utils.tsx'
 import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
 import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
 
-import { navigation } from './Navigation.ts'
+import useNavigation from './useNavigation.ts'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../redux/store.ts'
 import Button from '../../../ui/Button/Button.tsx'
 import { useNavigate } from 'react-router-dom'
 import LanguageSelector from '../../../custom/LanguageSelector/LanguageSelector.tsx'
 import { useTranslation } from 'react-i18next'
+import Modal from '../../../custom/Modal/Modal.tsx'
+import { AnimatePresence } from 'framer-motion'
+import SearchUser from '../../../../pages/user/SearchUser/SearchUser.tsx'
+import { useState } from 'react'
 
 
 
 export default function Navbar() {
   const { t } = useTranslation(['common'])
+  const [openSearch, setOpenSearch] =useState(false)
+  const navigation=  useNavigation({setOpenSearch})
+
+  
 
   const { isAuth } = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
@@ -25,7 +33,9 @@ export default function Navbar() {
   const isScrolled: boolean = useScrollDetection(0)
 
   return (
-    <Disclosure as="nav" className='bg-white border-b-secondary  sticky top-0 w-full z-40 drop-shadow-sm'>
+    <>
+
+<Disclosure as="nav" className='bg-white border-b-secondary  sticky top-0 w-full z-40 drop-shadow-sm'>
       {({ open }) => (
         <>
           <div className="mx-auto   max-w-7xl px-2 sm:px-6 lg:px-8 ">
@@ -54,22 +64,32 @@ export default function Navbar() {
                   <div className="flex space-x-5">
                     {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
 
-
-                      <a
-                        key={item.name}
-                        href={item.href}
+                      <div key={item.name} className='relative group px-3 py-2'>
+                        <a
+                        
+                       
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-black hover:bg-primary hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          item.current ? 'bg-gray-900 text-white' : 'text-black ',
+                          '  text-sm font-medium   cursor-pointer '
                         )}
                         aria-current={item.current ? 'page' : undefined}
+                      
+                          
+                        onClick={item.action}
+                        
                       >
                         {item.name}
                       </a>
+                      <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all  ${item.current ? 'w-full':'group-hover:w-full'}`}></span>
+                      </div>
+                     
 
 
                     ))}
-                    <LanguageSelector />
+                    
+                    
+                    <div className='mt-1.5'>  <LanguageSelector /></div>
+                   
                   </div>
                 </div>
               </div>
@@ -101,11 +121,10 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  onClick={item.action}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-black hover:bg-primary hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
@@ -123,5 +142,14 @@ export default function Navbar() {
         </>
       )}
     </Disclosure>
+
+      <AnimatePresence
+        initial={false}
+        mode="wait"
+        >
+        {openSearch && <Modal position='top-20' loading={false}  handleClose={()=>{setOpenSearch(false)}} ><SearchUser {...{setOpenSearch}}/></Modal>}
+        </AnimatePresence>
+    </>
+
   )
 }

@@ -34,13 +34,10 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       confirm_password;
       setLoading(true)
       await signup({ ...formData }).unwrap()
-
-
-      setLoading(false)
       navigate('/signup/verify-user')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setLoading(false)
+    } catch (error:any) {
+     
       const errorInfo = error.data.errors;
       if (error.status == 400) {
         setError('email', { message: errorInfo[0].message })
@@ -48,6 +45,8 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
         toast.error(errorInfo[0].message)
       }
 
+    }finally{
+      setLoading(false)
     }
   }
   

@@ -24,6 +24,15 @@ export const profileApiSlice = apiSlice.injectEndpoints({
                 method: 'Get',
             }),
         }),
+        searchUsers:builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/?key=${data.key}&page=${data.page}`,
+                method: 'GET',
+            }),
+        }),
+        getUser:builder.query({
+            query:(data)=>`${USER_URL}/${data.userName}`
+        })
     }),
     
 });
@@ -31,5 +40,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 export const {
     useUploadProfileMutation,
     useUpdateUserInfoMutation,
-    useGetAllLanguagesMutation
+    useGetAllLanguagesMutation,
+    useSearchUsersMutation,
+    useGetUserQuery
 } = profileApiSlice;
