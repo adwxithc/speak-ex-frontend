@@ -19,7 +19,7 @@ export interface IPost{
     content:string;
     image:string;
     userId:string;
-    likes?:string[];
+    upvotes?:string[];
     comments?:string[];
     createdAt?:string;
     updatedAt?:string;

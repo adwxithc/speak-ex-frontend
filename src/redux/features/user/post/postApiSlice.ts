@@ -23,6 +23,18 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method:'GET',
             })
         }),
+        like:builder.mutation({
+            query:(data)=>({
+                url:`${POST_URL}/${data.postId}/upvote`,
+                method:'PUT',
+            })
+        }),
+        unlike:builder.mutation({
+            query:(data)=>({
+                url:`${POST_URL}/${data.postId}/downvote`,
+                method:'PUT',
+            })
+        }),
         
       
        
@@ -34,5 +46,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
 export const {
 useCreatePostMutation,
 useGetUsersPostsMutation,
-useGetPostMutation
+useGetPostMutation,
+useLikeMutation,
+useUnlikeMutation
 } = postApiSlice;
