@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom"
 import usePostDataFetcher from "./usePostDataFetcher"
 import PostActions from "./PostActions"
 
+
 function Post() {
     const {postId=''} = useParams()
     const {post} = usePostDataFetcher({postId})
@@ -75,6 +76,7 @@ function Post() {
                 </PostWraper>
 
              <PostActions {...{post,postId }} />
+             
             </div>
             :
             <div className="h-full w-full p-8 flex justify-center items-center bg-red-50">

@@ -33,3 +33,14 @@ export interface ILanguage{
     updatedAt?:string;
 }
 
+export interface IComment{
+    id:string;
+    text:string;
+    user:{userName:string, profile:string,id:string};
+    postId:string;
+    parentId:null|string;
+    replys:number;
+    createdAt:string;
+    updatedAt:string;
+}
+

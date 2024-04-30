@@ -35,8 +35,33 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method:'PUT',
             })
         }),
+        getComments:builder.mutation({
+            query:(data)=>({
+                url:`${POST_URL}/${data.postId}/comments?page=${data.page}&parentId=${data.parentId || null}`,
+                method:'GET'
+            })
+        }),
+        addComment: builder.mutation({
+            query: (data) => ({
+                url: `${POST_URL}/${data.postId}/comment`,
+                method: 'POST',
+                body: {text:data.text,parentId:data.parentId},
+            }),
+        }),
+        deleteComment:builder.mutation({
+            query:(data)=>({
+                url: `${POST_URL}/comment/${data.commentId}`,
+                method: 'DELETE',
+            })
+        }),
+        updateComment:builder.mutation({
+            query:(data)=>({
+                url:`${POST_URL}/${data.postId}/comment/${data.commentId}`,
+                method:'PUT',
+                body:{text:data.text}
+            })
+        })
         
-      
        
      
 
@@ -48,5 +73,9 @@ useCreatePostMutation,
 useGetUsersPostsMutation,
 useGetPostMutation,
 useLikeMutation,
-useUnlikeMutation
+useUnlikeMutation,
+useGetCommentsMutation,
+useAddCommentMutation,
+useDeleteCommentMutation,
+useUpdateCommentMutation
 } = postApiSlice;
