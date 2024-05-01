@@ -1,45 +1,46 @@
-import { useState } from "react"
-import AutoCompleteDropDown from "../../components/ui/AutoCompleteDropDown/AutoCompleteDropDown"
+import { useEffect, useState } from "react";
+import ChatArea from "../../components/custom/Chat/ChatArea/ChatArea"
+import Conversations from '../../components/custom/Chat/Conversations/Conversations'
 
-const language=[
-  {
-    label:'english',
-    
-    },
-    {
-      label:'malayalam'
-    },
-    {
-      label:'japan'
-    },
-    {
-      label:'german'
-    },
-    {
-      label:'latin'
-    },
-    {
-      label:'arbic'
-    },
-    {
-      label:'french'
-    },
-    {
-      label:'russian'
-    }
-]
 
 function Test() {
-  const [lang,setLang] = useState<{ label: string; value: string; } | null>(null)
+  
+  const [isMobile, setIsMobile] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768); // Adjust breakpoint as needed
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize(); // Call on initial render
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <>
-    <div className="h-screen flex justify-center p-10">
-      {JSON.stringify(lang)}
-      <div className="w-72">
-      <AutoCompleteDropDown list={language} onItemSelect={setLang} />
+    <div className="h-screen overflow-y-hidde  bg-[#11223e]">
+      <div className="flex h-full">
+        {
+          isMobile ?
+          selectedUser?<div className=" w-full h-full "> <ChatArea {...{setSelectedUser}} /></div> :<div className={`${isMobile?'w-full':'w-2/5'} `}><Conversations {...{setSelectedUser}} /></div>
+          :<>
+          
+          <div className={`${isMobile?'w-full':'w-2/5'} `}><Conversations {...{setSelectedUser}} /></div>
+          <div className=" w-full h-full "> <ChatArea {...{setSelectedUser}} /></div>
+          </>
+        }
+       
+        
+
       </div>
-    
+
     </div>
+ 
     </>
   ) 
 }

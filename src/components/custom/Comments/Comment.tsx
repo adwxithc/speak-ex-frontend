@@ -102,16 +102,16 @@ function Comment({ comment, onDeleteComment, setActiveComment, activeComment, po
     }
 
     return (
-        <div className="p-4 w-full my-2 ">
+        <div className="p-4 w-full  ">
             <div className="flex flex-wrap gap-1">
 
                 <div className="">
                     <Avatar className="h-8 w-8" src={comment.user.profile} />
                 </div>
 
-                <div className=" max-w-[90%] ">
+                <div className=" max-w-[90%]  ">
 
-                    <div className="bg-secondary rounded-b-xl rounded-tr-xl p-4">
+                    <div className="bg-secondary rounded-b-xl rounded-tr-xl p-4 mb-1">
                         <div className="flex gap-3 items-center justify-between">
 
                             <span className="  text-blue-600 font-semibold">{comment.user.userName}</span>
@@ -127,7 +127,7 @@ function Comment({ comment, onDeleteComment, setActiveComment, activeComment, po
                         }
                     </div>
 
-                    <div className="flex gap-2 text-sm cursor-pointer font-semibold text-gray-600 ">
+                    <div className="flex gap-2 text-sm cursor-pointer font-semibold text-gray-600 mb-1 ">
                         {canReply && <div className=" hover:text-black" onClick={() => setActiveComment({ type: 'reply', id: comment.id })}>Reply</div>}   {canEdit && <div className=" hover:text-black" onClick={() => setActiveComment({ type: 'editing', id: comment.id })} >Edit</div>}
                         {canDelete && <div className=" hover:text-black" onClick={() => onDeleteComment(comment.id, handleDeletedComment)}>Delete</div>}
                     </div>

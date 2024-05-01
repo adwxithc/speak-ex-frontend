@@ -38,10 +38,7 @@ const router = createBrowserRouter([
     path: '/',
     Component: UserLayout,
     children: [
-      {
-        path: '/test',
-        Component: Test
-      },
+    
       {
         index: true,
         Component: LandingPage,
@@ -104,6 +101,10 @@ const router = createBrowserRouter([
       {
         path: '/forgot-password/reset-password',
         Component: ResetPassword
+      },
+      {
+        path: '/test',
+        Component: Test
       },
     ]
   },
