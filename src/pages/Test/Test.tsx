@@ -1,38 +1,72 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatArea from "../../components/custom/Chat/ChatArea/ChatArea"
 import Conversations from '../../components/custom/Chat/Conversations/Conversations'
+import { useGetChatRoomsQuery } from "../../redux/features/user/user/chatApiSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import {IChatRoom} from "../../types/database";
+import {Socket, io} from 'socket.io-client';
 
 
 function Test() {
-  
-  const [isMobile, setIsMobile] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(false)
+  const { userData } = useSelector((state: RootState) => state.user)
+  const [isMobile, setIsMobile] = useState(true);
+
+  const [conversations, setConversations] = useState<IChatRoom[]>([])
+  const [currentChat, setCurrentChat] = useState<IChatRoom|null>(null)
+
+const socket= useRef<Socket|null>(null)
+  const { data, isLoading } = useGetChatRoomsQuery({ userId:userData?.id });
+
+  useEffect(()=>{
+    setConversations(data?.data as  IChatRoom[])
+  },[data])
+
+
+ 
+
+  useEffect(()=>{
+    socket.current = io("http://localhost:5000");
+    socket.current?.emit('addUser',{
+      userId:userData?.id
+    })
+    socket.current?.on('getUsers',(data)=>{
+      console.log(data);
+      
+    })
+  },[])
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
       setIsMobile(width <= 768); // Adjust breakpoint as needed
     };
-
+    handleResize();
     window.addEventListener('resize', handleResize);
-
-    handleResize(); // Call on initial render
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+
+
+
   return (
     <>
+
     <div className="h-screen overflow-y-hidde  bg-[#11223e]">
       <div className="flex h-full">
+        
         {
-          isMobile ?
-          selectedUser?<div className=" w-full h-full "> <ChatArea {...{setSelectedUser}} /></div> :<div className={`${isMobile?'w-full':'w-2/5'} `}><Conversations {...{setSelectedUser}} /></div>
-          :<>
+          isMobile ?(
+            currentChat?
+            (<div className=" w-full h-full "> <ChatArea {...{setCurrentChat,currentChat,socket}} /></div>)
+            :(<div className={`${isMobile?'w-full':'w-2/5'} `}>{isLoading?<div>Loading...</div>:<Conversations {...{setCurrentChat,conversations}} />}</div>)
+          )
+          :(<>
           
-          <div className={`${isMobile?'w-full':'w-2/5'} `}><Conversations {...{setSelectedUser}} /></div>
-          <div className=" w-full h-full "> <ChatArea {...{setSelectedUser}} /></div>
-          </>
+          <div className='w-2/5' >{isLoading?<div>Loading...</div>:<Conversations {...{setCurrentChat,conversations}} />}</div>
+          <div className=" w-full h-full ">{currentChat?<ChatArea {...{setCurrentChat,currentChat,socket}} />:<div className="h-full w-full text-gray-700 opacity-55 text-9xl pt-[10%] font-bold">Get Start You Chat..</div>}</div>
+          </>)
         }
        
         

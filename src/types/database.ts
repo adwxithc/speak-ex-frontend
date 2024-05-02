@@ -44,3 +44,21 @@ export interface IComment{
     updatedAt:string;
 }
 
+
+export interface IChatRoom{
+    id:string;
+    members:string[];
+    otherUserId: string;
+    user: { userName: string, profile: string };
+    createdAt?:string,
+    updatedAt?:string
+}
+
+export interface IMessage{
+    id:string;
+    roomId:string;
+    senderId:string;
+    text:string;
+    createdAt:string;
+    updatedAt:string
+}
