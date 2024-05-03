@@ -14,9 +14,12 @@ function Test() {
 
   const [conversations, setConversations] = useState<IChatRoom[]>([])
   const [currentChat, setCurrentChat] = useState<IChatRoom|null>(null)
+  const [onlineUsers, setOnlineUsers] = useState<{userId:string, socketId:string}[] >([])
+  const [page, setPage]= useState(1)
+  const [key, setKey] = useState('')
 
 const socket= useRef<Socket|null>(null)
-  const { data, isLoading } = useGetChatRoomsQuery({ userId:userData?.id });
+  const { data, isLoading } = useGetChatRoomsQuery({ userId:userData?.id,key });
 
   useEffect(()=>{
     setConversations(data?.data as  IChatRoom[])
@@ -31,7 +34,7 @@ const socket= useRef<Socket|null>(null)
       userId:userData?.id
     })
     socket.current?.on('getUsers',(data)=>{
-      console.log(data);
+      setOnlineUsers(data);
       
     })
   },[])
@@ -59,13 +62,13 @@ const socket= useRef<Socket|null>(null)
         {
           isMobile ?(
             currentChat?
-            (<div className=" w-full h-full "> <ChatArea {...{setCurrentChat,currentChat,socket}} /></div>)
-            :(<div className={`${isMobile?'w-full':'w-2/5'} `}>{isLoading?<div>Loading...</div>:<Conversations {...{setCurrentChat,conversations}} />}</div>)
+            (<div className=" w-full h-full "> <ChatArea {...{setCurrentChat,currentChat,socket,onlineUsers,setPage,page}} /></div>)
+            :(<div className="w-full">{isLoading?<div>Loading...</div>:<Conversations {...{setCurrentChat,conversations,onlineUsers,setPage,setKey}} />}</div>)
           )
           :(<>
           
-          <div className='w-2/5' >{isLoading?<div>Loading...</div>:<Conversations {...{setCurrentChat,conversations}} />}</div>
-          <div className=" w-full h-full ">{currentChat?<ChatArea {...{setCurrentChat,currentChat,socket}} />:<div className="h-full w-full text-gray-700 opacity-55 text-9xl pt-[10%] font-bold">Get Start You Chat..</div>}</div>
+          <div className='w-2/5' >{isLoading?<div>Loading...</div>:<Conversations {...{setCurrentChat,conversations,onlineUsers,setPage,setKey}} />}</div>
+          <div className=" w-full h-full ">{currentChat?<ChatArea {...{setCurrentChat,currentChat,socket,onlineUsers,page,setPage}} />:<div className="h-full w-full text-gray-700 opacity-55 text-9xl pt-[10%] font-bold">Get Start You Chat..</div>}</div>
           </>)
         }
        

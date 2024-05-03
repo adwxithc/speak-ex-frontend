@@ -59,6 +59,7 @@ export interface IMessage{
     roomId:string;
     senderId:string;
     text:string;
+    seen:boolean;
     createdAt:string;
     updatedAt:string
 }

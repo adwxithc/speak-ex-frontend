@@ -14,13 +14,13 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-  <React.StrictMode>
+  {/* <React.StrictMode> */}
     <StyledEngineProvider injectFirst>
       <React.Suspense fallback="loading...">
     <App />
     </React.Suspense>
     <Toaster position="bottom-right" />
     </StyledEngineProvider>
-  </React.StrictMode>
+  {/* </React.StrictMode> */}
   </Provider>
 )

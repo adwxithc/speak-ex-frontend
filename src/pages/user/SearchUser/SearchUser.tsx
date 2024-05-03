@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 function SearchUser({setOpenSearch}:{setOpenSearch:Dispatch<SetStateAction<boolean>>}) {
     const navigate = useNavigate()
     const [input, setInput] = useState('')
+    
     const [page, setPage]=useState(1)
     const {loading,users, hasMore} = useUserSearch(input,page)
 
