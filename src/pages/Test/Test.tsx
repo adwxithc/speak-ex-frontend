@@ -22,7 +22,7 @@ const socket= useRef<Socket|null>(null)
   const { data, isLoading } = useGetChatRoomsQuery({ userId:userData?.id,key });
 
   useEffect(()=>{
-    setConversations(data?.data as  IChatRoom[])
+    setConversations([...data?.data as  IChatRoom[] || []])
   },[data])
 
 
@@ -37,7 +37,41 @@ const socket= useRef<Socket|null>(null)
       setOnlineUsers(data);
       
     })
-  },[])
+
+    socket.current?.on("getMessage", (data) => {
+      
+    
+      setConversations(prev=>{
+        const updatedConv = prev.find(c=>  c.otherUserId==data.senderId  )
+        if(!updatedConv || currentChat  &&  currentChat.id==data.roomId) return prev
+
+        return prev.map(c=>{
+          if(c.id==updatedConv.id && currentChat?.id!==updatedConv.id){
+            
+            
+             const unseenMessageCount=c.unseenMessageCount+1;
+             const lastMessage={text:data.text,createdAt:new Date().toISOString(),senderId:data.senderId}
+             return {...c, unseenMessageCount, lastMessage}
+          }
+          return c
+        })
+      })
+    })
+
+    
+    setConversations(prev=>{
+      return prev.map(c=>{
+        if( currentChat?.id==c.id){
+           const unseenMessageCount=0;
+           
+           return {...c, unseenMessageCount}
+        }
+        return c
+      })
+    })
+      
+
+  },[ currentChat, userData])
 
   useEffect(() => {
     const handleResize = () => {

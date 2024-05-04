@@ -51,7 +51,9 @@ export interface IChatRoom{
     otherUserId: string;
     user: { userName: string, profile: string };
     createdAt?:string,
-    updatedAt?:string
+    updatedAt?:string,
+    lastMessage:{text:string, createdAt:string, senderId:string},
+    unseenMessageCount:number
 }
 
 export interface IMessage{

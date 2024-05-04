@@ -32,10 +32,15 @@ function UserProfileSideBar({ children }: { children: React.ReactNode }) {
 
                         <div className={`transition-all  ${expanded ? "w-96 h-52 " : "w-0 h-0"}`}>
                             <ProfilePicture />
+                            
                         </div>
                     </div>
 
                     <ProfileSideBarContext.Provider value={{ expanded }}>
+                        <div className=' flex justify-center gap-8 w-full text-sm text-primary font-semibold '>
+                            <div className='flex flex-col items-center'>  <span>410</span> <span>Followers</span> </div>
+                            <div className='flex flex-col items-center'>  <span>410</span> <span>Followers</span> </div>        
+                        </div>
                         <ul className={`flex-1 px-3 ${expanded && 'px-4'}`}>{children}</ul>
                     </ProfileSideBarContext.Provider>
 

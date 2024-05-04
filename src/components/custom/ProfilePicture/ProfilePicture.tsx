@@ -62,10 +62,12 @@ const ProfilePicture=forwardRef<HTMLDivElement, ProfilePictureProps>(
                     <h1 className='font-semibold'>{data?.userName}</h1>
                     <h2 className='text-sm'>{data?.email}</h2>
                 </div>
+                
         
             </div>
                  </div>
             }
+            
              
              
             

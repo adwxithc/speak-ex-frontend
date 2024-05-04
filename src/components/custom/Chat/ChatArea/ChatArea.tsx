@@ -41,16 +41,18 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
         e.target.style.height = e.target.scrollHeight < 150 ? `${e.target.scrollHeight}px` : '150px';
     };
 
-    const handleSeenMessage=async()=>{
-    
+    const handleSeenMessage =useCallback( async () => {
+
         try {
-            await setMessageSeen({roomId:currentChat.id,senderId:currentChat.otherUserId})
+            socket.current?.emit("setMessageSeen", {
+                receiverId: currentChat.otherUserId,
+            });
+            await setMessageSeen({ roomId: currentChat.id, senderId: currentChat.otherUserId })
         } catch (error) {
             console.log(error);
-            
-        }
-    }
 
+        }
+    },[currentChat,setMessageSeen,socket])
 
     const [getMessages, { isLoading }] = useGetMessagesMutation()
     const observer = useRef<IntersectionObserver | null>(null)
@@ -68,19 +70,16 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
         if (node) observer.current.observe(node)
 
 
-    }, [isLoading, hasMore])
+    }, [isLoading, hasMore, setPage])
 
 
     const [sendMessage] = useSendMessageMutation()
-
-
 
     useEffect(() => {
         const fetchMessages = async () => {
             try {
 
                 const res = await getMessages({ roomId: currentChat?.id, page }).unwrap();
-
                 isFirstRender.current = true
                 console.log(res);
 
@@ -94,11 +93,8 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
 
             }
         }
-
         fetchMessages()
     }, [currentChat, getMessages, page])
-
-
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -106,8 +102,6 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             setTimeout(() => {
                 if (!scrollRef?.current) return
                 scrollRef.current.scrollIntoView({ behavior: 'smooth' })
-
-
             }, 500)
             isFirstRender.current = false
         } else {
@@ -121,18 +115,26 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
     useEffect(() => {
 
         socket.current?.on("getMessage", (data) => {
-           
+            // alert('recieve getMessage')
             setArrivalMessage({
                 id: '',
                 senderId: data.senderId,
                 text: data.text,
-                createdAt: Date.now().toString(),
-                updatedAt: Date.now().toString(),
-                seen:true,
+                createdAt: new Date().toString(),
+                updatedAt: new Date().toString(),
+                seen: true,
                 roomId: currentChat.id
             });
+        });
 
-            
+        socket.current?.on("getMessageSeen", () => {
+            // alert('recieve getMessageSeen')
+
+            setTimeout(() => {
+                setMessages(prev => [...prev.map(msg => ({ ...msg, seen: true }))])
+            }, 1000)
+
+
         });
     }, [socket, currentChat]);
 
@@ -140,15 +142,14 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
         arrivalMessage &&
             currentChat?.members.includes(arrivalMessage.senderId) &&
             setMessages((prev) => [...prev, arrivalMessage]);
-            
-            handleSeenMessage()
-    }, [arrivalMessage, currentChat]);
+
+        handleSeenMessage()
+    }, [arrivalMessage, currentChat,handleSeenMessage]);
 
     const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         if (!text) return
         try {
-
 
             const receiverId = currentChat.members.find(
                 (member) => member !== userData?.id
@@ -161,7 +162,6 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             });
 
             const res = await sendMessage({ roomId: currentChat?.id, messageData: { text, senderId: userData?.id } }).unwrap()
-            
 
             setMessages(prev => [...prev, res.data])
             setText('')
@@ -170,12 +170,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             console.log(error);
         }
     }
-
-    // if(isLoading) return <div>Loading..</div>
-
     return (
-
-
 
         <motion.div
             initial={{ x: '100vw' }}
@@ -191,25 +186,17 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
                         <span>{currentChat.user.userName}</span>
                         <span className="text-gray-300 text-sm">{isOnline ? 'Online' : 'Offline'}</span>
                     </div>
-
                 </div>
-
             </div>
-
-
             {/* chat */}
             <div className=" flex-1  overflow-y-scroll pretty-scrollbar bg-[#0e1c34]">
                 {isLoading ? <div className='flex justify-center text-gray-200 pt-1'><PropagateLoader color='white' /></div> : ''}
                 {
-                    messages.map((msg, index) => <div key={msg.id} ref={index == 0 ? lastMessageRef : null}><div ref={scrollRef}><Message message={msg} user={currentChat.user}  /></div></div>)
+                    messages.map((msg, index) => <div key={msg.id} ref={index == 0 ? lastMessageRef : null}><div ref={scrollRef}><Message message={msg} user={currentChat.user} /></div></div>)
                 }
-
-
             </div>
             {/* bottom area */}
             <div className="py-1 flex  bg-[#152a4c]">
-
-
                 <div className='border-2 border-[#0e1c34] bg-[#152b52] w-full overflow-hidden px-5 mx-8 flex rounded-[35px]'>
                     <textarea value={text} onChange={handleChange} className="resize-none pt-3 text-white  bg-inherit outline-none   w-full max-w-[900px] flex items-center pretty-scrollbar" placeholder="write something..."></textarea>
                     <div className='flex items-center'>
@@ -217,13 +204,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
                     </div>
 
                 </div>
-
-
-
             </div>
-
-
-
         </motion.div>
     )
 }

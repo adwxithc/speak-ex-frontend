@@ -23,8 +23,8 @@ function Message({user,message}:MessageProps) {
                 <span className="leading-relaxed">{message.text}</span>
 
                 <div className={`flex justify-end items-center`}>
-                <span className={`text-gray-400 text-xs`} >{moment(new Date(message.createdAt)).fromNow()} </span>
-                {own &&message.seen && <CheckCheck className="ml-2" size={15} color="blue" />}
+                <span className={`text-gray-400 text-xs`} >{moment(new Date(message.createdAt.toString())).fromNow()} </span>
+                {own && message.seen && <CheckCheck className="ml-2" size={15} color="blue" />}
                 </div>
 
             </div>
