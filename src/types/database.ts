@@ -71,3 +71,11 @@ export interface IMessage{
     createdAt:string;
     updatedAt:string
 }
+
+
+export interface ITag{
+    id:string;
+    name:string,
+    count:number
+} 
+

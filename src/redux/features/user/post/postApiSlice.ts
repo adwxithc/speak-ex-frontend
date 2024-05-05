@@ -60,8 +60,10 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method:'PUT',
                 body:{text:data.text}
             })
+        }),
+        getTags:builder.query({
+            query:(data)=>`${POST_URL}/tags/search?key=${data.key||''}&page=${data.page||1}`
         })
-        
        
      
 
@@ -77,5 +79,6 @@ useUnlikeMutation,
 useGetCommentsMutation,
 useAddCommentMutation,
 useDeleteCommentMutation,
-useUpdateCommentMutation
+useUpdateCommentMutation,
+useGetTagsQuery
 } = postApiSlice;

@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react'
 import { Input } from '../../../components/ui/Input/Input';
 import Tiptap from '../../../components/custom/Tiptap/Tiptap';
 import { PostData } from './CreatePost';
+import TagInput from '../../../components/custom/TagInput/TagInput';
 
 interface IEnterDatas {
   updateFields: (fields: Partial<PostData>) => void;
@@ -34,6 +35,10 @@ function EnterDatas({ title, content, updateFields, setShowNext }: IEnterDatas) 
         <div>
           <label htmlFor="title">title</label>
           <Input id='title' onChange={(e) => updateFields({ title: e.target.value })} value={title} />
+        </div>
+        <div>
+          <label htmlFor="tags">Add tags</label>
+          <TagInput updateFields={updateFields} />
         </div>
 
         <div className='mt-5'>

@@ -13,12 +13,14 @@ import { useNavigate } from "react-router-dom";
 export type PostData = {
   title:string,
   content:string,
+  tags:string,
   image:File|null
 }
 
 const INITIAL_DATA: PostData = {
   title:'',
   content:'',
+  tags:'',
   image:null
 }
 
@@ -61,6 +63,7 @@ function CreatePost({setPosts,setLoading,setModalOpen}:ICreatePostProps) {
         formData.append('image',data.image as Blob)
         formData.append('title',data.title)
         formData.append('content',data.content)
+        formData.append('tags',data.tags)
 
         setLoading(true)
         const res= await upload(formData).unwrap()
