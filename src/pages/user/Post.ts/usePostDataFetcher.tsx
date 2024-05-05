@@ -3,10 +3,12 @@ import { useGetPostMutation } from '../../../redux/features/user/post/postApiSli
 import { IPost } from '../../../types/database';
 
 
-interface IPostedUser{
+export interface IPostedUser{
+    id:string;
     userName:string;
     profile:string
     email:string
+    followers:string[]
 }
 
 export interface IPostData extends IPost{

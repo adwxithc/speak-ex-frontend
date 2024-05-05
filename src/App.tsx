@@ -29,6 +29,8 @@ import UsersPosts from './pages/user/UsersPosts/UsersPosts';
 import UserPrivateRoute from './pages/user/UserPrivateRoute/UserPrivateRoute';
 import Post from './pages/user/Post.ts/Post';
 import UserInfo from './pages/user/UserInfo/UserInfo';
+import Test3 from './pages/Test/Test3';
+import FollowAndFollowers from './pages/user/FollowAndFollowers/FollowAndFollowers';
 
 
 
@@ -58,6 +60,10 @@ const router = createBrowserRouter([
             {
               path: 'user-info',
               Component: UserInfo
+            },
+            {
+              path: 'follow/:followType',
+              Component:FollowAndFollowers
             }
           ]
         },
@@ -105,6 +111,10 @@ const router = createBrowserRouter([
       {
         path: '/test',
         Component: Test
+      },
+      {
+        path: '/test3',
+        Component: Test3
       },
     ]
   },

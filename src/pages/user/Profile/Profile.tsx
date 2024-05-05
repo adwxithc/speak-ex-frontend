@@ -7,7 +7,7 @@ import { CircleDollarSign, CircleUser,Info, Wallet } from "lucide-react"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
 import { useGetUserQuery } from "../../../redux/features/user/user/profileApiSlice"
-import { createContext } from "react"
+import { createContext, useEffect } from "react"
 import { IUser } from "../../../types/database"
 
 
@@ -18,7 +18,10 @@ function Profile() {
   const navigate =useNavigate()
   const {userName} = useParams()
   
-  const { data, isLoading, error } = useGetUserQuery({ userName });
+  const { data, isLoading, error,refetch } = useGetUserQuery({ ...{userName} });
+  useEffect(()=>{
+    refetch()
+  },[userName])
   
     return (
         <>
@@ -43,9 +46,14 @@ function Profile() {
             <div className="bg-white rounded-xl w-full max-h-screen overflow-x-hidden overflow-y-scroll pretty-scrollbar shadow-md">
 
               <div className=" h-52 sm:h-0 overflow-hidden">
+                
               <ProfilePicture />
-              </div>
               
+              </div>
+              <div className={` sm:hidden flex justify-center gap-8 w-full text-sm text-primary font-semibold mt-2`}>
+                <div className='flex flex-col items-center'>  <span>410</span> <span>Followers</span> </div>
+                <div className='flex flex-col items-center'>  <span>410</span> <span>Followers</span> </div>        
+              </div>
                 <Outlet />
             </div>
   

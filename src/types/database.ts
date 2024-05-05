@@ -10,8 +10,14 @@ export interface IUser{
     createdAt:string;
     focusLanguage?:string;
     proficientLanguage?:string[]
+    followers: string[],
+    following: string[]
     status?: 'active' | 'freeze';
 }
+
+
+
+export default IUser; 
 
 export interface IPost{
     id:string;

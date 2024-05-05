@@ -60,7 +60,22 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body:{userName:data}
             })
         }),
-        
+        followUser:builder.mutation({
+            query:(data)=>({
+                url:`${USER_URL}/follow/${data.userId}`,
+                method:'PUT',
+            })
+        }),
+        unfollowUser:builder.mutation({
+            query:(data)=>({
+                url:`${USER_URL}/unfollow/${data.userId}`,
+                method:'PUT',
+            })
+        }),
+        getFollowersOrFollowings:builder.query({
+            query:(data)=>`${USER_URL}/${data.userName}/${data.followType}?page=${data.page||1}&limit=${data.limit||5}`
+        }),
+       
 
 
     }),
@@ -74,5 +89,8 @@ export const {
     useForgotPasswordMutation,
     useVerifyOtpMutation,
     useResetPasswordMutation,
-    useCheckUserNameAvailabilityMutation
+    useCheckUserNameAvailabilityMutation,
+    useUnfollowUserMutation,
+    useFollowUserMutation,
+    useGetFollowersOrFollowingsQuery
 } = userApiSlice;

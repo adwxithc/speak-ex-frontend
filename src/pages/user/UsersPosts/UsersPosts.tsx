@@ -38,7 +38,7 @@ function UsersPosts() {
     }
     fetchData();
 
-  },[data,getPosts])
+  },[data,getPosts,data?.userName])
   
 
   return (
