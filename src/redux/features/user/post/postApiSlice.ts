@@ -19,7 +19,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         }),
         getPost:builder.mutation({
             query:(data)=>({
-                url:`${POST_URL}/${data.postId}`,
+                url:`${POST_URL}/singlePost/${data.postId}`,
                 method:'GET',
             })
         }),
@@ -63,8 +63,10 @@ export const postApiSlice = apiSlice.injectEndpoints({
         }),
         getTags:builder.query({
             query:(data)=>`${POST_URL}/tags/search?key=${data.key||''}&page=${data.page||1}`
-        })
-       
+        }),
+        getFeed:builder.query({
+            query:(data)=>`${POST_URL}/feed?page=${data.page||1}`
+        }),
      
 
     }),
@@ -80,5 +82,6 @@ useGetCommentsMutation,
 useAddCommentMutation,
 useDeleteCommentMutation,
 useUpdateCommentMutation,
-useGetTagsQuery
+useGetTagsQuery,
+useGetFeedQuery
 } = postApiSlice;

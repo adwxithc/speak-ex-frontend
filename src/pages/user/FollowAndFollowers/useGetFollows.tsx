@@ -12,6 +12,9 @@ function useGetFollows({userName, followType,page}:IUseGetFollowsProps) {
   
     const [hasMore, setHasMore] = useState(false)
     const{data,isLoading, refetch} = useGetFollowersOrFollowingsQuery({userName, followType,page})
+    useEffect(()=>{
+        setUsers([])
+    },[followType])
 
     useEffect(()=>{
         setUsers(prev=>{

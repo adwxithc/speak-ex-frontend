@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchUsersMutation, } from '../../../redux/features/user/user/profileApiSlice'
 import { debounce } from 'lodash';
+import IUser from '../../../types/database';
 
 export default function useUserSearch(key:string, page:number) {
 
@@ -27,7 +28,7 @@ export default function useUserSearch(key:string, page:number) {
             // Combine results efficiently and remove duplicates
             const combinedUsers = [...prev, ...res.data.users];
             const uniqueUsers = combinedUsers.reduce((acc, cur) => {
-              return acc.some((item) => item.id === cur.id) ? acc : [...acc, cur];
+              return acc.some((item:IUser) => item.id === cur.id) ? acc : [...acc, cur];
             }, []);
             return uniqueUsers;
           });

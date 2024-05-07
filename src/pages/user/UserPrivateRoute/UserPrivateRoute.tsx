@@ -6,7 +6,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 function UserPrivateRoute() {
     const {isAuth} = useSelector((state:RootState)=>state.user)
   return (
-    <div>
+    <div className='h-full'>
         {isAuth?<Outlet />: <Navigate to='/signin' />}
     </div>
   )

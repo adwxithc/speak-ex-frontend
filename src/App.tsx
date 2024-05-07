@@ -2,7 +2,7 @@
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import LandingPage from './pages/user/LandingPage'
+import LandingPage from './pages/user/LandingPage/LandingPage'
 import SignUp from './pages/user/auth/SignUp'
 import SignIn from './pages/user/auth/SignIn';
 import VerifyUser from './pages/user/auth/verifyUser';
@@ -31,6 +31,8 @@ import Post from './pages/user/Post.ts/Post';
 import UserInfo from './pages/user/UserInfo/UserInfo';
 import Test3 from './pages/Test/Test3';
 import FollowAndFollowers from './pages/user/FollowAndFollowers/FollowAndFollowers';
+import Chat from './pages/user/Chat/Chat';
+import VideoSession from './pages/user/VideoSession/VideoSession';
 
 
 
@@ -49,6 +51,7 @@ const router = createBrowserRouter([
       path:'',
       Component:UserPrivateRoute,
       children:[
+        
         {
           path: 'profile/:userName',
           Component: Profile,
@@ -73,11 +76,25 @@ const router = createBrowserRouter([
         }
       ]
      },
-
-
     ]
 
-  }, {
+  },{
+
+    path:'',
+    Component:UserPrivateRoute,
+    children:[
+      {
+        path:'chat',
+        Component:Chat
+      },
+      {
+        path:'video-session/:sessionId',
+        Component:VideoSession
+      }
+    ]
+  },
+
+   {
     path: '/',
     children: [
       {
