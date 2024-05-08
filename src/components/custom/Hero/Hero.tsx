@@ -6,7 +6,12 @@ import Peoples from "../Peoples/Peoples.tsx"
 import { useTranslation } from "react-i18next"
 import { RootState } from "../../../redux/store.ts"
 import { useSelector } from "react-redux"
-function Hero() {
+
+interface IHeroProps{
+  handleStartSession:()=>void
+}
+
+function Hero({handleStartSession}:IHeroProps) {
   const {t} = useTranslation(['common','landingPage'])
 
   const peoples = [
@@ -65,7 +70,7 @@ function Hero() {
             {
               isAuth
               ?<div className="mt-8">
-                <Button varient={"primary"} size={"lg"} >{t('getStarted',{ns:'common'})}</Button>
+                <Button varient={"primary"} size={"lg"} onClick={handleStartSession} >{t('getStarted',{ns:'common'})}</Button>
               </div>
               : <div className="sm:flex items-center justify-center gap-1 mt-4">
               <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />

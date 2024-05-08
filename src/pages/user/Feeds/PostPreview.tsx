@@ -77,7 +77,7 @@ function PostPreview({post}:IPostPreviewProps) {
                 <div className="">
                     <h3 className="font-bold sm:text-2xl mb-2  line-clamp-2 sm:line-clamp-1 ">{post.title}</h3>
                     <div className="hidden sm:block">
-                        <p className="text-justify line-clamp-2 md:line-clamp-3  ">{parse(post.content)}</p>
+                        <div className="text-justify line-clamp-2 md:line-clamp-3  ">{parse(post.content)}</div>
                     </div>
                     <ToolTip tooltip='Read More Content'><Link  to={`/post/${post._id}`} ><span className="text-primary font-semibold hover:border-b-2 border-primary cursor-pointer text-sm sm:text-md">view more...</span></Link></ToolTip>
                 </div>

@@ -19,8 +19,7 @@ function useGetFeeds({page}:UseGetFeedsProps) {
     const { data,isLoading, refetch } = useGetFeedQuery({page})
 
     useEffect(()=>{
-        console.log(data);
-        
+       
         setFeeds(prev=>[...prev,...(data?.data?.posts || [])])
         setHasMore(data?.data?.lastPage > page);
     },[data])

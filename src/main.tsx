@@ -9,6 +9,7 @@ import './utils/i18n.ts'
 
 import App from './App.tsx'
 import './index.css'
+import {SocketProvider} from './context/SocketProvider.tsx'
 
 
 
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
       <React.Suspense fallback="loading...">
-    <App />
+        <SocketProvider>
+              <App />
+        </SocketProvider>
     </React.Suspense>
     <Toaster position="bottom-right" />
     </StyledEngineProvider>

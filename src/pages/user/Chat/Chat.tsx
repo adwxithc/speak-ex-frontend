@@ -5,7 +5,8 @@ import { useGetChatRoomsQuery } from "../../../redux/features/user/user/chatApiS
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {IChatRoom} from "../../../types/database";
-import {Socket, io} from 'socket.io-client';
+import {Socket} from 'socket.io-client';
+import { useSocket } from "../../../context/SocketProvider";
 
 
 function Chat() {
@@ -19,6 +20,7 @@ function Chat() {
   const [key, setKey] = useState('')
 
 const socket= useRef<Socket|null>(null)
+socket.current=useSocket()
   const { data, isLoading } = useGetChatRoomsQuery({ userId:userData?.id,key });
 
   useEffect(()=>{
@@ -29,7 +31,7 @@ const socket= useRef<Socket|null>(null)
  
 
   useEffect(()=>{
-    socket.current = io("http://localhost:5000");
+  
     socket.current?.emit('addUser',{
       userId:userData?.id
     })

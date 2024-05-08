@@ -33,6 +33,7 @@ import Test3 from './pages/Test/Test3';
 import FollowAndFollowers from './pages/user/FollowAndFollowers/FollowAndFollowers';
 import Chat from './pages/user/Chat/Chat';
 import VideoSession from './pages/user/VideoSession/VideoSession';
+import WaitForLearner from './pages/user/VideoSession/WaitForLearner';
 
 
 
@@ -128,6 +129,10 @@ const router = createBrowserRouter([
       {
         path: '/test',
         Component: Test
+      },
+      {
+        path: '/test-wait',
+        Component: WaitForLearner
       },
       {
         path: '/test3',

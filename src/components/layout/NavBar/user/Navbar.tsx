@@ -16,12 +16,14 @@ import Modal from '../../../custom/Modal/Modal.tsx'
 import { AnimatePresence } from 'framer-motion'
 import SearchUser from '../../../../pages/user/SearchUser/SearchUser.tsx'
 import { useState } from 'react'
+import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
 
 
 
 export default function Navbar() {
   const { t } = useTranslation(['common'])
   const [openSearch, setOpenSearch] =useState(false)
+  const [openNotification, setOpenNotification] = useState(false)
   const navigation=  useNavigation({setOpenSearch})
 
   
@@ -99,12 +101,14 @@ export default function Navbar() {
                   {isAuth ?
                     <>
                       <button
+                      onClick={()=>setOpenNotification(true)}
                         type="button"
                         className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       >
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        
                       </button>
 
                       <ProfileDropdown />
@@ -113,7 +117,7 @@ export default function Navbar() {
                     <Button varient={'primary-outline'} size={'sm'} onClick={() => navigate('/signin')}>{t('login', { ns: 'common' })}</Button>
 
                   }
-
+                  
                 </div>
               }
             </div>
@@ -148,7 +152,14 @@ export default function Navbar() {
         mode="wait"
         >
         {openSearch && <Modal position='top-20' loading={false}  handleClose={()=>{setOpenSearch(false)}} ><SearchUser {...{setOpenSearch}}/></Modal>}
+        {openNotification &&
+        <NotificationBar handleClose={()=>setOpenNotification(false)}  />
+
+        }
         </AnimatePresence>
+
+        
+        
     </>
 
   )
