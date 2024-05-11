@@ -11,14 +11,16 @@ function useHandleSession() {
     const socket = useSocket()
 
     const handleStartSession = useCallback(()=>{
+       
         setLoading(true)
+  
         socket?.emit('session:start',{userId:userData?.id})
 
         setLoading(false)
     },[socket, userData?.id])
 
     const handleJoinSession=useCallback(({sessionId}:{sessionId:string})=>{
-        navigate(`video-session/${sessionId}`)
+        navigate(`video-session/session-wait/${sessionId}`)
     },[navigate])
 
     useEffect(()=>{

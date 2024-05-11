@@ -1,6 +1,8 @@
 
-import { ReactNode, createContext, useContext, useMemo } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
+import { useSelector } from 'react-redux';
 import { Socket, io} from 'socket.io-client';
+import { RootState } from '../redux/store';
 
 const SocketContext = createContext<Socket|null>(null)
 
@@ -16,7 +18,15 @@ export const useSocket=()=>{
 
 
 export function SocketProvider({children}:IContextProviderProps) {
-    const socket:Socket = useMemo(()=>io("http://10.0.13.94:5000/"),[])
+
+    const {userData} =useSelector((state:RootState)=>state.user)
+
+    const socket:Socket = useMemo(()=>io("http://localhost:5000"),[])
+    useEffect(()=>{
+      if(!userData?.id) return 
+      socket.emit('addUser',{userId:userData?.id})
+    },[socket, userData?.id])
+    
   return (
     <SocketContext.Provider value={socket}>
         {children}

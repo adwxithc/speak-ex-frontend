@@ -17,6 +17,7 @@ import { AnimatePresence } from 'framer-motion'
 import SearchUser from '../../../../pages/user/SearchUser/SearchUser.tsx'
 import { useState } from 'react'
 import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
+import useNotifications from '../../../../pages/user/Notifications/useNotifications.tsx'
 
 
 
@@ -25,7 +26,7 @@ export default function Navbar() {
   const [openSearch, setOpenSearch] =useState(false)
   const [openNotification, setOpenNotification] = useState(false)
   const navigation=  useNavigation({setOpenSearch})
-
+  const { notifications, handleJoinSession} =useNotifications()
   
 
   const { isAuth } = useSelector((state: RootState) => state.user)
@@ -153,7 +154,7 @@ export default function Navbar() {
         >
         {openSearch && <Modal position='top-20' loading={false}  handleClose={()=>{setOpenSearch(false)}} ><SearchUser {...{setOpenSearch}}/></Modal>}
         {openNotification &&
-        <NotificationBar handleClose={()=>setOpenNotification(false)}  />
+        <NotificationBar {...{notifications,handleJoinSession}}  handleClose={()=>setOpenNotification(false)}  />
 
         }
         </AnimatePresence>

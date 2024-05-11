@@ -5,14 +5,16 @@ import Backdrop from '../Modal/Backdrop';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom'
 import Notifications from '../../../pages/user/Notifications/Notifications';
+import { INotification } from '../../../pages/user/Notifications/useNotifications';
 
 interface ModalProp{
     handleClose: () => void;
-  
+    notifications:INotification[];
+    handleJoinSession: ({ sessionId }: {sessionId: string;}) => void
 
 }
 
-const  Modal:FC<ModalProp> = ({ handleClose } ) =>{
+const  Modal:FC<ModalProp> = ({ handleClose, notifications,handleJoinSession } ) =>{
     
     return ReactDOM.createPortal(
         <>
@@ -33,8 +35,8 @@ const  Modal:FC<ModalProp> = ({ handleClose } ) =>{
                 </div>
 
 
-                <div className='px-5 h-full overflow-x-hidden overflow-y-scroll pretty-scrollbar'>
-                    <Notifications/>
+                <div className='px-5 h-full w-full overflow-x-hidden overflow-y-scroll pretty-scrollbar'>
+                    <Notifications {...{notifications,handleJoinSession}}/>
                 </div>
                 
                 

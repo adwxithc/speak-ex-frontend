@@ -34,6 +34,8 @@ import FollowAndFollowers from './pages/user/FollowAndFollowers/FollowAndFollowe
 import Chat from './pages/user/Chat/Chat';
 import VideoSession from './pages/user/VideoSession/VideoSession';
 import WaitForLearner from './pages/user/VideoSession/WaitForLearner';
+import VideoSessionTest from './pages/user/VideoSession/VideoSessionTest';
+import JoinSession from './pages/user/VideoSession/JoinSession';
 
 
 
@@ -89,8 +91,20 @@ const router = createBrowserRouter([
         Component:Chat
       },
       {
+        path: 'video-session/session-wait/:sessionId',
+        Component: WaitForLearner
+      },
+      {
+        path: 'video-session/join/:sessionId',
+        Component: JoinSession
+      },
+      {
         path:'video-session/:sessionId',
         Component:VideoSession
+      },
+      {
+        path:'video-session/:userType',
+        Component:VideoSessionTest
       }
     ]
   },
@@ -130,10 +144,7 @@ const router = createBrowserRouter([
         path: '/test',
         Component: Test
       },
-      {
-        path: '/test-wait',
-        Component: WaitForLearner
-      },
+      
       {
         path: '/test3',
         Component: Test3

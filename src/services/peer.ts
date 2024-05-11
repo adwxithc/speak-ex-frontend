@@ -35,9 +35,11 @@ class PeerService{
         if(!this.peer) return 
         try {
             
+            
+            
             await this.peer.setRemoteDescription(new RTCSessionDescription(ans));
         } catch (error) {
-            console.error('Error setting local description:', error);
+            console.error('Error setting remote description:', error);
         }
     }
 
