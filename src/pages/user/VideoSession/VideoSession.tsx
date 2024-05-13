@@ -12,109 +12,171 @@ import { useLocation } from "react-router-dom";
 
 export default function VideoSession() {
   const socket = useSocket()
-  const {userData} =useSelector((state:RootState)=>state.user)
+  const { userData } = useSelector((state: RootState) => state.user)
   const [isMobile, setIsMobile] = useState(true);
-  const [chating, setChating] = useState(false);
- 
-  const [localStream, setLocalStream] = useState<MediaStream|null>(null)
-  const [remoteStream, setRemoteStream] = useState<MediaStream|null>(null)
+  const chating = false;
+
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null)
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
   const location = useLocation();
-  const data = location.state;
-  const {remoteUserId,audioEnabled, videoEnabled}=data
- 
-  console.log(audioEnabled, videoEnabled);
-  
-  const [enableVideo, setEnableVideo] = useState<boolean>(videoEnabled)
-    const [enableAudio, setEnableAudio] = useState<boolean>(audioEnabled)
+  const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type } = location.state;
 
-    const toggleAudio =()=>{
-        setEnableAudio(prev=>!prev)
+  const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(audio)
+  const [videoEnabled, setVideoEnabled] = useState<boolean>(video)
+
+
+
+  useEffect(()=>{
+    const getLocalStream = async()=>{
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: audioEnabled,
+        video: videoEnabled
+      })
+      setLocalStream(stream)
+      return stream
     }
+    const stream = getLocalStream()
 
-    const toggleVideo =()=>{
-        setEnableVideo(prev=>!prev)
+    return ()=>{
+      stream.then(s=>{
+        s.getTracks().forEach(track=>{
+          track.stop()
+        })
+      })
+
+     
     }
+  },[audioEnabled, videoEnabled])
 
-
-
-  const handleNegoNeeded =  useCallback(async()=>{
   
+
+  
+
+  const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
+
+    
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: audioEnabled,
+      video: videoEnabled
+    })
+    setLocalStream(stream)
+
+    const offer = await peer.getOffer()
+
+    socket?.emit('session:call-user', { from: userData?.id, to: remoteUserId, offer })
+
+
+  }, [audioEnabled, socket, userData?.id, videoEnabled])
+
+
+  const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
+
+
+    handleCallUser({ remoteUserId: userId })
+
+  }, [handleCallUser])
+
+  useEffect(() => {
+    if (type == 'host') {
+      handleUserJoin({ userId: remoteUserId })
+    }
+  }, [handleUserJoin, remoteUserId, type])
+
+
+
+  const handleNegoNeeded = useCallback(async () => {
+    
     const offer = await peer.getOffer();
-    socket?.emit('peer:nego-needed',{offer, to:remoteUserId, from:userData?.id})
-  },[remoteUserId, socket, userData?.id])
+    socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
+  }, [remoteUserId, socket, userData?.id])
 
 
   //SETTING REMOTE STREAM
-  const handleAddTrack = useCallback((ev:RTCTrackEvent)=>{
-   
+  const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
+
     const remoteStream = ev.streams;
-   
+
     setRemoteStream(remoteStream[0]);
-  },[])
+  }, [])
 
-  const handlePeerNegoNeeded=useCallback(async ({from,offer}:{from:string,offer:RTCSessionDescriptionInit})=>{
+  const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
     const ans = await peer.getAnswer(offer)
-    socket?.emit('peer:nego-done',{to:from,ans})
+    socket?.emit('peer:nego-done', { to: from, ans })
 
-  },[socket])
-  
-  const handlePeerNegoFinal= useCallback(async({ans}:{ans:RTCSessionDescriptionInit})=>{
+  }, [socket])
+
+  const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
     await peer.setRemoteDescription(ans)
-  },[])
+  }, [])
 
 
 
-
-  useEffect(()=>{
-   
-    const getLocalStream=async()=>{
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio:enableAudio,
-        video:enableVideo
-      })
+  const sendStreams = useCallback(async () => {
+    let stream = null
+    if (localStream) {
+      stream = localStream
+    } else {
+      stream = await navigator.mediaDevices.getUserMedia({ video: videoEnabled, audio: audioEnabled })
       setLocalStream(stream)
-      for (const track of stream.getTracks()) {
-        peer.peer.addTrack(track, stream);
-      }
-      return stream
     }
-    getLocalStream()
-    
 
-  },[enableAudio, enableVideo])
+    for (const track of stream.getTracks()) {
+      peer.peer.addTrack(track, stream);
+    }
+
+    setLocalStream(stream)
+
+  }, [audioEnabled, localStream, videoEnabled]);
+
+
+
+  const handleIncommingCall = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
+
+    const ans = await peer.getAnswer(offer)
+
+    setRemoteUserId(from)
+    socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
+    sendStreams();
+
+  }, [remoteUserId, sendStreams, socket, userData?.id])
+
+  const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
+
+    peer.setRemoteDescription(ans)
+    sendStreams()
+  }, [sendStreams])
 
  
 
+  useEffect(() => {
+    peer.peer.addEventListener('negotiationneeded', handleNegoNeeded)
+    peer.peer.addEventListener('track', handleAddTrack)
+    return () => {
+      peer.peer.removeEventListener('negotiationneeded', handleNegoNeeded)
+      peer.peer.removeEventListener('track', handleAddTrack)
+    }
+  }, [handleAddTrack, handleNegoNeeded])
 
 
-  useEffect(()=>{
-    peer.peer.addEventListener('negotiationneeded',handleNegoNeeded)
 
-    return ()=>{
-    peer.peer.removeEventListener('negotiationneeded',handleNegoNeeded)
+
+  useEffect(() => {
+
+    socket?.on('incomming:call', handleIncommingCall)
+    socket?.on('call:accepted', handleCallAccepted)
+    socket?.on('peer:nego-needed', handlePeerNegoNeeded)
+    socket?.on('peer:nego-final', handlePeerNegoFinal)
+
+    return () => {
+
+      socket?.off('incomming:call', handleIncommingCall)
+      socket?.off('call:accepted', handleCallAccepted)
+      socket?.off('peer:nego-needed', handlePeerNegoNeeded)
+      socket?.off('peer:nego-final', handlePeerNegoFinal)
 
     }
-  },[handleNegoNeeded])
-
-
-  useEffect(()=>{
-    peer.peer.addEventListener('track',handleAddTrack)
-
-    return ()=>{
-      peer.peer.removeEventListener('track',handleAddTrack)
-    }
-  },[handleAddTrack])
-
-  useEffect(()=>{
-    socket?.on('peer:nego-needed',handlePeerNegoNeeded)
-    socket?.on('peer:nego-final',handlePeerNegoFinal)
-
-    return ()=>{
-    socket?.off('peer:nego-needed',handlePeerNegoNeeded)
-    socket?.off('peer:nego-final',handlePeerNegoFinal)
-   
-    }
-  },[handlePeerNegoFinal, handlePeerNegoNeeded, socket])
+  }, [handleCallAccepted, handleIncommingCall, handlePeerNegoFinal, handlePeerNegoNeeded, socket])
 
 
 
@@ -130,41 +192,43 @@ export default function VideoSession() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+
+
   return (
 
     <div className="flex">
 
       {
-        isMobile?(
-          chating?(
+        isMobile ? (
+          chating ? (
             <div className="w-96 border-l dark:border-l-[#091220]">
               <VideoCallChat />
             </div>
           )
-          :(
-            <div className="flex-1">
-              <VideoChatArea {...{localStream,toggleVideo,toggleAudio,enableAudio,enableVideo,remoteStream}} />
-            </div>
+            : (
+              <div className="flex-1">
+                <VideoChatArea {...{ localStream, remoteStream, audioEnabled, setAudioEnabled, videoEnabled, setVideoEnabled }} />
+              </div>
+            )
+        )
+          : (
+            <>
+              <div className="flex-1">
+                <VideoChatArea {...{ localStream, remoteStream, audioEnabled, setAudioEnabled, setVideoEnabled, videoEnabled }} />
+              </div>
+
+              <div className="w-96 border-l dark:border-l-[#091220]">
+                <VideoCallChat />
+              </div>
+            </>
           )
-        )
-        :(
-          <>
-          <div className="flex-1">
-            <VideoChatArea {...{localStream,toggleVideo,toggleAudio,enableAudio,enableVideo,remoteStream}} />
-          </div>
-        
-          <div className="w-96 border-l dark:border-l-[#091220]">
-          <VideoCallChat />
-          </div>
-          </>
-        )
       }
 
 
-      
+
     </div>
-    
+
   )
- 
+
 }
 
