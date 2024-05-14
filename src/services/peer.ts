@@ -68,15 +68,16 @@ class PeerService implements IPeerService{
     destroyPeerConnection() {
         if (this.peer) {
           this.peer.ontrack = null;
-        //   this.peer.onremovetrack = null;
-        //   this.peer.onremovestream = null;
+       
           this.peer.onicecandidate = null;
           this.peer.oniceconnectionstatechange = null;
           this.peer.onsignalingstatechange = null;
           this.peer.onicegatheringstatechange = null;
           this.peer.onnegotiationneeded = null;
+          this.peer.getSenders().forEach((sender) => sender.track?.stop());
+         
         }
-        this.peer = null;
+     
       }
 }
 

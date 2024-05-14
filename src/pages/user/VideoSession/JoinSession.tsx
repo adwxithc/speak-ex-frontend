@@ -10,8 +10,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 
 
-
-
 function JoinSession() {
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
 
@@ -22,8 +20,6 @@ function JoinSession() {
     const { sessionId = '' } = useParams()
     const socket = useSocket()
     const videoRef = useRef<HTMLVideoElement>(null);
-
-
 
 
     useEffect(() => {
@@ -45,8 +41,6 @@ function JoinSession() {
     }, [setLocalStream, videoEnabled]);
 
 
-
-
     const toggleVideo = () => {
         setVideoEnabled(prev => !prev)
 
@@ -55,8 +49,6 @@ function JoinSession() {
     const toggleAudio = () => {
         setAudioEnabled(prev => !prev)
     };
-
-
 
 
     const handleJoinSession = useCallback(({ sessionId, allowed }: { sessionId: string, allowed: boolean, session: string }) => {
@@ -89,7 +81,6 @@ function JoinSession() {
     }, [localStream]);
 
     return (
-
         <div className='h-full  bg-secondary  dark:bg-[#0e1c34] '>
             <Container className="h-[calc(100vh-0rem)]">
 
@@ -133,13 +124,8 @@ function JoinSession() {
                         </div>
 
                     </div>
-
-
                 </div>
             </Container>
-
-
-
         </div>
     )
 }

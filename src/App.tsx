@@ -32,10 +32,10 @@ import UserInfo from './pages/user/UserInfo/UserInfo';
 import Test3 from './pages/Test/Test3';
 import FollowAndFollowers from './pages/user/FollowAndFollowers/FollowAndFollowers';
 import Chat from './pages/user/Chat/Chat';
-import VideoSession from './pages/user/VideoSession/VideoSession';
 import WaitForLearner from './pages/user/VideoSession/WaitForLearner';
-import VideoSessionTest from './pages/user/VideoSession/VideoSessionTest';
+
 import JoinSession from './pages/user/VideoSession/JoinSession';
+import VideoSessionLogic from './pages/user/VideoSession/VideoSessionLogic';
 
 
 
@@ -100,12 +100,9 @@ const router = createBrowserRouter([
       },
       {
         path:'video-session/:sessionId',
-        Component:VideoSession
+        Component:VideoSessionLogic
       },
-      {
-        path:'video-session/:userType',
-        Component:VideoSessionTest
-      }
+      
     ]
   },
 
