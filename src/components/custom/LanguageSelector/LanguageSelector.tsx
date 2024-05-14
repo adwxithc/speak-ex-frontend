@@ -23,8 +23,8 @@ function LanguageSelector() {
     },[i18n,i18n.language])
   return (
     <div>
-      <select onChange={(e)=>changeLanguage(e)} >
-        {languages.map(lng=><option selected={lng.code==i18n.language} key={lng.code} value={lng.code}>{lng.lang}</option>)}
+      <select onChange={(e)=>changeLanguage(e)} defaultValue={i18n.language} >
+        {languages.map(lng=><option  key={lng.code} value={lng.code}>{lng.lang}</option>)}
         
       </select>
     </div>

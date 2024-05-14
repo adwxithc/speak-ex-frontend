@@ -18,6 +18,7 @@ import SearchUser from '../../../../pages/user/SearchUser/SearchUser.tsx'
 import { useState } from 'react'
 import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
 import useNotifications from '../../../../pages/user/Notifications/useNotifications.tsx'
+import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
 
 
 
@@ -26,7 +27,7 @@ export default function Navbar() {
   const [openSearch, setOpenSearch] =useState(false)
   const [openNotification, setOpenNotification] = useState(false)
   const navigation=  useNavigation({setOpenSearch})
-  const { notifications, handleJoinSession} =useNotifications()
+  const { notifications, handleJoinSession, handleRejectOffer, openSessionOffer} =useNotifications()
   
 
   const { isAuth } = useSelector((state: RootState) => state.user)
@@ -153,6 +154,7 @@ export default function Navbar() {
         mode="wait"
         >
         {openSearch && <Modal position='top-20' loading={false}  handleClose={()=>{setOpenSearch(false)}} ><SearchUser {...{setOpenSearch}}/></Modal>}
+        {openSessionOffer && <Modal position='top-20' loading={false}  handleClose={handleRejectOffer} ><SessionOffer {...{handleJoinSession,handleRejectOffer}} /></Modal>}
         {openNotification &&
         <NotificationBar {...{notifications,handleJoinSession}}  handleClose={()=>setOpenNotification(false)}  />
 

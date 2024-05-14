@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import VideoCallChat from "./VideoCallChat"
 import VideoChatArea from "./VideoChatArea"
@@ -22,9 +22,9 @@ export default function VideoSession() {
   const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type } = location.state;
 
   const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
-  const [audioEnabled, setAudioEnabled] = useState<boolean>(audio)
-  const [videoEnabled, setVideoEnabled] = useState<boolean>(video)
-
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(audio||true)
+  const [videoEnabled, setVideoEnabled] = useState<boolean>(video ||true)
+  const role  = useRef(type)
 
 
   useEffect(()=>{
@@ -36,6 +36,7 @@ export default function VideoSession() {
       setLocalStream(stream)
       return stream
     }
+    
     const stream = getLocalStream()
 
     return ()=>{
@@ -55,7 +56,7 @@ export default function VideoSession() {
 
   const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
 
-    
+  
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: audioEnabled,
       video: videoEnabled
@@ -79,6 +80,7 @@ export default function VideoSession() {
 
   useEffect(() => {
     if (type == 'host') {
+      
       handleUserJoin({ userId: remoteUserId })
     }
   }, [handleUserJoin, remoteUserId, type])
@@ -86,7 +88,11 @@ export default function VideoSession() {
 
 
   const handleNegoNeeded = useCallback(async () => {
-    
+    if(role.current=='host'){
+      role.current= 'client'
+      return
+    } 
+   
     const offer = await peer.getOffer();
     socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
   }, [remoteUserId, socket, userData?.id])
@@ -94,19 +100,18 @@ export default function VideoSession() {
 
   //SETTING REMOTE STREAM
   const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
-
     const remoteStream = ev.streams;
-
     setRemoteStream(remoteStream[0]);
   }, [])
 
   const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
+ 
     const ans = await peer.getAnswer(offer)
     socket?.emit('peer:nego-done', { to: from, ans })
-
   }, [socket])
 
   const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
+
     await peer.setRemoteDescription(ans)
   }, [])
 

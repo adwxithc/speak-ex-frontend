@@ -18,6 +18,10 @@ function WaitForLearner() {
   const navigate = useNavigate()
   const socket = useSocket()
 
+  const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
+    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'host' } })
+  }, [audioEnabled, navigate, sessionId, videoEnabled])
+
   useEffect(() => {
 
     const getLocalStream = async () => {
@@ -43,9 +47,16 @@ function WaitForLearner() {
 
   }, [videoEnabled])
 
-  const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
-    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'host' } })
-  }, [audioEnabled, navigate, sessionId, videoEnabled])
+useEffect(()=>{
+  const timeOut = setTimeout(()=>{
+ 
+    socket?.emit('session:rematch',{sessionId})
+  },10000)
+
+  return ()=>{
+    clearTimeout(timeOut)
+  }
+},[sessionId, socket])
 
 
   useEffect(() => {
