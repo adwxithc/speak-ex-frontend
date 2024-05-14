@@ -1,6 +1,15 @@
-class PeerService{
+export interface IPeerService{
+    getOffer(): Promise<RTCSessionDescriptionInit | undefined>
+    getAnswer(offer: RTCSessionDescriptionInit): Promise<RTCSessionDescriptionInit | undefined>
+    setRemoteDescription(ans: RTCSessionDescriptionInit): Promise<void>
+    addTrack(track: MediaStreamTrack, stream: MediaStream): Promise<void>
+    getPeerConnection(): RTCPeerConnection | null
+    destroyPeerConnection(): void
+}
 
-    public peer: RTCPeerConnection;
+class PeerService implements IPeerService{
+
+    private peer: RTCPeerConnection|null;
     constructor(){
         
         this.peer = new RTCPeerConnection({
@@ -43,15 +52,32 @@ class PeerService{
         }
     }
 
-    async addTrack(track:MediaStreamTrack){
+    async addTrack(track:MediaStreamTrack,stream:MediaStream){
         try {
-            this.peer.addTrack(track)
+            this.peer?.addTrack(track,stream)
         } catch (error) {
             console.log('error in add tracks', error);
             
         }
         
     }
+    getPeerConnection() {
+        return this.peer;
+      }
+
+    destroyPeerConnection() {
+        if (this.peer) {
+          this.peer.ontrack = null;
+        //   this.peer.onremovetrack = null;
+        //   this.peer.onremovestream = null;
+          this.peer.onicecandidate = null;
+          this.peer.oniceconnectionstatechange = null;
+          this.peer.onsignalingstatechange = null;
+          this.peer.onicegatheringstatechange = null;
+          this.peer.onnegotiationneeded = null;
+        }
+        this.peer = null;
+      }
 }
 
 const peerService = new PeerService();

@@ -1,28 +1,24 @@
 import { Maximize, MessageSquareText, Mic, MicOff, Minimize, PhoneOff, Video, VideoOff } from "lucide-react"
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react"
-
-
-import Button from "../../../components/ui/Button/Button"
-
-import ToolTip from "../../../components/ui/ToolTip/ToolTip"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+import { toogleVideoTrack, toogleAudioTrack } from '../../../webRTC/streamToggle'
+import Button from "../../../components/ui/Button/Button"
+import ToolTip from "../../../components/ui/ToolTip/ToolTip"
+import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler"
+import peerService from "../../../services/peer"
+
 interface IVideoChatArea {
-
-    audioEnabled: boolean
-    videoEnabled: boolean
-    setAudioEnabled: Dispatch<SetStateAction<boolean>>
-    setVideoEnabled: Dispatch<SetStateAction<boolean>>
-
     localStream: MediaStream | null;
     remoteStream: MediaStream | null
 }
 
-function VideoChatArea({ localStream, audioEnabled, videoEnabled, setAudioEnabled, setVideoEnabled, remoteStream }: IVideoChatArea) {
+function VideoChatArea({ localStream, remoteStream }: IVideoChatArea) {
     const navigate = useNavigate()
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
-
+    const [audioEnabled, setAudioEnabled] = useState<boolean>(true)
+    const [videoEnabled, setVideoEnabled] = useState<boolean>(true)
     const [fullscreen, setFullScreen] = useState(false)
 
     useEffect(() => {
@@ -37,13 +33,23 @@ function VideoChatArea({ localStream, audioEnabled, videoEnabled, setAudioEnable
         }
     }, [remoteStream]);
 
-    const toggleVideo = useCallback(() => {
-        setVideoEnabled(prev => !prev)
-    }, [setVideoEnabled])
+    const toggleVideo = () => {
+        if(!localStream) return
+        toogleVideoTrack(localStream)
+        setVideoEnabled(prev=>!prev)
+    }
 
-    const toggleAudio = useCallback(() => {
-        setAudioEnabled(prev => !prev)
-    }, [setAudioEnabled])
+    const toggleAudio = () => {
+        if(!localStream) return
+        toogleAudioTrack(localStream)
+       setAudioEnabled(prev=>!prev)
+      
+    }
+
+    const terminate = ()=>{
+        endPeerConnectionHandler({localStream,peerService:peerService,remoteStream})
+        navigate('/')
+    }
 
     return (
         <div className="h-screen   flex flex-col">
@@ -69,7 +75,7 @@ function VideoChatArea({ localStream, audioEnabled, videoEnabled, setAudioEnable
                         {
                             remoteStream ?
 
-                                <video ref={remotevideoRef} autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
+                                <video ref={remotevideoRef} autoPlay  style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
                                 : <div>oops something went wrong...</div>
                         }
 
@@ -117,7 +123,7 @@ function VideoChatArea({ localStream, audioEnabled, videoEnabled, setAudioEnable
                     </Button>
 
 
-                    <Button onClick={() => navigate('/')} className="bg-red-500 text-white " size={'md'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
+                    <Button onClick={terminate} className="bg-red-500 text-white " size={'md'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
 
 
                     <ToolTip tooltip="chat">

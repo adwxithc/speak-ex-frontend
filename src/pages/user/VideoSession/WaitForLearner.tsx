@@ -42,7 +42,6 @@ function WaitForLearner() {
           track.stop()
         })
       })
-
     }
 
   }, [videoEnabled])

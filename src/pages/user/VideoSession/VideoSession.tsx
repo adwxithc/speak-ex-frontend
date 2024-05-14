@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import VideoCallChat from "./VideoCallChat"
 import VideoChatArea from "./VideoChatArea"
 import { useSocket } from "../../../context/SocketProvider";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import peer from '../../../services/peer.ts'
-import { useLocation } from "react-router-dom";
+
 
 
 
@@ -22,16 +23,15 @@ export default function VideoSession() {
   const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type } = location.state;
 
   const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
-  const [audioEnabled, setAudioEnabled] = useState<boolean>(audio||true)
-  const [videoEnabled, setVideoEnabled] = useState<boolean>(video ||true)
+  
   const role  = useRef(type)
 
 
   useEffect(()=>{
     const getLocalStream = async()=>{
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: audioEnabled,
-        video: videoEnabled
+        audio: audio,
+        video: video
       })
       setLocalStream(stream)
       return stream
@@ -48,7 +48,7 @@ export default function VideoSession() {
 
      
     }
-  },[audioEnabled, videoEnabled])
+  },[audio, video])
 
   
 
@@ -58,8 +58,8 @@ export default function VideoSession() {
 
   
     const stream = await navigator.mediaDevices.getUserMedia({
-      audio: audioEnabled,
-      video: videoEnabled
+      audio: audio,
+      video: video
     })
     setLocalStream(stream)
 
@@ -68,7 +68,7 @@ export default function VideoSession() {
     socket?.emit('session:call-user', { from: userData?.id, to: remoteUserId, offer })
 
 
-  }, [audioEnabled, socket, userData?.id, videoEnabled])
+  }, [audio, socket, userData?.id, video])
 
 
   const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
@@ -122,17 +122,17 @@ export default function VideoSession() {
     if (localStream) {
       stream = localStream
     } else {
-      stream = await navigator.mediaDevices.getUserMedia({ video: videoEnabled, audio: audioEnabled })
+      stream = await navigator.mediaDevices.getUserMedia({ video, audio })
       setLocalStream(stream)
     }
 
     for (const track of stream.getTracks()) {
-      peer.peer.addTrack(track, stream);
+      peer.addTrack(track, stream);
     }
 
     setLocalStream(stream)
 
-  }, [audioEnabled, localStream, videoEnabled]);
+  }, [audio, localStream, video]);
 
 
 
@@ -155,11 +155,11 @@ export default function VideoSession() {
  
 
   useEffect(() => {
-    peer.peer.addEventListener('negotiationneeded', handleNegoNeeded)
-    peer.peer.addEventListener('track', handleAddTrack)
+    peer.getPeerConnection()?.addEventListener('negotiationneeded', handleNegoNeeded)
+    peer.getPeerConnection()?.addEventListener('track', handleAddTrack)
     return () => {
-      peer.peer.removeEventListener('negotiationneeded', handleNegoNeeded)
-      peer.peer.removeEventListener('track', handleAddTrack)
+      peer.getPeerConnection()?.removeEventListener('negotiationneeded', handleNegoNeeded)
+      peer.getPeerConnection()?.removeEventListener('track', handleAddTrack)
     }
   }, [handleAddTrack, handleNegoNeeded])
 
@@ -212,14 +212,14 @@ export default function VideoSession() {
           )
             : (
               <div className="flex-1">
-                <VideoChatArea {...{ localStream, remoteStream, audioEnabled, setAudioEnabled, videoEnabled, setVideoEnabled }} />
+                <VideoChatArea {...{ localStream, remoteStream }} />
               </div>
             )
         )
           : (
             <>
               <div className="flex-1">
-                <VideoChatArea {...{ localStream, remoteStream, audioEnabled, setAudioEnabled, setVideoEnabled, videoEnabled }} />
+                <VideoChatArea {...{ localStream, remoteStream }} />
               </div>
 
               <div className="w-96 border-l dark:border-l-[#091220]">
