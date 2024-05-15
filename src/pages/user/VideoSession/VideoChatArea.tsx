@@ -1,16 +1,17 @@
 import { Maximize, MessageSquareText, Mic, MicOff, Minimize, PhoneOff, Video, VideoOff } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import { toogleVideoTrack, toogleAudioTrack } from '../../../webRTC/streamToggle'
 import Button from "../../../components/ui/Button/Button"
 import ToolTip from "../../../components/ui/ToolTip/ToolTip"
 import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler"
 import peerService from "../../../services/peer"
+import { useSocket } from "../../../context/SocketProvider"
 
 interface IVideoChatArea {
     localStream: MediaStream | null;
-    remoteStream: MediaStream | null
+    remoteStream: MediaStream | null;
 }
 
 function VideoChatArea({ localStream, remoteStream }: IVideoChatArea) {
@@ -20,7 +21,8 @@ function VideoChatArea({ localStream, remoteStream }: IVideoChatArea) {
     const [audioEnabled, setAudioEnabled] = useState<boolean>(true)
     const [videoEnabled, setVideoEnabled] = useState<boolean>(true)
     const [fullscreen, setFullScreen] = useState(false)
-
+    const socket = useSocket()
+    const { sessionId = '' } = useParams()
     useEffect(() => {
         if (localvideoRef.current && localStream) {
             localvideoRef.current.srcObject = localStream;
@@ -47,7 +49,9 @@ function VideoChatArea({ localStream, remoteStream }: IVideoChatArea) {
     }
 
     const terminate = ()=>{
+        
         endPeerConnectionHandler({localStream,peerService:peerService,remoteStream})
+        socket?.emit('session:terminate',{sessionCode:sessionId})
         navigate('/')
     }
 
