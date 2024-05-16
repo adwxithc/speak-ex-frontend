@@ -2,16 +2,17 @@ import React, { forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "../../../utils/style-utils";
-import { DotLoader } from "react-spinners";
+
 
 
 const buttonVarients = cva(
-    'inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium  hover:opacity-90 m-1',
+    'inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium  hover:opacity-90 m-1 disabled:cursor-not-allowed',
     {
         variants: {
             varient: {
                 default: 'bg-gray-200 text-black',
                 primary:"bg-primary text-white",
+                'primary-square' :'bg-primary text-white rounded',
                 danger:"bg-red-500 text-white",
                 'danger-outline':" border border-red-500 text-red-500",
                 'success-outline':" border border-green-500 text-green-500",
@@ -30,6 +31,7 @@ const buttonVarients = cva(
                 actionIcon: "h-7 w-7 p-0 m-0",
 
             },
+            
             defaultVariants: {
                 variant: "default",
                 size: "default",

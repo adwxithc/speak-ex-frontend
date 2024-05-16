@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import {debounce} from 'lodash'
+
 import { useGetLanguagesMutation } from '../../../redux/features/admin/languages/languagesApiSlice'
 import { ILanguage } from '../../../types/database';
 
@@ -9,21 +11,24 @@ function useDataFetcher() {
     const [loading, setLoading] = useState(true)
     const [languages,setLanguages] = useState<ILanguage[]>([])
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [key,setKey] = useState('')
     const [getLanguagesList] = useGetLanguagesMutation()
 
+   
+    
+
     useEffect(()=>{
-        const fetchData=async()=>{
-                   const res = await getLanguagesList({ page: currentPage + 1}).unwrap()
+        const fetchData=debounce(async()=>{
+                   const res = await getLanguagesList({ page: currentPage + 1,key}).unwrap()
 
                    const { languages, totalLanguages } = res.data
                 
                    setLanguages(()=>[...languages])
                    setTotalPages(Math.ceil(totalLanguages/5))
                    setLoading(false)
-        }
+        },500)
         fetchData();
-    },[currentPage,getLanguagesList])
+    },[currentPage, getLanguagesList, key])
 
   return {
     loading,
@@ -31,7 +36,9 @@ function useDataFetcher() {
     totalPages,
     currentPage,
     setCurrentPage,
-    setLanguages
+    setLanguages,
+    key,
+    setKey
   }
 }
 

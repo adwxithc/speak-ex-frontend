@@ -23,8 +23,11 @@ export const languageApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        getLanguageInfo:builder.query({
+            query:(data)=>`${ADMIN_URl}/language/${data.languageId}`
+        }),
 
     }),
 });
 
-export const { useAddLanguageMutation,useGetLanguagesMutation } = languageApiSlice;
+export const { useAddLanguageMutation,useGetLanguagesMutation, useGetLanguageInfoQuery } = languageApiSlice;

@@ -14,7 +14,7 @@ function AdminHomeLayout() {
   const navigate=useNavigate()
   return (
     <>
-    <div className='flex'>
+    <div className='flex bg-[#FAFBFC]'>
     <AdminNavBar>
         <ul>
             <li className='cursor-pointer'>
@@ -30,7 +30,7 @@ function AdminHomeLayout() {
     <section className='h-screen w-full overflow-y-scroll   hide-scrollbar'>
   
     <div className='h-16'></div>
-    <div className='p-8 '>{<Outlet/>}</div>
+    <div className=' p-3 sm:p-5 '>{<Outlet/>}</div>
     
     </section>
 

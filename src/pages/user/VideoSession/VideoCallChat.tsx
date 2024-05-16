@@ -2,8 +2,11 @@
 import { SendHorizontal } from 'lucide-react'
 import Message from '../../../components/custom/Chat/Message/Message'
 import Avatar from '../../../components/ui/Avatar/Avatar'
+import { useState } from 'react'
+import { IMessage } from '../../../types/database'
 
 function VideoCallChat() {
+  const [messages, setMessages] = useState<IMessage[]>([])
   return (
     <div className="h-screen   flex flex-col ">
     {/* top area */}
@@ -22,6 +25,10 @@ function VideoCallChat() {
     <div className="flex-1 bg-[#ebeaea] flex flex-col dark:bg-[#0F2440]">
 
         <div className='flex-1'>
+          {
+            messages.map(msg=>(<Message user={msg.} message={{createdAt:'',text:'hi',senderId:'',id:'',roomId:'',seen:true,updatedAt:''}} />))
+
+          }
         <Message user={{profile:'',userName:''}} message={{createdAt:'',text:'hi',senderId:'',id:'',roomId:'',seen:true,updatedAt:''}} />
         <Message user={{profile:'',userName:''}} message={{createdAt:'',text:'hello i am adwait c ',senderId:'',id:'',roomId:'',seen:true,updatedAt:''}} />
         <Message user={{profile:'',userName:''}} message={{createdAt:'',text:'how are you doing',senderId:'',id:'',roomId:'',seen:true,updatedAt:''}} />

@@ -137,6 +137,7 @@ function UserInfo() {
  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
       const errorInfo = error.data.errors;
+      alert('from server')
       toast.error(errorInfo[0].message)
 
     }finally{

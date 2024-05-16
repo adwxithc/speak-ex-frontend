@@ -5,11 +5,12 @@ import VideoChatArea from "./VideoChatArea"
 
 interface IVideoSessionProps {
   localStream: MediaStream | null,
-  remoteStream: MediaStream | null
+  remoteStream: MediaStream | null,
+  role:string
 }
 
 
-export default function VideoSession({ localStream, remoteStream }: IVideoSessionProps) {
+export default function VideoSession({ localStream, remoteStream,role }: IVideoSessionProps) {
 
   const [isMobile, setIsMobile] = useState(true);
   const chating = false;
@@ -40,14 +41,14 @@ export default function VideoSession({ localStream, remoteStream }: IVideoSessio
           )
             : (
               <div className="flex-1">
-                <VideoChatArea {...{ localStream, remoteStream }} />
+                <VideoChatArea {...{ localStream, remoteStream,role }} />
               </div>
             )
         )
           : (
             <>
               <div className="flex-1">
-                <VideoChatArea {...{ localStream, remoteStream }} />
+                <VideoChatArea {...{ localStream, remoteStream,role }} />
               </div>
 
               <div className="w-96 border-l dark:border-l-[#091220]">

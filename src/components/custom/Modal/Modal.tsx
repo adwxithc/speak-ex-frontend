@@ -38,7 +38,7 @@ const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false
         <>
          <Backdrop onClick={handleClose}>
             <motion.div
-                className={`w-auto h-auto max-h-[100vh] m-auto py-2  rounded-md flex flex-col items-center bg-white absolute ${position}`}
+                className={`w-auto h-auto max-h-[100vh] m-auto p-2  rounded-md flex flex-col items-center bg-white absolute ${position}`}
                 onClick={(e) => e.stopPropagation()}
                 variants={dropIn}
                 initial="hidden"
@@ -46,7 +46,7 @@ const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false
                 exit="exit"
             >
 
-                <div className='border-b border-gray-300 w-full p-1'>
+                <div className=' border-gray-300 w-full p-1'>
                 <X className='ml-auto  cursor-pointer' onClick={handleClose} />
                 </div>
                 <div className='px-5 h-full overflow-y-scroll pretty-scrollbar'>

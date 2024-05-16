@@ -36,6 +36,8 @@ import WaitForLearner from './pages/user/VideoSession/WaitForLearner';
 
 import JoinSession from './pages/user/VideoSession/JoinSession';
 import VideoSessionLogic from './pages/user/VideoSession/VideoSessionLogic';
+import SessionFeedBack from './pages/user/SessionFeedBack/SessionFeedBack';
+import LanguageInfo from './pages/admin/Languages/LanguageInfo/LanguageInfo';
 
 
 
@@ -76,6 +78,10 @@ const router = createBrowserRouter([
         {
           path:'post/:postId',
           Component: Post
+        },
+        {
+          path:'session-feedback/:sessionCode',
+          Component: SessionFeedBack
         }
       ]
      },
@@ -188,6 +194,10 @@ const router = createBrowserRouter([
             {
               path: 'add-language',
               Component: AddNewLanguage
+            },
+            {
+              path: 'language/:languageId',
+              Component: LanguageInfo
             }
 
           ]
