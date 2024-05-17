@@ -1,40 +1,16 @@
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-  },
-];
-
-function SessionRate() {
+import { ILnaguageMonthelySessions } from '../../../../types/queryResults';
 
 
+interface ISessionRateProps{
+  sessionCounts:ILnaguageMonthelySessions[]
+}
+
+function SessionRate({sessionCounts}:ISessionRateProps) {
+
+
+  if(!sessionCounts) return <div className='h-64'></div>
     return (
 
         <div className='h-64 '>
@@ -43,7 +19,7 @@ function SessionRate() {
                     <LineChart
                         width={500}
                         height={300}
-                        data={data}
+                        data={sessionCounts}
                         margin={{
                             top: 5,
                             right: 30,
@@ -52,11 +28,11 @@ function SessionRate() {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="month" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="uv" stroke="#00255F" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="count" stroke="#00255F" activeDot={{ r: 8 }} />
                         
                     </LineChart>
             </ResponsiveContainer>

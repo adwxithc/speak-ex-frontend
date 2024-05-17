@@ -8,7 +8,7 @@ interface IVideoSessionProps {
   localStream: MediaStream | null,
   remoteStream: MediaStream | null,
   role:string
-  remoteUser:Required<IUser>
+  remoteUser:Required<IUser>|null
 }
 
 

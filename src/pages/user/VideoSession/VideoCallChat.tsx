@@ -10,7 +10,7 @@ import Button from '../../../components/ui/Button/Button'
 import { useSocket } from '../../../context/SocketProvider'
 
 interface IVideoCallChatProps{
-  remoteUser:Required<IUser>
+  remoteUser:Required<IUser>|null
 }
 
 function VideoCallChat({remoteUser}:IVideoCallChatProps) {
@@ -27,7 +27,7 @@ function VideoCallChat({remoteUser}:IVideoCallChatProps) {
 
 const handleSend = async () => {
 
-  if (!text) return
+  if (!text || !remoteUser) return
       const receiverId = remoteUser.id
     
       socket?.emit("sendMessage", {

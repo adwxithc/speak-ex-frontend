@@ -23,11 +23,14 @@ export const languageApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
-        getLanguageInfo:builder.query({
-            query:(data)=>`${ADMIN_URl}/language/${data.languageId}`
+        getLearnerHelperRatio:builder.query({
+            query:(data)=>`${ADMIN_URl}/language/${data.languageId}/user-ratio`
+        }),
+        getMonthlySessions:builder.query({
+            query:(data)=>`${ADMIN_URl}/language/${data.languageId}/monthly-sessions`
         }),
 
     }),
 });
 
-export const { useAddLanguageMutation,useGetLanguagesMutation, useGetLanguageInfoQuery } = languageApiSlice;
+export const { useAddLanguageMutation,useGetLanguagesMutation, useGetLearnerHelperRatioQuery, useGetMonthlySessionsQuery } = languageApiSlice;

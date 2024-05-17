@@ -9,6 +9,7 @@ import { Ierror } from '../../../types/error';
 
 
 
+
 interface formValue{
     name:string,
     basePrice:number
@@ -64,6 +65,7 @@ function AddNewLanguage() {
       const {errors} = formState
   return (
     <div className=''>
+      
          <form onSubmit={handleSubmit(onSubmit)}>
             <Typography variant='h4' component={'h1'} sx={{textAlign:'center', marginBottom:5, marginTop:3}} >Add new Language</Typography>
                <Box sx={{maxWidth:800, marginX:'auto'}} >

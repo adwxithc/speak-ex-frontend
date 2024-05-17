@@ -139,7 +139,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream,role:type,remoteUser:data.data }} />
+        <VideoSession {...{ localStream, remoteStream,role:type,remoteUser:data?.data }} />
     )
 }
 export default VideoSessionLogic

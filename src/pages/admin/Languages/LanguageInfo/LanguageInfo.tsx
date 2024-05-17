@@ -2,18 +2,21 @@ import { useParams } from "react-router-dom"
 import LanguageRateCalculationEquation from "../../../../components/custom/LanguageRateCalculator.tsx/LanguageRateCalculator"
 import Button from "../../../../components/ui/Button/Button"
 import LearnerHelperChart from "./LearnerHelperChart"
-import SessionRate from "./SessionRate"
-import { useGetLanguageInfoQuery } from "../../../../redux/features/admin/languages/languagesApiSlice"
+
+import { useGetLearnerHelperRatioQuery, useGetMonthlySessionsQuery } from "../../../../redux/features/admin/languages/languagesApiSlice"
 import { useEffect } from "react"
+import SessionRate from "./SessionRate"
 
 function LanguageInfo() {
   const {languageId} = useParams()
-  const {data,refetch,isLoading} = useGetLanguageInfoQuery({languageId})
-  console.log(data,isLoading);
+  const {data:languageRatiodata,refetch:refetchRatio} = useGetLearnerHelperRatioQuery({languageId})
+  const languageRatio=languageRatiodata?.data;
+  const {data:sessionCountData} = useGetMonthlySessionsQuery({languageId});
+  const sessionCounts=sessionCountData?.data
   useEffect(()=>{
    
-    refetch()
-  },[refetch])
+    refetchRatio()
+  },[refetchRatio])
   return (
     <div className="h-full w-full px-8">
 
@@ -24,7 +27,7 @@ function LanguageInfo() {
         
         <div className="  w-full  rounded-md shadow-md p-2 px-8 bg-white">
         <h3 className="font-semibold text-gray-700 text-lg text-center mb-3">Learner helper ratio</h3>
-          <LearnerHelperChart {...{helpersCount:data?.data?.helpersCount,learnersCount:data?.data?.learnersCount}} />
+          <LearnerHelperChart {...{helpersCount:languageRatio?.helpersCount,learnersCount:languageRatio?.learnersCount}} />
         </div>
         
       </div>
@@ -33,14 +36,14 @@ function LanguageInfo() {
         
         <div className="  w-full  rounded-md shadow-md p-2 px-8 bg-white">
         <h3 className="font-semibold text-gray-700 text-lg mb-3 text-center">Monthly sessions</h3>
-          <SessionRate />
+          <SessionRate {...{sessionCounts}} />
         </div>
       </div>
      
       <div className="col-span-2  mt-5">
 
       <div className="flex justify-center">
-      <LanguageRateCalculationEquation {...{helpersCount:data?.data?.helpersCount,learnersCount:data?.data?.learnersCount,basePriceValue:data?.data?.basePrice}} />
+      <LanguageRateCalculationEquation {...{helpersCount:languageRatio?.helpersCount,learnersCount:languageRatio?.learnersCount,basePriceValue:languageRatio?.basePrice}} />
       </div>
        <div className="flex justify-end mr-40">
        <Button varient={'primary-square'} size={'md'}>Update</Button>
