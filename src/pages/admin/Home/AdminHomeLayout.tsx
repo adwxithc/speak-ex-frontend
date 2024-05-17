@@ -30,7 +30,7 @@ function AdminHomeLayout() {
     <section className='h-screen w-full overflow-y-scroll   hide-scrollbar'>
   
     <div className='h-16'></div>
-    <div className=' p-3 sm:p-5 '>{<Outlet/>}</div>
+    <div className=' py-3 md:p-5 '>{<Outlet/>}</div>
     
     </section>
 

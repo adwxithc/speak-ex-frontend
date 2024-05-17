@@ -3,3 +3,9 @@ export interface ILnaguageMonthelySessions{
     year:string;
     sessionsCount:number;
 }
+
+export interface IBackendResponse<T>{
+    success:boolean,
+    data:T,
+    message?:string
+}

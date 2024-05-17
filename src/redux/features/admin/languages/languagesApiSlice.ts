@@ -4,10 +4,8 @@ const ADMIN_URl = '/api/admin';
 
 export const languageApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        
-        addLanguage:builder.mutation({
+        addLanguage: builder.mutation({
             query: (data) => {
-                
                 return {
                     url: `${ADMIN_URl}/language`,
                     method: 'POST',
@@ -23,14 +21,28 @@ export const languageApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
-        getLearnerHelperRatio:builder.query({
-            query:(data)=>`${ADMIN_URl}/language/${data.languageId}/user-ratio`
+        getLearnerHelperRatio: builder.query({
+            query: (data) =>
+                `${ADMIN_URl}/language/${data.languageId}/user-ratio`,
         }),
-        getMonthlySessions:builder.query({
-            query:(data)=>`${ADMIN_URl}/language/${data.languageId}/monthly-sessions`
+        getMonthlySessions: builder.query({
+            query: (data) =>
+                `${ADMIN_URl}/language/${data.languageId}/monthly-sessions`,
         }),
-
+        updateLanguage: builder.mutation({
+            query: (data) => ({
+                url: `${ADMIN_URl}/language/${data.languageId}`,
+                method: 'PUT',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useAddLanguageMutation,useGetLanguagesMutation, useGetLearnerHelperRatioQuery, useGetMonthlySessionsQuery } = languageApiSlice;
+export const {
+    useAddLanguageMutation,
+    useGetLanguagesMutation,
+    useGetLearnerHelperRatioQuery,
+    useGetMonthlySessionsQuery,
+    useUpdateLanguageMutation,
+} = languageApiSlice;

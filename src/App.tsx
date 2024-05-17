@@ -20,7 +20,7 @@ import UsersConcerns from "./pages/admin/UsersConcerns/UsersConcerns";
 import Languages from "./pages/admin/Languages/Languages";
 import AdminPrivateRoute from './pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute';
 import AdminSignOut from './pages/admin/auth/AdminSignOut';
-import AddNewLanguage from './pages/admin/Languages/AddNewLanguage';
+import AddNewLanguage from './pages/admin/Languages/AddNewLanguage/AddNewLanguage';
 import Test from './pages/Test/Test';
 import AdminHomeLayout from './pages/admin/Home/AdminHomeLayout';
 import Profile from './pages/user/Profile/Profile';

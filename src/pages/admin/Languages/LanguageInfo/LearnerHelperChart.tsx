@@ -22,7 +22,7 @@ function LearnerHelperChart({learnersCount,helpersCount}:{learnersCount:number,h
 
       return (
         <>
-        <div className='h-64 '>
+        <div className='h-52 px-2'>
         
            
             <ResponsiveContainer width="100%" height="100%">

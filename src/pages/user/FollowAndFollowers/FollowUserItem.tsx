@@ -7,7 +7,7 @@ import { IExtendedUser } from './FollowAndFollowers'
 import { RootState } from '../../../redux/store';
 import { useFollowUserMutation, useUnfollowUserMutation } from '../../../redux/features/user/user/userApiSlice';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface FollowUserItemProps{
     user:IExtendedUser;
@@ -18,6 +18,7 @@ function FollowUserItem({user,setUsers}:FollowUserItemProps) {
     const { userData } = useSelector((state: RootState) => state.user)
     const [userInfo, setUserInfo] =useState(user)
     const following=userInfo?.followers?.includes(userData?.id||'')
+    const {followType} = useParams()
     const navigate = useNavigate()
     
     const [followUser] = useFollowUserMutation();
@@ -27,9 +28,14 @@ function FollowUserItem({user,setUsers}:FollowUserItemProps) {
         try {
             await unfollowUser({userId:userInfo.id})
             
-            setUsers(prev=>{
-                return prev.filter(item=>item.id!==user.id)
-            })
+            if(followType=='followers'){
+                setUserInfo(prev=>({...prev,followers:[...prev.followers.filter(item=>item!==userData?.id)]}))
+            }else{
+                setUsers(prev=>{
+                    return prev.filter(item=>item.id!==user.id)
+                })
+            }
+            
         } catch (error) {
             console.log(error);
             
@@ -39,7 +45,7 @@ function FollowUserItem({user,setUsers}:FollowUserItemProps) {
     const handleFollow=async()=>{
         try {
             await followUser({userId:userInfo.id})
-            setUserInfo(prev=>({...prev,followers:[...prev.followers,userData?.id || '']}))
+            setUserInfo(prev=>({...prev,followers:[...prev.followers||[],userData?.id || '']}))
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +53,7 @@ function FollowUserItem({user,setUsers}:FollowUserItemProps) {
   return (
     <li className="w-full  p-3 mb-3 flex justify-between items-center  rounded cursor-pointer hover:bg-gray-100" >
         <div className="flex  gap-3">
-        <Avatar src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" className="h-11 w-11" />
+        <Avatar src={userInfo.profile} className="h-11 w-11" />
         <div className="flex flex-col">
             <span className="">{userInfo.firstName+' '+userInfo.lastName}</span>
             <span className="text-sm font-semibold text-gray-800 hover:underline" onClick={()=>navigate(`/profile/${user.userName}`)}>{userInfo.userName}</span>

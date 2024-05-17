@@ -3,9 +3,9 @@ import { Box, Button, TextField, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form';
 import {z} from 'zod';
 
-import { useAddLanguageMutation } from '../../../redux/features/admin/languages/languagesApiSlice';
+import { useAddLanguageMutation } from '../../../../redux/features/admin/languages/languagesApiSlice';
 import toast from 'react-hot-toast';
-import { Ierror } from '../../../types/error';
+import { Ierror } from '../../../../types/error';
 
 
 

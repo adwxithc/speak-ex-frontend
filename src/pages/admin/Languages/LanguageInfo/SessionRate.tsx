@@ -10,10 +10,10 @@ interface ISessionRateProps{
 function SessionRate({sessionCounts}:ISessionRateProps) {
 
 
-  if(!sessionCounts) return <div className='h-64'></div>
+  if(!sessionCounts) return <div className='h-52'></div>
     return (
 
-        <div className='h-64 '>
+        <div className='h-52 px-2'>
             
             <ResponsiveContainer width="100%" height="100%">
                     <LineChart
