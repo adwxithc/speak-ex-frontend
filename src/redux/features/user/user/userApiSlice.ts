@@ -76,6 +76,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             query:(data)=>`${USER_URL}/${data.userName}/${data.followType}?page=${data.page||1}&limit=${data.limit||5}`
         }),
        
+       
 
 
     }),

@@ -14,8 +14,8 @@ function SessionFeedBack() {
     const [inAction,setInAction] = useState(false)
     const handleTimesUp =useCallback(()=>{
         if(inAction) return 
-    //    navigate('/')
-    },[navigate])
+       navigate('/')
+    },[inAction, navigate])
 
     return (
         <Container className={`bg-[url('/src/assets/Images/ad.png')] object-contain bg-no-repeat bg-center`}>

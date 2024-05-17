@@ -26,7 +26,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
     const isOnline = Boolean(onlineUsers.find(user => user.userId == currentChat.otherUserId))
     const { userData } = useSelector((state: RootState) => state.user)
     const [text, setText] = useState('')
-
+    const [messages, setMessages] = useState<IMessage[]>([])
     const [arrivalMessage, setArrivalMessage] = useState<IMessage | null>(null);
     const [hasMore, setHasMore] = useState(false)
     const scrollRef = useRef<HTMLDivElement | null>(null)

@@ -6,10 +6,11 @@ import { RootState } from "../../../redux/store";
 import { useSocket } from "../../../context/SocketProvider";
 import peerService from "../../../services/peer";
 import VideoSession from "./VideoSession";
-import { useGetUserQuery } from "../../../redux/features/user/user/profileApiSlice";
+import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
 
 
 function VideoSessionLogic() {
+
     const socket = useSocket()
     const { userData } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
@@ -19,10 +20,10 @@ function VideoSessionLogic() {
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
 
     const role = useRef(type)
+    const {data} =useGetUserByIdQuery({userId:remoteUserId})
+    
 
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
-        const {} =useGetUserQuery({userName:re})
-
         const stream = await navigator.mediaDevices.getUserMedia({
             audio: audio,
             video: video
@@ -138,7 +139,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream,role:type }} />
+        <VideoSession {...{ localStream, remoteStream,role:type,remoteUser:data.data }} />
     )
 }
 export default VideoSessionLogic

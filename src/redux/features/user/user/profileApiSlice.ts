@@ -32,7 +32,16 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         }),
         getUser:builder.query({
             query:(data)=>`${USER_URL}/${data.userName}`
-        })
+        }),
+        getUserById:builder.query({
+            query: (data) => {
+                if (!data.userId) {
+                  return undefined;
+                }
+                return `${USER_URL}/id/${data.userId}`;
+              },
+        }),
+
     }),
     
 });
@@ -42,5 +51,6 @@ export const {
     useUpdateUserInfoMutation,
     useGetAllLanguagesMutation,
     useSearchUsersMutation,
-    useGetUserQuery
+    useGetUserQuery,
+    useGetUserByIdQuery
 } = profileApiSlice;

@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 
 import VideoCallChat from "./VideoCallChat"
 import VideoChatArea from "./VideoChatArea"
+import IUser from "../../../types/database";
 
 interface IVideoSessionProps {
   localStream: MediaStream | null,
   remoteStream: MediaStream | null,
   role:string
+  remoteUser:Required<IUser>
 }
 
 
-export default function VideoSession({ localStream, remoteStream,role }: IVideoSessionProps) {
+export default function VideoSession({ localStream, remoteStream, role, remoteUser }: IVideoSessionProps) {
 
   const [isMobile, setIsMobile] = useState(true);
   const chating = false;
@@ -36,7 +38,7 @@ export default function VideoSession({ localStream, remoteStream,role }: IVideoS
         isMobile ? (
           chating ? (
             <div className="w-96 border-l dark:border-l-[#091220]">
-              <VideoCallChat />
+              <VideoCallChat {...{remoteUser}} />
             </div>
           )
             : (
@@ -52,7 +54,7 @@ export default function VideoSession({ localStream, remoteStream,role }: IVideoS
               </div>
 
               <div className="w-96 border-l dark:border-l-[#091220]">
-                <VideoCallChat />
+                <VideoCallChat {...{remoteUser}} />
               </div>
             </>
           )
