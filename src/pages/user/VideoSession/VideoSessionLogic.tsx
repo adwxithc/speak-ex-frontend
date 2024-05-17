@@ -4,9 +4,10 @@ import { useLocation } from "react-router-dom";
 
 import { RootState } from "../../../redux/store";
 import { useSocket } from "../../../context/SocketProvider";
-import peerService from "../../../webRTC/peer";
+import peerService from  '../../../webRTC/peer'
 import VideoSession from "./VideoSession";
 import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
+import useLiveChat from "./useLiveChat";
 
 
 function VideoSessionLogic() {
@@ -15,13 +16,14 @@ function VideoSessionLogic() {
     const { userData } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
+    
     const location = useLocation();
     const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type } = location.state;
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
 
     const role = useRef(type)
     const {data} =useGetUserByIdQuery({userId:remoteUserId})
-    
+    const {handleSendMessage,messages} = useLiveChat(data?.data);
 
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -139,7 +141,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream,role:type,remoteUser:data?.data }} />
+        <VideoSession {...{ localStream, remoteStream,remoteUser:data?.data,messages,handleSendMessage }} />
     )
 }
 export default VideoSessionLogic

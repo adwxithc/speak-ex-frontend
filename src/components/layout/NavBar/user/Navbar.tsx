@@ -123,6 +123,7 @@ export default function Navbar() {
 
       <AnimatePresence
         initial={false}
+        
         mode="wait"
       >
         {openSearch && <Modal position='top-20' loading={false} handleClose={() => { setOpenSearch(false) }} ><SearchUser {...{ setOpenSearch }} /></Modal>}

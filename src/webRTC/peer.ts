@@ -75,11 +75,11 @@ class PeerService implements IPeerService{
           this.peer.onicegatheringstatechange = null;
           this.peer.onnegotiationneeded = null;
           this.peer.getSenders().forEach((sender) => sender.track?.stop());
-         
         }
      
       }
 }
 
 const peerService = new PeerService();
+
 export default peerService;

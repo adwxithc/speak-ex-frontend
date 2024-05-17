@@ -1,4 +1,4 @@
-import { IPeerService } from "./peer";
+import { IPeerService } from './peer'
 import stopStreamedMedia from "./stopStreamedMedia";
 
 const endPeerConnectionHandler = ({
