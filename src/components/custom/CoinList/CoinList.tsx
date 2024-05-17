@@ -3,7 +3,7 @@
 function CoinList() {
     const baseUrl = import.meta.env.VITE_BASE_URL 
   return (
-    <div className="hidden sm:flex items-center justify-center  mr-5 border-2 border-blue-200 rounded  cursor-pointer">
+    <div className="hidden sm:flex items-center justify-center  mr-5   cursor-pointer">
 
         <div className="flex justify-center items-center mr-5">
        

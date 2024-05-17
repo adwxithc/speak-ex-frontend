@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 import { RootState } from "../../../redux/store";
 import { useSocket } from "../../../context/SocketProvider";
-import peerService from "../../../services/peer";
+import peerService from "../../../webRTC/peer";
 import VideoSession from "./VideoSession";
 import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
 

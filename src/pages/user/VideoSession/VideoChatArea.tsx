@@ -6,7 +6,7 @@ import { toogleVideoTrack, toogleAudioTrack } from '../../../webRTC/streamToggle
 import Button from "../../../components/ui/Button/Button"
 import ToolTip from "../../../components/ui/ToolTip/ToolTip"
 import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler"
-import peerService from "../../../services/peer"
+import peerService from "../../../webRTC/peer"
 import { useSocket } from "../../../context/SocketProvider"
 
 interface IVideoChatArea {
