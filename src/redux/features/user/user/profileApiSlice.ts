@@ -31,7 +31,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         getUser:builder.query({
-            query:(data)=>`${USER_URL}/${data.userName}`
+            query:(data)=>`${USER_URL}/userName/${data.userName}`
         }),
         getUserById:builder.query({
             query: (data) => {

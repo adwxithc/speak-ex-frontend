@@ -38,13 +38,13 @@ function useNotifications() {
 
     // }, [navigate])
 
-    const handleJoinSession = useCallback(({ sessionId, allowed }: { sessionId: string, allowed: boolean, session: string }) => {
+    const handleJoinSession = useCallback(({ sessionId, allowed, message }: { sessionId: string, allowed: boolean, session: string, message:string }) => {
 
         if (allowed) {
 
             navigate(`/video-session/${sessionId}`, { state: { remoteUserId: '', audioEnabled:true, videoEnabled:true} })
         } else {
-            toast.error('session is already occupied', { position: 'top-right' })
+            toast.error(message, { position: 'top-right' })
             navigate(`/`)
         }
     }, [navigate])

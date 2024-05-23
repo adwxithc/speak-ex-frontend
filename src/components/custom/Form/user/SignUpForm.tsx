@@ -34,6 +34,8 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       confirm_password;
       setLoading(true)
       await signup({ ...formData }).unwrap()
+  
+      
       navigate('/signup/verify-user')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
@@ -42,7 +44,7 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       if (error.status == 400) {
         setError('email', { message: errorInfo[0].message })
       } else {
-        toast.error(errorInfo[0].message)
+        toast.error('something went wrong')
       }
 
     }finally{

@@ -18,8 +18,9 @@ import { useState } from 'react'
 import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
 import useNotifications from '../../../../pages/user/Notifications/useNotifications.tsx'
 import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
-import CoinList from '../../../custom/CoinList/CoinList.tsx'
 import MobileMenu from './MobileMenu.tsx'
+import { useGetWalletQuery } from '../../../../redux/features/user/user/userApiSlice.ts'
+import { IWallet } from '../../../../types/database.ts'
 
 export default function Navbar() {
   const { t } = useTranslation(['common'])
@@ -32,6 +33,8 @@ export default function Navbar() {
   const navigate = useNavigate()
 
   const isScrolled: boolean = useScrollDetection(0)
+
+  const {data}:{data:IWallet} = useGetWalletQuery({}) 
 
   return (
     <>
@@ -84,7 +87,7 @@ export default function Navbar() {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   {isAuth ?
                     <>
-                      <CoinList/>
+         
                       <button
                         onClick={() => setOpenNotification(true)}
                         type="button"
@@ -94,7 +97,7 @@ export default function Navbar() {
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
-                      <ProfileDropdown />
+                      <ProfileDropdown {...{wallet}} />
 
                     </>
                     :

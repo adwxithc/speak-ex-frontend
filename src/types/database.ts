@@ -15,8 +15,6 @@ export interface IUser{
     status?: 'active' | 'freeze';
 }
 
-
-
 export default IUser; 
 
 export interface IPost{
@@ -50,7 +48,6 @@ export interface IComment{
     updatedAt:string;
 }
 
-
 export interface IChatRoom{
     id:string;
     members:string[];
@@ -72,10 +69,19 @@ export interface IMessage{
     updatedAt:string
 }
 
-
 export interface ITag{
     id:string;
     name:string,
     count:number
 } 
 
+export interface IWallet {
+    id?: string;
+    userId: string;
+    silverCoins: number;
+    goldCoins: number;
+    money: number;
+    transactions: string[];
+    createdAt?: string;
+    updatedAt?: string;
+}

@@ -1,4 +1,4 @@
-import { Maximize, MessageSquareText, Mic, MicOff, Minimize, PhoneOff, Video, VideoOff } from "lucide-react"
+import { MessageSquareText, Mic, MicOff, PhoneOff, Video, VideoOff } from "lucide-react"
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 
@@ -10,6 +10,7 @@ import peerService from '../../../webRTC/peer'
 import { useSocket } from "../../../context/SocketProvider"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
+import IUser from "../../../types/database"
 
 interface IVideoChatArea {
     localStream: MediaStream | null;

@@ -75,7 +75,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
         getFollowersOrFollowings:builder.query({
             query:(data)=>`${USER_URL}/${data.userName}/${data.followType}?page=${data.page||1}&limit=${data.limit||5}`
         }),
-       
+       getWallet:builder.query({
+        query:()=>`${USER_URL}/wallet`
+       })
        
 
 
@@ -93,5 +95,6 @@ export const {
     useCheckUserNameAvailabilityMutation,
     useUnfollowUserMutation,
     useFollowUserMutation,
-    useGetFollowersOrFollowingsQuery
+    useGetFollowersOrFollowingsQuery,
+    useGetWalletQuery
 } = userApiSlice;
