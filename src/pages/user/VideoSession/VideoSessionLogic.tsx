@@ -10,6 +10,9 @@ import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileAp
 import useLiveChat from "./useLiveChat";
 
 
+
+
+
 function VideoSessionLogic() {
 
     const socket = useSocket()
@@ -21,8 +24,15 @@ function VideoSessionLogic() {
     const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type } = location.state;
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
 
+   
+    
+
+
     const role = useRef(type)
     const {data} =useGetUserByIdQuery({userId:remoteUserId})
+    
+    
+    //HANDLE VOLATILE CHAT DURING VIDEO SESSION
     const {handleSendMessage,messages} = useLiveChat(data?.data);
 
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
@@ -96,11 +106,13 @@ function VideoSessionLogic() {
         setRemoteUserId(from)
         socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
         sendStreams();
+       
 
     }, [remoteUserId, sendStreams, socket, userData?.id])
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
-
+   
+        
         peerService.setRemoteDescription(ans)
         sendStreams()
     }, [sendStreams])

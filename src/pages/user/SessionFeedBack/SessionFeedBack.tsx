@@ -17,6 +17,7 @@ function SessionFeedBack() {
        navigate('/')
     },[inAction, navigate])
 
+
     return (
         <Container className={`bg-[url('/src/assets/Images/ad.png')] object-contain bg-no-repeat bg-center`}>
 

@@ -1,13 +1,11 @@
 
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { RiseLoader } from 'react-spinners'
-import { useSignOutMutation } from '../../../redux/features/user/user/userApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { logoutUser } from '../../../redux/features/user/user/userSlice'
 
-
-
+import { useSignOutMutation } from '../../../redux/features/user/user/userApiSlice'
+import { removeCridentials } from '../../../redux/features/user/user/userSlice'
 
 
 
@@ -20,20 +18,21 @@ function SignOut() {
 
     const navigate= useNavigate()
 
-    const signoutFunc=async()=>{
+    const signoutFunc=useCallback( async()=>{
         try {
             await logout({}).unwrap()
-            dispatch(logoutUser())
+            dispatch(removeCridentials())
             navigate('/')
         } catch (error) {
             alert('error')
             console.log(error);
             
         }   
-    }
+    },[dispatch, logout, navigate])
+
     useEffect(()=>{
         signoutFunc()
-    },[])
+    },[signoutFunc])
 
   return (
     <div className='relative'>

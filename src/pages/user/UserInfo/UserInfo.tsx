@@ -12,7 +12,7 @@ import ProfileInfoItem from "../../../components/custom/ProfileInfoItem/ProfileI
 import { RootState } from '../../../redux/store'
 import Button from "../../../components/ui/Button/Button";
 import { useGetAllLanguagesMutation, useUpdateUserInfoMutation } from "../../../redux/features/user/user/profileApiSlice";
-import { logUser } from "../../../redux/features/user/user/userSlice";
+import { setCridentials } from "../../../redux/features/user/user/userSlice";
 import AutoCompleteDropDown from "../../../components/ui/AutoCompleteDropDown/AutoCompleteDropDown";
 import { ILanguage } from '../../../types/database'
 import Buttton from '../../../components/ui/Button/Button';
@@ -22,7 +22,7 @@ import { ProfileContext } from "../Profile/Profile";
 
 function UserInfo() {
 
-  const {data,isLoading,self}= useContext(ProfileContext)
+  const {self}= useContext(ProfileContext)
   const { userData } = useSelector((state: RootState) => state.user)
 
 
@@ -132,7 +132,7 @@ function UserInfo() {
 
       const res = await updateUser(userInfo).unwrap()
 
-      dispatch(logUser({ ...res.data }))
+      dispatch(setCridentials({ ...res.data }))
       
  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {

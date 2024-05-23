@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import OtpInput from '../../../ui/OtpInput/OtpInput'
 import  Button  from '../../../ui/Button/Button'
 import { useVerifyOtpMutation } from '../../../../redux/features/user/user/userApiSlice';
-import { logUser } from '../../../../redux/features/user/user/userSlice';
+import { setCridentials } from '../../../../redux/features/user/user/userSlice';
 
 
 
@@ -34,7 +34,7 @@ const [verify] = useVerifyOtpMutation()
     try {
       setLoading(true)
     const res= await verify({otp:enteredOtp}).unwrap()
-    dispatch(logUser(res.data));
+    dispatch(setCridentials(res.data));
     setLoading(false)
     
     navigate('/forgot-password/reset-password')

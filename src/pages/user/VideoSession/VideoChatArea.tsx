@@ -11,25 +11,31 @@ import { useSocket } from "../../../context/SocketProvider"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
 import IUser from "../../../types/database"
+import SessionTimer from "./SessionTimer"
+
 
 interface IVideoChatArea {
     localStream: MediaStream | null;
     remoteStream: MediaStream | null;
     setChating:Dispatch<SetStateAction<boolean>>
     remoteUser:Required<IUser>|null
+
 }
 
 function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IVideoChatArea) {
     const navigate = useNavigate()
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
-
+ 
     const [audioEnabled, setAudioEnabled] = useState<boolean>(true)
     const [videoEnabled, setVideoEnabled] = useState<boolean>(true)
 
     const { userData } = useSelector((state: RootState) => state.user)
+   
     
     const socket = useSocket()
+
+    
 
     const { sessionId = '' } = useParams()
     const {  type:role } = useLocation().state;
@@ -88,7 +94,8 @@ function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IV
                                 : <div>oops something went wrong...</div>
                         }
                         <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute bottom-5 left-5 text-sm font-semibold"> {remoteUser?.firstName+" "+remoteUser?.lastName}</span>
-                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> 30 min</span>
+                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> <SessionTimer startTime={1713739200000}/> </span>
+                        
                     </div>
                     {
                         true &&

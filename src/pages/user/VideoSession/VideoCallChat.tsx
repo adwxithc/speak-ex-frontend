@@ -16,6 +16,7 @@ interface IVideoCallChatProps{
   messages:IMessage[],
   handleSendMessage: (text: string, cb: () => void) => Promise<void>
   setChating:Dispatch<SetStateAction<boolean>>
+  
 }
 
 function VideoCallChat({remoteUser,messages, handleSendMessage, setChating}:IVideoCallChatProps) {

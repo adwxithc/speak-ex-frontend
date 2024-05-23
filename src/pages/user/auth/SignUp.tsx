@@ -12,7 +12,7 @@ function SignUp() {
   const navigate = useNavigate()
   useEffect(()=>{
     if(isAuth) navigate('/')
-  },[])
+  },[isAuth, navigate])
 
   const [loading,setLoading] = useState(false)
   return (

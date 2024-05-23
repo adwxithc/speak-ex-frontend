@@ -46,16 +46,16 @@ function WaitForLearner() {
 
   }, [videoEnabled])
 
-useEffect(()=>{
-  const timeOut = setTimeout(()=>{
- 
-    socket?.emit('session:rematch',{sessionId})
-  },10000)
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
 
-  return ()=>{
-    clearTimeout(timeOut)
-  }
-},[sessionId, socket])
+      socket?.emit('session:rematch', { sessionId })
+    }, 10000)
+
+    return () => {
+      clearTimeout(timeOut)
+    }
+  }, [sessionId, socket])
 
 
   useEffect(() => {

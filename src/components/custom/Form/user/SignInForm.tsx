@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 import { IformValue, schema } from './Schema/SignInSchema'
 import Button from "../../../ui/Button/Button";
-import { logUser } from "../../../../redux/features/user/user/userSlice";
+import { setCridentials } from "../../../../redux/features/user/user/userSlice";
 import { useLoginMutation } from "../../../../redux/features/user/user/userApiSlice";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -46,7 +46,7 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
         try {
             setLoading(true)
             const res = await login({ ...data }).unwrap()
-            dispatch(logUser({ ...res.data }));
+            dispatch(setCridentials({ ...res.data }));
 
             setLoading(false)
             navigate('/')

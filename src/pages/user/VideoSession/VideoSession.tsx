@@ -8,10 +8,10 @@ import { AnimatePresence } from "framer-motion";
 interface IVideoSessionProps {
   localStream: MediaStream | null,
   remoteStream: MediaStream | null,
-
   remoteUser:Required<IUser>|null
   messages:IMessage[],
   handleSendMessage: (text: string, cb: () => void) => Promise<void>
+
 }
 
 

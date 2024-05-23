@@ -1,26 +1,26 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+
 import { classNames } from '../../../../utils/style-utils.tsx'
 import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
 import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
-
 import useNavigation from './useNavigation.tsx'
-import { useSelector } from 'react-redux'
 import { RootState } from '../../../../redux/store.ts'
 import Button from '../../../ui/Button/Button.tsx'
-import { useNavigate } from 'react-router-dom'
 import LanguageSelector from '../../../custom/LanguageSelector/LanguageSelector.tsx'
 import { useTranslation } from 'react-i18next'
 import Modal from '../../../custom/Modal/Modal.tsx'
-import { AnimatePresence } from 'framer-motion'
 import SearchUser from '../../../../pages/user/SearchUser/SearchUser.tsx'
-import { useState } from 'react'
 import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
 import useNotifications from '../../../../pages/user/Notifications/useNotifications.tsx'
 import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
-import MobileMenu from './MobileMenu.tsx'
-import { useGetWalletQuery } from '../../../../redux/features/user/user/userApiSlice.ts'
-import { IWallet } from '../../../../types/database.ts'
+import MobileMenu from './MobileMenu/MobileMenu.tsx'
+import useGetWallet from './useGetWallet.tsx'
+
 
 export default function Navbar() {
   const { t } = useTranslation(['common'])
@@ -28,13 +28,12 @@ export default function Navbar() {
   const [openNotification, setOpenNotification] = useState(false)
   const navigation = useNavigation({ setOpenSearch })
   const { notifications, handleJoinSession, handleRejectOffer, openSessionOffer } = useNotifications()
-
+  useGetWallet()
   const { isAuth } = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
 
   const isScrolled: boolean = useScrollDetection(0)
 
-  const {data}:{data:IWallet} = useGetWalletQuery({}) 
 
   return (
     <>
@@ -97,7 +96,7 @@ export default function Navbar() {
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
-                      <ProfileDropdown {...{wallet}} />
+                      <ProfileDropdown  />
 
                     </>
                     :

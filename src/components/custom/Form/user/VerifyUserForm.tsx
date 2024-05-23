@@ -4,7 +4,7 @@ import OtpInput from '../../../ui/OtpInput/OtpInput'
 import Button from '../../../ui/Button/Button'
 import { useDispatch } from 'react-redux';
 import { useVerifyUserMutation } from '../../../../redux/features/user/user/userApiSlice';
-import { logUser } from '../../../../redux/features/user/user/userSlice';
+import { setCridentials } from '../../../../redux/features/user/user/userSlice';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ function VerifyUser({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
     try {
       setLoading(true)
       const res = await verify({ otp: enteredOtp }).unwrap()
-      dispatch(logUser(res.data));
+      dispatch(setCridentials(res.data));
       setLoading(false)
       navigate('/')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

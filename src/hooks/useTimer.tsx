@@ -11,7 +11,7 @@ function useTimer({ startTime,duration }:{startTime:number,duration:number}) {
       const interval = setInterval(() => {
         if (seconds === 0) {
           clearInterval(interval);
-          console.log("Time's up!");
+       
         } else {
           setSeconds(prevSeconds => prevSeconds - 1);
         }

@@ -1,9 +1,9 @@
 import { Disclosure } from '@headlessui/react'
-import LanguageSelector from '../../../custom/LanguageSelector/LanguageSelector'
-import { classNames } from '../../../../utils/style-utils'
+import LanguageSelector from '../../../../custom/LanguageSelector/LanguageSelector'
+import { classNames } from '../../../../../utils/style-utils'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../../redux/store'
-import { INavigationItem } from './useNavigation'
+import { RootState } from '../../../../../redux/store'
+import { INavigationItem } from '../useNavigation'
 
 import UserData from './UserData'
 

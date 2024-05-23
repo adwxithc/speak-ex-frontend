@@ -1,10 +1,10 @@
 import {FetchBaseQueryError, FetchBaseQueryMeta, createApi,fetchBaseQuery, QueryReturnValue} from '@reduxjs/toolkit/query/react'
-import { logoutUser } from './features/user/user/userSlice';
+import { removeCridentials } from './features/user/user/userSlice';
 
 
 const baseQuery=fetchBaseQuery({baseUrl:''})
 
-const baseQueryWithReauth = async <T>(
+const baseQueryWithReauth = async(
     args: any,
     api: any,
     extraOptions: any
@@ -23,7 +23,7 @@ const baseQueryWithReauth = async <T>(
     //  alert('refresh')
     //  console.log(refreshResult);
      
-      api.dispatch(logoutUser());
+      api.dispatch(removeCridentials());
     } 
     
   }
@@ -37,5 +37,5 @@ export const apiSlice =createApi({
     baseQuery:baseQueryWithReauth,
     tagTypes:['User'],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    endpoints:(builder)=> ({})
+    endpoints:(_)=> ({})
 })

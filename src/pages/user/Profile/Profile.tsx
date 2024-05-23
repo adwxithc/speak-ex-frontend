@@ -21,7 +21,7 @@ function Profile() {
   const { data, isLoading, error,refetch } = useGetUserQuery({ ...{userName} });
   useEffect(()=>{
     refetch()
-  },[userName])
+  },[refetch, userName])
   
     return (
         <>

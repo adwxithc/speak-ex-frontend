@@ -6,7 +6,7 @@ import Modal from '../Modal/Modal.tsx';
 import { AnimatePresence } from 'framer-motion';
 import UploadProfile from '../UploadProfile/UploadProfile.tsx';
 import { useUploadProfileMutation } from '../../../redux/features/user/user/profileApiSlice.ts';
-import { updateUser } from '../../../redux/features/user/user/userSlice.ts';
+import { updateCridentials } from '../../../redux/features/user/user/userSlice.ts';
 import toast from 'react-hot-toast';
 import { ProfileContext } from '../../../pages/user/Profile/Profile.tsx';
 import Skelton from './Skelton.tsx';
@@ -42,7 +42,7 @@ const ProfilePicture=forwardRef<HTMLDivElement, ProfilePictureProps>(
               formData.append('image',imageFile)
               const res=await upload(formData).unwrap()
              
-              dispatch(updateUser({profile:res.data}));
+              dispatch(updateCridentials({profile:res.data}));
               setLoading(false)
               setShowModal(false)
               toast(res.message,{
