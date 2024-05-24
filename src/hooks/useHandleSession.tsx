@@ -1,7 +1,7 @@
 import  { useCallback, useEffect, useState } from 'react'
-import { useSocket } from '../../../context/SocketProvider'
+import { useSocket } from '../context/SocketProvider'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
+import { RootState } from '../redux/store'
 import { useNavigate } from 'react-router-dom'
 
 function useHandleSession() {
@@ -20,7 +20,7 @@ function useHandleSession() {
     },[socket, userData?.id])
 
     const handleJoinSession=useCallback(({sessionId}:{sessionId:string})=>{
-        navigate(`video-session/session-wait/${sessionId}`)
+        navigate(`/video-session/session-wait/${sessionId}`)
     },[navigate])
 
     useEffect(()=>{

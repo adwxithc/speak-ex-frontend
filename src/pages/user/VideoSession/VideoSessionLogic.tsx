@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { RootState } from "../../../redux/store";
 import { useSocket } from "../../../context/SocketProvider";
-import peerService from  '../../../webRTC/peer'
+import peerService from '../../../webRTC/peer'
 import VideoSession from "./VideoSession";
 import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
 import useLiveChat from "./LiveChat/useLiveChat";
+import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler";
 
 
 
@@ -19,21 +20,22 @@ function VideoSessionLogic() {
     const { userData } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
-    
+
     const location = useLocation();
-    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type,startTime } = location.state;
+    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type, startTime } = location.state;
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
-    
-   
-    
+
+
+    const navigate = useNavigate()
+    const { sessionId = '' } = useParams()
 
 
     const role = useRef(type)
-    const {data} =useGetUserByIdQuery({userId:remoteUserId})
-    
-    
+    const { data } = useGetUserByIdQuery({ userId: remoteUserId })
+
+
     //HANDLE VOLATILE CHAT DURING VIDEO SESSION
-    const {handleSendMessage,messages} = useLiveChat(data?.data);
+    const { handleSendMessage, messages } = useLiveChat(data?.data);
 
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -80,6 +82,13 @@ function VideoSessionLogic() {
         await peerService.setRemoteDescription(ans)
     }, [])
 
+    const handleTermination = useCallback(({coinExchange}:{coinExchange:number})=> { 
+        endPeerConnectionHandler({ localStream, peerService: peerService, remoteStream })
+        if(type == 'host')
+            navigate('/session-over',{state:{coinExchange}})
+        else navigate(`/session-feedback/${sessionId}`,{state:{coinExchange}})
+    }, [localStream, navigate, remoteStream, sessionId, type])
+
 
     const sendStreams = useCallback(async () => {
         let stream = null
@@ -106,16 +115,16 @@ function VideoSessionLogic() {
         setRemoteUserId(from)
         socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
         sendStreams();
-       
+
 
     }, [remoteUserId, sendStreams, socket, userData?.id])
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
-   
-        
+
+
         peerService.setRemoteDescription(ans)
         sendStreams()
-       
+
     }, [sendStreams])
 
 
@@ -143,6 +152,7 @@ function VideoSessionLogic() {
         socket?.on('call:accepted', handleCallAccepted)
         socket?.on('peer:nego-needed', handlePeerNegoNeeded)
         socket?.on('peer:nego-final', handlePeerNegoFinal)
+        socket?.on('session:terminate', handleTermination)
         return () => {
 
             socket?.off('incomming:call', handleIncommingCall)
@@ -154,7 +164,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream,remoteUser:data?.data,messages,handleSendMessage,startTime:new Date(startTime).getTime() }} />
+        <VideoSession {...{ localStream, remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime() }} />
     )
 }
 export default VideoSessionLogic

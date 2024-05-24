@@ -51,8 +51,8 @@ function ReportSession({
     };
 
     const handleCloseModal = () => {
-setOpenReportModal(false)
-setInAction(false);
+        setOpenReportModal(false)
+        setInAction(false);
     };
     return (
         <>

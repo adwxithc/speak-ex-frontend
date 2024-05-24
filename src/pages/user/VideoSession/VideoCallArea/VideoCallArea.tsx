@@ -1,12 +1,10 @@
 import { MessageSquareText, Mic, MicOff, PhoneOff, Video, VideoOff } from "lucide-react"
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 
 import { toogleVideoTrack, toogleAudioTrack } from '../../../../webRTC/streamToggle'
 import Button from "../../../../components/ui/Button/Button"
-import endPeerConnectionHandler from "../../../../webRTC/endPeerConnectionHandler"
-import peerService from '../../../../webRTC/peer'
 import { useSocket } from "../../../../context/SocketProvider"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../redux/store"
@@ -17,26 +15,26 @@ import SessionDuration from "../SessionDuration/SessionDuration"
 interface IVideoCallArea {
     localStream: MediaStream | null;
     remoteStream: MediaStream | null;
-    setChating:Dispatch<SetStateAction<boolean>>
-    remoteUser:Required<IUser>|null
-    startTime:number
+    setChating: Dispatch<SetStateAction<boolean>>
+    remoteUser: Required<IUser> | null
+    startTime: number
 }
 
-function VideoCallArea({ localStream, remoteStream, setChating, remoteUser,startTime }: IVideoCallArea) {
-    const navigate = useNavigate()
+function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, startTime }: IVideoCallArea) {
+  
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
- 
+
     const [audioEnabled, setAudioEnabled] = useState<boolean>(true)
     const [videoEnabled, setVideoEnabled] = useState<boolean>(true)
 
     const { userData } = useSelector((state: RootState) => state.user)
-   
-    
+
+
     const socket = useSocket()
 
     const { sessionId = '' } = useParams()
-    const {  type:role } = useLocation().state;
+
 
     useEffect(() => {
         if (localvideoRef.current && localStream) {
@@ -51,34 +49,25 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser,start
     }, [remoteStream]);
 
     const toggleVideo = () => {
-        if(!localStream) return
+        if (!localStream) return
         toogleVideoTrack(localStream)
-        setVideoEnabled(prev=>!prev)
+        setVideoEnabled(prev => !prev)
     }
     const toggleAudio = () => {
-        if(!localStream) return
+        if (!localStream) return
         toogleAudioTrack(localStream)
-       setAudioEnabled(prev=>!prev)
-      
+        setAudioEnabled(prev => !prev)
+
     }
-    const terminate = ()=>{
-        
-        endPeerConnectionHandler({localStream,peerService:peerService,remoteStream})
-        socket?.emit('session:terminate',{sessionCode:sessionId})
-        if(role!=='host')
-        navigate(`/session-feedback/${sessionId}`)
-        else navigate('/')
-    }
-    const timesUpTermination = ()=>{
-        
-        endPeerConnectionHandler({localStream,peerService:peerService,remoteStream})
-        socket?.emit('session:terminate',{sessionCode:sessionId})
-        if(role!=='host')
-        navigate(`/session-feedback/${sessionId}`)
-        else navigate('/')
-    }
-    return (
+    const terminate = () => {
+
+       
+        socket?.emit('session:terminate', { sessionCode: sessionId })
   
+    }
+ 
+    return (
+
         <div className="h-screen   flex flex-col">
             {/* top area */}
             <div className="h-16 bg-white  dark:bg-[#0e1c34] flex items-center">
@@ -88,21 +77,21 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser,start
 
                 <div className="h-full w-full p-1 md:p-5 xl:px-20 relative overflow-hidd  ">
 
-                    <div className={`${ 'aspect-square xl:aspect-video'} bg-[#0a1426]   rounded-xl drop-shadow-md relative mt-20 sm:m-0 overflow-hidden`}>
+                    <div className={`${'aspect-square xl:aspect-video'} bg-[#0a1426]   rounded-xl drop-shadow-md relative mt-20 sm:m-0 overflow-hidden`}>
 
                         <span className="text-gray-700 absolute top-5 right-5 cursor-pointer">
-                          
+
                         </span>
                         {
                             remoteStream ?
 
-                                <video ref={remotevideoRef} autoPlay  style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
+                                <video ref={remotevideoRef} autoPlay style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
                                 : <div>oops something went wrong...</div>
                         }
-                        <span className="text-white absolute top-5 right-5 bg-[#0000002c] p-1 rounded-full">{remoteStream?.getAudioTracks()[0].enabled?<Mic />:<MicOff />}</span>
-                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute bottom-5 left-5 text-sm font-semibold"> {remoteUser?.firstName+" "+remoteUser?.lastName}</span>
-                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> <SessionDuration  {...{timesUpTermination, startTime}} /> </span>
-                         
+                        <span className="text-white absolute top-5 right-5 bg-[#0000002c] p-1 rounded-full">{remoteStream?.getAudioTracks()[0].enabled ? <Mic /> : <MicOff />}</span>
+                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute bottom-5 left-5 text-sm font-semibold"> {remoteUser?.firstName + " " + remoteUser?.lastName}</span>
+                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> <SessionDuration  {...{ terminate, startTime }} /> </span>
+
                     </div>
                     {
                         true &&
@@ -113,7 +102,7 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser,start
                                     <video ref={localvideoRef} autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
                                     : <div>oops something went wrong...</div>
                             }
-                            <span className="bg-[#0000002c] text-white px-3 py-2 rounded-full absolute bottom-3 left-3 text-xs font-semibold"> {userData?.firstName+" "+userData?.lastName}</span>
+                            <span className="bg-[#0000002c] text-white px-3 py-2 rounded-full absolute bottom-3 left-3 text-xs font-semibold"> {userData?.firstName + " " + userData?.lastName}</span>
                         </div>
                     }
                 </div>
@@ -138,11 +127,11 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser,start
                         }
                     </Button>
                     <Button onClick={terminate} className="bg-red-500 text-white " size={'md'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
-                    <Button onClick={()=>setChating(true)}><span className="dark:bg-white p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
+                    <Button onClick={() => setChating(true)}><span className="dark:bg-white p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
                 </div>
             </div>
         </div>
-       
+
     )
 }
 

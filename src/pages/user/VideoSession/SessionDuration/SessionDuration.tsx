@@ -9,11 +9,11 @@ import Button from "../../../../components/ui/Button/Button";
 
 
 interface ISessionDurationProps{
-  timesUpTermination: () => void;
+  terminate: () => void;
   startTime:number;
 }
 
-function SessionDuration({startTime,timesUpTermination}:ISessionDurationProps) {
+function SessionDuration({startTime,terminate}:ISessionDurationProps) {
 
   const location = useLocation();
   const { type } = location.state;
@@ -35,12 +35,12 @@ function SessionDuration({startTime,timesUpTermination}:ISessionDurationProps) {
       const totalCost = language.rate*(duration/3600);
 
       if(wallet?.silverCoins && wallet?.silverCoins<=totalCost){
-        timesUpTermination()
+        terminate()
         setOpenDialog(true)
       }
       
     }
-  },[duration, languageInfo, timesUpTermination, userData?.wallet])
+  },[duration, languageInfo, terminate, userData?.wallet])
 
     
 

@@ -7,16 +7,13 @@ import {  updateCridentials } from "../../../../redux/features/user/user/userSli
 
 function useGetWallet() {
 
-  const { userData } = useSelector((state: RootState) => state.user)
-  const {data} = useGetWalletQuery({}) 
+  const { userData , isAuth } = useSelector((state: RootState) => state.user)
+  const {data} = useGetWalletQuery({},{skip:Boolean(userData?.wallet && !isAuth )}) 
   const dispatch =useDispatch()
   useEffect(()=>{
-    if(!userData?.wallet){
-    
-      
-      if(data?.data)
+      if(data?.data )
         dispatch(updateCridentials({wallet:data?.data as IWallet}))
-    }
+    
   },[data?.data, dispatch, userData?.wallet])
 
 

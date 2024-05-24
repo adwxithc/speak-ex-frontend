@@ -38,6 +38,7 @@ import WaitForLearner from './pages/user/VideoSession/WaitForLearners/WaitForLea
 import VideoSessionLogic from './pages/user/VideoSession/VideoSessionLogic';
 import SessionFeedBack from './pages/user/SessionFeedBack/SessionFeedBack';
 import LanguageInfo from './pages/admin/Languages/LanguageInfo/LanguageInfo';
+import SessionOver from './pages/user/SessionOver/SessionOver';
 
 
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
         {
           path:'session-feedback/:sessionCode',
           Component: SessionFeedBack
+        },
+        {
+          path:'session-over',
+          Component: SessionOver
         }
       ]
      },
