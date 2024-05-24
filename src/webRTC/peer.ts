@@ -62,7 +62,7 @@ class PeerService implements IPeerService{
         
     }
     getPeerConnection() {
-        return this.peer;
+        return this.peer ;
       }
 
     destroyPeerConnection() {

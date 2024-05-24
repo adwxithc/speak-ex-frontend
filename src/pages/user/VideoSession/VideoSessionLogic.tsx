@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { RootState } from "../../../redux/store";
@@ -9,6 +9,7 @@ import VideoSession from "./VideoSession";
 import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
 import useLiveChat from "./LiveChat/useLiveChat";
 import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler";
+import { setWallet } from "../../../redux/features/user/user/userSlice";
 
 
 
@@ -17,7 +18,7 @@ import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler";
 function VideoSessionLogic() {
 
     const socket = useSocket()
-    const { userData } = useSelector((state: RootState) => state.user)
+    const { userData, wallet } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
 
@@ -26,6 +27,7 @@ function VideoSessionLogic() {
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
 
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const { sessionId = '' } = useParams()
 
@@ -70,6 +72,19 @@ function VideoSessionLogic() {
         setRemoteStream(remoteStream[0]);
     }, [])
 
+    const handleWindowUnload = useCallback(() => {
+        socket?.emit('session:terminate', { sessionCode: sessionId, endingTime: new Date() })
+    }, [sessionId, socket])
+
+    const handlePeerDisconnect = useCallback(() => {
+        const pc = peerService.getPeerConnection();
+        if (!pc) return
+        const connectionState = pc.iceConnectionState;
+        if (connectionState === 'disconnected' || connectionState === 'failed') {
+            socket?.emit('session:terminate', { sessionCode: sessionId, endingTime: new Date() })
+
+        }
+    }, [sessionId, socket])
 
     const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
 
@@ -82,12 +97,20 @@ function VideoSessionLogic() {
         await peerService.setRemoteDescription(ans)
     }, [])
 
-    const handleTermination = useCallback(({coinExchange}:{coinExchange:number})=> { 
+
+    const handleTermination = useCallback(({ coinExchange }: { coinExchange: number }) => {
+
         endPeerConnectionHandler({ localStream, peerService: peerService, remoteStream })
-        if(type == 'host')
-            navigate('/session-over',{state:{coinExchange}})
-        else navigate(`/session-feedback/${sessionId}`,{state:{coinExchange}})
-    }, [localStream, navigate, remoteStream, sessionId, type])
+        if (type == 'host') {
+            console.log(wallet?.silverCoins || 0 + coinExchange);
+
+            dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) + coinExchange }))
+            navigate('/session-over', { state: { coinExchange } })
+        } else {
+            navigate(`/session-feedback/${sessionId}`, { state: { coinExchange } })
+            dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) - coinExchange }))
+        }
+    }, [dispatch, localStream, navigate, remoteStream, sessionId, type, wallet?.silverCoins])
 
 
     const sendStreams = useCallback(async () => {
@@ -136,14 +159,34 @@ function VideoSessionLogic() {
     }, [handleUserJoin, remoteUserId, type])
 
 
+
+    useEffect(() => {
+        const pc = peerService.getPeerConnection();
+        if (pc) {
+            pc.addEventListener('iceconnectionstatechange', handlePeerDisconnect);
+        }
+
+        return () => {
+            if (pc) {
+                pc.removeEventListener('iceconnectionstatechange', handlePeerDisconnect);
+            }
+        };
+    }, [handlePeerDisconnect]);
+
+
     useEffect(() => {
         peerService.getPeerConnection()?.addEventListener('negotiationneeded', handleNegoNeeded)
         peerService.getPeerConnection()?.addEventListener('track', handleAddTrack)
+        window.addEventListener('unload', handleWindowUnload)
+
+
         return () => {
             peerService.getPeerConnection()?.removeEventListener('negotiationneeded', handleNegoNeeded)
             peerService.getPeerConnection()?.removeEventListener('track', handleAddTrack)
+            window.removeEventListener('unload', handleWindowUnload)
+
         }
-    }, [handleAddTrack, handleNegoNeeded])
+    }, [handleAddTrack, handleNegoNeeded, handleWindowUnload])
 
 
     useEffect(() => {
@@ -160,7 +203,7 @@ function VideoSessionLogic() {
             socket?.off('peer:nego-needed', handlePeerNegoNeeded)
             socket?.off('peer:nego-final', handlePeerNegoFinal)
         }
-    }, [handleCallAccepted, handleIncommingCall, handlePeerNegoFinal, handlePeerNegoNeeded, socket])
+    }, [handleCallAccepted, handleIncommingCall, handlePeerNegoFinal, handlePeerNegoNeeded, handleTermination, socket])
 
 
     return (

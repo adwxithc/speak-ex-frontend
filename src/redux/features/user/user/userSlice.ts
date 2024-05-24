@@ -13,18 +13,21 @@ const userSlice = createSlice({
         removeCridentials: (state) => {
             state.isAuth = false;
             state.userData = null;
-       
             localStorage.removeItem('userData')
-        
         },
         updateCridentials:(state,action)=>{
-            const data={...state.userData,...action.payload}
-            state.userData=data
+            const data={...state.userData,...action.payload};
+            state.userData=data;
             localStorage.setItem('userData',JSON.stringify(data))
         },
-      
+        setWallet:(state,action)=>{
+            const data =  {...state.wallet,...action.payload};
+            
+            
+            state.wallet=data;
+        }
     }
 })
 
-export const {removeCridentials,setCridentials,updateCridentials} =userSlice.actions
+export const {removeCridentials,setCridentials,updateCridentials,setWallet} =userSlice.actions
 export default userSlice.reducer

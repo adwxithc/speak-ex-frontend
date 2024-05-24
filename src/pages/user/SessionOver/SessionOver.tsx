@@ -23,7 +23,7 @@ function SessionOver() {
       <div className='ml-3 mt-5  sm:ml-16 sm:mt-8 flex items-center gap-2'>
         <CountdownCircleTimer
           isPlaying
-          duration={60000}
+          duration={60}
           colors={['#0c921e', '#ffea00', '#ff691e', '#ff0000']}
           colorsTime={[60, 30, 10, 0]}
           isSmoothColorTransition

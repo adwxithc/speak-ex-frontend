@@ -18,6 +18,9 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
                 body:{description:data.description}
             })
         }),
+        getSession:builder.query({
+            query: (data) => `${SESSION_URL}/sessionCode/${data.sessionCode}`,
+        })
        
 })
 })
@@ -25,5 +28,6 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useRateSessionMutation,
-    useReportSessionMutation
+    useReportSessionMutation,
+    useGetSessionQuery
 } = sessionApiSlice;

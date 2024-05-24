@@ -86,3 +86,18 @@ export interface IWallet {
     createdAt?: string;
     updatedAt?: string;
 }
+
+export interface ISession{
+    id:string;
+    sessionCode:string;
+    helper:string;
+    learner?:string;
+    startingTime?:string;
+    endingTime?:string;
+    rating?:number
+    languageId?:string;
+    rate:number;
+    createdAt?:string;
+    updatedAt?:string;
+    offers:string[]
+}

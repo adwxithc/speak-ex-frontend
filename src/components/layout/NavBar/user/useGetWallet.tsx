@@ -3,18 +3,18 @@ import { useGetWalletQuery } from "../../../../redux/features/user/user/userApiS
 import { IWallet } from "../../../../types/database"
 import { RootState } from "../../../../redux/store"
 import { useEffect } from "react"
-import {  updateCridentials } from "../../../../redux/features/user/user/userSlice"
+import {  setWallet } from "../../../../redux/features/user/user/userSlice"
 
 function useGetWallet() {
 
-  const { userData , isAuth } = useSelector((state: RootState) => state.user)
-  const {data} = useGetWalletQuery({},{skip:Boolean(userData?.wallet && !isAuth )}) 
+  const { wallet , isAuth } = useSelector((state: RootState) => state.user)
+  const {data} = useGetWalletQuery({},{skip:Boolean(wallet || !isAuth )}) 
   const dispatch =useDispatch()
   useEffect(()=>{
       if(data?.data )
-        dispatch(updateCridentials({wallet:data?.data as IWallet}))
+        dispatch(setWallet({...data?.data as IWallet}))
     
-  },[data?.data, dispatch, userData?.wallet])
+  },[data?.data, dispatch])
 
 
 }

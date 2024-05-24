@@ -1,5 +1,5 @@
 import { MessageSquareText, Mic, MicOff, PhoneOff, Video, VideoOff } from "lucide-react"
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 
 
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../../redux/store"
 import IUser from "../../../../types/database"
 import SessionDuration from "../SessionDuration/SessionDuration"
+
 
 
 interface IVideoCallArea {
@@ -59,12 +60,16 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
         setAudioEnabled(prev => !prev)
 
     }
-    const terminate = () => {
+    const terminate = useCallback(() => {
 
        
-        socket?.emit('session:terminate', { sessionCode: sessionId })
-  
-    }
+        socket?.emit('session:terminate', { sessionCode: sessionId,endingTime:new Date()})
+       
+    },[sessionId, socket])
+
+
+
+
  
     return (
 
