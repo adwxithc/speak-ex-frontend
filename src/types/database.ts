@@ -33,6 +33,7 @@ export interface ILanguage{
     id:string;
     name:string;
     basePrice:number;
+    rate:number;
     createdAt?:string;
     updatedAt?:string;
 }

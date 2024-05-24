@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react"
-import IUser, { IMessage } from "../../../types/database"
-import { useSocket } from "../../../context/SocketProvider"
+import IUser, { IMessage } from "../../../../types/database"
+import { useSocket } from "../../../../context/SocketProvider"
 import { useSelector } from "react-redux"
-import { RootState } from "../../../redux/store"
+import { RootState } from "../../../../redux/store"
 
 function useLiveChat(remoteUser:Required<IUser>|null) {
     const [messages, setMessages] = useState<IMessage[]>([])

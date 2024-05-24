@@ -1,9 +1,9 @@
 
-import Container from "../../../components/layout/Container/Container"
-import Button from "../../../components/ui/Button/Button"
+import Container from "../../../../components/layout/Container/Container"
+import Button from "../../../../components/ui/Button/Button"
 import { Mic, MicOff, Video, VideoOff } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { useSocket } from "../../../context/SocketProvider"
+import { useSocket } from "../../../../context/SocketProvider"
 import { useNavigate, useParams } from "react-router-dom"
 
 
@@ -18,8 +18,8 @@ function WaitForLearner() {
   const navigate = useNavigate()
   const socket = useSocket()
 
-  const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
-    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'host' } })
+  const handleUserJoin = useCallback(({ userId,startTime }: { userId: string,startTime:string }) => {
+    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'host',startTime } })
   }, [audioEnabled, navigate, sessionId, videoEnabled])
 
   useEffect(() => {
@@ -47,13 +47,13 @@ function WaitForLearner() {
   }, [videoEnabled])
 
   useEffect(() => {
-    const timeOut = setTimeout(() => {
+    const timeOut = setInterval(() => {
 
       socket?.emit('session:rematch', { sessionId })
     }, 10000)
 
     return () => {
-      clearTimeout(timeOut)
+      clearInterval(timeOut)
     }
   }, [sessionId, socket])
 

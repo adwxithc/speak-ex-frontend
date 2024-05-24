@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 
-import VideoCallChat from "./VideoCallChat"
-import VideoChatArea from "./VideoChatArea"
+import LiveChat from "./LiveChat/LiveChat"
+import VideoCallArea from "./VideoCallArea/VideoCallArea"
 import IUser, { IMessage } from "../../../types/database";
 import { AnimatePresence } from "framer-motion";
 
 interface IVideoSessionProps {
   localStream: MediaStream | null,
   remoteStream: MediaStream | null,
-  remoteUser:Required<IUser>|null
-  messages:IMessage[],
+  remoteUser: Required<IUser> | null
+  messages: IMessage[],
   handleSendMessage: (text: string, cb: () => void) => Promise<void>
-
+  startTime: number
 }
 
 
-export default function VideoSession({ localStream, remoteStream, remoteUser,handleSendMessage,messages }: IVideoSessionProps) {
+export default function VideoSession({ localStream, remoteStream, remoteUser, handleSendMessage, messages, startTime }: IVideoSessionProps) {
 
   const [isMobile, setIsMobile] = useState(true);
   const [chating, setChating] = useState(false)
- 
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,31 +42,31 @@ export default function VideoSession({ localStream, remoteStream, remoteUser,han
         mode="wait"
       >
 
-      {
-        isMobile ? (
-          chating ? (
-            <div className="w-full border-l dark:border-l-[#091220]">
-              <VideoCallChat {...{remoteUser,messages, handleSendMessage,setChating}} />
-            </div>
-          )
-            : (
-              <div className="flex-1">
-                <VideoChatArea {...{ localStream, remoteStream,setChating,remoteUser }} />
+        {
+          isMobile ? (
+            chating ? (
+              <div className="w-full border-l dark:border-l-[#091220]">
+                <LiveChat {...{ remoteUser, messages, handleSendMessage, setChating }} />
               </div>
             )
-        )
-          : (
-            <>
-              <div className="flex-1">
-                <VideoChatArea {...{ localStream, remoteStream,setChating,remoteUser }} />
-              </div>
-
-              <div className="w-96 border-l dark:border-l-[#091220]">
-                <VideoCallChat {...{remoteUser,messages, handleSendMessage,setChating}} />
-              </div>
-            </>
+              : (
+                <div className="flex-1">
+                  <VideoCallArea {...{ localStream, remoteStream, setChating, remoteUser, startTime }} />
+                </div>
+              )
           )
-      }
+            : (
+              <>
+                <div className="flex-1">
+                  <VideoCallArea {...{ localStream, remoteStream, setChating, remoteUser, startTime }} />
+                </div>
+
+                <div className="w-96 border-l dark:border-l-[#091220]">
+                  <LiveChat {...{ remoteUser, messages, handleSendMessage, setChating }} />
+                </div>
+              </>
+            )
+        }
       </AnimatePresence>
     </div>
 

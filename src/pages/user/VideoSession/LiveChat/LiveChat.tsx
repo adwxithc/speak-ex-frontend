@@ -4,14 +4,14 @@ import {motion} from 'framer-motion'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import Message from '../../../components/custom/Chat/Message/Message'
-import Avatar from '../../../components/ui/Avatar/Avatar'
-import IUser, { IMessage } from '../../../types/database'
-import { RootState } from '../../../redux/store'
-import Button from '../../../components/ui/Button/Button'
+import Message from '../../../../components/custom/Chat/Message/Message'
+import Avatar from '../../../../components/ui/Avatar/Avatar'
+import IUser, { IMessage } from '../../../../types/database'
+import { RootState } from '../../../../redux/store'
+import Button from '../../../../components/ui/Button/Button'
 
 
-interface IVideoCallChatProps{
+interface ILiveChatProps{
   remoteUser:Required<IUser>|null
   messages:IMessage[],
   handleSendMessage: (text: string, cb: () => void) => Promise<void>
@@ -19,7 +19,7 @@ interface IVideoCallChatProps{
   
 }
 
-function VideoCallChat({remoteUser,messages, handleSendMessage, setChating}:IVideoCallChatProps) {
+function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChatProps) {
   
   const [text, setText] = useState('')
   const { userData } = useSelector((state: RootState) => state.user)
@@ -84,4 +84,4 @@ function VideoCallChat({remoteUser,messages, handleSendMessage, setChating}:IVid
   )
 }
 
-export default VideoCallChat
+export default LiveChat

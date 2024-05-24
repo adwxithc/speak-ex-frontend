@@ -3,26 +3,26 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 
 
-import { toogleVideoTrack, toogleAudioTrack } from '../../../webRTC/streamToggle'
-import Button from "../../../components/ui/Button/Button"
-import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler"
-import peerService from '../../../webRTC/peer'
-import { useSocket } from "../../../context/SocketProvider"
+import { toogleVideoTrack, toogleAudioTrack } from '../../../../webRTC/streamToggle'
+import Button from "../../../../components/ui/Button/Button"
+import endPeerConnectionHandler from "../../../../webRTC/endPeerConnectionHandler"
+import peerService from '../../../../webRTC/peer'
+import { useSocket } from "../../../../context/SocketProvider"
 import { useSelector } from "react-redux"
-import { RootState } from "../../../redux/store"
-import IUser from "../../../types/database"
-import SessionTimer from "./SessionTimer"
+import { RootState } from "../../../../redux/store"
+import IUser from "../../../../types/database"
+import SessionDuration from "../SessionDuration/SessionDuration"
 
 
-interface IVideoChatArea {
+interface IVideoCallArea {
     localStream: MediaStream | null;
     remoteStream: MediaStream | null;
     setChating:Dispatch<SetStateAction<boolean>>
     remoteUser:Required<IUser>|null
-
+    startTime:number
 }
 
-function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IVideoChatArea) {
+function VideoCallArea({ localStream, remoteStream, setChating, remoteUser,startTime }: IVideoCallArea) {
     const navigate = useNavigate()
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
@@ -34,8 +34,6 @@ function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IV
    
     
     const socket = useSocket()
-
-    
 
     const { sessionId = '' } = useParams()
     const {  type:role } = useLocation().state;
@@ -71,6 +69,14 @@ function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IV
         navigate(`/session-feedback/${sessionId}`)
         else navigate('/')
     }
+    const timesUpTermination = ()=>{
+        
+        endPeerConnectionHandler({localStream,peerService:peerService,remoteStream})
+        socket?.emit('session:terminate',{sessionCode:sessionId})
+        if(role!=='host')
+        navigate(`/session-feedback/${sessionId}`)
+        else navigate('/')
+    }
     return (
   
         <div className="h-screen   flex flex-col">
@@ -93,9 +99,10 @@ function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IV
                                 <video ref={remotevideoRef} autoPlay  style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
                                 : <div>oops something went wrong...</div>
                         }
+                        <span className="text-white absolute top-5 right-5 bg-[#0000002c] p-1 rounded-full">{remoteStream?.getAudioTracks()[0].enabled?<Mic />:<MicOff />}</span>
                         <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute bottom-5 left-5 text-sm font-semibold"> {remoteUser?.firstName+" "+remoteUser?.lastName}</span>
-                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> <SessionTimer startTime={1713739200000}/> </span>
-                        
+                        <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> <SessionDuration  {...{timesUpTermination, startTime}} /> </span>
+                         
                     </div>
                     {
                         true &&
@@ -139,4 +146,4 @@ function VideoChatArea({ localStream, remoteStream, setChating, remoteUser }: IV
     )
 }
 
-export default VideoChatArea
+export default VideoCallArea

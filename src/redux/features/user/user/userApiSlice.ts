@@ -77,8 +77,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }),
        getWallet:builder.query({
         query:()=>`${USER_URL}/wallet`
+       }),
+       getLanguageInfo:builder.query({
+        query:(data)=>`${USER_URL}/language/${data.languageId}`
        })
-       
 
 
     }),
@@ -96,5 +98,6 @@ export const {
     useUnfollowUserMutation,
     useFollowUserMutation,
     useGetFollowersOrFollowingsQuery,
-    useGetWalletQuery
+    useGetWalletQuery,
+    useGetLanguageInfoQuery
 } = userApiSlice;

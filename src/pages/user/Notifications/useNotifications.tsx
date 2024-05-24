@@ -38,11 +38,11 @@ function useNotifications() {
 
     // }, [navigate])
 
-    const handleJoinSession = useCallback(({ sessionId, allowed, message }: { sessionId: string, allowed: boolean, session: string, message:string }) => {
+    const handleJoinSession = useCallback(({ sessionId, allowed, message,startTime }: { sessionId: string, allowed: boolean, session: string, message:string,startTime:string }) => {
 
         if (allowed) {
 
-            navigate(`/video-session/${sessionId}`, { state: { remoteUserId: '', audioEnabled:true, videoEnabled:true} })
+            navigate(`/video-session/${sessionId}`, { state: { remoteUserId: '', audioEnabled:true, videoEnabled:true,startTime} })
         } else {
             toast.error(message, { position: 'top-right' })
             navigate(`/`)

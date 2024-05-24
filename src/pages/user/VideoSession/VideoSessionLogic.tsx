@@ -7,7 +7,7 @@ import { useSocket } from "../../../context/SocketProvider";
 import peerService from  '../../../webRTC/peer'
 import VideoSession from "./VideoSession";
 import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
-import useLiveChat from "./useLiveChat";
+import useLiveChat from "./LiveChat/useLiveChat";
 
 
 
@@ -21,9 +21,9 @@ function VideoSessionLogic() {
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
     
     const location = useLocation();
-    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type } = location.state;
+    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type,startTime } = location.state;
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
-
+    
    
     
 
@@ -115,6 +115,7 @@ function VideoSessionLogic() {
         
         peerService.setRemoteDescription(ans)
         sendStreams()
+       
     }, [sendStreams])
 
 
@@ -153,7 +154,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream,remoteUser:data?.data,messages,handleSendMessage }} />
+        <VideoSession {...{ localStream, remoteStream,remoteUser:data?.data,messages,handleSendMessage,startTime:new Date(startTime).getTime() }} />
     )
 }
 export default VideoSessionLogic
