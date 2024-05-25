@@ -1,10 +1,10 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import React,{ Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { cn } from '../../../utils/style-utils';
 
 interface IDialogBoxProps {
     isOpen: boolean
-    setIsOpen: Dispatch<SetStateAction<boolean>>;
+    
     title?:string;
     children:React.ReactNode,
     onClose:()=>void
