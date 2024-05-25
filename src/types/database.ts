@@ -101,3 +101,29 @@ export interface ISession{
     updatedAt?:string;
     offers:string[]
 }
+
+export interface IReport{
+    id:string;
+    type:'sessions'|'posts';
+    referenceId:string;
+    description:string;
+    reportedUser:string;
+    reporter:string;
+    createdAt:string;
+    updatedAt:string;
+}
+
+export interface IReportWithUsers extends IReport{
+    reporterInfo:{
+        id: string;
+        username: string;
+        firstName:string;
+        lastName:string
+    },
+    reportedUserInfo:{
+        id: string;
+        username: string;
+        firstName:string;
+        lastName:string
+    },
+}

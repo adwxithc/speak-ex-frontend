@@ -15,7 +15,6 @@ import Users from './pages/admin/Users/Users';
 import Main from './pages/admin/Main/Main';
 import Monetization from './pages/admin/Monetization/Monetization'
 import CreditTime from "./pages/admin/CreditTime/CreditTime";
-import SalesReport from "./pages/admin/SalesReport/SalesReport";
 import UsersConcerns from "./pages/admin/UsersConcerns/UsersConcerns";
 import Languages from "./pages/admin/Languages/Languages";
 import AdminPrivateRoute from './pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute';
@@ -39,6 +38,7 @@ import VideoSessionLogic from './pages/user/VideoSession/VideoSessionLogic';
 import SessionFeedBack from './pages/user/SessionFeedBack/SessionFeedBack';
 import LanguageInfo from './pages/admin/Languages/LanguageInfo/LanguageInfo';
 import SessionOver from './pages/user/SessionOver/SessionOver';
+import ReportManagement from './pages/admin/ReportManagement/ReportManagement';
 
 
 
@@ -182,8 +182,8 @@ const router = createBrowserRouter([
               Component: CreditTime
             },
             {
-              path: 'sales-report',
-              Component: SalesReport
+              path: 'report-management',
+              Component: ReportManagement
             },
             {
               path: 'users-concern',
