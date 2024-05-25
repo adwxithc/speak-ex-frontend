@@ -6,13 +6,13 @@ import { cn } from "../../../utils/style-utils";
 
 
 const buttonVarients = cva(
-    'inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium  hover:opacity-90 m-1 disabled:cursor-not-allowed',
+    'inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium  hover:opacity-90 m-1 disabled:cursor-not-allowed shadow-inner shadow-white/10 focus:outline-none',
     {
         variants: {
             varient: {
                 default: 'bg-gray-200 text-black',
                 primary:"bg-primary text-white",
-                'primary-square' :'bg-primary text-white rounded',
+                'primary-square' :'bg-primary text-white rounded-md ',
                 danger:"bg-red-500 text-white",
                 'danger-outline':" border border-red-500 text-red-500",
                 'success-outline':" border border-green-500 text-green-500",

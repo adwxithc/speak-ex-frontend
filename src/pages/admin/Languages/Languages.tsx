@@ -65,7 +65,7 @@ const navigate =  useNavigate()
           <>
           {languages.map((item)=>(<tr key={item.id}>
            
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 cursor-pointer " onClick={()=>navigate(`/admin/language/${item.id}`)}>
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 cursor-pointer " onClick={()=>navigate(`/admin/language/${item.id}`,{state:{name:item.name}})}>
               {item.name}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 ">

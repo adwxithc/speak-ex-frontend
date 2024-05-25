@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import LanguageRateCalculator from "../../../../components/custom/LanguageRateCalculator.tsx/LanguageRateCalculator"
 import Button from "../../../../components/ui/Button/Button"
 import LearnerHelperChart from "./LearnerHelperChart"
@@ -9,9 +9,14 @@ import SessionRate from "./SessionRate"
 import toast from "react-hot-toast"
 import { IBackendResponse } from "../../../../types/queryResults"
 import { ILanguage } from "../../../../types/database"
+import { ChevronLeft } from "lucide-react"
 
 function LanguageInfo() {
   const { languageId } = useParams()
+  const location = useLocation();
+  const { name } = location.state;
+  const navigate =  useNavigate()
+
   const { data: languageRatiodata, refetch: refetchRatio } = useGetLearnerHelperRatioQuery({ languageId })
   const languageRatio = languageRatiodata?.data;
 
@@ -45,11 +50,15 @@ function LanguageInfo() {
 
     setBasePrice(languageRatio?.basePrice)
   }, [languageRatio])
+  
 
   return (
     <div className="h-full w-full xl:px-8">
 
-      <h2 className="font-semibold text-2xl mb-4 text-center ">Language Info</h2>
+      <h2 className="font-semibold text-2xl mb-4 text-center capitalize">{name}</h2>
+      <div>
+        <Button varient={'primary-square'} size={'sm'} onClick={()=>navigate('/admin/languages')}><ChevronLeft /> Back</Button>
+      </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-5 sm:px-3">
 
         <div className="col-span-2 sm:col-span-1 md:px-5 p-3">

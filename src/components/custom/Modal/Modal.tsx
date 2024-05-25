@@ -49,7 +49,7 @@ const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false
                 <div className=' border-gray-300 w-full p-1'>
                 <X className='ml-auto  cursor-pointer' onClick={handleClose} />
                 </div>
-                <div className='px-5 h-full overflow-y-scroll pretty-scrollbar'>
+                <div className='px-5 h-full overflow-x-hidden overflow-y-scroll pretty-scrollbar'>
                 {children}
                 </div>
                 
