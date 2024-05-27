@@ -23,9 +23,11 @@ export const usersListApiSlice = apiSlice.injectEndpoints({
                 };
             },
         }),
-    
+        getCompleteUserInfo:builder.query({
+            query:(data)=>`${ADMIN_URl}/user/${data.userId}`
+        })
 
     }),
 });
 
-export const { useGetUsersMutation, useUpdateUserMutation } = usersListApiSlice;
+export const { useGetUsersMutation, useUpdateUserMutation, useGetCompleteUserInfoQuery } = usersListApiSlice;

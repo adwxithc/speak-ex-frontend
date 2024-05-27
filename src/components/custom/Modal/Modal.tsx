@@ -5,15 +5,16 @@ import Backdrop from './Backdrop'
 import { X } from 'lucide-react';
 import { DotLoader } from 'react-spinners';
 import ReactDOM from 'react-dom'
+import { cn } from '../../../utils/style-utils';
 
-interface ModalProp{
+interface ModalProp extends React.HTMLAttributes<HTMLDivElement>{
     handleClose: () => void;
     children: ReactNode;
     loading:boolean;
     position?:string
 }
 
-const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false } ) =>{
+const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false ,className} ) =>{
     
     const dropIn = {
         hidden: {
@@ -38,7 +39,7 @@ const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false
         <>
          <Backdrop onClick={handleClose}>
             <motion.div
-                className={`w-auto h-auto max-h-[100vh] m-auto p-2  rounded-md flex flex-col items-center bg-white absolute ${position}`}
+                className={cn(`w-auto h-auto max-h-[100vh] m-auto p-2  rounded-md flex flex-col items-center bg-white absolute ${position}`,className)}
                 onClick={(e) => e.stopPropagation()}
                 variants={dropIn}
                 initial="hidden"

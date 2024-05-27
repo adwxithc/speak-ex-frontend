@@ -29,7 +29,7 @@ function Table<T,>({ columns, data,RowAction }: ITabelProps<T>) {
           {data?
           data.map((row, rowIndex) => (
             <tr key={rowIndex}
-          
+          className={RowAction&&'cursor-pointer'}
             onClick={RowAction?()=>RowAction(row):undefined}
             >
               {columns.map((column) => (

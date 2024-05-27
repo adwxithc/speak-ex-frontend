@@ -127,3 +127,12 @@ export interface IReportWithUsers extends IReport{
         lastName:string
     },
 }
+
+export interface IUserDetails extends Omit<IUser,'password'>{
+    proficientLanguageInfo:ILanguage[];
+    focusLanguageInfo:ILanguage;
+    wallet:IWallet;
+    session:{helpingSessions:number; learningSessions:number;rating:number;avgHelpingSessionsPerMonth:number;avgLearningSessionsPerMonth:number};
+    social:{followers:number;following:number;posts:number;averageLikes:number}
+    reports:(IReport&{reporterDetails:{firstName:string,lastName:string,userName:string,profile:string}})[]
+}
