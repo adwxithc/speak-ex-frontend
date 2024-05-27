@@ -5,17 +5,20 @@ import { useListReportsOnSessionQuery } from "../../../redux/features/admin/repo
 import { IReportWithUsers } from "../../../types/database";
 import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons";
 import Modal from "../../../components/custom/Modal/Modal";
-import moment from "moment";
 import ReportDetails from "./ReportDetails";
 import UserDetails from "../UserDetails.tsx/UserDetails";
+import Avatar from "../../../components/ui/Avatar/Avatar";
 
 
 interface IData {
+  firstName: string;
+  lastName: string;
+  userName:string;
   id: string;
-  reporter: string;
-  reportedUser: string;
-  createdAt: string;
-  description: string
+  profile: string;
+  reportCount: number;
+  repotedUser?:string;
+  reporters:string[]
 }
 
 function ReportManagement() {
@@ -40,29 +43,54 @@ function ReportManagement() {
 
   }, [ReportsData?.data?.reports, ReportsData?.data?.totalReports])
 
+  const handleShowUSer=(row:IData)=>{
+   
+    return (
+      <div className="flex items-center justify-center gap-2" onClick={()=>handleViewUserDetails(row.id)}>
+        <Avatar className="h-10 w-10" src={row.profile} />
+        <span>{row.firstName+' '+row.lastName}</span>
+      </div>
+    )
+  }
+
+  const handleShowReporters =(row:IData)=>{
+    console.log(row);
+    
+    return( 
+      <div className="flex relative items-center cursor-pointer" onClick={()=>handleViwReports(row)}>
+        {
+          row.reporters.map((reporter,i)=>(<span style={{zIndex:`${i}`,position:'absolute',left:`${i*20}px`}}>{i<4?<Avatar className={`h-10 w-10  `}  src={reporter} />:i==4 &&row.reporters.length-4>0 &&<span className="text-white h-10 w-10 bg-black/80 p-2.5 rounded-full inline-flex items-center justify-center">+{row.reporters.length-4}</span>}</span>))
+        }
+      </div>
+    )
+  }
 
   const columns: IColumns<IData>[] = [
-    { Header: 'Reporter', accessor: 'reporter' },
-    { Header: 'Reported User', accessor: 'reportedUser' },
-    { Header: 'CreatedAt', accessor: 'createdAt' },
-    { Header: 'Description', accessor: 'description' }
+    { Header: 'Reported User', accessor: 'repotedUser', Cell:handleShowUSer },
+    { Header: 'User Name', accessor: 'userName' },
+    { Header: 'id', accessor: 'id' },
+    { Header: 'Report Count', accessor: 'reportCount' },
+    { Header: 'Reports', accessor: 'reporters' , Cell:handleShowReporters},
   ];
 
 
   const data = useMemo(() => {
     if (!reports || !reports.length) return []
     const data = reports.map(r => ({
-      id: r.id,
-      reporter: r.reporterInfo.firstName + ' ' + r.reporterInfo.lastName,
-      reportedUser: r.reportedUserInfo.firstName + ' ' + r.reportedUserInfo.lastName,
-      createdAt: moment(r.createdAt).format('YYYY-MM-DD HH:MM:SS'),
-      description: r.description
+      firstName:r.reportedUserInfo.firstName,
+      lastName:r.reportedUserInfo.lastName,
+      profile:r.reportedUserInfo.profile,
+      id:r.reportedUserInfo.id,
+      userName:r.reportedUserInfo.userName,
+      reportCount:r.reports.length,
+      reporters:r.reports.map(reporter=>reporter.reporterInfo.profile)
+
     }))
     return data
   }, [reports])
 
-  const handleViwMoreInfo = (row: IData) => {
-    const info = reports.find(r => r.id == row.id)
+  const handleViwReports = (row: IData) => {
+    const info = reports.find(r => r.reportedUserInfo.id == row.id)
     setSelectedReport(info || null)
     setOpenReport(true)
   }
@@ -88,7 +116,7 @@ function ReportManagement() {
         <h1 className="text-3xl mb-5 font-semibold text-center">Session Reports</h1>
 
         <div className=" border  rounded-md  overflow-auto">
-          <Table columns={columns} data={data} RowAction={(row: IData) => handleViwMoreInfo(row)} />
+          <Table columns={columns} data={data}  />
         </div>
         <div>
           <PaginationButtons {...{ currentPage, setCurrentPage, totalPages }} />

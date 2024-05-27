@@ -10,9 +10,10 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Button from "../../../ui/Button/Button";
-import { useAdminLoginMutation } from "../../../../redux/features/admin/auth/adminApiSlice";
+import { useAdminLoginMutation } from "../../../../redux/features/admin/auth/adminAuthApiSlice";
 import { logAdmin } from "../../../../redux/features/admin/auth/adminSlice";
 import { IformValue, schema } from '../user/Schema/SignInSchema'
+import { removeCridentials } from "../../../../redux/features/user/user/userSlice";
 
 function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
 
@@ -44,12 +45,14 @@ function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<b
             setLoading(true)
             const res = await login({ ...data }).unwrap()
             dispatch(logAdmin({ ...res.data }));
-
+            dispatch(removeCridentials())
             setLoading(false)
             navigate('/admin')
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             setLoading(false)
+            console.log(error);
+            
 
             const errorInfo = error.data.errors;
             if (error.status == 400) {

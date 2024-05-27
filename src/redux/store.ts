@@ -6,13 +6,15 @@ import usersListReducer from './features/admin/listUsers/usersListSlice';
 import {apiSlice} from './apiSlice'
 
 
+
 const store = configureStore({
     reducer:{
         user:userReducer,
         admin:adminReducer,
         usersList:usersListReducer,
         language:languageListReducer,
-        [apiSlice.reducerPath]:apiSlice.reducer
+        [apiSlice.reducerPath]:apiSlice.reducer,
+        
         
     },
     middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(apiSlice.middleware),

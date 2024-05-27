@@ -1,8 +1,7 @@
 
 export interface IInitialAdminState{
     adminData:{email:string} | null,
-    isAuth:boolean,
-    
+    isAuth:boolean,  
 } 
 
 

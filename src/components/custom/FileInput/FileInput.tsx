@@ -14,7 +14,7 @@ function FileInput({onImageSelected}:IFileInputProps) {
     const handleImageChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
 
         const selectedFile = e.target.files?.[0];
-        console.log(selectedFile,'selectedFile');
+       
        
         if (!selectedFile) return;
       

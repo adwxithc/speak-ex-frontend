@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { RiseLoader } from 'react-spinners'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useAdminSignOutMutation } from '../../../redux/features/admin/auth/adminApiSlice'
+import { useAdminSignOutMutation } from '../../../redux/features/admin/auth/adminAuthApiSlice'
 import { logoutAdmin } from '../../../redux/features/admin/auth/adminSlice'
 
 

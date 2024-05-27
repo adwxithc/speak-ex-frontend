@@ -14,7 +14,7 @@ import AdminSignin from './pages/admin/auth/AdminSignin';
 import Users from './pages/admin/Users/Users';
 import Main from './pages/admin/Main/Main';
 import Monetization from './pages/admin/Monetization/Monetization'
-import CreditTime from "./pages/admin/CreditTime/CreditTime";
+import GoldCoins from "./pages/admin/GoldCoins/GoldCoins";
 import UsersConcerns from "./pages/admin/UsersConcerns/UsersConcerns";
 import Languages from "./pages/admin/Languages/Languages";
 import AdminPrivateRoute from './pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute';
@@ -39,6 +39,7 @@ import SessionFeedBack from './pages/user/SessionFeedBack/SessionFeedBack';
 import LanguageInfo from './pages/admin/Languages/LanguageInfo/LanguageInfo';
 import SessionOver from './pages/user/SessionOver/SessionOver';
 import ReportManagement from './pages/admin/ReportManagement/ReportManagement';
+import CreateCoinPurchasePlan from './pages/admin/GoldCoins/CreateCoinPurchasePlan';
 
 
 
@@ -178,8 +179,12 @@ const router = createBrowserRouter([
               Component: Monetization
             },
             {
-              path: 'credit-time',
-              Component: CreditTime
+              path: 'gold-coins',
+              Component: GoldCoins
+            },
+            {
+              path: 'create-purchase-plan',
+              Component: CreateCoinPurchasePlan
             },
             {
               path: 'report-management',

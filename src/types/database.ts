@@ -113,18 +113,21 @@ export interface IReport{
     updatedAt:string;
 }
 
-export interface IReportWithUsers extends IReport{
-    reporterInfo:{
+export interface IReportWithUsers{
+    reports:(IReport&{reporterInfo:{
         id: string;
-        username: string;
+        userName: string;
         firstName:string;
-        lastName:string
-    },
+        lastName:string;
+        profile:string;
+
+    }})[],
     reportedUserInfo:{
         id: string;
         username: string;
         firstName:string;
-        lastName:string
+        lastName:string;
+        profile:string
     },
 }
 

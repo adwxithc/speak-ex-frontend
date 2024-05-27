@@ -57,7 +57,7 @@ function UserDetails({ userId }: { userId: string }) {
             const res = await updateUser(data).unwrap() as IBackendResponse<IUser>;
             setUserData(prev=>{
                 if(prev){
-                    return {...prev, blocked: status}
+                    return {...prev, blocked: res.data.blocked}
                 }
                 return null
             })
@@ -165,7 +165,7 @@ function UserDetails({ userId }: { userId: string }) {
                         <div className="flex flex-wrap gap-5 p-5">
                             {
                                 datas.map(item => (
-                                    <motion.div layoutId={item.name} onClick={() => setSelectedId(item.name)} key={item.name} className=" flex-1 aspect-square p-3 drop-shadow bg-gray-100 rounded-xl flex flex-col justify-center items-center">
+                                    <motion.div layoutId={item.name} onClick={() => setSelectedId(item.name)} key={item.name} className=" flex-1 cursor-pointer aspect-square p-3 drop-shadow bg-gray-100 rounded-xl flex flex-col justify-center items-center">
                                         <img className="h-14 w-14 " src={item.icon} alt={item.name} />
                                         <span className="text-sm text-gray-700 capitalize">{item.name}</span>
                                     </motion.div>
@@ -211,16 +211,14 @@ function UserDetails({ userId }: { userId: string }) {
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.2 }}
                         onClick={() => setSelectedId('')}
-                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex justify-center items-center overflow-y-scroll pt-10" // Fullscreen modal style
+                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex justify-center items-center " 
                     >
-                        <motion.div className="bg-white p-5 rounded-lg" onClick={(e) => e.stopPropagation()}>
-
-                            {
-                                renderContent()
-
-                            }
-
+                        <div className="overflow-y-scroll pretty-scrollbar max-h-full ">
+                        <motion.div className="bg-white p-5 rounded-lg " onClick={(e) => e.stopPropagation()}>
+                            {renderContent()}
                         </motion.div>
+                        </div>
+                       
                     </motion.div>
                 )}
             </AnimatePresence>
