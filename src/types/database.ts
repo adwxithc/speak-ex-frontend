@@ -124,7 +124,7 @@ export interface IReportWithUsers{
     }})[],
     reportedUserInfo:{
         id: string;
-        username: string;
+        userName: string;
         firstName:string;
         lastName:string;
         profile:string
@@ -138,4 +138,16 @@ export interface IUserDetails extends Omit<IUser,'password'>{
     session:{helpingSessions:number; learningSessions:number;rating:number;avgHelpingSessionsPerMonth:number;avgLearningSessionsPerMonth:number};
     social:{followers:number;following:number;posts:number;averageLikes:number}
     reports:(IReport&{reporterDetails:{firstName:string,lastName:string,userName:string,profile:string}})[]
+}
+
+
+export interface ICoinPurchasePlan{
+    id:string;
+    price:number;
+    count:number;
+    title:string;
+    image:string;
+    deleted?:boolean;
+    createdAt:string,
+    updatedAt:string
 }

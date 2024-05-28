@@ -39,7 +39,7 @@ import SessionFeedBack from './pages/user/SessionFeedBack/SessionFeedBack';
 import LanguageInfo from './pages/admin/Languages/LanguageInfo/LanguageInfo';
 import SessionOver from './pages/user/SessionOver/SessionOver';
 import ReportManagement from './pages/admin/ReportManagement/ReportManagement';
-import CreateCoinPurchasePlan from './pages/admin/GoldCoins/CreateCoinPurchasePlan';
+import CreateCoinPurchasePlanLogic from './pages/admin/GoldCoins/CreateCoinPurchasePlan/CreateCoinPurchasePlanLogic';
 
 
 
@@ -184,7 +184,7 @@ const router = createBrowserRouter([
             },
             {
               path: 'create-purchase-plan',
-              Component: CreateCoinPurchasePlan
+              Component: CreateCoinPurchasePlanLogic
             },
             {
               path: 'report-management',

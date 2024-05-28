@@ -14,6 +14,8 @@ const buttonVarients = cva(
                 primary:"bg-primary text-white",
                 'primary-square' :'bg-primary text-white rounded-md ',
                 danger:"bg-red-500 text-white",
+                'danger-square' :'bg-red-500 text-white rounded-md ',
+
                 'danger-outline':" border border-red-500 text-red-500",
                 'success-outline':" border border-green-500 text-green-500",
                 success:"bg-green-500 text-white",

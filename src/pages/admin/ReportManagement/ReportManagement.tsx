@@ -142,9 +142,6 @@ function ReportManagement() {
       }
 
     </>
-
-
-
   )
 }
 

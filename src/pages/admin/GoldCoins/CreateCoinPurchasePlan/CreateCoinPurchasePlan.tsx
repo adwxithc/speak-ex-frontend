@@ -1,83 +1,38 @@
-import { useForm } from "react-hook-form";
-import Button from "../../../components/ui/Button/Button"
-import { Input } from "../../../components/ui/Input/Input"
-import { z } from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent, useState } from "react";
-import { useCreatePurchasePlanMutation } from "../../../redux/features/admin/coinPurchase/coinPurchasePlanApiSlice";
-import toast from "react-hot-toast";
-import { MoonLoader } from "react-spinners";
 
-interface IformValue {
-    title: string,
-    count: number,
-    price: number
+import Button from "../../../../components/ui/Button/Button"
+import { Input } from "../../../../components/ui/Input/Input"
+
+import { MoonLoader } from "react-spinners";
+import { IformValue } from "./CreateCoinPurchasePlanLogic";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { BaseSyntheticEvent, ChangeEvent } from "react";
+import { ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+interface ICreateCoinPurchasePlanProps {
+    handleSubmit: (e?: BaseSyntheticEvent<object, unknown, unknown> | undefined) => Promise<void>
+    errors: FieldErrors<IformValue>;
+    register: UseFormRegister<IformValue>;
+    preview: string;
+    handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    isValid: boolean;
+    isLoading: boolean;
 }
 
-function CreateCoinPurchasePlan() {
+function CreateCoinPurchasePlan({ errors, handleImageChange, handleSubmit, isLoading, isValid, preview, register }: ICreateCoinPurchasePlanProps) {
 
-    const schema = z.object({
-        title: z.string().min(3, 'title must be minimum 3 character long'),
-        count: z.number().min(1, 'No. of coins  should be more than zero'),
-        price: z.number().min(1, 'price  should be more than zero'),
-
-    });
-
-    const methods = useForm<IformValue>({
-        mode: 'onChange',
-        resolver: zodResolver(schema), // zod resolver for form validation
-    });
-
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
-
-    const { register, handleSubmit, formState, reset } = methods;
-    const { errors, isValid } = formState
-
-    const [createPurchasePlan, { isLoading }] = useCreatePurchasePlanMutation();
-
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files) return;
-
-        const file = e.target.files[0];
-        if (file) {
-            setSelectedImage(file);
-
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result?.toString() || '');
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const onSubmit = async (data: IformValue) => {
-        if (!selectedImage) return
-        const formData = new FormData()
-
-        formData.append('image', selectedImage);
-        formData.append('count', data.count.toString())
-        formData.append('price', data.price.toString());
-        formData.append('title', data.title);
-
-        try {
-            await createPurchasePlan(formData).unwrap();
-
-            toast.success('Purchase plan created successfully', { position: 'top-center' });
-            reset()
-            setPreview('')
-            setSelectedImage(null)
-        } catch (error) {
-            toast.error('something went wrong')
-        }
-    }
+    const navigate = useNavigate()
 
 
     return (
         <div className="max-w-4xl min-w-[700px]  mx-auto overflow-x-auto">
+             <div >
+                <Button onClick={()=>navigate('/admin/gold-coins')} varient={'primary-square'} size={'sm'}><ChevronLeft />Back </Button>
+            </div>
             <h2 className="text-2xl font-medium my-5 text-black/80">Create Plan</h2>
+           
             <p className="mb-4 text-black/60 font-medium text-sm">Create gold coin purchase plan for  users </p>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit}>
                 <div className="bg-white p-5 rounded shadow mb-5 text-sm">
                     <label htmlFor="title" className=" font-medium text-black/70" >Plan title</label>
                     <Input placeholder="Title" id="title" {...register('title')} />
