@@ -12,9 +12,10 @@ interface ModalProp extends React.HTMLAttributes<HTMLDivElement>{
     children: ReactNode;
     loading:boolean;
     position?:string
+    handleModalShowed?:()=>void
 }
 
-const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false ,className} ) =>{
+const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false ,className,handleModalShowed} ) =>{
     
     const dropIn = {
         hidden: {
@@ -45,6 +46,8 @@ const  Modal:FC<ModalProp> = ({ handleClose, children,position='', loading=false
                 initial="hidden"
                 animate="visible"
                 exit="exit"
+                onAnimationComplete={handleModalShowed}
+                
             >
 
                 <div className=' border-gray-300 w-full p-1'>

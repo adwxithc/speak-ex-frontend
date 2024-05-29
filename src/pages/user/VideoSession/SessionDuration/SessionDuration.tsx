@@ -5,7 +5,7 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import Button from "../../../../components/ui/Button/Button";
-import { useGetSessionQuery } from "../../../../redux/features/user/user/sessionApiSlice";
+import { useGetSessionQuery } from "../../../../redux/features/user/session/sessionApiSlice";
 import { ISession } from "../../../../types/database";
 
 

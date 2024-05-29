@@ -10,6 +10,8 @@ body {
   /* background-color: blue; */
 }
 
+
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }

@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button/Button'
 import Rating from '../../../components/custom/Rating/Rating'
 import { Dispatch, SetStateAction, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useRateSessionMutation } from '../../../redux/features/user/user/sessionApiSlice'
+import { useRateSessionMutation } from '../../../redux/features/user/session/sessionApiSlice'
 import { useParams } from 'react-router-dom'
 
 function RateSession({setInAction}:{setInAction: Dispatch<SetStateAction<boolean>>}) {

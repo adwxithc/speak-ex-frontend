@@ -20,6 +20,9 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
         }),
         getSession:builder.query({
             query: (data) => `${SESSION_URL}/sessionCode/${data.sessionCode}`,
+        }),
+        getCoinPurchasePlans:builder.query({
+            query: () => `${SESSION_URL}/coin-purchase-plans`,
         })
        
 })
@@ -29,5 +32,6 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
 export const {
     useRateSessionMutation,
     useReportSessionMutation,
-    useGetSessionQuery
+    useGetSessionQuery,
+    useGetCoinPurchasePlansQuery
 } = sessionApiSlice;

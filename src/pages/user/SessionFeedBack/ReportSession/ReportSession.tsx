@@ -10,7 +10,7 @@ import {
     useState,
 } from 'react';
 import ReportForm from './ReportForm';
-import { useReportSessionMutation } from '../../../../redux/features/user/user/sessionApiSlice';
+import { useReportSessionMutation } from '../../../../redux/features/user/session/sessionApiSlice';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 

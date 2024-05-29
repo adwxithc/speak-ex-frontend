@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './features/user/user/userSlice';
 import adminReducer from './features/admin/auth/adminSlice';
-import languageListReducer from './features/admin/languages/languageSlice'
-import usersListReducer from './features/admin/listUsers/usersListSlice';
+import coinPurchaseReducer from './features/user/coinPurchase/coinPurchaseSlice'
+
 import {apiSlice} from './apiSlice'
 
 
@@ -11,8 +11,7 @@ const store = configureStore({
     reducer:{
         user:userReducer,
         admin:adminReducer,
-        usersList:usersListReducer,
-        language:languageListReducer,
+        coinPurchase:coinPurchaseReducer,
         [apiSlice.reducerPath]:apiSlice.reducer,
         
         
