@@ -13,6 +13,7 @@ const buttonVarients = cva(
                 default: 'bg-gray-200 text-black',
                 primary:"bg-primary text-white",
                 'primary-square' :'bg-primary text-white rounded-md ',
+                'primary-outline-square' :'border border-primary text-primary rounded-md ',
                 danger:"bg-red-500 text-white",
                 'danger-square' :'bg-red-500 text-white rounded-md ',
 

@@ -37,7 +37,7 @@ function Profile() {
               { userName===userData?.userName &&
               <>
                <SideBarItem text="User Info" key='2' icon={<Info />} onClick={()=>navigate('user-info')}  />
-              <SideBarItem text="Monetization" key='3' icon={<CircleDollarSign />} />
+              <SideBarItem text="Monetization" key='3' icon={<CircleDollarSign />}  onClick={()=>navigate('monetization')}   />
               <SideBarItem text="Wallet" key='5' icon={<Wallet />} />
               </>
               }

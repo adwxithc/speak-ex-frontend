@@ -36,11 +36,12 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         getUserById:builder.query({
             query: (data) => {
                 if (!data.userId) {
-                  return undefined;
+                  return '';
                 }
                 return `${USER_URL}/id/${data.userId}`;
               },
         }),
+        
 
     }),
     

@@ -40,12 +40,12 @@ export default function useUserSearch(key:string, page:number) {
         setHasMore(res.data.lastPage > page);
 
       } catch (error) {
-        console.error(error);
+       
         toast('something went wrong',{position:'top-center'})
       } finally {
         setLoading(false);
       }
-    }, 5000);
+    }, 500);
     debouncedFetchUsers()
     
   }, [ key, page, search])

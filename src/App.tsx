@@ -13,7 +13,7 @@ import ResetPassword from './pages/user/auth/forgot-password/ResetPassword';
 import AdminSignin from './pages/admin/auth/AdminSignin';
 import Users from './pages/admin/Users/Users';
 import Main from './pages/admin/Main/Main';
-import Monetization from './pages/admin/Monetization/Monetization'
+import Monetization from './pages/user/Monetization/Monetization'
 import GoldCoins from "./pages/admin/GoldCoins/GoldCoins";
 import UsersConcerns from "./pages/admin/UsersConcerns/UsersConcerns";
 import Languages from "./pages/admin/Languages/Languages";
@@ -70,6 +70,10 @@ const router = createBrowserRouter([
             {
               path: 'user-info',
               Component: UserInfo
+            },
+            {
+              path: 'monetization',
+              Component: Monetization
             },
             {
               path: 'follow/:followType',

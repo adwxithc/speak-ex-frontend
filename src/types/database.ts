@@ -11,9 +11,16 @@ export interface IUser{
     focusLanguage?:string;
     proficientLanguage?:string[]
     followers: string[],
-    following: string[]
-    status?: 'active' | 'freeze';
+    following: string[],
+    isMonetized:boolean;
+    requestedForMonetization:boolean
+   
 }
+
+   
+   
+
+    
 
 export default IUser; 
 
@@ -131,11 +138,19 @@ export interface IReportWithUsers{
     },
 }
 
+export interface IUsersSesssionData{
+    helpingSessions:number;
+    learningSessions:number;
+    rating:number;
+    avgHelpingSessionsPerMonth:number;
+    avgLearningSessionsPerMonth:number
+}
+
 export interface IUserDetails extends Omit<IUser,'password'>{
     proficientLanguageInfo:ILanguage[];
     focusLanguageInfo:ILanguage;
     wallet:IWallet;
-    session:{helpingSessions:number; learningSessions:number;rating:number;avgHelpingSessionsPerMonth:number;avgLearningSessionsPerMonth:number};
+    session:IUsersSesssionData;
     social:{followers:number;following:number;posts:number;averageLikes:number}
     reports:(IReport&{reporterDetails:{firstName:string,lastName:string,userName:string,profile:string}})[]
 }

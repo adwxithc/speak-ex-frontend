@@ -23,6 +23,16 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
         }),
         getCoinPurchasePlans:builder.query({
             query: () => `${SESSION_URL}/coin-purchase-plans`,
+        }),
+        getSessionData:builder.query({
+            query:(data)=>`${SESSION_URL}/session-datas/${data.userId}`
+        }),
+        requestForMonetization:builder.mutation({
+            query:(data)=>({
+                url:`${SESSION_URL}/request-monetization`,
+                method:'POST',
+                body:data
+            })
         })
        
 })
@@ -33,5 +43,7 @@ export const {
     useRateSessionMutation,
     useReportSessionMutation,
     useGetSessionQuery,
-    useGetCoinPurchasePlansQuery
+    useGetCoinPurchasePlansQuery,
+    useGetSessionDataQuery,
+    useRequestForMonetizationMutation
 } = sessionApiSlice;
