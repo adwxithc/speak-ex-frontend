@@ -33,7 +33,11 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
                 method:'POST',
                 body:data
             })
+        }),
+        getVideoSessions:builder.query({
+            query: (data) => `${SESSION_URL}/video-sessions?page=${data.page||1}&type=${data.type||'all'}`,
         })
+
        
 })
 })
@@ -45,5 +49,6 @@ export const {
     useGetSessionQuery,
     useGetCoinPurchasePlansQuery,
     useGetSessionDataQuery,
-    useRequestForMonetizationMutation
+    useRequestForMonetizationMutation,
+    useGetVideoSessionsQuery
 } = sessionApiSlice;

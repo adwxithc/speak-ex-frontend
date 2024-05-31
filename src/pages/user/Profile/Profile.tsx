@@ -3,7 +3,7 @@ import SideBarItem from "../../../components/layout/SideBar/User/UserProfileSide
 import UserProfileSideBar from "../../../components/layout/SideBar/User/UserProfileSideBar"
 import { Outlet, useNavigate, useParams } from "react-router-dom"
 import ProfilePicture from "../../../components/custom/ProfilePicture/ProfilePicture"
-import { CircleDollarSign, CircleUser,Info, Wallet } from "lucide-react"
+import { CircleDollarSign, CircleUser,History,Info, Wallet } from "lucide-react"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
 import { useGetUserQuery } from "../../../redux/features/user/user/profileApiSlice"
@@ -38,6 +38,7 @@ function Profile() {
               <>
                <SideBarItem text="User Info" key='2' icon={<Info />} onClick={()=>navigate('user-info')}  />
               <SideBarItem text="Monetization" key='3' icon={<CircleDollarSign />}  onClick={()=>navigate('monetization')}   />
+              <SideBarItem text="Session History" key='3' icon={<History />}  onClick={()=>navigate('session-logs')}   />
               <SideBarItem text="Wallet" key='5' icon={<Wallet />} />
               </>
               }

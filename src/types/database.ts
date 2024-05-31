@@ -97,6 +97,8 @@ export interface IWallet {
 export interface ISession{
     id:string;
     sessionCode:string;
+    isMonetized:boolean;
+    moneyToTheHelper?:number;
     helper:string;
     learner?:string;
     startingTime?:string;
@@ -187,4 +189,9 @@ export interface IMonetizationRequestData extends IMonetizationRequest{
         userName:string,
         profile:string
     }
+}
+
+export interface ISessionDetails extends ISession {
+    helperData: {firstName:string;lastName:string;userName:string;profile:string ; id:string};
+    learnerData: {firstName:string;lastName:string;userName:string;profile:string ; id:string};
 }
