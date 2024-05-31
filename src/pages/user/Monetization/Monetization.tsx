@@ -10,6 +10,8 @@ import { updateCridentials } from "../../../redux/features/user/user/userSlice";
 import DialogBox from "../../../components/custom/DialogBox/DialogBox";
 import Button from "../../../components/ui/Button/Button";
 import { MoonLoader } from "react-spinners";
+import Monetised from "./Statuses/Monetized";
+import Requested from "./Statuses/Requested";
 
 function Monetization() {
   const { userData } = useSelector((state: RootState) => state.user)
@@ -18,10 +20,8 @@ function Monetization() {
   const dispatch = useDispatch()
 
   const [requestForMonetization, { isLoading }] = useRequestForMonetizationMutation()
-  const { data } = useGetSessionDataQuery({ userId: userData?.id }, { skip: userData?.isMonetized });
+  const { data } = useGetSessionDataQuery({ userId: userData?.id });
   const sessionData = data?.data as IUsersSesssionData
-
-
 
 
 
@@ -30,9 +30,11 @@ function Monetization() {
   const [rating, setRating] = useState(0)
 
   useEffect(() => {
+    
     setHelpingSessions(sessionData?.helpingSessions || 0);
     setRating(sessionData?.rating || 0);
-  }, [sessionData?.helpingSessions, sessionData?.rating])
+  }, [sessionData?.helpingSessions, sessionData?.rating, userData?.isMonetized])
+
 
   const handleRequestSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -46,17 +48,31 @@ function Monetization() {
     setOpenConfirm(false)
   }
 
+console.log(helpingSessions , rating);
+
+  const renderContent = () => {
+
+    if(sessionData?.isMonetized){
+     return  <Monetised />
+    }else if(helpingSessions > 10 && rating >= 4 && !userData?.requestedForMonetization){
+      return  <Eligible {...{ handleRequestSubmit, isValid: Boolean(description), onDescriptionChange: (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value) }} />
+    }else if(userData?.requestedForMonetization){
+      return <Requested />
+
+    }else{
+      return <NotEligibel />
+
+    }
+};
+
   return (
     <>
       <div className="p-5">
 
         <div className="flex justify-center items-center">
           {
-            helpingSessions > 10 && rating >= 4 ?
-              <Eligible {...{ handleRequestSubmit, isValid: Boolean(description), onDescriptionChange: (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value) }} />
-              : <NotEligibel />
+            renderContent()
           }
-
         </div>
 
 

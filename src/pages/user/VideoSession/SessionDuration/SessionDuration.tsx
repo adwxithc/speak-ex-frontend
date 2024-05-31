@@ -17,7 +17,7 @@ interface ISessionDurationProps {
 function SessionDuration({ startTime, terminate }: ISessionDurationProps) {
 
   const location = useLocation();
-  const { type } = location.state;
+  const { type,isMonetized } = location.state;
   const { wallet } = useSelector((state: RootState) => state.user)
   const [formatedDuration, setFormatedDuration] = useState('00:00:00');
 
@@ -35,15 +35,18 @@ function SessionDuration({ startTime, terminate }: ISessionDurationProps) {
       
       const totalCost = session?.rate * (duration / 3600);
 
-      if (wallet?.silverCoins && wallet?.silverCoins - totalCost < 5) {
+      const coins = isMonetized?wallet?.goldCoins:wallet?.silverCoins
+
+
+      if (coins && coins - totalCost < 5) {
         setOpenDialog(true)
       }
-      if (!wallet?.silverCoins || wallet?.silverCoins <= totalCost) {
+      if (!coins || coins <= totalCost) {
         terminate()
       }
 
     }
-  }, [duration, sessionInfo, terminate, wallet])
+  }, [duration, isMonetized, sessionInfo, terminate, wallet])
 
 
 

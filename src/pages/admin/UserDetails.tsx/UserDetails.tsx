@@ -9,10 +9,13 @@ import ToolTip from "../../../components/ui/ToolTip/ToolTip"
 import { Languages, Monetization, Reports, Sessions, Socials, Wallet } from "./Cards/"
 import Button from "../../../components/ui/Button/Button"
 import toast from "react-hot-toast"
+import { useUpdateMonetizationStatusMutation } from "../../../redux/features/admin/monetization/monetizationApiSlice"
+import { MoonLoader } from "react-spinners"
 function UserDetails({ userId }: { userId: string }) {
 
     const [selectedId, setSelectedId] = useState('')
     const [userData, setUserData] = useState<IUserDetails | null>(null)
+    
 
     const { data } = useGetCompleteUserInfoQuery({ userId })
     const response = data as IBackendResponse<IUserDetails>
@@ -49,7 +52,22 @@ function UserDetails({ userId }: { userId: string }) {
         }
     ]
 
-    const [updateUser] = useUpdateUserMutation()
+    const [updateUser,{isLoading:updationLoading}] = useUpdateUserMutation()
+    const [updauteMonetizationStatus,{isLoading:updateUserLoading}] =useUpdateMonetizationStatusMutation()
+
+    const handleUpdateMonetizationStatus=async (status:'accepted'|'rejected')=>{
+        try {
+            if(!userData) return;
+            const res = await updauteMonetizationStatus({status,userId:userData?.id}).unwrap() as IBackendResponse<IUser>
+          
+           
+            setUserData(prev=>(prev?{...prev,isMonetized:res.data.isMonetized}:prev));
+        } catch (error) {
+            console.log(error);
+            
+        }
+      
+    }
 
     const handleBlocke = async (id: string, status: boolean) => {
         try {
@@ -90,6 +108,8 @@ function UserDetails({ userId }: { userId: string }) {
                 return < ></>;
         }
     };
+
+    
 
     return (
 
@@ -178,7 +198,7 @@ function UserDetails({ userId }: { userId: string }) {
                             <div className="flex-1 h-full bg-gray-100 p-5 rounded shadow">
                                 <h2 className="font-medium text-center mb-5">Actions</h2>
                                 <div className="flex justify-end">
-                                    <Button onClick={() => handleBlocke(userData.id, !userData.blocked || false)} varient={'primary-square'} size={'sm'}>{userData.blocked? 'Unblock' : 'Block'}</Button>
+                                    <Button onClick={() => handleBlocke(userData.id, !userData.blocked || false)} varient={'primary-square'} size={'sm'}>{updationLoading?<MoonLoader color={'white'} size={20}/>:(userData.blocked? 'Unblock' : 'Block')}</Button>
 
                                 </div>
 
@@ -187,7 +207,7 @@ function UserDetails({ userId }: { userId: string }) {
                             <div className="flex-1 h-full bg-gray-100 p-5 rounded shadow">
                                 <h2 className="font-medium text-center mb-5">Monetisation</h2>
                                 <div className="flex justify-end">
-                                    <Button varient={'primary-square'} size={'sm'}>Approve</Button>
+                                    <Button onClick={()=>handleUpdateMonetizationStatus(userData.isMonetized?'rejected':'accepted')} varient={'primary-square'} size={'sm'}>{updateUserLoading?<MoonLoader color={'white'} size={20}/>:(userData.isMonetized?'Reject':'Approve')}</Button>
                                 </div>
 
                             </div>

@@ -32,7 +32,7 @@ import Test3 from './pages/Test/Test3';
 import FollowAndFollowers from './pages/user/FollowAndFollowers/FollowAndFollowers';
 import Chat from './pages/user/Chat/Chat';
 import WaitForLearner from './pages/user/VideoSession/WaitForLearners/WaitForLearner';
-
+import MonetizationRequests from './pages/admin/Monetization/Monetization';
 
 import VideoSessionLogic from './pages/user/VideoSession/VideoSessionLogic';
 import SessionFeedBack from './pages/user/SessionFeedBack/SessionFeedBack';
@@ -180,7 +180,7 @@ const router = createBrowserRouter([
             },
             {
               path: 'monetisation',
-              Component: Monetization
+              Component: MonetizationRequests
             },
             {
               path: 'gold-coins',

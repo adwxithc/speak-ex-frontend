@@ -8,13 +8,14 @@ import {  setWallet } from "../../../../redux/features/user/user/userSlice"
 function useGetWallet() {
 
   const { wallet , isAuth } = useSelector((state: RootState) => state.user)
-  const {data} = useGetWalletQuery({},{skip:Boolean(wallet || !isAuth )}) 
+  const {data,refetch} = useGetWalletQuery({},{skip:Boolean(wallet || !isAuth )}) 
   const dispatch =useDispatch()
+
+
   useEffect(()=>{
       if(data?.data )
         dispatch(setWallet({...data?.data as IWallet}))
-    
-  },[data?.data, dispatch])
+  },[data?.data, dispatch, refetch])
 
 
 }

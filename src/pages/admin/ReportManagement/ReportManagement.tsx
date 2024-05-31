@@ -8,6 +8,7 @@ import Modal from "../../../components/custom/Modal/Modal";
 import ReportDetails from "./ReportDetails";
 import UserDetails from "../UserDetails.tsx/UserDetails";
 import Avatar from "../../../components/ui/Avatar/Avatar";
+import { AnimatePresence } from "framer-motion";
 
 
 interface IData {
@@ -43,11 +44,11 @@ function ReportManagement() {
 
   }, [ReportsData?.data?.reports, ReportsData?.data?.totalReports])
 
-  const handleShowUSer=(row:IData)=>{
+  const handleShowUser=(row:IData)=>{
    
     return (
-      <div className="flex items-center justify-center gap-2" onClick={()=>handleViewUserDetails(row.id)}>
-        <Avatar className="h-10 w-10" src={row.profile} />
+      <div className="flex items-center justify-center gap-2 cursor-pointer" onClick={()=>handleViewUserDetails(row.id)}>
+        <Avatar className="h-10 w-10 border" src={row.profile} />
         <span>{row.firstName+' '+row.lastName}</span>
       </div>
     )
@@ -66,7 +67,7 @@ function ReportManagement() {
   }
 
   const columns: IColumns<IData>[] = [
-    { Header: 'Reported User', accessor: 'repotedUser', Cell:handleShowUSer },
+    { Header: 'Reported User', accessor: 'repotedUser', Cell:handleShowUser },
     { Header: 'User Name', accessor: 'userName' },
     { Header: 'id', accessor: 'id' },
     { Header: 'Report Count', accessor: 'reportCount' },
@@ -124,6 +125,7 @@ function ReportManagement() {
 
 
       </div>
+      <AnimatePresence mode="wait" initial={false}>
 
       {
         openReport && selectedReport && (
@@ -140,6 +142,7 @@ function ReportManagement() {
           </Modal>
         )
       }
+      </AnimatePresence>
 
     </>
   )

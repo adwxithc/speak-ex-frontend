@@ -144,6 +144,7 @@ export interface IUsersSesssionData{
     rating:number;
     avgHelpingSessionsPerMonth:number;
     avgLearningSessionsPerMonth:number
+    isMonetized:boolean
 }
 
 export interface IUserDetails extends Omit<IUser,'password'>{
@@ -165,4 +166,25 @@ export interface ICoinPurchasePlan{
     deleted?:boolean;
     createdAt:string,
     updatedAt:string
+}
+export type IMonetizationRequestStatus='pending'|'accepted'|'rejected';
+
+interface IMonetizationRequest{
+    id:string;
+    userId:string
+    status:IMonetizationRequestStatus;
+    description:string;
+    createdAt:string;
+    updatedAt:string;
+}
+
+
+export interface IMonetizationRequestData extends IMonetizationRequest{
+    userData:{
+        id:string,
+        firstName:string,
+        lastName:string,
+        userName:string,
+        profile:string
+    }
 }

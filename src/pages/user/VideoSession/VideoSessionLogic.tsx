@@ -23,7 +23,7 @@ function VideoSessionLogic() {
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
 
     const location = useLocation();
-    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type, startTime } = location.state;
+    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type, startTime, isMonetized } = location.state;
     const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
 
 
@@ -102,15 +102,26 @@ function VideoSessionLogic() {
 
         endPeerConnectionHandler({ localStream, peerService: peerService, remoteStream })
         if (type == 'host') {
-            console.log(wallet?.silverCoins || 0 + coinExchange);
-
-            dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) + coinExchange }))
-            navigate('/session-over', { state: { coinExchange } })
+            
+            if(isMonetized){
+                dispatch(setWallet({ money: (wallet?.money || 0) + coinExchange }))
+                navigate('/session-over', { state: { coinExchange } })
+            }else{
+                dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) + coinExchange }))
+                navigate('/session-over', { state: { coinExchange } })
+            }
+            
         } else {
-            navigate(`/session-feedback/${sessionId}`, { state: { coinExchange } })
-            dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) - coinExchange }))
+            if(isMonetized){
+                navigate(`/session-feedback/${sessionId}`, { state: { coinExchange } })
+                dispatch(setWallet({ goldCoins: (wallet?.goldCoins || 0) - coinExchange }))
+            }else{
+                navigate(`/session-feedback/${sessionId}`, { state: { coinExchange } })
+                dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) - coinExchange }))
+            }
+            
         }
-    }, [dispatch, localStream, navigate, remoteStream, sessionId, type, wallet?.silverCoins])
+    }, [dispatch, isMonetized, localStream, navigate, remoteStream, sessionId, type, wallet])
 
 
     const sendStreams = useCallback(async () => {
