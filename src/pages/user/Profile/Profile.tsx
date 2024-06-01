@@ -39,7 +39,7 @@ function Profile() {
                <SideBarItem text="User Info" key='2' icon={<Info />} onClick={()=>navigate('user-info')}  />
               <SideBarItem text="Monetization" key='3' icon={<CircleDollarSign />}  onClick={()=>navigate('monetization')}   />
               <SideBarItem text="Session History" key='3' icon={<History />}  onClick={()=>navigate('session-logs')}   />
-              <SideBarItem text="Wallet" key='5' icon={<Wallet />} />
+              <SideBarItem text="Wallet" key='5' icon={<Wallet />}  onClick={()=>navigate('wallet')}  />
               </>
               }
             </UserProfileSideBar>

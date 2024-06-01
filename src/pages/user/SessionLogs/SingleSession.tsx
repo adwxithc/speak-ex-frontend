@@ -20,7 +20,7 @@ function SingleSession({session}:{session:ISessionDetails}) {
         const duration = moment.duration(datetime2.diff(datetime1));
 
         const totalSeconds = duration.asSeconds();
-        const totalHours = (totalSeconds / 3600).toFixed(2);
+        const totalHours = Number((totalSeconds / 3600).toFixed(2));
         const coinExchanged= totalHours* session.rate;
 
         // Get the difference in hours, minutes, and seconds

@@ -195,3 +195,39 @@ export interface ISessionDetails extends ISession {
     helperData: {firstName:string;lastName:string;userName:string;profile:string ; id:string};
     learnerData: {firstName:string;lastName:string;userName:string;profile:string ; id:string};
 }
+
+export type CurrencyType='gold' | 'silver' | 'money'
+
+export interface ITransaction {
+    id:string
+    description: string;
+    amount: number;
+    type: 'credit' | 'debit';
+    currencyType: CurrencyType;
+    transactionId: string;
+    createdAt:string;
+    updatedAt:string;
+}
+
+export interface INotification{
+    id:string;
+    userId:string;
+    title:string;
+    message:string;
+    read:boolean;
+    type:'POST_LIKE',
+    relatedEntity:string,
+    actionCreator:string,
+    createdAt?:string;
+    updatedAt?:string;
+}
+
+export interface INotificationDetails extends INotification{
+    actionCreatorInfo:{
+        id:string,
+        firstName:string,
+        lastName:string,
+        userName:string,
+        profile:string
+    }
+}

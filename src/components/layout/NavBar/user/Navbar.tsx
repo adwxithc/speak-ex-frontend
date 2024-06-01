@@ -24,13 +24,17 @@ import useGetWallet from './useGetWallet.tsx'
 
 export default function Navbar() {
   const { t } = useTranslation(['common'])
+
+  const { isAuth } = useSelector((state: RootState) => state.user)
+ 
+  const navigate = useNavigate()
   const [openSearch, setOpenSearch] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
+
   const navigation = useNavigation({ setOpenSearch })
-  const { notifications, handleJoinSession, handleRejectOffer, openSessionOffer } = useNotifications()
+
+  const { handleJoinSession, handleRejectOffer, openSessionOffer,handleClose } = useNotifications({setOpenNotification})
   useGetWallet()
-  const { isAuth } = useSelector((state: RootState) => state.user)
-  const navigate = useNavigate()
 
   const isScrolled: boolean = useScrollDetection(0)
 
@@ -86,7 +90,7 @@ export default function Navbar() {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   {isAuth ?
                     <>
-         
+
                       <button
                         onClick={() => setOpenNotification(true)}
                         type="button"
@@ -96,7 +100,7 @@ export default function Navbar() {
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
-                      <ProfileDropdown  />
+                      <ProfileDropdown />
 
                     </>
                     :
@@ -116,7 +120,7 @@ export default function Navbar() {
               leaveTo="opacity-0 transform -translate-y-1"
             >
               <div className="sm:hidden absolute bg-white w-full h-screen">
-               <MobileMenu {...{navigation}} />
+                <MobileMenu {...{ navigation }} />
               </div>
             </Transition>
           </>
@@ -125,13 +129,13 @@ export default function Navbar() {
 
       <AnimatePresence
         initial={false}
-        
+
         mode="wait"
       >
         {openSearch && <Modal position='top-20' loading={false} handleClose={() => { setOpenSearch(false) }} ><SearchUser {...{ setOpenSearch }} /></Modal>}
         {openSessionOffer && <Modal position='top-20' loading={false} handleClose={handleRejectOffer} ><SessionOffer {...{ handleJoinSession, handleRejectOffer }} /></Modal>}
         {openNotification &&
-          <NotificationBar {...{ notifications, handleJoinSession }} handleClose={() => setOpenNotification(false)} />
+          <NotificationBar {...{ notifications:[], handleJoinSession,handleClose }}  />
         }
       </AnimatePresence>
     </>

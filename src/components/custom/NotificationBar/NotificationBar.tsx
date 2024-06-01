@@ -14,7 +14,7 @@ interface ModalProp{
 
 }
 
-const  Modal:FC<ModalProp> = ({ handleClose, notifications,handleJoinSession } ) =>{
+const  Modal:FC<ModalProp> = ({ handleClose} ) =>{
     
     return ReactDOM.createPortal(
         <>
@@ -36,7 +36,7 @@ const  Modal:FC<ModalProp> = ({ handleClose, notifications,handleJoinSession } )
 
 
                 <div className='px-5 h-full w-full overflow-x-hidden overflow-y-scroll pretty-scrollbar'>
-                    <Notifications {...{notifications,handleJoinSession}}/>
+                    <Notifications />
                 </div>
                 
                 

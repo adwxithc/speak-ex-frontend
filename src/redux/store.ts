@@ -2,6 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './features/user/user/userSlice';
 import adminReducer from './features/admin/auth/adminSlice';
 import coinPurchaseReducer from './features/user/coinPurchase/coinPurchaseSlice'
+import notificationReducer from './features/user/notification/notificationSlice'
 
 import {apiSlice} from './apiSlice'
 
@@ -12,6 +13,7 @@ const store = configureStore({
         user:userReducer,
         admin:adminReducer,
         coinPurchase:coinPurchaseReducer,
+        notification:notificationReducer,
         [apiSlice.reducerPath]:apiSlice.reducer,
         
         

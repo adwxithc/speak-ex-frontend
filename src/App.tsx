@@ -41,6 +41,7 @@ import SessionOver from './pages/user/SessionOver/SessionOver';
 import ReportManagement from './pages/admin/ReportManagement/ReportManagement';
 import CreateCoinPurchasePlanLogic from './pages/admin/GoldCoins/CreateCoinPurchasePlan/CreateCoinPurchasePlanLogic';
 import SessionLogs from './pages/user/SessionLogs/SessionLogs';
+import Wallet from './pages/user/Wallet/Wallet';
 
 
 
@@ -83,7 +84,12 @@ const router = createBrowserRouter([
             {
               path:'session-logs',
               Component:SessionLogs
-            }
+            },
+            {
+              path:'wallet',
+              Component:Wallet
+            },
+
           ]
         },
         {

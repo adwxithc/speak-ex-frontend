@@ -36,8 +36,10 @@ export const sessionApiSlice = apiSlice.injectEndpoints({
         }),
         getVideoSessions:builder.query({
             query: (data) => `${SESSION_URL}/video-sessions?page=${data.page||1}&type=${data.type||'all'}`,
+        }),
+        getTransactions:builder.query({
+            query: (data) => `${SESSION_URL}/transactions?page=${data.page||1}&type=${data.type||'all'}`
         })
-
        
 })
 })
@@ -50,5 +52,6 @@ export const {
     useGetCoinPurchasePlansQuery,
     useGetSessionDataQuery,
     useRequestForMonetizationMutation,
-    useGetVideoSessionsQuery
+    useGetVideoSessionsQuery,
+    useGetTransactionsQuery
 } = sessionApiSlice;
