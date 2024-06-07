@@ -18,7 +18,9 @@ const notificationSlice = createSlice({
             state.notifications=[action.payload, ...state.notifications||[] ];
 
         },
-        
+        setNotifications:(state, action)=>{
+            state.notifications=action.payload;
+        },
         setHasMore:(state, action)=>{
            
             state.hasMore=action.payload;
@@ -28,11 +30,14 @@ const notificationSlice = createSlice({
             state.page=action.payload;
         },
        setNextPage:(state)=>{
-        // if(state.page==state.nextPage)
+       
         state.nextPage=state.nextPage+1
+       },
+       setUnreadedNotificationCount:(state,action)=>{
+        state.unreadedNotifications=action.payload
        }
     }
 })
 
-export const {pushNotifications,setHasMore, setPage,setNextPage,addNewNotification} =notificationSlice.actions
+export const {pushNotifications,setHasMore, setPage,setNextPage,addNewNotification,setNotifications,setUnreadedNotificationCount} =notificationSlice.actions
 export default notificationSlice.reducer

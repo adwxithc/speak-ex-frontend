@@ -20,7 +20,7 @@ function AdminSignOut() {
         try {
             await logout({}).unwrap()
             dispatch(logoutAdmin())
-            navigate('/')
+            navigate('/admin/signin')
         } catch (error) {
             alert('error')
             console.log(error);  

@@ -37,8 +37,9 @@ function PostPreview({post}:IPostPreviewProps) {
 
     const handleLike =async()=>{
         try {
-            await like({postId:post._id})
             setIsLiked(true)
+            await like({postId:post.id})
+            
             setLikes(prev=>prev+1)
         } catch (error) {
             console.log(error);
@@ -48,7 +49,7 @@ function PostPreview({post}:IPostPreviewProps) {
 
     const handleUnlike =async()=>{
       try {
-        await unlike({postId:post._id})
+        await unlike({postId:post.id})
         setIsLiked(false)
         setLikes(prev=>prev-1)
       } catch (error) {
@@ -79,7 +80,7 @@ function PostPreview({post}:IPostPreviewProps) {
                     <div className="hidden sm:block">
                         <div className="text-justify line-clamp-2 md:line-clamp-3  ">{parse(post.content)}</div>
                     </div>
-                    <ToolTip tooltip='Read More Content'><Link  to={`/post/${post._id}`} ><span className="text-primary font-semibold hover:border-b-2 border-primary cursor-pointer text-sm sm:text-md">view more...</span></Link></ToolTip>
+                    <ToolTip tooltip='Read More Content'><Link  to={`/post/${post.id}`} ><span className="text-primary font-semibold hover:border-b-2 border-primary cursor-pointer text-sm sm:text-md">view more...</span></Link></ToolTip>
                 </div>
 
 
@@ -93,13 +94,13 @@ function PostPreview({post}:IPostPreviewProps) {
         </div>
 
         <div className=" w-2/5 overflow-hidden   ml-3 sm:ml-12 flex items-center px-5">
-            <img className="object-fit " src={post.image} alt="" />
+            <img loading='lazy' className="object-fit " src={post.image} alt="" />
         </div>
     </div>
 
     <div className="flex gap-5 ">
-        <ToolTip tooltip='Likes'><span className="text-sm flex"> <span className='cursor-pointer' onClick={isLiked?handleUnlike:handleLike}> <ThumbsUp size={18} color={isLiked?"blue":"gray"}  /> </span> <span className="ml-1"> {likes}</span>  </span></ToolTip>
-        <ToolTip tooltip='Comments'><span className="text-sm flex"> <Link  to={`/post/${post._id}`} > <MessageCircle size={18} color="gray" /></Link> <span className="ml-1">{comments}</span> </span></ToolTip>
+        <ToolTip tooltip='Likes'><span className="text-sm flex"> <span className='cursor-pointer text-[#0084ff]' onClick={isLiked?handleUnlike:handleLike}> <ThumbsUp size={18} fill={isLiked?"#0084ff":"gray"} color={isLiked?"#0084ff":"gray"}  /> </span> <span className="ml-1"> {likes}</span>  </span></ToolTip>
+        <ToolTip tooltip='Comments'><span className="text-sm flex"> <Link  to={`/post/${post.id}`} > <MessageCircle size={18} color="gray" /></Link> <span className="ml-1">{comments}</span> </span></ToolTip>
     </div>
 
 </div>

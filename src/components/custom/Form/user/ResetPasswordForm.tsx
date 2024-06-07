@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextField } from "@mui/material";
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -8,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useResetPasswordMutation } from "../../../../redux/features/user/user/userApiSlice";
 import Button from "../../../ui/Button/Button";
 import { IformValue, schema } from './Schema/ResetPasswordSchema'
+import { Input } from "../../../ui/Input/Input";
 
 
 
@@ -51,36 +51,20 @@ function ResetPasswordForm({ setLoading }: { setLoading: Dispatch<SetStateAction
 
                 <div className="my-3">
 
-                    <TextField
-                        type="password"
-                        label="Password"
-                        className="w-full"
-                        {...register('password')}
-                        error={!!errors.password}
-                        helperText={errors.password ? errors.password.message?.toString() : ''}
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '25px',
-                            },
-                        }}
-                    />
+                 
+
+                    <label htmlFor="password" className={`flex  ml-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>Password</label>
+                    <Input id="password" {...register('password')} error={errors?.password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="password" />
+
                 </div>
 
-                <div className="my-5">
+                <div className="my-3 mb-5">
 
-                    <TextField
-                        type="password"
-                        label="Confirm Password"
-                        className="w-full "
-                        {...register('confirm_password')}
-                        error={!!errors.confirm_password}
-                        helperText={errors.confirm_password ? errors.confirm_password.message?.toString() : ''}
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '25px',
-                            },
-                        }}
-                    />
+                  
+
+                    <label htmlFor="confirm_password" className={`flex  ml-4 ${errors.confirm_password ? 'text-red-600 ' : 'text-black/60 '} `}>Confirm Password</label>
+                    <Input id="confirm_password" {...register('confirm_password')} error={errors?.confirm_password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="Confirm Password" />
+
 
                 </div>
 

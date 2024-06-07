@@ -22,7 +22,7 @@ function useGetFeeds({page}:UseGetFeedsProps) {
        
         setFeeds(prev=>[...prev,...(data?.data?.posts || [])])
         setHasMore(data?.data?.lastPage > page);
-    },[data])
+    },[data, page])
 
     useEffect(()=>{
         

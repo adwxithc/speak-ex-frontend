@@ -5,6 +5,7 @@ export interface IInitialNotificationState{
     page:number
     nextPage:number
     hasMore:boolean
+    unreadedNotifications:number
    
    } 
    
@@ -12,7 +13,8 @@ export interface IInitialNotificationState{
     notifications:null,
     page:0,
     nextPage:1,
-    hasMore:false
+    hasMore:false,
+    unreadedNotifications:0
    };
    
    

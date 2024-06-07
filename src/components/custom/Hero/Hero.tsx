@@ -16,37 +16,37 @@ function Hero({handleStartSession}:IHeroProps) {
 
   const peoples = [
     {
-      src: 'src/assets/Images/peoples/person2.jpeg',
+      src: '/Images/peoples/person2-min.jpeg',
       size: 24,
       className: "w-32"
     },
     {
-      src: 'src/assets/Images/peoples/person3.jpg',
+      src: '/Images/peoples/person3-min.jpg',
       size: 24,
     },
     {
-      src: 'src/assets/Images/peoples/emoji.jpg',
+      src: '/Images/peoples/emoji-min.jpg',
       size: 24,
     },
     {
-      src: 'src/assets/Images/peoples/person4.jpeg',
+      src: '/Images/peoples/person4-min.jpeg',
       size: 24,
       className: "w-32"
     },
     {
-      src: 'src/assets/Images/peoples/mic.jpg',
+      src: '/Images/peoples/mic-min.jpg',
       size: 24,
       className: "w-20"
     },
 
     {
-      src: 'src/assets/Images/peoples/device.avif',
+      src: '/Images/peoples/device.avif',
       size: 24,
       className: "w-20"
     },
 
     {
-      src: 'src/assets/Images/peoples/person5.jpg',
+      src: '/Images/peoples/person5-min.jpg',
       size: 24,
 
     }

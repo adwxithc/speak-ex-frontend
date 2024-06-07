@@ -1,10 +1,14 @@
 import { useSelector } from 'react-redux'
-
-import Hero from '../../../components/custom/Hero/Hero'
-import Intro from '../../../components/custom/Intro/Intro'
 import { RootState } from '../../../redux/store'
-import Feeds from '../Feeds/Feeds'
+import { lazy } from 'react'
+
 import useHandleSession from '../../../hooks/useHandleSession'
+
+const Hero = lazy(()=>import('../../../components/custom/Hero/Hero')) 
+const Intro = lazy(()=>import('../../../components/custom/Intro/Intro')) 
+const Feeds = lazy(()=>import('../Feeds/Feeds')) 
+
+
 
 
 

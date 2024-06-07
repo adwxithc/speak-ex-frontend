@@ -1,3 +1,4 @@
+import { cn } from "../../../utils/style-utils";
 
 export interface IColumns<T> {
   Header: string;
@@ -14,11 +15,11 @@ interface ITabelProps<T> {
 
 function Table<T,>({ columns, data,RowAction }: ITabelProps<T>) {
   return (
-    <table className="min-w-full divide-y divide-gray-200    ">
-      <thead className=" bg-secondary ">
-        <tr >
+    <table className="w-full divide-y divide-gray-200    ">
+      <thead className="   ">
+        <tr  >
 
-          {columns.map(column => (<th key={column.accessor as string} scope="col" className="p-5  text-center  font-medium  capitalize text-lg text-black tracking-wider">{column.Header}</th>))}
+          {columns.map(column => (<th key={column.accessor as string} scope="col" className="p-3  text-center   font-medium  capitalize  text-black/80 tracking-wider">{column.Header}</th>))}
 
 
         </tr>
@@ -29,11 +30,11 @@ function Table<T,>({ columns, data,RowAction }: ITabelProps<T>) {
           {data?
           data.map((row, rowIndex) => (
             <tr key={rowIndex}
-          className={RowAction&&'cursor-pointer'}
+          className={cn( RowAction&&'cursor-pointer',`${rowIndex%2==1 &&'bg-secondary'} text-black/60 font-semibold`)}
             onClick={RowAction?()=>RowAction(row):undefined}
             >
               {columns.map((column) => (
-                <td className="max-w-[200px] overflow-hidden truncate px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 " key={column.accessor as string}>
+                <td className="max-w-[200px] overflow-hidden truncate px-5 py-3 whitespace-nowrap text-center text-sm  " key={column.accessor as string}>
                   {column.Cell ? column.Cell(row) : (row[column.accessor] as React.ReactNode)}
                 </td>
               ))}

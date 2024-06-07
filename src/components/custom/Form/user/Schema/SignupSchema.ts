@@ -25,7 +25,8 @@ export function SignupSchema() {
      const schema = z.object({
         firstName: z.string().min(3,'first name must be minimum 3 character long'),
         lastName: z.string(),
-        userName: z.string().min(3,'userName must be minimum 3 character long').refine(async (username) => {
+        userName: z.string().min(3,'userName must be minimum 3 character long')
+        .refine(async (username) => {
             if(username.length<3) return true
           
             return new Promise(resolve => {

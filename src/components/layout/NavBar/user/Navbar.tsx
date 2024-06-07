@@ -1,9 +1,8 @@
-import { Disclosure, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Disclosure, DisclosureButton, Transition } from '@headlessui/react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 
 import { classNames } from '../../../../utils/style-utils.tsx'
 import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
@@ -14,18 +13,22 @@ import Button from '../../../ui/Button/Button.tsx'
 import LanguageSelector from '../../../custom/LanguageSelector/LanguageSelector.tsx'
 import { useTranslation } from 'react-i18next'
 import Modal from '../../../custom/Modal/Modal.tsx'
-import SearchUser from '../../../../pages/user/SearchUser/SearchUser.tsx'
 import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
 import useNotifications from '../../../../pages/user/Notifications/useNotifications.tsx'
-import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
 import MobileMenu from './MobileMenu/MobileMenu.tsx'
 import useGetWallet from './useGetWallet.tsx'
+import { Bell, Menu, X } from 'lucide-react'
+
+const SessionOffer =lazy(()=>import( '../../../custom/SessionOffer/SessionOffer.tsx'))
+const SearchUser =lazy(()=>import('../../../../pages/user/SearchUser/SearchUser.tsx')) 
+
 
 
 export default function Navbar() {
   const { t } = useTranslation(['common'])
 
   const { isAuth } = useSelector((state: RootState) => state.user)
+  const { unreadedNotifications } = useSelector((state: RootState) => state.notification)
  
   const navigate = useNavigate()
   const [openSearch, setOpenSearch] = useState(false)
@@ -48,15 +51,17 @@ export default function Navbar() {
               <div className={`relative flex items-center justify-between ${isScrolled ? 'h-16 ' : 'h-24'} transition duration-300 ease`}>
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-black hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-black hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                      <X className="block h-6 w-6" aria-hidden="true" />
+                      
                     ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                     
+                      <Menu className="block h-6 w-6" aria-hidden="true"  />
                     )}
-                  </Disclosure.Button>
+                  </DisclosureButton>
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
@@ -98,7 +103,12 @@ export default function Navbar() {
                       >
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        
+                        <Bell className="h-6 w-6" aria-hidden="true" />
+                        { unreadedNotifications!==0&&
+                        <span className='h-4 w-4 top-0 -left-2 absolute bg-red-500 rounded-full text-xs text-white flex justify-center items-center'>{unreadedNotifications}</span>
+
+                        }
                       </button>
                       <ProfileDropdown />
 

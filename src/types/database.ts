@@ -231,3 +231,19 @@ export interface INotificationDetails extends INotification{
         profile:string
     }
 }
+
+
+export interface IDashboardNumerics{
+    totalEarnings:{
+        thisMonth:number;
+        lastMonth:number
+    },
+    totalSessions:{
+        thisMonth:number;
+        lastMonth:number
+    },
+    totalProfit:{
+        thisMonth:number;
+        lastMonth:number
+    }
+}

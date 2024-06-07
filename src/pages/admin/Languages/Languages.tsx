@@ -44,7 +44,7 @@ const navigate =  useNavigate()
         </ToolTip>
         
       </div>
-      <h1 className="text-3xl mb-5 font-semibold text-center">Users List</h1>
+      <h1 className="text-3xl mb-5 font-semibold text-center">Language List</h1>
       <div className="w-80 ml-auto mr-5 mb-3">
         <Input value={key} onChange={(e)=>setKey(e.target.value)} placeholder="Search language"/>
         </div>

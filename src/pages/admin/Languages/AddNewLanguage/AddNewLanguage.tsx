@@ -1,106 +1,98 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, TextField, Typography } from '@mui/material'
+// import { Box, Button, TextField, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form';
-import {z} from 'zod';
+import { z } from 'zod';
 
 import { useAddLanguageMutation } from '../../../../redux/features/admin/languages/languagesApiSlice';
 import toast from 'react-hot-toast';
 import { Ierror } from '../../../../types/error';
+import { Input } from '../../../../components/ui/Input/Input';
+import Button from '../../../../components/ui/Button/Button';
 
 
 
 
-interface formValue{
-    name:string,
-    basePrice:number
+interface formValue {
+    name: string,
+    basePrice: number
 }
 
 const schema = z.object({
-    name: z.string().min(3,'language name must be minimum 3 character long'),
+    name: z.string().min(3, 'language name must be minimum 3 character long'),
     basePrice: z.number().min(0, 'base price should be a positive number')
 })
-  
+
 
 
 function AddNewLanguage() {
 
     const [addLanguage] = useAddLanguageMutation()
 
-    const onSubmit = async(data: formValue)=>{
+    const onSubmit = async (data: formValue) => {
 
         try {
-            const res= await addLanguage(data).unwrap()
+            const res = await addLanguage(data).unwrap()
             console.log(res);
-            
+
             reset()
-            toast.success('new language created',{
-                position:'top-center'
+            toast.success('new language created', {
+                position: 'top-center'
             })
-            
-            
+
+
         } catch (error) {
             console.log(error);
-            let message=''
-            if(error.status>=400){
-                const err= error as Ierror
-                message=err.data.errors.map(item=>item.message) 
+            let message = ''
+            if (error.status >= 400) {
+                const err = error as Ierror
+                message = err.data.errors.map(item => item.message)
 
-            }else{
-                message=error.message
+            } else {
+                message = error.message
             }
-            toast.error(message,{
-                position:'top-center'
+            toast.error(message, {
+                position: 'top-center'
             })
-            
+
         }
-        
+
     }
 
     const methods = useForm<formValue>({
-        mode:'onChange',
+        mode: 'onChange',
         resolver: zodResolver(schema), // zod resolver for form validation
-      });
+    });
 
-      const {register, handleSubmit,formState, reset}=methods;
-      const {errors} = formState
-  return (
-    <div className=''>
-      
-         <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography variant='h4' component={'h1'} sx={{textAlign:'center', marginBottom:5, marginTop:3}} >Add new Language</Typography>
-               <Box sx={{maxWidth:800, marginX:'auto'}} >
-                    <TextField
-                    
+    const { register, handleSubmit, formState, reset } = methods;
+    const { errors } = formState
+    return (
+        <div className=''>
 
-                        className=" w-full my-3"
-                        label="Name"
-                        {...register('name')}
-                        error={!!errors.name}
-                        helperText={errors.name ? errors.name.message?.toString() : ''}
-                        
-                    />
-                    <TextField
+            <form onSubmit={handleSubmit(onSubmit)}>
+                
+                    <div className="my-2">
+
+                        <label htmlFor="name" className={`flex  ml-4 ${errors.name ? 'text-red-600 ' : 'text-black/60 '} `}>name</label>
+                        <Input id="name" {...register('name')} error={errors?.name?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="name" />
+                    </div>
                    
-                    type='number'
-                        className=" w-full my-3"
-                        label="Base Price"
-                        {...register('basePrice',{ valueAsNumber: true })}
-                        error={!!errors.basePrice}
-                        helperText={errors.basePrice ? errors.basePrice.message?.toString() : ''}
-                       
-                    />
-               
-               <Box sx={{display:'flex',justifyContent:'end', marginTop:5}}>
-                <Button variant='contained' type='submit' >Submit</Button>
-                </Box>
-               </Box>
+                    <div className="my-2">
 
-                
-                
-                
+                        <label htmlFor="basePrice" className={`flex  ml-4 ${errors.basePrice ? 'text-red-600 ' : 'text-black/60 '} `}>basePrice</label>
+                        <Input id="basePrice"    {...register('basePrice', { valueAsNumber: true })} error={errors?.basePrice?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="basePrice" />
+                    </div>
+                    <div className='flex justify-end mt-5'>
+                        <Button>Submit</Button>
+                    </div>
+                 
+             
+
+
+
+
             </form>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default AddNewLanguage

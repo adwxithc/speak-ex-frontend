@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { useGetNotificationsQuery, useGetSingleNotificationMutation } from "../../../redux/features/user/notification/notificationApiSlice";
+import { useGetNotificationsQuery, useGetSingleNotificationMutation, useMarkAsReadMutation } from "../../../redux/features/user/notification/notificationApiSlice";
 import { IBackendResponse } from "../../../types/queryResults";
 import { INotificationDetails } from "../../../types/database";
-import { addNewNotification, pushNotifications, setHasMore, setPage } from "../../../redux/features/user/notification/notificationSlice";
+import { addNewNotification, pushNotifications, setHasMore, setNotifications, setPage, setUnreadedNotificationCount } from "../../../redux/features/user/notification/notificationSlice";
 
 
 export interface INotification {
@@ -15,42 +15,42 @@ export interface INotification {
     sessionId: string;
 }
 
-function useNotifications({setOpenNotification}:{setOpenNotification: Dispatch<SetStateAction<boolean>>}) {
+function useNotifications({ setOpenNotification }: { setOpenNotification: Dispatch<SetStateAction<boolean>> }) {
 
     // const [notifications, setNotification] = useState<INotification[]>([])
     const [openSessionOffer, setOpenSessionOffer] = useState(false)
     const [sessionId, setSessionId] = useState('')
-   
 
-   
 
-    const { userData } = useSelector((state: RootState) => state.user)
-    const { page,nextPage } = useSelector((state: RootState) => state.notification)
+
+
+    const { userData, isAuth } = useSelector((state: RootState) => state.user)
+    const { page, nextPage, notifications,unreadedNotifications } = useSelector((state: RootState) => state.notification)
+    const [markAsRead] = useMarkAsReadMutation()
 
     const dispatch = useDispatch()
     const socket = useSocket()
     const navigate = useNavigate()
 
 
-    const { data } = useGetNotificationsQuery({page:nextPage},{skip:page==nextPage});
-    console.log(data);
-    
-    
-    const [getSingleNotification]=useGetSingleNotificationMutation()
-        
+    const { data } = useGetNotificationsQuery({ page: nextPage }, { skip: page == nextPage || !isAuth });
+
+
+    const [getSingleNotification] = useGetSingleNotificationMutation()
+
     useEffect(() => {
         const newNotifications = data?.data?.notifications as INotification[];
-        
-        
-        if(!newNotifications) return
-      
-        dispatch(pushNotifications([...newNotifications]))
-        dispatch(setPage(data?.data?.currentPage||0))
-      
-        dispatch(setHasMore(data?.data?.lastPage>data?.data?.currentPage))
-        
     
-    }, [data?.data?.currentPage, data?.data?.lasPage, data?.data.lastPage, data?.data?.notifications, dispatch])
+
+        if (!newNotifications) return
+
+        dispatch(pushNotifications([...newNotifications]))
+        dispatch(setPage(data?.data?.currentPage || 0))
+        dispatch(setUnreadedNotificationCount(data?.data?.totalUnReadedNotifications||0))
+        dispatch(setHasMore(data?.data?.lastPage > data?.data?.currentPage))
+
+
+    }, [data?.data?.currentPage, data?.data.lasPage, data?.data?.lastPage, data?.data?.notifications, data?.data?.totalUnReadedNotifications, dispatch])
 
 
     const notifyUser = useCallback(({ sessionId }: { sessionId: string }) => {
@@ -75,16 +75,28 @@ function useNotifications({setOpenNotification}:{setOpenNotification: Dispatch<S
         }
     }, [navigate])
 
-    const handleClose=()=>{
+    const handleClose = async () => {
         setOpenNotification(false)
+        if (notifications?.length == 0) return
+
+        const updatedNotifications = notifications?.map(n => ({ ...n, read: true }))
+        dispatch(setNotifications(updatedNotifications))
+        dispatch(setUnreadedNotificationCount(0))
+        const notificationIds = notifications?.map(n => n.id)
+        await markAsRead({ notificationIds }).unwrap()
+
+
     }
 
-    const handleNewNotification=useCallback(async({notificationId}:{notificationId:string})=>{
-        
-        const notification = await getSingleNotification({notificationId}).unwrap() as IBackendResponse<INotificationDetails>
-        if(notification.data)
-        dispatch(addNewNotification(notification.data))
-    },[dispatch, getSingleNotification])
+    const handleNewNotification = useCallback(async ({ notificationId }: { notificationId: string }) => {
+
+        const notification = await getSingleNotification({ notificationId }).unwrap() as IBackendResponse<INotificationDetails>
+        if (notification.data){
+            dispatch(addNewNotification(notification.data))
+            dispatch(setUnreadedNotificationCount(unreadedNotifications + 1))
+        }
+            
+    }, [dispatch, getSingleNotification, unreadedNotifications])
 
 
 
@@ -107,7 +119,7 @@ function useNotifications({setOpenNotification}:{setOpenNotification: Dispatch<S
         }
     }, [handleJoinSession, handleNewNotification, notifyUser, socket])
 
-    return {  handleJoinSession: sessionJoinReady, openSessionOffer, handleRejectOffer,handleClose }
+    return { handleJoinSession: sessionJoinReady, openSessionOffer, handleRejectOffer, handleClose }
 }
 
 export default useNotifications

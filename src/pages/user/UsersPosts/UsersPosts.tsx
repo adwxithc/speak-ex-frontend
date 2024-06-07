@@ -1,4 +1,4 @@
-import { IoMdAdd } from "react-icons/io";
+
 import { AnimatePresence } from "framer-motion";
 
 import PostThumbNail from "../../../components/custom/PostThumbNail/PostThumbNail"
@@ -11,6 +11,7 @@ import { IPost } from "../../../types/database";
 import { Link } from "react-router-dom";
 import { ProfileContext } from "../Profile/Profile";
 import UserPostsSkelton from "./UserPostsSkelton";
+import { Plus } from "lucide-react";
 
 
 function UsersPosts() { 
@@ -49,7 +50,7 @@ function UsersPosts() {
             
               
               <Button varient={'primary-outline'} size={"md"} className="text-center" onClick={()=>setModalOpen(true)}>
-                <span className="hidden sm:inline">Create post</span> <IoMdAdd size={20} />
+                <span className="hidden sm:inline">Create post</span> <Plus size={20} />
               </Button>
             
             </div>

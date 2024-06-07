@@ -1,7 +1,7 @@
-import { FaGithub,FaInstagram,FaLinkedinIn } from "react-icons/fa";
-import { RiTwitterXLine } from "react-icons/ri";
+
 import Container from "../Container/Container"
 import Button from "../../ui/Button/Button";
+import { Github, Instagram, Linkedin } from "lucide-react";
 
 function Footer() {
   return (
@@ -45,10 +45,10 @@ function Footer() {
                         
                     </ul>
                     <div> 
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><FaInstagram /></Button>
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><FaGithub /></Button>
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><RiTwitterXLine /></Button>
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><FaLinkedinIn /></Button>
+                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><Instagram /></Button>
+                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><Github /></Button>
+                        {/* <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><RiTwitterXLine /></Button> */}
+                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><Linkedin /></Button>
                     </div>
                 </div>
                

@@ -1,9 +1,8 @@
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material"
 import { useForm } from 'react-hook-form';
 import { Dispatch, SetStateAction } from 'react'
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,8 @@ import { useAdminLoginMutation } from "../../../../redux/features/admin/auth/adm
 import { logAdmin } from "../../../../redux/features/admin/auth/adminSlice";
 import { IformValue, schema } from '../user/Schema/SignInSchema'
 import { removeCridentials } from "../../../../redux/features/user/user/userSlice";
+import { Eye, EyeOff } from "lucide-react";
+import { Input } from "../../../ui/Input/Input";
 
 function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
 
@@ -35,9 +36,9 @@ function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<b
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
+    // const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    //     event.preventDefault();
+    // };
 
     const onSubmit = async (data: IformValue) => {
 
@@ -52,7 +53,7 @@ function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<b
         } catch (error: any) {
             setLoading(false)
             console.log(error);
-            
+
 
             const errorInfo = error.data.errors;
             if (error.status == 400) {
@@ -71,66 +72,35 @@ function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<b
             <form onSubmit={handleSubmit(onSubmit)}>
 
 
-                <div className="my-3">
 
-                    <TextField
-                        type="text"
-                        label="email"
-                        className="w-full"
-                        {...register('email')}
-                        error={!!errors.email}
-                        helperText={errors.email ? errors.email.message?.toString() : ''}
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '20px', 
-                            },
-                        }}
-                    />
+                <div className="my-2">
+
+                    <label htmlFor="email" className={`flex  ml-4 ${errors.email ? 'text-red-600 ' : 'text-black/60 '} `}>email</label>
+                    <Input id="email" {...register('email')} error={errors?.email?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="email" />
                 </div>
 
-                <div className="my-5">
 
 
+                <div className="my-2">
 
-                    <FormControl sx={{
-                        width: '100%', '& .MuiOutlinedInput-root': {
-                            borderRadius: '20px', 
-                            paddingRight: 4
-                        },
 
-                    }}
-
-                        variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password" error={!!errors.password} >Password</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            {...register('password')}
-                            error={!!errors.password}
-
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                        sx={{ color: errors.password && 'red' }}
-                                    >
-
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
+                    <label htmlFor="password" className={`flex  ml-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>password</label>
+                    <div className={`border rounded-3xl  flex overflow-hidden items-center pr-4 focus:border-2  ${errors.password ? 'border-red-600' : 'border-black/30 hover:border-black'}`}>
+                        <input {...register('password')} placeholder="Password" id="password" type={showPassword ? 'text' : 'password'} className="h-full w-full flex-1 outline-none py-4 px-5" />
+                        <Button type='button' size={'icon'} className={`${errors.password ? 'text-red-600' : 'text-black/70'} hover:bg-black/5 transition-colors duration-500`} onClick={handleClickShowPassword}>
+                            {
+                                showPassword ? <EyeOff /> : <Eye />
                             }
-                            label="Password"
-                        />
-                        {errors.password && (
-                            <span className="text-red-500 text-xs ml-4 flex flex-1">{errors.password.message}</span>
-                        )}
 
-                    </FormControl>
 
+                        </Button>
+
+                    </div>
+                    {errors.password && (
+                        <span className="text-red-500 text-xs ml-4 flex flex-1">{errors.password.message}</span>
+                    )}
                 </div>
+
 
                 <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
 

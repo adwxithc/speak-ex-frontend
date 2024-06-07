@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material"
 import { useForm } from 'react-hook-form';
 import { Dispatch, SetStateAction } from "react";
 import { DevTool } from "@hookform/devtools";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { SignupSchema, IformValue } from "./Schema/SignupSchema";
 import { useSignUpMutation } from "../../../../redux/features/user/user/userApiSlice";
 import Button from "../../../ui/Button/Button";
+import { Input } from "../../../ui/Input/Input";
 
 
 function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
@@ -34,12 +34,12 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       confirm_password;
       setLoading(true)
       await signup({ ...formData }).unwrap()
-  
-      
+
+
       navigate('/signup/verify-user')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
-     
+    } catch (error: any) {
+
       const errorInfo = error.data.errors;
       if (error.status == 400) {
         setError('email', { message: errorInfo[0].message })
@@ -47,102 +47,56 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
         toast.error('something went wrong')
       }
 
-    }finally{
+    } finally {
       setLoading(false)
     }
   }
-  
+
   return (
     <div className="w-full p-5 text-center">
       <h2 className='text-2xl font-serif font-semibold mb-10'>Set  Personal info</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="sm:flex gap-1  ">
-          <TextField
-            className=" w-full my-3"
-            label="First Name"
-            {...register('firstName')}
-            error={!!errors.firstName}
-            helperText={errors.firstName ? errors.firstName.message?.toString() : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
-              },
-            }}
-          />
-          <TextField
-            className=" w-full my-3"
-            label="Last Name"
-            {...register('lastName')}
-            error={!!errors.lastName}
-            helperText={errors.lastName ? errors.lastName.message?.toString() : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
-              },
-            }}
-          />
+        <div className="sm:flex gap-3  mb-3">
+        
+          <div className=" w-full">
+          <label htmlFor="firstName" className={`flex text-sm  ml-4 ${errors.firstName ? 'text-red-600 ' : 'text-black/60 '} `}>FirstName</label>
+          <Input id="firstName"  {...register('firstName')} error={errors?.firstName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="firstName" />
+          </div>
+          <div className=" w-full">
+          <label htmlFor="lastName" className={`flex text-sm  ml-4 ${errors.lastName ? 'text-red-600 ' : 'text-black/60 '} `}>LastName</label>
+          <Input id="lastName"  {...register('lastName')} error={errors?.lastName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="lastName" />
+          </div>
+         
         </div>
 
-        <div className="sm:flex gap-1   ">
-          <TextField
-            className=" w-full my-3"
-            label="Email"
-            {...register('email')}
-            error={!!errors.email}
-            helperText={errors.email ? errors.email.message?.toString() : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
-              },
-            }}
-          />
-          <TextField
-            className=" w-full my-3"
-            label="userName"
-            {...register('userName')}
-            error={!!errors.userName}
-            helperText={errors.userName ? errors.userName.message?.toString() : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
-              },
-            }}
-          />
+        <div className="sm:flex gap-3   mb-3">
+        
+          <div className=" w-full">
+          <label htmlFor="email" className={`flex text-sm  ml-4 ${errors.email ? 'text-red-600 ' : 'text-black/60 '} `}>Email</label>
+          <Input id="email"  {...register('email')} error={errors?.email?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="email" />
+          </div>
+       
+           <div className=" w-full">
+          <label htmlFor="userName" className={`flex text-sm  ml-4 ${errors.userName ? 'text-red-600 ' : 'text-black/60 '} `}>UserName</label>
+          <Input id="userName"  {...register('userName')} error={errors?.userName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="userName" />
+          </div>
         </div>
 
-        <div className="my-3">
+        <div className="mb-3">
 
-          <TextField
-            type="password"
-            label="Password"
-            className="w-full"
-            {...register('password')}
-            error={!!errors.password}
-            helperText={errors.password ? errors.password.message?.toString() : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
-              },
-            }}
-          />
+         
+          <label htmlFor="password" className={`flex text-sm  ml-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>Password</label>
+          <Input type='password' id="password"  {...register('password')} error={errors?.password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="password" />
+          
         </div>
 
         <div className="my-5">
 
-          <TextField
-            type="password"
-            label="Confirm Password"
-            className="w-full "
-            {...register('confirm_password')}
-            error={!!errors.confirm_password}
-            helperText={errors.confirm_password ? errors.confirm_password.message?.toString() : ''}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
-              },
-            }}
-          />
+         
+          <label htmlFor="confirm_password" className={`flex text-sm  ml-4 ${errors.confirm_password ? 'text-red-600 ' : 'text-black/60 '} `}>Confirm Password</label>
+          <Input type="password" id="confirm_password"  {...register('confirm_password')} error={errors?.confirm_password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="Confirm Password" />
+          
         </div>
         <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
         <p className="mt-3">Already have an account? <b className="cursor-pointer" onClick={() => navigate('/signin')}>signin</b></p>

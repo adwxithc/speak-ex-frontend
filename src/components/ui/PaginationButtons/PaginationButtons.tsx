@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate"
-import  { BsChevronLeft,BsChevronRight} from 'react-icons/bs'
 import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from "lucide-react";
 function PaginationButtons({totalPages,currentPage,setCurrentPage}:{totalPages:number,currentPage:number,setCurrentPage:React.Dispatch<React.SetStateAction<number>>}) {
     const PaginationVarianats ={
         hidden:{
@@ -35,7 +35,7 @@ function PaginationButtons({totalPages,currentPage,setCurrentPage}:{totalPages:n
         nextLabel={
             showNextButton &&
         <span className="w-10 h-10 flex items-center justify-center bg-secondary rounded-md">
-            <BsChevronRight />
+            <ChevronRight />
         </span>
         }
         onPageChange={handlePageClick}
@@ -44,7 +44,7 @@ function PaginationButtons({totalPages,currentPage,setCurrentPage}:{totalPages:n
         previousLabel={
             showPreviousButton &&
             <span className="w-10 h-10 flex items-center justify-center bg-secondary rounded-md mr-4">
-            <BsChevronLeft />
+            <ChevronLeft />
         </span>
         }
         
