@@ -20,7 +20,7 @@ function Post() {
         <>
         {
             post ?
-            <div className={`h-full my-5 `}>
+            <div className={`h-full my-5 `} dir="ltr">
                 <PostWraper >
                     <div className="  border-b w-full flex justify-center">
                         <img

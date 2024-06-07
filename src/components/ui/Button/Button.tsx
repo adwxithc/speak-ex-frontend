@@ -13,7 +13,7 @@ const buttonVarients = cva(
                 default: 'bg-gray-200 text-black',
                 primary:"bg-primary text-white",
                 'primary-square' :'bg-primary text-white rounded-md ',
-                'primary-outline-square' :'border border-primary text-primary rounded-md ',
+                'primary-outline-square' :'border-2 border-primary/70 text-primary rounded-md ',
                 danger:"bg-red-500 text-white",
                 'danger-square' :'bg-red-500 text-white rounded-md ',
 
@@ -21,7 +21,7 @@ const buttonVarients = cva(
                 'success-outline':" border border-green-500 text-green-500",
                 success:"bg-green-500 text-white",
                 "primary-full":"bg-primary text-white w-full my-4",
-                'primary-outline':'border border-primary text-primary',
+                'primary-outline':'border-2 border-primary/70 text-primary',
                 'secondary-outline':'border secondary-primary text-secondary',
             
             },

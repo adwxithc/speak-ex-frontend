@@ -25,9 +25,15 @@ const userSlice = createSlice({
             
             
             state.wallet=data;
+        },
+        setOpenCompleteProfileModal:(state)=>{
+            state.openCompleteProfileModal=true
+        },
+        setCloseCompleteProfileModal:(state)=>{
+            state.openCompleteProfileModal=false
         }
     }
 })
 
-export const {removeCridentials,setCridentials,updateCridentials,setWallet} =userSlice.actions
+export const {removeCridentials,setCridentials,updateCridentials,setWallet,setCloseCompleteProfileModal,setOpenCompleteProfileModal} =userSlice.actions
 export default userSlice.reducer

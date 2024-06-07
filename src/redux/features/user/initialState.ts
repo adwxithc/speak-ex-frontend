@@ -4,12 +4,13 @@ export interface IInitialUserState{
     userData:IUser |null,
     wallet:IWallet|null,
     isAuth:boolean,
-    
+    openCompleteProfileModal:boolean
 } 
 
 export const userInitialState: IInitialUserState = {
     isAuth: localStorage.getItem('userData')?true:false,
     wallet:null,
     userData: localStorage.getItem('userData')?JSON.parse(localStorage.getItem('userData') || '' ):null,
+    openCompleteProfileModal:false
 };
 

@@ -57,28 +57,28 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       <h2 className='text-2xl font-serif font-semibold mb-10'>Set  Personal info</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="sm:flex gap-3  mb-3">
+        <div className="md:flex gap-1 lg:gap-3  mb-3">
         
           <div className=" w-full">
-          <label htmlFor="firstName" className={`flex text-sm  ml-4 ${errors.firstName ? 'text-red-600 ' : 'text-black/60 '} `}>FirstName</label>
+          <label htmlFor="firstName" className={`flex text-sm  mx-4 ${errors.firstName ? 'text-red-600 ' : 'text-black/60 '} `}>FirstName</label>
           <Input id="firstName"  {...register('firstName')} error={errors?.firstName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="firstName" />
           </div>
           <div className=" w-full">
-          <label htmlFor="lastName" className={`flex text-sm  ml-4 ${errors.lastName ? 'text-red-600 ' : 'text-black/60 '} `}>LastName</label>
+          <label htmlFor="lastName" className={`flex text-sm  mx-4 ${errors.lastName ? 'text-red-600 ' : 'text-black/60 '} `}>LastName</label>
           <Input id="lastName"  {...register('lastName')} error={errors?.lastName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="lastName" />
           </div>
          
         </div>
 
-        <div className="sm:flex gap-3   mb-3">
+        <div className="md:flex gap-1 lg:gap-3   mb-3">
         
           <div className=" w-full">
-          <label htmlFor="email" className={`flex text-sm  ml-4 ${errors.email ? 'text-red-600 ' : 'text-black/60 '} `}>Email</label>
+          <label htmlFor="email" className={`flex text-sm  mx-4 ${errors.email ? 'text-red-600 ' : 'text-black/60 '} `}>Email</label>
           <Input id="email"  {...register('email')} error={errors?.email?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="email" />
           </div>
        
            <div className=" w-full">
-          <label htmlFor="userName" className={`flex text-sm  ml-4 ${errors.userName ? 'text-red-600 ' : 'text-black/60 '} `}>UserName</label>
+          <label htmlFor="userName" className={`flex text-sm  mx-4 ${errors.userName ? 'text-red-600 ' : 'text-black/60 '} `}>UserName</label>
           <Input id="userName"  {...register('userName')} error={errors?.userName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="userName" />
           </div>
         </div>
@@ -86,7 +86,7 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
         <div className="mb-3">
 
          
-          <label htmlFor="password" className={`flex text-sm  ml-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>Password</label>
+          <label htmlFor="password" className={`flex text-sm  mx-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>Password</label>
           <Input type='password' id="password"  {...register('password')} error={errors?.password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="password" />
           
         </div>
@@ -94,7 +94,7 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
         <div className="my-5">
 
          
-          <label htmlFor="confirm_password" className={`flex text-sm  ml-4 ${errors.confirm_password ? 'text-red-600 ' : 'text-black/60 '} `}>Confirm Password</label>
+          <label htmlFor="confirm_password" className={`flex text-sm  mx-4 ${errors.confirm_password ? 'text-red-600 ' : 'text-black/60 '} `}>Confirm Password</label>
           <Input type="password" id="confirm_password"  {...register('confirm_password')} error={errors?.confirm_password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="Confirm Password" />
           
         </div>

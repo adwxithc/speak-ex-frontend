@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import { cn } from "../../../utils/style-utils";
 import { RiseLoader } from 'react-spinners';
-
+import i18n from 'i18next';
 
 
 interface SignUpProps {
@@ -13,7 +13,7 @@ interface SignUpProps {
 
 }
 function SignUpContainer({ children, className, title, description, loading = false }: SignUpProps) {
-
+const dir =i18n.dir()
 
   return (
 
@@ -31,8 +31,8 @@ function SignUpContainer({ children, className, title, description, loading = fa
 
 
         </div>
-        <div className="w-full h-full md:w-3/5  md:h-[100vh] order-2  md:overflow-y-scroll hide-scrollbar  pt-10 md:pl-20  rounded-t-[70px] md:rounded-none  md:rounded-l-full bg-white flex items-center">
-          <div className="w-full  md:ml-5">
+        <div className={`w-full h-full md:w-3/5  md:h-[100vh] order-2  md:overflow-y-scroll hide-scrollbar  pt-10    rounded-t-[70px] md:rounded-none ${dir=='ltr'?'md:rounded-l-full md:pl-20':'md:rounded-r-full md:pr-20'}   bg-white flex items-center`}>
+          <div className={`w-full ${dir=='ltr'?'md:ml-5':'md:mr-5'} `}>
             {children}
 
           </div>

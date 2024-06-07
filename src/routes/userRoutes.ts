@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import UserLayout from '../components/layout/UserLayout/UserLayout';
 import UserPrivateRoute from '../pages/user/UserPrivateRoute/UserPrivateRoute';
 
+const UserLayout =  lazy(()=>import('../components/layout/UserLayout/UserLayout'));
 const Chat = lazy(() => import('../pages/user/Chat/Chat'));
 const FollowAndFollowers = lazy(() => import('../pages/user/FollowAndFollowers/FollowAndFollowers'));
 const LandingPage = lazy(() => import('../pages/user/LandingPage/LandingPage'));

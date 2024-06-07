@@ -41,7 +41,7 @@ function Feeds() {
                 <h1 className="text-center text-3xl font-semibold mb-8">Let's Explore.</h1>
             </div>
             <div className="flex ">
-                <main className=" flex-1 h-full">
+                <main className=" flex-1 h-full" dir="ltr">
 
                     <ul>
                     { isLoading?

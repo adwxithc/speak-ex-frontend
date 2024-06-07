@@ -1,20 +1,21 @@
 import { useSelector } from "react-redux"
+import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { PuffLoader } from "react-spinners"
+import { useState } from "react"
+
 import Button from "../../../components/ui/Button/Button"
 import { useGetCoinPurchasePlansQuery } from "../../../redux/features/user/session/sessionApiSlice"
 import { ICoinPurchasePlan } from "../../../types/database"
-import Skelton from "./Skelton"
 import { RootState } from "../../../redux/store"
-import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { useCreatePaymentMutation } from "../../../redux/features/user/coinPurchase/coinPurchaseApiSlice"
 import { IBackendResponse } from "../../../types/queryResults"
-import { PuffLoader } from "react-spinners"
-import { useState } from "react"
-const public_stripe_key = import.meta.env.VITE_STRIPE_PUBLIC_KET
+import PlanSkeleton from "./PlanSkeleton"
 
+const public_stripe_key = import.meta.env.VITE_STRIPE_PUBLIC_KET;
 
 function Store({ modalAnimationCompleted }: { modalAnimationCompleted: boolean }) {
 
-  const { data: PurchasePlanData } = useGetCoinPurchasePlansQuery({})
+  const { data: PurchasePlanData,isLoading } = useGetCoinPurchasePlansQuery({})
   const [selectedPlan, setSelectedPlan] = useState('')
   const purchasePlans = PurchasePlanData?.data as ICoinPurchasePlan[]
   const { userData } = useSelector((state: RootState) => state.user)
@@ -42,7 +43,8 @@ function Store({ modalAnimationCompleted }: { modalAnimationCompleted: boolean }
         <h2 className="text-center  font-bold text-xl text-black/70">Purchase Coins</h2>
       </div>
       <div className="flex justify-center  flex-wrap gap-3 w-full p-2 sm:p-5  ">
-        {purchasePlans && modalAnimationCompleted ? (
+        {
+        !isLoading && modalAnimationCompleted ? (
           purchasePlans?.length > 0 ?
 
 
@@ -74,10 +76,10 @@ function Store({ modalAnimationCompleted }: { modalAnimationCompleted: boolean }
 
         ) :
           <>
-            <Skelton />
-            <Skelton />
-            <Skelton />
-            <Skelton />
+            <PlanSkeleton />
+            <PlanSkeleton />
+            <PlanSkeleton />
+            <PlanSkeleton />
           </>
 
         }

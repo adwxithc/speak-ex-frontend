@@ -18,8 +18,7 @@ import useNotifications from '../../../../pages/user/Notifications/useNotificati
 import MobileMenu from './MobileMenu/MobileMenu.tsx'
 import useGetWallet from './useGetWallet.tsx'
 import { Bell, Menu, X } from 'lucide-react'
-
-const SessionOffer =lazy(()=>import( '../../../custom/SessionOffer/SessionOffer.tsx'))
+import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
 const SearchUser =lazy(()=>import('../../../../pages/user/SearchUser/SearchUser.tsx')) 
 
 
@@ -110,6 +109,7 @@ export default function Navbar() {
 
                         }
                       </button>
+                      
                       <ProfileDropdown />
 
                     </>
@@ -120,6 +120,7 @@ export default function Navbar() {
               </div>
             </div>
 
+                {/* mobile view */}
             <Transition
               as={Disclosure.Panel}
               enter="transition ease-out duration-200"
