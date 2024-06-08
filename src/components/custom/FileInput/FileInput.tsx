@@ -9,7 +9,7 @@ interface IFileInputProps{
 
 function FileInput({onImageSelected}:IFileInputProps) {
 
-    const inputRef= useRef(null)
+    const inputRef= useRef<HTMLInputElement>(null)
 
     const handleImageChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -32,12 +32,12 @@ function FileInput({onImageSelected}:IFileInputProps) {
   return (
     <div className=" h-52 px-16 my-4 overflow-hidden rounded-md  border-2 border-dashed flex justify-center items-center p-3">
         
-    <label  htmlFor="image" ref={inputRef} >
+    <label  htmlFor="image"  >
     <div className=' flex flex-col items-center'>
         <img className='object-contain max-w-[100px]' src="./src/assets/Images/extras/uploadImg.png" alt="upload image" />
         <p className='text-gray-500 my-1'>drage and drop image here</p>
         <Button type='button' varient={'primary-outline'} size={'sm'} onClick={()=>inputRef.current?.click()} >Browse File</Button>
-        <Input id="image" className="hidden " type="file" onChange={handleImageChange} accept="image/*"  />
+        <Input id="image" className="hidden " type="file" ref={inputRef} onChange={handleImageChange} accept="image/*"  />
         
     </div>
     </label>

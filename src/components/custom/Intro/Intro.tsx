@@ -1,14 +1,28 @@
-import React, { useMemo } from 'react'
+import  { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Carosal from '../Carosal/AluminiCarosal'
 import Section from '../Section/Section'
+
+
+interface WorkflowStep {
+    title: string;
+    description: string;
+}
+
+interface Workflow {
+    step1: WorkflowStep;
+    step2: WorkflowStep;
+    step3: WorkflowStep;
+    step4: WorkflowStep;
+}
 
 
 
 function Intro() {
 
     const { t } = useTranslation(['landingPage'])
-    const { step1, step2, step3, step4 } = t('workflow')
+    const { step1, step2, step3, step4 } = t('workflow', { returnObjects: true }) as Workflow
+
 
     const workflow = useMemo(() => [
         {

@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { LucideIcon, Mail, SquarePen, SquareUser } from 'lucide-react';
 
-export type IEditUserFields = "firstName" | "lastName" | "userName" | 'email'
+export type IEditUserFields = "firstName" | "lastName" | "userName" 
 
-export const INITIAL_VALUE: { label: string; name: IEditUserFields; icon: LucideIcon, editable: boolean }[] = [
+export const INITIAL_VALUE: { label: string; name: IEditUserFields | 'email'; icon: LucideIcon, editable: boolean }[] = [
     {
       label: 'Email Address',
       icon: Mail,
