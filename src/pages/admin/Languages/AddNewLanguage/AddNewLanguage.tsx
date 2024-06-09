@@ -1,13 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-// import { Box, Button, TextField, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { useAddLanguageMutation } from '../../../../redux/features/admin/languages/languagesApiSlice';
 import toast from 'react-hot-toast';
-import { Ierror } from '../../../../types/error';
 import { Input } from '../../../../components/ui/Input/Input';
 import Button from '../../../../components/ui/Button/Button';
+import { isHttpError } from '../../../../utils/isHttpError';
 
 
 
@@ -29,34 +28,28 @@ function AddNewLanguage() {
     const [addLanguage] = useAddLanguageMutation()
 
     const onSubmit = async (data: formValue) => {
-
         try {
-            const res = await addLanguage(data).unwrap()
-            console.log(res);
-
+            await addLanguage(data).unwrap()
             reset()
             toast.success('new language created', {
                 position: 'top-center'
             })
 
-
         } catch (error) {
-            console.log(error);
             let message = ''
-            if (error.status >= 400) {
-                const err = error as Ierror
-                message = err.data.errors.map(item => item.message)
-
+            if (isHttpError(error) && error.status >= 400) {
+                message = error.data.errors.map(item => item.message).join(',');
             } else {
-                message = error.message
+                message = 'something went wrong';
             }
             toast.error(message, {
                 position: 'top-center'
-            })
-
+            });
         }
 
     }
+
+
 
     const methods = useForm<formValue>({
         mode: 'onChange',
@@ -66,32 +59,35 @@ function AddNewLanguage() {
     const { register, handleSubmit, formState, reset } = methods;
     const { errors } = formState
     return (
-        <div className=''>
+        <div className='overflow-x-auto w-full p-5'>
+            <div className='max-w-xl min-w-[500px] m-auto py-5  '>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-                
+                <div className='font-semibold my-5'>
+                    <h2 className='text-black/80 text-2xl mb-2'>Add new Language</h2>
+                    <p className='text-black/50 text-sm '>add a new language with a base price  to the platform</p>
+                </div>
+
+                <form onSubmit={handleSubmit(onSubmit)}>
+
                     <div className="my-2">
 
-                        <label htmlFor="name" className={`flex  ml-4 ${errors.name ? 'text-red-600 ' : 'text-black/60 '} `}>name</label>
-                        <Input id="name" {...register('name')} error={errors?.name?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="name" />
+                        <label htmlFor="name" className={`flex  ${errors.name ? 'text-red-600 ' : 'text-black/60 '} `}>name</label>
+                        <Input id="name" {...register('name')} error={errors?.name?.message?.toString()} className=" hover:border-black " placeholder="name" />
                     </div>
-                   
+
                     <div className="my-2">
 
-                        <label htmlFor="basePrice" className={`flex  ml-4 ${errors.basePrice ? 'text-red-600 ' : 'text-black/60 '} `}>basePrice</label>
-                        <Input id="basePrice"    {...register('basePrice', { valueAsNumber: true })} error={errors?.basePrice?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="basePrice" />
+                        <label htmlFor="basePrice" className={`flex  ${errors.basePrice ? 'text-red-600 ' : 'text-black/60 '} `}>basePrice</label>
+                        <Input id="basePrice"    {...register('basePrice', { valueAsNumber: true })} error={errors?.basePrice?.message?.toString()} className=" hover:border-black " placeholder="basePrice" />
                     </div>
                     <div className='flex justify-end mt-5'>
-                        <Button>Submit</Button>
+                        <Button varient={'primary-square'} size={'md'} >Submit</Button>
                     </div>
-                 
-             
 
-
-
-
-            </form>
+                </form>
+            </div>
         </div>
+
     )
 }
 

@@ -9,6 +9,7 @@ import { SignupSchema, IformValue } from "./Schema/SignupSchema";
 import { useSignUpMutation } from "../../../../redux/features/user/user/userApiSlice";
 import Button from "../../../ui/Button/Button";
 import { Input } from "../../../ui/Input/Input";
+import { isHttpError } from '../../../../utils/isHttpError';
 
 
 function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
@@ -34,15 +35,10 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       confirm_password;
       setLoading(true)
       await signup({ ...formData }).unwrap()
-
-
       navigate('/signup/verify-user')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-
-      const errorInfo = error.data.errors;
-      if (error.status == 400) {
-        setError('email', { message: errorInfo[0].message })
+    } catch (error) {
+      if(isHttpError(error) && error.status == 400){
+        setError('email', { message: error.data.errors[0].message })
       } else {
         toast.error('something went wrong')
       }

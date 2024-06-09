@@ -14,6 +14,7 @@ import { useLoginMutation } from "../../../../redux/features/user/user/userApiSl
 import { Trans, useTranslation } from "react-i18next";
 import { Input } from "../../../ui/Input/Input";
 import { Eye, EyeOff } from "lucide-react";
+import { isHttpError } from '../../../../utils/isHttpError';
 
 
 
@@ -51,18 +52,16 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
             setLoading(false)
             navigate('/')
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-
+            
+        } catch (error) {
             setLoading(false)
-            const errorInfo = error.data.errors;
-            if (error.status == 400) {
-                setError('email', { message: errorInfo[0].message })
-                setError('password', { message: errorInfo[0].message })
-            } else {
-                toast.error(errorInfo[0].message)
+            if(isHttpError(error) && error.status == 400){
+                setError('email', { message: error.data.errors[0].message })
+                setError('password', { message: error.data.errors[0].message })
+            }else{
+                toast.error('something went wrong');
             }
-
+        
         }
     }
     return (

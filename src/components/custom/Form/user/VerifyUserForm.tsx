@@ -7,6 +7,7 @@ import { useVerifyUserMutation } from '../../../../redux/features/user/user/user
 import { setCridentials } from '../../../../redux/features/user/user/userSlice';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { isHttpError } from '../../../../utils/isHttpError';
 
 
 function VerifyUser({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
@@ -35,15 +36,12 @@ function VerifyUser({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
       dispatch(setCridentials(res.data));
       setLoading(false)
       navigate('/')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-
-      setLoading(false)
-      const errorInfo = error.data.errors;
-      if (error.status == 400) {
-
-        toast.error(errorInfo[0].message)
+    
+    } catch (error) {
+      if(isHttpError(error) && error.status == 400){
+        toast.error(error.data.errors[0].message);
       }
+      setLoading(false)
     }
   }
 

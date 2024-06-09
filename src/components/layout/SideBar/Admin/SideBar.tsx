@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react'
 import Button from '../../../ui/Button/Button'
 import { useNavigate } from 'react-router-dom'
-import { ListCollapse, LogOut } from 'lucide-react'
+import { ArrowLeftToLine, ArrowRightToLine, LogOut } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../redux/store'
 
@@ -18,8 +18,9 @@ function SideBar({ children }: { children: React.ReactNode }) {
             <nav className='h-full flex flex-col bg-white border-r shadow-sm'>
                 <div className='p-4 pb-2 flex justify-between items-center  mb-5 h-16 border-b-2 '>
                     <img src="https://img.logoipsum.com/243.svg" className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`} alt="" />
-                    <button onClick={() => setExpanded(cur => !cur)} className='p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100'>
-                        {expanded ? <ListCollapse rotate={180} /> : <ListCollapse  />}
+                    <button onClick={() => setExpanded(cur => !cur)} className='p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 text-black/70 '>
+                        {expanded ?  <ArrowLeftToLine size={20} />:<ArrowRightToLine size={20} /> }
+
                     </button>
 
                 </div>
