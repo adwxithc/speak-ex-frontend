@@ -59,10 +59,12 @@ function VideoSessionLogic() {
     }, [handleCallUser])
 
     const handleNegoNeeded = useCallback(async () => {
-        // if (role.current == 'host') {
-        //     role.current = 'client'
-        //     return
-        // }
+        if (role.current == 'host') {
+            // role.current = 'client'
+            // return
+            console.log('handleNegoNeeded by host');
+            
+        }
 
         const offer = await peerService.getOffer();
         socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
