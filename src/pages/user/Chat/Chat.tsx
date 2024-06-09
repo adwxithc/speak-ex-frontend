@@ -7,13 +7,18 @@ import { RootState } from "../../../redux/store";
 import { IChatRoom } from "../../../types/database";
 import { Socket } from 'socket.io-client';
 import { useSocket } from "../../../context/SocketProvider";
+import { useLocation } from "react-router-dom";
 
 
 function Chat() {
   const { userData } = useSelector((state: RootState) => state.user)
+  const location = useLocation();
   const [isMobile, setIsMobile] = useState(true);
 
+
   const [conversations, setConversations] = useState<IChatRoom[]>([])
+  const [directedRoom,setDirectedRoom] = useState(location?.state?.roomId||'')
+  
   const [currentChat, setCurrentChat] = useState<IChatRoom | null>(null)
   const [onlineUsers, setOnlineUsers] = useState<{ userId: string, socketId: string }[]>([])
   const [page, setPage] = useState(1)
@@ -25,8 +30,16 @@ function Chat() {
 
   useEffect(() => {
     setConversations([...data?.data as IChatRoom[] || []])
-  }, [data])
+    if(directedRoom){
+      const room = data?.data.find((room:IChatRoom) => room.id === directedRoom)
+      if(room){
+        setCurrentChat(room)
+        setDirectedRoom('')
+      }
+    }
+  }, [data, directedRoom])
 
+  
 
 
 

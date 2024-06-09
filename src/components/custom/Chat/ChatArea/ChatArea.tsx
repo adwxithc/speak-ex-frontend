@@ -11,6 +11,7 @@ import { IChatRoom, IMessage } from '../../../../types/database';
 import { useGetMessagesMutation, useSendMessageMutation, useSetMessageSeenMutation } from '../../../../redux/features/user/user/chatApiSlice';
 import { RootState } from '../../../../redux/store';
 import { PropagateLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 
 interface ChatAreaProps {
@@ -49,7 +50,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             });
             await setMessageSeen({ roomId: currentChat.id, senderId: currentChat.otherUserId })
         } catch (error) {
-            console.log(error);
+            toast.error('something went wrong');
 
         }
     },[currentChat,setMessageSeen,socket])
@@ -81,16 +82,13 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
 
                 const res = await getMessages({ roomId: currentChat?.id, page }).unwrap();
                 isFirstRender.current = true
-                console.log(res);
-
                 setMessages(prev => {
 
                     return page == 1 ? [...(res.data.messages || [])] : [...(res.data.messages || []), ...prev]
                 });
                 setHasMore(res.data.lastPage > page)
             } catch (error) {
-                console.log(error);
-
+                toast.error('something went wrong')
             }
         }
         fetchMessages()
@@ -111,6 +109,8 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
         }
 
     }, [messages, page,])
+   
+    
 
     useEffect(() => {
 
@@ -167,7 +167,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             setText('')
 
         } catch (error) {
-            console.log(error);
+            toast.error('something went wrong');
         }
     }
     return (
@@ -192,7 +192,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             <div className=" flex-1  overflow-y-scroll pretty-scrollbar bg-[#0e1c34]">
                 {isLoading ? <div className='flex justify-center text-gray-200 pt-1'><PropagateLoader color='white' /></div> : ''}
                 {
-                    messages.map((msg, index) => <div key={msg.id} ref={index == 0 ? lastMessageRef : null}><div ref={scrollRef}><Message message={msg} user={currentChat.user} /></div></div>)
+                    messages.map((msg, index) => <div key={msg.id} ref={index == 0 ? lastMessageRef : null}><div ref={scrollRef} ><Message message={msg} user={currentChat.user} /></div></div>)
                 }
             </div>
             {/* bottom area */}

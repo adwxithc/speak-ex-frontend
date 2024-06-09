@@ -1,7 +1,6 @@
 
 import React, { useContext } from 'react'
 import { ProfileSideBarContext } from '../User/UserProfileSideBar'
-import ToolTip from '../../../ui/ToolTip/ToolTip';
 
 interface SideBarItem extends React.HTMLAttributes<HTMLLIElement> {
     icon: React.ReactNode;
@@ -25,9 +24,9 @@ function UserProfileSideBarItem({ icon, text, active = false, alert, ...props }:
                     " hover:text-black hover:font-semibold"
                 }
         `}>
-            <ToolTip tooltip={text} >
-                <span className='text-xl font-extrabold'>{icon}</span>
-            </ToolTip>
+
+            <span className='text-xl font-extrabold'>{icon}</span>
+
             <span className={`overflow-hidden transition-all ${expanded ? "w-44 ml-4" : "w-0 h-0"}`}>{text}</span>
             {
                 alert && (

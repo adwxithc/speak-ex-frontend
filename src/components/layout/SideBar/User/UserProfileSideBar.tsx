@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import ProfilePicture from '../../../custom/ProfilePicture/ProfilePicture';
 import { ProfileContext } from '../../../../pages/user/Profile/Profile';
 import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 
 export const ProfileSideBarContext = createContext({ expanded: true })
@@ -22,8 +23,8 @@ function UserProfileSideBar({ children }: { children: React.ReactNode }) {
         <aside className={`w-full sm:w-auto z-0 sm:mr-5 ${expanded && 'h-screen sm:h-full'} bg-white  shadow-md sm:rounded-xl  overflow-hidden `}>
             <div className='relative'>
                 <div className={`${expanded ? 'right-0' : 'left-3'} sm:absolute top-0`}>
-                    <button onClick={() => setExpanded(cur => !cur)} className=' p-1.5 text-xl drop-shadow-lg '>
-                        {expanded ? 'X' : 'O'}
+                    <button onClick={() => setExpanded(cur => !cur)} className=' p-1.5 text-xl text-primary drop-shadow-lg '>
+                        {expanded ? <X /> : <Menu />}
                     </button>
                 </div>
                 <nav className={` flex flex-col  transition-all ${expanded ? 'w-full h-full' : ' w-0 h-0 sm:h-full sm:w-full'}`}>

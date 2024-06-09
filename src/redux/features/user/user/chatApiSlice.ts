@@ -28,7 +28,13 @@ export const chatApiSlice = apiSlice.injectEndpoints({
                body:{senderId:data.senderId}
             }),
         }),
-        
+        createChatRoom:builder.mutation({
+            query: (data)=>({
+                url:`${CHAT_URL}/`,
+                method:'POST',
+                body:data
+            })
+        })
 })
 })
 
@@ -37,6 +43,7 @@ export const {
     useGetChatRoomsQuery,
     useGetMessagesMutation,
     useSendMessageMutation,
-    useSetMessageSeenMutation
+    useSetMessageSeenMutation,
+    useCreateChatRoomMutation
   
 } = chatApiSlice;
