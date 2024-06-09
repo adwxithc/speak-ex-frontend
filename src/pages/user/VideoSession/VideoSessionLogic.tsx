@@ -60,9 +60,9 @@ function VideoSessionLogic() {
 
     const handleNegoNeeded = useCallback(async () => {
         if (role.current == 'host') {
-            // role.current = 'client'
-            // return
-            console.log('handleNegoNeeded by host');
+            role.current = 'client'
+            return
+            // console.log('handleNegoNeeded by host');
             
         }
 
