@@ -6,7 +6,7 @@ import { useGetCompleteUserInfoQuery, useUpdateUserMutation } from "../../../red
 import { IBackendResponse } from "../../../types/queryResults"
 import IUser, { IUserDetails } from "../../../types/database"
 import ToolTip from "../../../components/ui/toolTip/ToolTip"
-import { Languages, Monetization, Reports, Sessions, Socials, Wallet } from "./Cards/"
+import { Languages, Monetization, Reports, Sessions, Socials, Wallet } from "./Cards"
 import Button from "../../../components/ui/button/Button"
 import toast from "react-hot-toast"
 import { useUpdateMonetizationStatusMutation } from "../../../redux/features/admin/monetization/monetizationApiSlice"

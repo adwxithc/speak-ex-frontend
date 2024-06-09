@@ -2,17 +2,17 @@ import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
 
-const  AdminPrivateRoute = lazy(()=> import('../pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute')) ;
+const  AdminPrivateRoute = lazy(()=> import('../pages/admin/adminPrivateRoute.tsx/AdminPrivateRoute')) ;
 const  Dashboard = lazy(()=> import('../pages/admin/adminDashboard/AdminDashboard')) ;
-const  CreateCoinPurchasePlan = lazy(()=> import('../pages/admin/GoldCoins/CreateCoinPurchasePlan/CreateCoinPurchasePlanLogic')) ;
-const  GoldCoins = lazy(()=> import('../pages/admin/GoldCoins/GoldCoins')) ;
-const  AdminHomeLayout = lazy(()=> import('../pages/admin/Home/AdminHomeLayout')) ;
-const  AddNewLanguage = lazy(()=> import('../pages/admin/Languages/AddNewLanguage/AddNewLanguage')) ;
-const  LanguageInfo = lazy(()=> import('../pages/admin/Languages/LanguageInfo/LanguageInfo')) ;
-const  Languages = lazy(()=> import('../pages/admin/Languages/Languages')) ;
-const  Monetization = lazy(()=> import('../pages/admin/Monetization/Monetization')) ;
-const  ReportManagement = lazy(()=> import('../pages/admin/ReportManagement/ReportManagement')) ;
-const  Users = lazy(()=> import('../pages/admin/Users/Users')) ;
+const  CreateCoinPurchasePlan = lazy(()=> import('../pages/admin/goldCoins/CreateCoinPurchasePlan/CreateCoinPurchasePlanLogic')) ;
+const  GoldCoins = lazy(()=> import('../pages/admin/goldCoins/GoldCoins')) ;
+const  AdminHomeLayout = lazy(()=> import('../pages/admin/home/AdminHomeLayout')) ;
+const  AddNewLanguage = lazy(()=> import('../pages/admin/languages/AddNewLanguage/AddNewLanguage')) ;
+const  LanguageInfo = lazy(()=> import('../pages/admin/languages/LanguageInfo/LanguageInfo')) ;
+const  Languages = lazy(()=> import('../pages/admin/languages/Languages')) ;
+const  Monetization = lazy(()=> import('../pages/admin/monetization/Monetization')) ;
+const  ReportManagement = lazy(()=> import('../pages/admin/reportManagement/ReportManagement')) ;
+const  Users = lazy(()=> import('../pages/admin/users/Users')) ;
 const  AdminSignOut = lazy(()=> import('../pages/admin/auth/AdminSignOut')) ;
 const  AdminSignin = lazy(()=> import('../pages/admin/auth/AdminSignin')) ;
 

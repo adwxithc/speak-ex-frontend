@@ -1,6 +1,6 @@
 import {  useMemo } from "react"
 import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons"
-import useDataFetcher from "../Users/useDataFetcher"
+import useDataFetcher from "./useDataFetcher"
 import moment from 'moment'
 import Button from "../../../components/ui/button/Button"
 import Avatar from "../../../components/ui/avatar/Avatar"
