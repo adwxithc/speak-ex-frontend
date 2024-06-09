@@ -1,8 +1,9 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
+import Dashboard from '../pages/admin/Dashboard/Dashboard';
 
 const  AdminPrivateRoute = lazy(()=> import('../pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute')) ;
-const  Dashboard = lazy(()=> import('../pages/admin/Dashboard/Dashboard')) ;
+// const  Dashboard = lazy(()=> import('../pages/admin/Dashboard/Dashboard')) ;
 const  CreateCoinPurchasePlan = lazy(()=> import('../pages/admin/GoldCoins/CreateCoinPurchasePlan/CreateCoinPurchasePlanLogic')) ;
 const  GoldCoins = lazy(()=> import('../pages/admin/GoldCoins/GoldCoins')) ;
 const  AdminHomeLayout = lazy(()=> import('../pages/admin/Home/AdminHomeLayout')) ;
