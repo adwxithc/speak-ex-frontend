@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import SignUpContainer from '../../../components/layout/SignUpContainer/SignUpContainer'
-import AdminSignInForm from '../../../components/custom/Form/admin/AdminSignInForm'
+import SignUpContainer from '../../../components/layout/signUpContainer/SignUpContainer'
+import AdminSignInForm from '../../../components/custom/form/admin/AdminSignInForm'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from '../../../redux/store'

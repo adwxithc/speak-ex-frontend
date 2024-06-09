@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import Container from "../../layout/Container/Container"
-import Button from '../../ui/Button/Button.tsx'
-import { Input } from "../../ui/Input/Input.tsx"
-import Peoples from "../Peoples/Peoples.tsx"
+import Container from "../../layout/container/Container.tsx"
+import Button from '../../ui/button/Button.tsx'
+import { Input } from "../../ui/input/Input.tsx"
+import Peoples from "../peoples/Peoples.tsx"
 import { useTranslation } from "react-i18next"
 import { RootState } from "../../../redux/store.ts"
 import { useSelector } from "react-redux"
@@ -75,7 +75,6 @@ function Hero() {
               : <div className="sm:flex items-center justify-center gap-1 mt-4">
               <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />
               <Button varient={"primary"} size={"lg"} onClick={()=>navigate('/signup')}>{t('getStarted',{ns:'common'})}</Button>
-              <span>testing span</span>
             </div>
             }
            

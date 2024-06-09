@@ -1,9 +1,9 @@
 import {  useMemo } from "react"
-import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons"
+import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons"
 import useDataFetcher from "../Users/useDataFetcher"
 import moment from 'moment'
-import Button from "../../../components/ui/Button/Button"
-import Avatar from "../../../components/ui/Avatar/Avatar"
+import Button from "../../../components/ui/button/Button"
+import Avatar from "../../../components/ui/avatar/Avatar"
 import { useUpdateUserMutation } from "../../../redux/features/admin/listUsers/usersListApiSlice"
 
 

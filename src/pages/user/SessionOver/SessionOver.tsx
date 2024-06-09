@@ -1,8 +1,8 @@
 import { CountdownCircleTimer } from "react-countdown-circle-timer"
-import Container from "../../../components/layout/Container/Container"
+import Container from "../../../components/layout/container/Container"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useCallback } from "react"
-import Button from "../../../components/ui/Button/Button"
+import Button from "../../../components/ui/button/Button"
 import { Undo2 } from "lucide-react"
 import useHandleSession from "../../../hooks/useHandleSession"
 

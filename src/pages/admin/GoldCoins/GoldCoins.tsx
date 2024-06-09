@@ -1,11 +1,11 @@
 import moment from "moment";
-import Table, { IColumns } from "../../../components/custom/Table/Table"
+import Table, { IColumns } from "../../../components/custom/table/Table"
 import { useDeletePurchasePlanMutation, useGetPurchasePlansQuery } from "../../../redux/features/admin/coinPurchase/coinPurchasePlanApiSlice"
 import { ICoinPurchasePlan } from "../../../types/database";
-import Button from "../../../components/ui/Button/Button";
+import Button from "../../../components/ui/button/Button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import DialogBox from "../../../components/custom/DialogBox/DialogBox";
+import DialogBox from "../../../components/custom/dialogBox/DialogBox";
 import { ClipLoader } from "react-spinners";
 import { IBackendResponse } from "../../../types/queryResults";
 

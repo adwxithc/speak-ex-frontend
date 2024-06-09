@@ -1,5 +1,5 @@
 
-import Button from "../../ui/Button/Button"
+import Button from "../../ui/button/Button"
 import useTimer from "../../../hooks/useTimer"
 import { useEffect } from "react"
 

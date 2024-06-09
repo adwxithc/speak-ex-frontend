@@ -7,10 +7,10 @@ import parse from 'html-react-parser'
 import { useSelector } from 'react-redux'
 
 import { IFeedItem } from "./useGetFeeds"
-import Avatar from "../../../components/ui/Avatar/Avatar"
+import Avatar from "../../../components/ui/avatar/Avatar"
 import { useLikeMutation, useUnlikeMutation } from '../../../redux/features/user/post/postApiSlice'
 import { RootState } from '../../../redux/store'
-import ToolTip from '../../../components/ui/ToolTip/ToolTip'
+import ToolTip from '../../../components/ui/toolTip/ToolTip'
 
 
 interface IPostPreviewProps{

@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 import { SignupSchema, IformValue } from "./Schema/SignupSchema";
 import { useSignUpMutation } from "../../../../redux/features/user/user/userApiSlice";
-import Button from "../../../ui/Button/Button";
-import { Input } from "../../../ui/Input/Input";
+import Button from "../../../ui/button/Button";
+import { Input } from "../../../ui/input/Input";
 import { isHttpError } from '../../../../utils/isHttpError';
 
 

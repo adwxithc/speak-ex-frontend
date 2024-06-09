@@ -1,7 +1,7 @@
 
 import { Dispatch, SetStateAction, useState } from 'react'
-import OtpInput from '../../../ui/OtpInput/OtpInput'
-import Button from '../../../ui/Button/Button'
+import OtpInput from '../../../ui/otpInput/OtpInput'
+import Button from '../../../ui/button/Button'
 import { useDispatch } from 'react-redux';
 import { useVerifyUserMutation } from '../../../../redux/features/user/user/userApiSlice';
 import { setCridentials } from '../../../../redux/features/user/user/userSlice';

@@ -1,7 +1,7 @@
 import  { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import Carosal from '../Carosal/AluminiCarosal'
-import Section from '../Section/Section'
+import Carosal from '../carosal/AluminiCarosal'
+import Section from '../section/Section'
 
 
 interface WorkflowStep {

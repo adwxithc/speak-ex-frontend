@@ -5,21 +5,21 @@ import { AnimatePresence } from 'framer-motion'
 import { lazy, useState } from 'react'
 
 import { classNames } from '../../../../utils/style-utils.tsx'
-import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
+import ProfileDropdown from '../../../custom/profileDropdown/ProfileDropdown.tsx'
 import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
 import useNavigation from './useNavigation.tsx'
 import { RootState } from '../../../../redux/store.ts'
-import Button from '../../../ui/Button/Button.tsx'
-import LanguageSelector from '../../../custom/LanguageSelector/LanguageSelector.tsx'
+import Button from '../../../ui/button/Button.tsx'
+import LanguageSelector from '../../../custom/languageSelector/LanguageSelector.tsx'
 import { useTranslation } from 'react-i18next'
-import Modal from '../../../custom/Modal/Modal.tsx'
-import NotificationBar from '../../../custom/NotificationBar/NotificationBar.tsx'
-import useNotifications from '../../../../pages/user/Notifications/useNotifications.tsx'
+import Modal from '../../../custom/modal/Modal.tsx'
+import NotificationBar from '../../../custom/notificationBar/NotificationBar.tsx'
+import useNotifications from '../../../../pages/user/notifications/useNotifications.tsx'
 import MobileMenu from './MobileMenu/MobileMenu.tsx'
 import useGetWallet from './useGetWallet.tsx'
 import { Bell, Menu, X } from 'lucide-react'
-import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
-const SearchUser =lazy(()=>import('../../../../pages/user/SearchUser/SearchUser.tsx')) 
+import SessionOffer from '../../../custom/sessionOffer/SessionOffer.tsx'
+const SearchUser =lazy(()=>import('../../../../pages/user/searchUser/SearchUser.tsx')) 
 
 
 

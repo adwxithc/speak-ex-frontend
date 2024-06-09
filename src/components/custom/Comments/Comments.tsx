@@ -5,9 +5,9 @@ import { IComment } from "../../../types/database";
 import CommentForm from "./CommentForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import Container from "../../layout/Container/Container";
-import DialogBox from "../DialogBox/DialogBox";
-import Button from "../../ui/Button/Button";
+import Container from "../../layout/container/Container";
+import DialogBox from "../dialogBox/DialogBox";
+import Button from "../../ui/button/Button";
 import { ClipLoader } from "react-spinners";
 
 interface CommentProps extends InputHTMLAttributes<HTMLDivElement> {

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { IPostData } from "./usePostDataFetcher"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
-import Comments from "../../../components/custom/Comments/Comments"
+import Comments from "../../../components/custom/comments/Comments"
 
 
 interface postActionsProps{

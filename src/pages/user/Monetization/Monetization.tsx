@@ -7,8 +7,8 @@ import NotEligibel from "./Statuses/NotEligibel"
 import { RootState } from "../../../redux/store";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { updateCridentials } from "../../../redux/features/user/user/userSlice";
-import DialogBox from "../../../components/custom/DialogBox/DialogBox";
-import Button from "../../../components/ui/Button/Button";
+import DialogBox from "../../../components/custom/dialogBox/DialogBox";
+import Button from "../../../components/ui/button/Button";
 import { MoonLoader } from "react-spinners";
 import Monetised from "./Statuses/Monetized";
 import Requested from "./Statuses/Requested";

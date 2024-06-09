@@ -1,15 +1,15 @@
 
 import { IMonetizationRequestData } from "../../../types/database";
-import Table, { IColumns } from "../../../components/custom/Table/Table";
+import Table, { IColumns } from "../../../components/custom/table/Table";
 import { useEffect, useState } from "react";
-import Modal from "../../../components/custom/Modal/Modal";
+import Modal from "../../../components/custom/modal/Modal";
 import UserDetails from "../UserDetails.tsx/UserDetails";
-import Avatar from "../../../components/ui/Avatar/Avatar";
+import Avatar from "../../../components/ui/avatar/Avatar";
 import { useGetMonetizationRequestsQuery } from "../../../redux/features/admin/monetization/monetizationApiSlice";
 import moment from "moment";
-import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons"
+import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons"
 import { AnimatePresence } from "framer-motion";
-import DialogBox from "../../../components/custom/DialogBox/DialogBox";
+import DialogBox from "../../../components/custom/dialogBox/DialogBox";
 
 
 function Monetization() {

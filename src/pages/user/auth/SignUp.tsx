@@ -1,6 +1,6 @@
 
-import SignUpContainer from '../../../components/layout/SignUpContainer/SignUpContainer'
-import SignUpForm from '../../../components/custom/Form/user/SignUpForm'
+import SignUpContainer from '../../../components/layout/signUpContainer/SignUpContainer'
+import SignUpForm from '../../../components/custom/form/user/SignUpForm'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'

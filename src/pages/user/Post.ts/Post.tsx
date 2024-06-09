@@ -1,4 +1,4 @@
-import PostWraper from "../../../components/layout/PostWraper/PostWraper"
+import PostWraper from "../../../components/layout/postWraper/PostWraper"
 
 import parse from 'html-react-parser'
 

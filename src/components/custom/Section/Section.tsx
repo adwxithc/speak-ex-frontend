@@ -1,6 +1,6 @@
 import { cn } from "../../../utils/style-utils";
-import Container from "../../layout/Container/Container";
-import Image from '../../ui/Image/Image'
+import Container from "../../layout/container/Container";
+import Image from '../../ui/image/Image'
 
 interface SectionProps {
     title: string;

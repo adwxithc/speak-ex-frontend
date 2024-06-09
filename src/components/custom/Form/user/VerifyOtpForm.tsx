@@ -4,8 +4,8 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import OtpInput from '../../../ui/OtpInput/OtpInput'
-import Button from '../../../ui/Button/Button'
+import OtpInput from '../../../ui/otpInput/OtpInput'
+import Button from '../../../ui/button/Button'
 import { useVerifyOtpMutation } from '../../../../redux/features/user/user/userApiSlice';
 import { setCridentials } from '../../../../redux/features/user/user/userSlice';
 import { isHttpError } from '../../../../utils/isHttpError';

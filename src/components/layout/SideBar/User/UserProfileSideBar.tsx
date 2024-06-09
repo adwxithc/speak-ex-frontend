@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import ProfilePicture from '../../../custom/ProfilePicture/ProfilePicture';
-import { ProfileContext } from '../../../../pages/user/Profile/Profile';
+import ProfilePicture from '../../../custom/profilePicture/ProfilePicture';
+import { ProfileContext } from '../../../../pages/user/profile/Profile';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 

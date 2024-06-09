@@ -23,7 +23,7 @@ import {
   AlignJustify,
   ImagePlus
 } from "lucide-react";
-import ToolTip from "../../ui/ToolTip/ToolTip";
+import ToolTip from "../../ui/toolTip/ToolTip";
 import { useCallback } from "react";
 
 

@@ -5,9 +5,9 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 import { useResetPasswordMutation } from "../../../../redux/features/user/user/userApiSlice";
-import Button from "../../../ui/Button/Button";
+import Button from "../../../ui/button/Button";
 import { IformValue, schema } from './Schema/ResetPasswordSchema'
-import { Input } from "../../../ui/Input/Input";
+import { Input } from "../../../ui/input/Input";
 
 
 

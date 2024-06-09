@@ -1,6 +1,6 @@
 
-import Container from "../../../../components/layout/Container/Container"
-import Button from "../../../../components/ui/Button/Button"
+import Container from "../../../../components/layout/container/Container"
+import Button from "../../../../components/ui/button/Button"
 import { Mic, MicOff, Video, VideoOff } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSocket } from "../../../../context/SocketProvider"

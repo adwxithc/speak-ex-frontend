@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import NumericalData from "../../../components/custom/DashboardItems/NumericalData"
-import RevenueChart from "../../../components/custom/DashboardItems/RevenueChart"
-import TransactionsPieChart from "../../../components/custom/DashboardItems/TransactionsPieChart"
+import NumericalData from "../../../components/custom/dashboardItems/NumericalData"
+import RevenueChart from "../../../components/custom/dashboardItems/RevenueChart"
+import TransactionsPieChart from "../../../components/custom/dashboardItems/TransactionsPieChart"
 import { useGetDashboardNumericsQuery, useGetMostLikedPostsQuery, useGetMostPopularPlansQuery, useGetSessionVsProfitQuery } from "../../../redux/features/admin/dashboard/dashboardApiSlice"
 import { ICoinPurchasePlan, IDashboardNumerics, IPost } from "../../../types/database"
 import { IBackendResponse } from "../../../types/queryResults"
-import PopularPosts from "../../../components/custom/DashboardItems/PopularPosts"
-import PopularPlans from "../../../components/custom/DashboardItems/PopularPlans"
+import PopularPosts from "../../../components/custom/dashboardItems/PopularPosts"
+import PopularPlans from "../../../components/custom/dashboardItems/PopularPlans"
 
 
 function Dashboard() {

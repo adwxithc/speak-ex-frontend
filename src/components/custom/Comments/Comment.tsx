@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
 import { IComment } from "../../../types/database"
-import Avatar from "../../ui/Avatar/Avatar"
+import Avatar from "../../ui/avatar/Avatar"
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import CommentForm from "./CommentForm"
 import { useGetCommentsMutation } from "../../../redux/features/user/post/postApiSlice"

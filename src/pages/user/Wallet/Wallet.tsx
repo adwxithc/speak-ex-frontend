@@ -5,7 +5,7 @@ import SingleTransaction from "./SingleTransaction"
 import { ITransaction } from "../../../types/database";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons";
+import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons";
 
 function Wallet() {
     const { wallet } = useSelector((state: RootState) => state.user)

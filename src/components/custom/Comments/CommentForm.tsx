@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react"
-import Button from "../../ui/Button/Button"
-import Avatar from "../../ui/Avatar/Avatar";
+import Button from "../../ui/button/Button"
+import Avatar from "../../ui/avatar/Avatar";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 

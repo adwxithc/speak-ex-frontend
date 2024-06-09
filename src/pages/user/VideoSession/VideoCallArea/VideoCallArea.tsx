@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 
 
 import { toogleVideoTrack, toogleAudioTrack } from '../../../../webRTC/streamToggle'
-import Button from "../../../../components/ui/Button/Button"
+import Button from "../../../../components/ui/button/Button"
 import { useSocket } from "../../../../context/SocketProvider"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../redux/store"

@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
-import PostWraper from "../../../components/layout/PostWraper/PostWraper";
-import Avatar from "../../../components/ui/Avatar/Avatar";
+import PostWraper from "../../../components/layout/postWraper/PostWraper";
+import Avatar from "../../../components/ui/avatar/Avatar";
 import { PostData } from "./CreatePost"
 import parse from 'html-react-parser';
-import Button from "../../../components/ui/Button/Button";
+import Button from "../../../components/ui/button/Button";
 
 
 function PreviewPost({data:{image,title,content},setShowNext}:{data:PostData,setShowNext:Dispatch<SetStateAction<boolean>>}) {

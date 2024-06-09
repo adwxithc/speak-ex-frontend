@@ -1,6 +1,6 @@
 
 import { ICoinPurchasePlan } from "../../../types/database"
-import Table, { IColumns } from "../Table/Table"
+import Table, { IColumns } from "../table/Table"
 
 function PopularPlans({popularPlans}:{popularPlans:ICoinPurchasePlan[]}) {
 

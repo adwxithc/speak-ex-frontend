@@ -1,15 +1,15 @@
 
 import { AnimatePresence } from "framer-motion";
 
-import PostThumbNail from "../../../components/custom/PostThumbNail/PostThumbNail"
-import Button from "../../../components/ui/Button/Button"
+import PostThumbNail from "../../../components/custom/postThumbNail/PostThumbNail"
+import Button from "../../../components/ui/button/Button"
 import { useContext, useEffect, useState } from "react";
-import Modal from "../../../components/custom/Modal/Modal";
-import CreatePost from "../CreatePost/CreatePost";
+import Modal from "../../../components/custom/modal/Modal";
+import CreatePost from "../createPost/CreatePost";
 import { useGetUsersPostsMutation } from "../../../redux/features/user/post/postApiSlice";
 import { IPost } from "../../../types/database";
 import { Link } from "react-router-dom";
-import { ProfileContext } from "../Profile/Profile";
+import { ProfileContext } from "../profile/Profile";
 import UserPostsSkelton from "./UserPostsSkelton";
 import { Plus } from "lucide-react";
 

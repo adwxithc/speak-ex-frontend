@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useGetVideoSessionsQuery } from "../../../redux/features/user/session/sessionApiSlice"
 import SingleSession from "./SingleSession"
 import { ISessionDetails } from "../../../types/database";
-import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons";
+import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons";
 
 
 

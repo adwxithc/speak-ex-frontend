@@ -4,7 +4,7 @@ import {classNames} from '../../../utils/style-utils'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
-import CoinsList from '../CoinsList.tsx/CoinsList'
+import CoinsList from '../coinsList.tsx/CoinsList'
 
 
 

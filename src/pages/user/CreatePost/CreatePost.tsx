@@ -2,7 +2,7 @@
 import { useMultistepForm } from "../../../hooks/useMultistepForm";
 import UploadImage from "./UploadImage";
 import EnterDatas from "./EnterDatas";
-import Button from "../../../components/ui/Button/Button";
+import Button from "../../../components/ui/button/Button";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import PreviewPost from "./PreviewPost";
 import { useCreatePostMutation } from "../../../redux/features/user/post/postApiSlice";

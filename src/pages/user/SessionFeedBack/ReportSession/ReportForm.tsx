@@ -1,6 +1,6 @@
 
 import { ChangeEvent, FormEvent } from "react";
-import Button from "../../../../components/ui/Button/Button";
+import Button from "../../../../components/ui/button/Button";
 import { Info } from "lucide-react";
 interface IReportFormProps{
     handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;

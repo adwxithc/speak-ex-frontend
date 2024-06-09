@@ -1,16 +1,16 @@
 import React, { forwardRef, useContext, useEffect, useState } from 'react'
-import { cn } from '../../../utils/style-utils'
+import { cn } from '../../../utils/style-utils.tsx'
 import { useDispatch, useSelector } from 'react-redux';
 
-import Modal from '../Modal/Modal.tsx';
+import Modal from '../modal/Modal.tsx';
 import { AnimatePresence } from 'framer-motion';
-import UploadProfile from '../UploadProfile/UploadProfile.tsx';
+import UploadProfile from '../uploadProfile/UploadProfile.tsx';
 import { useUploadProfileMutation } from '../../../redux/features/user/user/profileApiSlice.ts';
 import { updateCridentials } from '../../../redux/features/user/user/userSlice.ts';
 import toast from 'react-hot-toast';
-import { ProfileContext } from '../../../pages/user/Profile/Profile.tsx';
+import { ProfileContext } from '../../../pages/user/profile/Profile.tsx';
 import Skelton from './Skelton.tsx';
-import Button from '../../ui/Button/Button.tsx';
+import Button from '../../ui/button/Button.tsx';
 import { RootState } from '../../../redux/store.ts';
 import { useFollowUserMutation, useUnfollowUserMutation } from '../../../redux/features/user/user/userApiSlice.ts';
 import { useCreateChatRoomMutation } from '../../../redux/features/user/user/chatApiSlice.ts';

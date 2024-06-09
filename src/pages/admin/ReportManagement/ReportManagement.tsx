@@ -1,13 +1,13 @@
 
 import { useEffect, useMemo, useState } from "react";
-import Table, { IColumns } from "../../../components/custom/Table/Table";
+import Table, { IColumns } from "../../../components/custom/table/Table";
 import { useListReportsOnSessionQuery } from "../../../redux/features/admin/report/reportApiSlice";
 import { IReportWithUsers } from "../../../types/database";
-import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons";
-import Modal from "../../../components/custom/Modal/Modal";
+import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons";
+import Modal from "../../../components/custom/modal/Modal";
 import ReportDetails from "./ReportDetails";
 import UserDetails from "../UserDetails.tsx/UserDetails";
-import Avatar from "../../../components/ui/Avatar/Avatar";
+import Avatar from "../../../components/ui/avatar/Avatar";
 import { AnimatePresence } from "framer-motion";
 
 

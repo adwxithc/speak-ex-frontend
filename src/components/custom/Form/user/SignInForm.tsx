@@ -8,11 +8,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { IformValue, schema } from './Schema/SignInSchema'
-import Button from "../../../ui/Button/Button";
+import Button from "../../../ui/button/Button";
 import { setCridentials } from "../../../../redux/features/user/user/userSlice";
 import { useLoginMutation } from "../../../../redux/features/user/user/userApiSlice";
 import { Trans, useTranslation } from "react-i18next";
-import { Input } from "../../../ui/Input/Input";
+import { Input } from "../../../ui/input/Input";
 import { Eye, EyeOff } from "lucide-react";
 import { isHttpError } from '../../../../utils/isHttpError';
 

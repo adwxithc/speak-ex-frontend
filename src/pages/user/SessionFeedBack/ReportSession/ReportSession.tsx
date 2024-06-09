@@ -1,6 +1,6 @@
 import { Handshake } from 'lucide-react';
-import Button from '../../../../components/ui/Button/Button';
-import Modal from '../../../../components/custom/Modal/Modal';
+import Button from '../../../../components/ui/button/Button';
+import Modal from '../../../../components/custom/modal/Modal';
 import { AnimatePresence } from 'framer-motion';
 import {
     ChangeEvent,

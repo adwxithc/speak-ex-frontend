@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import ConversationItem from './ConversationItem'
 import {IChatRoom} from '../../../../types/database';
-import { Input } from '../../../ui/Input/Input';
+import { Input } from '../../../ui/input/Input';
 import { Search } from 'lucide-react';
 
 

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import Button from '../../../ui/Button/Button'
+import Button from '../../../ui/button/Button'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeftToLine, ArrowRightToLine, LogOut } from 'lucide-react'
 import { useSelector } from 'react-redux'

@@ -1,8 +1,8 @@
 import { ChangeEvent, useState, useRef, useCallback, Dispatch, SetStateAction } from "react"
-import Avatar from "../../../components/ui/Avatar/Avatar"
+import Avatar from "../../../components/ui/avatar/Avatar"
 import { DotLoader } from 'react-spinners';
 import useUserSearch from "./useUserSearch"
-import { Input } from "../../../components/ui/Input/Input"
+import { Input } from "../../../components/ui/input/Input"
 import { useNavigate } from "react-router-dom";
 
 function SearchUser({setOpenSearch}:{setOpenSearch:Dispatch<SetStateAction<boolean>>}) {

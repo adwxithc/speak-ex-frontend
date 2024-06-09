@@ -1,7 +1,7 @@
 import Cropper, { Area } from 'react-easy-crop'
 import React, { useState } from "react";
 import { LucideIcon} from 'lucide-react';
-import Button from '../../ui/Button/Button';
+import Button from '../../ui/button/Button';
 
 
 interface ImageCrperProps {

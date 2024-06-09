@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
-import SignUpContainer from '../../../../components/layout/SignUpContainer/SignUpContainer'
-import VerifyOtpForm from '../../../../components/custom/Form/user/VerifyOtpForm'
+import SignUpContainer from '../../../../components/layout/signUpContainer/SignUpContainer'
+import VerifyOtpForm from '../../../../components/custom/form/user/VerifyOtpForm'
 
 function VerifyOtp() {
     const [loading,setLoading] = useState(false)

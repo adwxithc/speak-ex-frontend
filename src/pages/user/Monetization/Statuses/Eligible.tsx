@@ -1,5 +1,5 @@
 
-import Button from "../../../../components/ui/Button/Button"
+import Button from "../../../../components/ui/button/Button"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../redux/store"
 import { ChangeEvent, FormEvent } from "react";

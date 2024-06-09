@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import Button from '../../ui/Button/Button';
+import Button from '../../ui/button/Button';
 
 interface ICroppedImage{
     imageAfterCrop:string;

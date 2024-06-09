@@ -1,8 +1,8 @@
 import { LucideIcon } from "lucide-react"
-import { Input } from "../../ui/Input/Input"
+import { Input } from "../../ui/input/Input"
 import { FieldErrors, UseFormRegister } from "react-hook-form"
-import { IEditUserFields } from "../../../pages/user/UserInfo/UserInfoSchema"
-import {IformValue} from '../../../pages/user/UserInfo/UserInfoSchema';
+import { IEditUserFields } from "../../../pages/user/userInfo/UserInfoSchema"
+import {IformValue} from '../../../pages/user/userInfo/UserInfoSchema';
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
 

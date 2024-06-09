@@ -1,5 +1,5 @@
 import moment from "moment"
-import Avatar from "../../../../components/ui/Avatar/Avatar"
+import Avatar from "../../../../components/ui/avatar/Avatar"
 import { IReport } from "../../../../types/database"
 
 interface IReportData extends IReport{

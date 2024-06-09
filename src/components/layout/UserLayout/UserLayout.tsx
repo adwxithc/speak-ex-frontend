@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
-import Navbar from '../NavBar/user/Navbar'
-import Footer from '../Footer/Footer'
-import Modal from '../../custom/Modal/Modal'
+import Navbar from '../navbar/user/Navbar'
+import Footer from '../footer/Footer'
+import Modal from '../../custom/modal/Modal'
 import { setOpenStore } from '../../../redux/features/user/coinPurchase/coinPurchaseSlice'
 import { RootState } from '../../../redux/store'
-import Store from '../../../pages/user/Store/Store'
+import Store from '../../../pages/user/store/Store'
 import { setCloseCompleteProfileModal } from '../../../redux/features/user/user/userSlice'
-import ProfileCompletionWarning from '../../custom/ProfileCompletionWarning/ProfileCompletionWarning'
+import ProfileCompletionWarning from '../../custom/profileCompletionWarning/ProfileCompletionWarning'
 
 function UserLayout() {
   const dispatch = useDispatch()

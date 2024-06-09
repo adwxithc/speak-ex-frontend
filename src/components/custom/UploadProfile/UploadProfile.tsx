@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react'
 import { Square } from 'lucide-react';
 
-import FileInput from '../FileInput/FileInput'
-import ImageCroper, { ICropArea } from '../ImageCroper/ImageCroper';
-import CroppedImage from '../ImageCroper/CroppedImage';
+import FileInput from '../fileInput/FileInput'
+import ImageCroper, { ICropArea } from '../imageCroper/ImageCroper';
+import CroppedImage from '../imageCroper/CroppedImage';
 import { dataURLtoFile } from '../../../services/dataURLtoFile';
-import Button from '../../ui/Button/Button';
+import Button from '../../ui/button/Button';
 
 
 

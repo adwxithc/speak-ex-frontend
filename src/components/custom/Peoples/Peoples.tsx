@@ -1,6 +1,6 @@
 import { cn } from "../../../utils/style-utils"
-import Avatar from "../../ui/Avatar/Avatar"
-import { AvatarProps } from '../../ui/Avatar/Avatar'
+import Avatar from "../../ui/avatar/Avatar"
+import { AvatarProps } from '../../ui/avatar/Avatar'
 
 interface PeopleProps {
     list: AvatarProps[],

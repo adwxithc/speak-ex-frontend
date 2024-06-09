@@ -1,6 +1,6 @@
 
-import Container from "../Container/Container"
-import Button from "../../ui/Button/Button";
+import Container from "../container/Container"
+import Button from "../../ui/button/Button";
 import { Github, Instagram, Linkedin } from "lucide-react";
 
 function Footer() {

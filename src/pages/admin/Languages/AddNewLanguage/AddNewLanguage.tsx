@@ -4,8 +4,8 @@ import { z } from 'zod';
 
 import { useAddLanguageMutation } from '../../../../redux/features/admin/languages/languagesApiSlice';
 import toast from 'react-hot-toast';
-import { Input } from '../../../../components/ui/Input/Input';
-import Button from '../../../../components/ui/Button/Button';
+import { Input } from '../../../../components/ui/input/Input';
+import Button from '../../../../components/ui/button/Button';
 import { isHttpError } from '../../../../utils/isHttpError';
 
 

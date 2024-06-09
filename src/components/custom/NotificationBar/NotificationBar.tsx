@@ -1,11 +1,11 @@
 
 import { motion } from 'framer-motion'
 import { FC } from 'react'
-import Backdrop from '../Modal/Backdrop';
+import Backdrop from '../modal/Backdrop';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom'
-import Notifications from '../../../pages/user/Notifications/Notifications';
-import { INotification } from '../../../pages/user/Notifications/useNotifications';
+import Notifications from '../../../pages/user/notifications/Notifications';
+import { INotification } from '../../../pages/user/notifications/useNotifications';
 
 interface ModalProp{
     handleClose: () => void;

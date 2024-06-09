@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
 
 import Message from '../Message/Message'
-import Avatar from '../../../ui/Avatar/Avatar'
-import Button from '../../../ui/Button/Button'
+import Avatar from '../../../ui/avatar/Avatar'
+import Button from '../../../ui/button/Button'
 import { MoveLeft } from 'lucide-react'
 import { IChatRoom, IMessage } from '../../../../types/database';
 import { useGetMessagesMutation, useSendMessageMutation, useSetMessageSeenMutation } from '../../../../redux/features/user/user/chatApiSlice';

@@ -1,6 +1,6 @@
 
-import AluminiCard from '../Card/AluminiCard';
-import Container from '../../layout/Container/Container';
+import AluminiCard from '../card/AluminiCard';
+import Container from '../../layout/container/Container';
 
 function Carosal() {
 

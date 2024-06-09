@@ -8,15 +8,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DotLoader } from "react-spinners";
 
 import { UserInfoSchema,IformValue,INITIAL_VALUE } from './UserInfoSchema'
-import ProfileInfoItem from "../../../components/custom/ProfileInfoItem/ProfileInfoItem"
+import ProfileInfoItem from "../../../components/custom/profileInfoItem/ProfileInfoItem"
 import { RootState } from '../../../redux/store'
-import Button from "../../../components/ui/Button/Button";
+import Button from "../../../components/ui/button/Button";
 import { useGetAllLanguagesMutation, useUpdateUserInfoMutation } from "../../../redux/features/user/user/profileApiSlice";
 import { setCridentials } from "../../../redux/features/user/user/userSlice";
-import AutoCompleteDropDown from "../../../components/ui/AutoCompleteDropDown/AutoCompleteDropDown";
+import AutoCompleteDropDown from "../../../components/ui/autoCompleteDropDown/AutoCompleteDropDown";
 import { ILanguage } from '../../../types/database'
-import Buttton from '../../../components/ui/Button/Button';
-import { ProfileContext } from "../Profile/Profile";
+import Buttton from '../../../components/ui/button/Button';
+import { ProfileContext } from "../profile/Profile";
 import { isHttpError } from "../../../utils/isHttpError";
 
 

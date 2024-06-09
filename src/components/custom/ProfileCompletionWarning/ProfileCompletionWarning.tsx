@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"
-import Button from "../../ui/Button/Button"
+import Button from "../../ui/button/Button"
 import { useNavigate } from "react-router-dom"
 import { setCloseCompleteProfileModal } from "../../../redux/features/user/user/userSlice"
 import { TriangleAlert } from "lucide-react"

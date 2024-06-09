@@ -3,9 +3,9 @@ import { RootState } from '../../../redux/store'
 import { lazy } from 'react'
 
 
-const Hero = lazy(()=>import('../../../components/custom/Hero/Hero')) 
-const Intro = lazy(()=>import('../../../components/custom/Intro/Intro')) 
-const Feeds = lazy(()=>import('../Feeds/Feeds')) 
+const Hero = lazy(()=>import('../../../components/custom/hero/Hero')) 
+const Intro = lazy(()=>import('../../../components/custom/intro/Intro')) 
+const Feeds = lazy(()=>import('../feeds/Feeds')) 
 
 
 

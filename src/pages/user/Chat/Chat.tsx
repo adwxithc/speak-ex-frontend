@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import ChatArea from "../../../components/custom/Chat/ChatArea/ChatArea"
-import Conversations from '../../../components/custom/Chat/Conversations/Conversations'
+import ChatArea from "../../../components/custom/chat/ChatArea/ChatArea"
+import Conversations from '../../../components/custom/chat/Conversations/Conversations'
 import { useGetChatRoomsQuery } from "../../../redux/features/user/user/chatApiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";

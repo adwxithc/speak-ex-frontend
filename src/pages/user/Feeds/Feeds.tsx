@@ -1,5 +1,5 @@
 
-import Container from "../../../components/layout/Container/Container"
+import Container from "../../../components/layout/container/Container"
 
 import useGetFeeds from "./useGetFeeds"
 import { useCallback, useRef, useState } from "react"

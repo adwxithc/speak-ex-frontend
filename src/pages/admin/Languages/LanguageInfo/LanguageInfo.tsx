@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import LanguageRateCalculator from "../../../../components/custom/LanguageRateCalculator.tsx/LanguageRateCalculator"
-import Button from "../../../../components/ui/Button/Button"
+import LanguageRateCalculator from "../../../../components/custom/languageRateCalculator.tsx/LanguageRateCalculator"
+import Button from "../../../../components/ui/button/Button"
 import LearnerHelperChart from "./LearnerHelperChart"
 
 import { useGetLearnerHelperRatioQuery, useGetMonthlySessionsQuery, useUpdateLanguageMutation } from "../../../../redux/features/admin/languages/languagesApiSlice"

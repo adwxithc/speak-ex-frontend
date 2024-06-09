@@ -1,6 +1,6 @@
 import { useState } from "react"
-import SignUpContainer from "../../../../components/layout/SignUpContainer/SignUpContainer"
-import ResetPasswordForm from "../../../../components/custom/Form/user/ResetPasswordForm"
+import SignUpContainer from "../../../../components/layout/signUpContainer/SignUpContainer"
+import ResetPasswordForm from "../../../../components/custom/form/user/ResetPasswordForm"
 
 function ResetPassword() {
     const [loading,setLoading] = useState(false)

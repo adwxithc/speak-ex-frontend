@@ -1,8 +1,8 @@
 
-import Button from '../../../components/ui/Button/Button'
+import Button from '../../../components/ui/button/Button'
 import { Undo2 } from 'lucide-react'
 import RateSession from './RateSession'
-import Container from '../../../components/layout/Container/Container'
+import Container from '../../../components/layout/container/Container'
 import { useNavigate } from 'react-router-dom'
 import ReportSession from './ReportSession/ReportSession'
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'

@@ -1,22 +1,22 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import UserPrivateRoute from '../pages/user/UserPrivateRoute/UserPrivateRoute';
+import UserPrivateRoute from '../pages/user/userPrivateRoute/UserPrivateRoute';
 
-const UserLayout =  lazy(()=>import('../components/layout/UserLayout/UserLayout'));
-const Chat = lazy(() => import('../pages/user/Chat/Chat'));
-const FollowAndFollowers = lazy(() => import('../pages/user/FollowAndFollowers/FollowAndFollowers'));
-const LandingPage = lazy(() => import('../pages/user/LandingPage/LandingPage'));
-const Monetization = lazy(() => import('../pages/user/Monetization/Monetization'));
-const Post = lazy(() => import('../pages/user/Post.ts/Post'));
-const Profile = lazy(() => import('../pages/user/Profile/Profile'));
-const SessionFeedBack = lazy(() => import('../pages/user/SessionFeedBack/SessionFeedBack'));
-const SessionLogs = lazy(() => import('../pages/user/SessionLogs/SessionLogs'));
-const SessionOver = lazy(() => import('../pages/user/SessionOver/SessionOver'));
-const UserInfo = lazy(() => import('../pages/user/UserInfo/UserInfo'));
-const UsersPosts = lazy(() => import('../pages/user/UsersPosts/UsersPosts'));
-const VideoSessionLogic = lazy(() => import('../pages/user/VideoSession/VideoSessionLogic'));
-const WaitForLearner = lazy(() => import('../pages/user/VideoSession/WaitForLearners/WaitForLearner'));
-const Wallet = lazy(() => import('../pages/user/Wallet/Wallet'));
+const UserLayout =  lazy(()=>import('../components/layout/userLayout/UserLayout'));
+const Chat = lazy(() => import('../pages/user/chat/Chat'));
+const FollowAndFollowers = lazy(() => import('../pages/user/followAndFollowers/FollowAndFollowers'));
+const LandingPage = lazy(() => import('../pages/user/landingPage/LandingPage'));
+const Monetization = lazy(() => import('../pages/user/monetization/Monetization'));
+const Post = lazy(() => import('../pages/user/post.ts/Post'));
+const Profile = lazy(() => import('../pages/user/profile/Profile'));
+const SessionFeedBack = lazy(() => import('../pages/user/sessionFeedBack/SessionFeedBack'));
+const SessionLogs = lazy(() => import('../pages/user/sessionLogs/SessionLogs'));
+const SessionOver = lazy(() => import('../pages/user/sessionOver/SessionOver'));
+const UserInfo = lazy(() => import('../pages/user/userInfo/UserInfo'));
+const UsersPosts = lazy(() => import('../pages/user/usersPosts/UsersPosts'));
+const VideoSessionLogic = lazy(() => import('../pages/user/videoSession/VideoSessionLogic'));
+const WaitForLearner = lazy(() => import('../pages/user/videoSession/WaitForLearners/WaitForLearner'));
+const Wallet = lazy(() => import('../pages/user/wallet/Wallet'));
 
 const userRoutes:RouteObject[] = [
     {

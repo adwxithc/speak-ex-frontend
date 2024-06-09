@@ -1,10 +1,10 @@
 import { RectangleHorizontal, RectangleVertical, Square } from "lucide-react";
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 
-import ImageCroper, { ICropArea } from '../../../components/custom/ImageCroper/ImageCroper';
-import CroppedImage from "../../../components/custom/ImageCroper/CroppedImage";
+import ImageCroper, { ICropArea } from '../../../components/custom/imageCroper/ImageCroper';
+import CroppedImage from "../../../components/custom/imageCroper/CroppedImage";
 import { PostData } from "./CreatePost";
-import FileInput from "../../../components/custom/FileInput/FileInput";
+import FileInput from "../../../components/custom/fileInput/FileInput";
 import { dataURLtoFile } from "../../../services/dataURLtoFile";
 
 interface IUploadImage {

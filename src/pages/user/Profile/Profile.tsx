@@ -2,7 +2,7 @@
 import SideBarItem from "../../../components/layout/SideBar/User/UserProfileSideBarItem"
 import UserProfileSideBar from "../../../components/layout/SideBar/User/UserProfileSideBar"
 import { Outlet, useNavigate, useParams } from "react-router-dom"
-import ProfilePicture from "../../../components/custom/ProfilePicture/ProfilePicture"
+import ProfilePicture from "../../../components/custom/profilePicture/ProfilePicture"
 import { CircleDollarSign, CircleUser, History, Info, MessageSquareText, Wallet } from "lucide-react"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../redux/store"

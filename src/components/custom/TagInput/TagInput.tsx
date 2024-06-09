@@ -1,8 +1,8 @@
 
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
-import { Input } from '../../ui/Input/Input'
+import { Input } from '../../ui/input/Input'
 import { ITag } from '../../../types/database'
-import { PostData } from '../../../pages/user/CreatePost/CreatePost';
+import { PostData } from '../../../pages/user/createPost/CreatePost';
 import useGetTags from './useGetTags';
 import { PropagateLoader } from 'react-spinners';
 

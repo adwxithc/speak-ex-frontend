@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
-import { Input } from '../../../components/ui/Input/Input';
-import Tiptap from '../../../components/custom/Tiptap/Tiptap';
+import { Input } from '../../../components/ui/input/Input';
+import Tiptap from '../../../components/custom/tiptap/Tiptap';
 import { PostData } from './CreatePost';
-import TagInput from '../../../components/custom/TagInput/TagInput';
+import TagInput from '../../../components/custom/tagInput/TagInput';
 
 interface IEnterDatas {
   updateFields: (fields: Partial<PostData>) => void;

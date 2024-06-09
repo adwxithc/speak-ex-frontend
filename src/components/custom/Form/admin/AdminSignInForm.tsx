@@ -8,13 +8,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import Button from "../../../ui/Button/Button";
+import Button from "../../../ui/button/Button";
 import { useAdminLoginMutation } from "../../../../redux/features/admin/auth/adminAuthApiSlice";
 import { logAdmin } from "../../../../redux/features/admin/auth/adminSlice";
 import { IformValue, schema } from '../user/Schema/SignInSchema'
 import { removeCridentials } from "../../../../redux/features/user/user/userSlice";
 import { Eye, EyeOff } from "lucide-react";
-import { Input } from "../../../ui/Input/Input";
+import { Input } from "../../../ui/input/Input";
 import { isHttpError } from '../../../../utils/isHttpError';
 
 function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {

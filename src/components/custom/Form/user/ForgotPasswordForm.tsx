@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Dispatch, SetStateAction } from 'react';
 
-import Button from '../../../ui/Button/Button';
+import Button from '../../../ui/button/Button';
 import { useForgotPasswordMutation } from '../../../../redux/features/user/user/userApiSlice';
 import { IformValue, schema } from './Schema/forgotPasswordSchema';
-import { Input } from '../../../ui/Input/Input';
+import { Input } from '../../../ui/input/Input';
 
 
 

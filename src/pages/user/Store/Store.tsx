@@ -3,7 +3,7 @@ import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { PuffLoader } from "react-spinners"
 import { useState } from "react"
 
-import Button from "../../../components/ui/Button/Button"
+import Button from "../../../components/ui/button/Button"
 import { useGetCoinPurchasePlansQuery } from "../../../redux/features/user/session/sessionApiSlice"
 import { ICoinPurchasePlan } from "../../../types/database"
 import { RootState } from "../../../redux/store"

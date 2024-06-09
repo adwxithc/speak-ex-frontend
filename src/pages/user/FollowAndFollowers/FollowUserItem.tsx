@@ -1,7 +1,7 @@
 
 import { useSelector } from 'react-redux';
-import Avatar from '../../../components/ui/Avatar/Avatar'
-import Button from '../../../components/ui/Button/Button'
+import Avatar from '../../../components/ui/avatar/Avatar'
+import Button from '../../../components/ui/button/Button'
 
 import { IExtendedUser } from './FollowAndFollowers'
 import { RootState } from '../../../redux/store';

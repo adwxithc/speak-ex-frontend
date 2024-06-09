@@ -1,12 +1,12 @@
 import {  useMemo } from "react"
-import PaginationButtons from "../../../components/ui/PaginationButtons/PaginationButtons"
+import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons"
 import useDataFetcher from "./useDataFetcher"
-import Button from "../../../components/ui/Button/Button"
+import Button from "../../../components/ui/button/Button"
 import { Plus } from "lucide-react"
-import ToolTip from "../../../components/ui/ToolTip/ToolTip"
+import ToolTip from "../../../components/ui/toolTip/ToolTip"
 import { useNavigate } from "react-router-dom"
 import moment from "moment"
-import { Input } from "../../../components/ui/Input/Input"
+import { Input } from "../../../components/ui/input/Input"
 
 
 

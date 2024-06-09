@@ -1,6 +1,6 @@
 
-import Button from "../../../../components/ui/Button/Button"
-import { Input } from "../../../../components/ui/Input/Input"
+import Button from "../../../../components/ui/button/Button"
+import { Input } from "../../../../components/ui/input/Input"
 
 import { MoonLoader } from "react-spinners";
 import { IformValue } from "./CreateCoinPurchasePlanLogic";

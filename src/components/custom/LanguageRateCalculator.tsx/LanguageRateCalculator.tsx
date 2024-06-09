@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect } from "react"
-import { Input } from "../../ui/Input/Input"
+import { Input } from "../../ui/input/Input"
 
 interface ILanguageRateCalculatorProps {
   learnersCount: number,
