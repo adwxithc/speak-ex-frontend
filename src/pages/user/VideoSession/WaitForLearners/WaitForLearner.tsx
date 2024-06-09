@@ -19,6 +19,8 @@ function WaitForLearner() {
   const socket = useSocket()
 
   const handleUserJoin = useCallback(({ userId,startTime }: { userId: string,startTime:string }) => {
+    console.log(userId,'<- this is remote user');
+    if(userId)
     navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'host',startTime } })
   }, [audioEnabled, navigate, sessionId, videoEnabled])
 
