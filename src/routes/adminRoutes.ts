@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import Dashboard from '../pages/admin/Dashboard/Dashboard';
+
 
 const  AdminPrivateRoute = lazy(()=> import('../pages/admin/AdminPrivateRoute.tsx/AdminPrivateRoute')) ;
 // const  Dashboard = lazy(()=> import('../pages/admin/Dashboard/Dashboard')) ;
@@ -25,7 +25,7 @@ const adminRoutes:RouteObject[] = [
                 path: '/admin',
                 Component: AdminHomeLayout,
                 children: [
-                    { index: true, Component: Dashboard },
+                    // { index: true, Component: Dashboard },
                     { path: 'users', Component: Users },
                     { path: 'monetisation', Component: Monetization },
                     { path: 'gold-coins', Component: GoldCoins },
