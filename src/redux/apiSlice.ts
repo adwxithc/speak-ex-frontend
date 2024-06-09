@@ -10,7 +10,7 @@ import { removeCridentials } from './features/user/user/userSlice';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL
 
-const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL });
+const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL, credentials: 'include' });
 
 const baseQueryWithReauth: BaseQueryFn<
     string | FetchArgs,
