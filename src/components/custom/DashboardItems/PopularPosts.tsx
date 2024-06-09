@@ -1,7 +1,7 @@
 import moment from "moment";
 import { IPost } from "../../../types/database"
 import Table, { IColumns } from "../table/Table"
-import Avatar from "../../ui/avatar/Avatar";
+import Avatar from "../../ui/Avatar/Avatar";
 
 function PopularPosts({ posts }: { posts: (IPost & { userData: { firstName: string; lastName: string; profile: string; userName: string; } })[] }) {
 

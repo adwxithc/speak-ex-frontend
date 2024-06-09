@@ -1,5 +1,5 @@
 import { ChangeEvent, useState, useRef, useCallback, Dispatch, SetStateAction } from "react"
-import Avatar from "../../../components/ui/avatar/Avatar"
+import Avatar from "../../../components/ui/Avatar/Avatar"
 import { DotLoader } from 'react-spinners';
 import useUserSearch from "./useUserSearch"
 import { Input } from "../../../components/ui/input/Input"

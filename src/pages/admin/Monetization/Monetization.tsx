@@ -4,7 +4,7 @@ import Table, { IColumns } from "../../../components/custom/table/Table";
 import { useEffect, useState } from "react";
 import Modal from "../../../components/custom/modal/Modal";
 import UserDetails from "../UserDetails.tsx/UserDetails";
-import Avatar from "../../../components/ui/avatar/Avatar";
+import Avatar from "../../../components/ui/Avatar/Avatar";
 import { useGetMonetizationRequestsQuery } from "../../../redux/features/admin/monetization/monetizationApiSlice";
 import moment from "moment";
 import PaginationButtons from "../../../components/ui/paginationButtons/PaginationButtons"

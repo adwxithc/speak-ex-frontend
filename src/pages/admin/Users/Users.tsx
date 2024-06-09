@@ -3,7 +3,7 @@ import PaginationButtons from "../../../components/ui/paginationButtons/Paginati
 import useDataFetcher from "./useDataFetcher"
 import moment from 'moment'
 import Button from "../../../components/ui/button/Button"
-import Avatar from "../../../components/ui/avatar/Avatar"
+import Avatar from "../../../components/ui/Avatar/Avatar"
 import { useUpdateUserMutation } from "../../../redux/features/admin/listUsers/usersListApiSlice"
 
 

@@ -1,6 +1,6 @@
 
 import { useSelector } from 'react-redux';
-import Avatar from '../../../components/ui/avatar/Avatar'
+import Avatar from '../../../components/ui/Avatar/Avatar'
 import Button from '../../../components/ui/button/Button'
 
 import { IExtendedUser } from './FollowAndFollowers'

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import PostWraper from "../../../components/layout/postWraper/PostWraper";
-import Avatar from "../../../components/ui/avatar/Avatar";
+import Avatar from "../../../components/ui/Avatar/Avatar";
 import { PostData } from "./CreatePost"
 import parse from 'html-react-parser';
 import Button from "../../../components/ui/button/Button";

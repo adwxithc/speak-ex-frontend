@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import Avatar from "../../../ui/avatar/Avatar"
+import Avatar from "../../../ui/Avatar/Avatar"
 import { RootState } from "../../../../redux/store"
 import moment from 'moment'
 import { IMessage } from "../../../../types/database";

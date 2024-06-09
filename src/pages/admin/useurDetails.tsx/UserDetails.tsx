@@ -1,5 +1,5 @@
 import { FlameKindling, Star, StarHalf } from "lucide-react"
-import Avatar from "../../../components/ui/avatar/Avatar"
+import Avatar from "../../../components/ui/Avatar/Avatar"
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from "react"
 import { useGetCompleteUserInfoQuery, useUpdateUserMutation } from "../../../redux/features/admin/listUsers/usersListApiSlice"

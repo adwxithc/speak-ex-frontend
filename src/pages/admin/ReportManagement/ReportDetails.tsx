@@ -1,7 +1,7 @@
 
 import Button from "../../../components/ui/button/Button"
 import { IReportWithUsers } from "../../../types/database"
-import Avatar from "../../../components/ui/avatar/Avatar";
+import Avatar from "../../../components/ui/Avatar/Avatar";
 
 interface IReportDetailsProps{
   selectedReport:IReportWithUsers;

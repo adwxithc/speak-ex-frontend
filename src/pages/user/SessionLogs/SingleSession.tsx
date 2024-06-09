@@ -1,5 +1,5 @@
 
-import Avatar from '../../../components/ui/avatar/Avatar'
+import Avatar from '../../../components/ui/Avatar/Avatar'
 import { ArrowDown, ArrowUp, BadgeIndianRupee, Coins } from 'lucide-react'
 import { ISessionDetails } from '../../../types/database'
 import { RootState } from '../../../redux/store'

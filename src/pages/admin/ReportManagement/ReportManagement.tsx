@@ -7,7 +7,7 @@ import PaginationButtons from "../../../components/ui/paginationButtons/Paginati
 import Modal from "../../../components/custom/modal/Modal";
 import ReportDetails from "./ReportDetails";
 import UserDetails from "../UserDetails.tsx/UserDetails";
-import Avatar from "../../../components/ui/avatar/Avatar";
+import Avatar from "../../../components/ui/Avatar/Avatar";
 import { AnimatePresence } from "framer-motion";
 
 

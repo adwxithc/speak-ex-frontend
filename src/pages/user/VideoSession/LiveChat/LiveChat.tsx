@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import Message from '../../../../components/custom/chat/Message/Message'
-import Avatar from '../../../../components/ui/avatar/Avatar'
+import Avatar from '../../../../components/ui/Avatar/Avatar'
 import IUser, { IMessage } from '../../../../types/database'
 import { RootState } from '../../../../redux/store'
 import Button from '../../../../components/ui/button/Button'

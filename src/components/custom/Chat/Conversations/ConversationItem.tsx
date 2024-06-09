@@ -2,7 +2,7 @@
 
 import moment from 'moment'
 import { IChatRoom } from '../../../../types/database'
-import Avatar from '../../../ui/avatar/Avatar'
+import Avatar from '../../../ui/Avatar/Avatar'
 
 
 

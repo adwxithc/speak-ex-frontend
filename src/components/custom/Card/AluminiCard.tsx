@@ -1,4 +1,4 @@
-import Avatar from "../../ui/avatar/Avatar"
+import Avatar from "../../ui/Avatar/Avatar"
 
 
 function AluminiCard() {

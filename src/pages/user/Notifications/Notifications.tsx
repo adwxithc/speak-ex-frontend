@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useCallback, useRef } from "react";
 
-import Avatar from "../../../components/ui/avatar/Avatar";
+import Avatar from "../../../components/ui/Avatar/Avatar";
 import { RootState } from "../../../redux/store";
 import { setNextPage } from "../../../redux/features/user/notification/notificationSlice";
 

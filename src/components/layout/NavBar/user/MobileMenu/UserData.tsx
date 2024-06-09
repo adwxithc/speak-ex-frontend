@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../../redux/store"
-import Avatar from "../../../../ui/avatar/Avatar"
+import Avatar from "../../../../ui/Avatar/Avatar"
 
 function UserData() {
     const { userData } = useSelector((state: RootState) => state.user)

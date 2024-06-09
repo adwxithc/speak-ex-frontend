@@ -1,5 +1,5 @@
 import { Minus, Plus } from "lucide-react"
-import Avatar from "../../../components/ui/avatar/Avatar"
+import Avatar from "../../../components/ui/Avatar/Avatar"
 import Button from "../../../components/ui/button/Button"
 import { useFollowUserMutation, useUnfollowUserMutation } from "../../../redux/features/user/user/userApiSlice";
 import { IPostedUser } from "./usePostDataFetcher";
