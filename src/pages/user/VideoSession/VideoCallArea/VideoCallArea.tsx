@@ -44,6 +44,8 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
     }, [localStream]);
 
     useEffect(() => {
+        console.log('remote stream changed ',remoteStream,remotevideoRef.current);
+        
         if (remotevideoRef.current && remoteStream) {
             remotevideoRef.current.srcObject = remoteStream;
         }
