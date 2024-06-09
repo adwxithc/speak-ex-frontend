@@ -8,7 +8,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { removeCridentials } from './features/user/user/userSlice';
 
-const baseQuery = fetchBaseQuery({ baseUrl: '' });
+const baseQuery = fetchBaseQuery({ baseUrl: process.env.VITE_BACKEND_URL });
 
 const baseQueryWithReauth: BaseQueryFn<
     string | FetchArgs,
