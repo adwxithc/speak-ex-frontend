@@ -59,10 +59,10 @@ function VideoSessionLogic() {
     }, [handleCallUser])
 
     const handleNegoNeeded = useCallback(async () => {
-        if (role.current == 'host') {
-            role.current = 'client'
-            return
-        }
+        // if (role.current == 'host') {
+        //     role.current = 'client'
+        //     return
+        // }
 
         const offer = await peerService.getOffer();
         socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
@@ -89,13 +89,15 @@ function VideoSessionLogic() {
     }, [sessionId, socket])
 
     const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
-
+        console.log('handlePeerNegoNeeded',offer);
+        
         const ans = await peerService.getAnswer(offer)
         socket?.emit('peer:nego-done', { to: from, ans })
     }, [socket])
 
     const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
-
+        console.log('handlePeerNegoFinal',ans);
+        
         await peerService.setRemoteDescription(ans)
     }, [])
 
