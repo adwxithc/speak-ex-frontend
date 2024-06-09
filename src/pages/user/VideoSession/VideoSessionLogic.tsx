@@ -144,14 +144,16 @@ function VideoSessionLogic() {
 
     const handleIncommingCall = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
 
+        console.log('handleIncommingCall',from,'from',userData?.id);
+        
         const ans = await peerService.getAnswer(offer)
 
         setRemoteUserId(from)
-        socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
+        socket?.emit('call:accepted', { ans, to: from, from: userData?.id })
         sendStreams();
 
 
-    }, [remoteUserId, sendStreams, socket, userData?.id])
+    }, [sendStreams, socket, userData?.id])
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
 
