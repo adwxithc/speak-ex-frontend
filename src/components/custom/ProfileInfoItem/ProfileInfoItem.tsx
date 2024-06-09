@@ -36,8 +36,6 @@ function ProfileInfoItem({label, name, Icon,editMode,register,errors,editable}:P
               <p className="truncate text-gray-600">{ userData && userData[name]}</p>
             </div>
             
-        
-        
     </div>
     </div> 
   )

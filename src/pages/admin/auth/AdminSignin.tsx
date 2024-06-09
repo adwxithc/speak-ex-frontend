@@ -10,7 +10,7 @@ function AdminSignin() {
   const navigate = useNavigate()
   useEffect(()=>{
     if(isAuth) navigate('/admin')
-  },[])
+  },[isAuth, navigate])
   const [loading,setLoading] = useState(false)
   return (
     <div>

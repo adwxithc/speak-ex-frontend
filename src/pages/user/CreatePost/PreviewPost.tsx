@@ -8,7 +8,7 @@ import Button from "../../../components/ui/Button/Button";
 
 function PreviewPost({data:{image,title,content},setShowNext}:{data:PostData,setShowNext:Dispatch<SetStateAction<boolean>>}) {
 
-    useEffect(()=>{setShowNext(true)},[])
+    useEffect(()=>{setShowNext(true)},[setShowNext])
 
     
   return (

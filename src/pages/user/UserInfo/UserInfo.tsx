@@ -17,6 +17,7 @@ import AutoCompleteDropDown from "../../../components/ui/AutoCompleteDropDown/Au
 import { ILanguage } from '../../../types/database'
 import Buttton from '../../../components/ui/Button/Button';
 import { ProfileContext } from "../Profile/Profile";
+import { isHttpError } from "../../../utils/isHttpError";
 
 
 
@@ -39,7 +40,8 @@ function UserInfo() {
     defaultValues: {
       firstName: userData?.firstName,
       lastName: userData?.lastName,
-      userName: userData?.userName
+      userName: userData?.userName,
+      email:userData?.email
     },
     mode: 'onChange',
     resolver: zodResolver(schema), // zod resolver for form validation
@@ -63,7 +65,6 @@ function UserInfo() {
         setLanguageList(list)
       } catch (error) {
         toast.error('IInternal server error',{position:'top-center',duration:2000})
-
       }
     }
     fetchData()
@@ -112,7 +113,6 @@ function UserInfo() {
         } else {
           return item
         }
-
       })
       return newList
     })
@@ -134,11 +134,13 @@ function UserInfo() {
 
       dispatch(setCridentials({ ...res.data }))
       
- // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error:any) {
-      const errorInfo = error.data.errors;
-      alert('from server')
-      toast.error(errorInfo[0].message)
+
+    } catch (error) {
+      if(isHttpError(error) && error.status==400){
+        toast.error(error.data.errors[0].message)
+      }else{
+        toast.error('something went wrong')
+      }
 
     }finally{
       setLoading(false)

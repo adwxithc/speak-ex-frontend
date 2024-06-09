@@ -3,19 +3,20 @@ import { ITag } from "../../../types/database"
 import { useGetTagsQuery } from "../../../redux/features/user/post/postApiSlice"
 
 interface IUseGetTags{
-    page:number,
+    
     key:string,
 
 }
 
-function useGetTags({page,key}:IUseGetTags) {
+function useGetTags({key}:IUseGetTags) {
     const [tags, setTags] = useState<ITag[]>([])
     const [hasMore, setHasMore] = useState(false)
+    const[page, setPage] = useState(1)
     const {data:tagData, isLoading,refetch} = useGetTagsQuery({page,key})
     useEffect(()=>{
         setTags(tagData?.data?.tags ||[])
         setHasMore(tagData?.data?.lastPage>page)
-    },[tagData])
+    },[page, tagData])
 
     useEffect(()=>{
         refetch()
@@ -24,7 +25,8 @@ function useGetTags({page,key}:IUseGetTags) {
     tags,
     isLoading,
     setTags,
-    hasMore
+    hasMore,
+    setPage
   }
 }
 

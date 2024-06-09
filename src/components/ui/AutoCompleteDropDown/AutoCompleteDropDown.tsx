@@ -26,7 +26,7 @@ const AutoCompleteDropDown = React.forwardRef<HTMLDivElement, IAutoCompleteDropD
 
     useEffect(()=>{
         setSelected(list.find(item=>item.value==selectedValue)?.label||'')
-    },[selectedValue])
+    },[list, selectedValue])
 
     return (
         <>

@@ -11,12 +11,13 @@ interface ITagInput{
 }
 
 function TagInput({updateFields}:ITagInput) {
-    const[page, setPage] = useState(1)
+   
     const [showSuggesion, serShowSuggesion] = useState(false)
     const [key, setKey] = useState('')
     
     const [text, setText] = useState('')
-    const {isLoading,tags,setTags,hasMore}=useGetTags({key,page})
+
+    const {isLoading,tags,setTags,hasMore, setPage}=useGetTags({key})
 
     const observer = useRef<IntersectionObserver | null>(null)
 
@@ -33,14 +34,14 @@ function TagInput({updateFields}:ITagInput) {
         if(node) observer.current.observe(node)
       
         
-    },[isLoading,hasMore])
+    },[isLoading, hasMore, setPage])
     
 
     const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
         const {value}=  e.target;
         const totalTags = value.split('#')
         const newTag= totalTags[totalTags.length-1]
-        
+        setPage(1)
         
         setText(e.target.value)
         updateFields({tags:e.target.value})

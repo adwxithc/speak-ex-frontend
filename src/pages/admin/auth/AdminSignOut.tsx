@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { RiseLoader } from 'react-spinners'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -16,7 +16,7 @@ function AdminSignOut() {
 
     const navigate= useNavigate()
 
-    const signoutFunc=async()=>{
+    const signoutFunc=useCallback( async()=>{
         try {
             await logout({}).unwrap()
             dispatch(logoutAdmin())
@@ -25,11 +25,11 @@ function AdminSignOut() {
             alert('error')
             console.log(error);  
         }   
-    }
+    },[dispatch, logout, navigate])
 
     useEffect(()=>{
         signoutFunc()
-    },[])
+    },[signoutFunc])
 
   return (
     <div className='relative'>

@@ -42,6 +42,7 @@ export interface IformValue {
     firstName: string;
     lastName: string;
     userName: string;
+    email:string
   }
 
 export function UserInfoSchema() {
