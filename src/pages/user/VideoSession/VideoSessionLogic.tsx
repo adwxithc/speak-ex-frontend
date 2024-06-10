@@ -73,8 +73,6 @@ function VideoSessionLogic() {
     //SETTING REMOTE STREAM
     const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
         const remoteStream = ev.streams;
-        alert('got tracks')
-        console.log(remoteStream[0]);
         
         // const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
         // if (remoteVideo && remoteStream[0]) {
@@ -99,14 +97,14 @@ function VideoSessionLogic() {
     }, [sessionId, socket])
 
     const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
-        console.log('handlePeerNegoNeeded',offer);
+        
         
         const ans = await peerService.getAnswer(offer)
         socket?.emit('peer:nego-done', { to: from, ans })
     }, [socket])
 
     const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
-        console.log('handlePeerNegoFinal',ans);
+ 
         
         await peerService.setRemoteDescription(ans)
     }, [])
@@ -146,7 +144,7 @@ function VideoSessionLogic() {
             stream = await navigator.mediaDevices.getUserMedia({ video, audio })
             setLocalStream(stream)
         }
-        console.log('sending stream');
+       
         
         for (const track of stream.getTracks()) {
             peerService.addTrack(track, stream);
@@ -159,7 +157,7 @@ function VideoSessionLogic() {
 
     const handleIncommingCall = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
 
-        console.log('handleIncommingCall',from,'from',userData?.id);
+       
         
         const ans = await peerService.getAnswer(offer)
 
