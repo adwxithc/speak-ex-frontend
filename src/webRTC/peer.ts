@@ -52,7 +52,7 @@ class PeerService implements IPeerService{
     }
 
     async setRemoteDescription(ans:RTCSessionDescriptionInit){
-        if(!this.peer) return 
+        if(!this.peer || !ans) return 
         try {
             
             
