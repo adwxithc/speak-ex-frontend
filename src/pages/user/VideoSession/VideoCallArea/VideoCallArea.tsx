@@ -50,6 +50,11 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
         // if (remotevideoRef.current && remoteStream) {
         //     remotevideoRef.current.srcObject = remoteStream;
         // }
+        const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
+        if (remoteVideo) {
+            
+            remoteVideo.srcObject = remoteStream;
+        }
        
     }, [remoteStream]);
 

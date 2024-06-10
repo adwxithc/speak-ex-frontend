@@ -22,13 +22,8 @@ class PeerService implements IPeerService{
               },
             ],
           });
-          
-          this.peer.ontrack = (event) => {
-            const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
-            if (remoteVideo) {
-                remoteVideo.srcObject = event.streams[0];
-            }
-        };
+
+        
     }
 
     async getOffer(){
