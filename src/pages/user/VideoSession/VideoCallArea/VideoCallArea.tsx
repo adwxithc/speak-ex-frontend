@@ -41,13 +41,19 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
         if (localvideoRef.current && localStream) {
             localvideoRef.current.srcObject = localStream;
         }
+        
     }, [localStream]);
 
     useEffect(() => {
         console.log('remote stream changed ',remoteStream,remotevideoRef.current);
         
-        if (remotevideoRef.current && remoteStream) {
-            remotevideoRef.current.srcObject = remoteStream;
+        // if (remotevideoRef.current && remoteStream) {
+        //     remotevideoRef.current.srcObject = remoteStream;
+        // }
+        const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
+        if (remoteVideo && remoteStream) {
+            
+            remoteVideo.srcObject = remoteStream;
         }
     }, [remoteStream]);
 
@@ -92,7 +98,7 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
                         {
                             remoteStream ?
 
-                                <video ref={remotevideoRef} autoPlay style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
+                                <video ref={remotevideoRef} id="remoteVideo" autoPlay style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
                                 : <div>oops something went wrong...</div>
                         }
                         <span className="text-white absolute top-5 right-5 bg-[#0000002c] p-1 rounded-full">{remoteStream?.getAudioTracks()[0].enabled ? <Mic /> : <MicOff />}</span>
