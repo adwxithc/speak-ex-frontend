@@ -21,7 +21,7 @@ function VideoSessionLogic() {
     const { userData, wallet } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
-    console.log(localStream,'localStream,',remoteStream,'remoteStream');
+    console.log(localStream?.getAudioTracks(),'localStream,',remoteStream?.getAudioTracks(),'remoteStream');
     
 
     const location = useLocation();
