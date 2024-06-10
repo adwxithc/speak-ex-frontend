@@ -51,10 +51,11 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
         //     remotevideoRef.current.srcObject = remoteStream;
         // }
         const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
-        if (remoteVideo && remoteStream) {
+        if (remoteVideo) {
             
             remoteVideo.srcObject = remoteStream;
         }
+       
     }, [remoteStream]);
 
     const toggleVideo = () => {

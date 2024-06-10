@@ -73,6 +73,11 @@ function VideoSessionLogic() {
     //SETTING REMOTE STREAM
     const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
         const remoteStream = ev.streams;
+        // const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
+        // if (remoteVideo && remoteStream[0]) {
+            
+        //     remoteVideo.srcObject = remoteStream[0];
+        // }
         setRemoteStream(remoteStream[0]);
     }, [])
 
