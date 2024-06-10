@@ -201,20 +201,49 @@ function VideoSessionLogic() {
         };
     }, [handlePeerDisconnect]);
 
+    const handleIceCandidate = useCallback((event: RTCPeerConnectionIceEvent) => {
+        if (event.candidate && remoteUserId) {
+            console.log("New ICE candidate:", event.candidate);
+            socket?.emit('peer:ice-candidate', { candidate: event.candidate, to: remoteUserId,from: userData?.id });
 
+        }
+    }, [remoteUserId, socket, userData?.id])
+
+    const handleIncommingIceC = useCallback(({ candidate,from }: { candidate: RTCIceCandidate,from:string }) => {
+        console.log('from handleIncommingIceC',candidate,from);
+   
+        
+        const pc = peerService.getPeerConnection();
+        if (pc) {
+            pc.addIceCandidate(new RTCIceCandidate(candidate))
+                .then(() => {
+                    console.log("ICE candidate added successfully");
+                    setRemoteUserId(from)
+                })
+                .catch(error => {
+                    console.error("Error adding received ICE candidate", error);
+                });
+        }
+
+
+    }, [])
     useEffect(() => {
         peerService.getPeerConnection()?.addEventListener('negotiationneeded', handleNegoNeeded)
         peerService.getPeerConnection()?.addEventListener('track', handleAddTrack)
+        peerService.getPeerConnection()?.addEventListener('icecandidate', handleIceCandidate)
+
         window.addEventListener('unload', handleWindowUnload)
 
 
         return () => {
             peerService.getPeerConnection()?.removeEventListener('negotiationneeded', handleNegoNeeded)
             peerService.getPeerConnection()?.removeEventListener('track', handleAddTrack)
+            peerService.getPeerConnection()?.removeEventListener('icecandidate', handleIceCandidate)
+
             window.removeEventListener('unload', handleWindowUnload)
 
         }
-    }, [handleAddTrack, handleNegoNeeded, handleWindowUnload])
+    }, [handleAddTrack, handleIceCandidate, handleNegoNeeded, handleWindowUnload])
 
 
     useEffect(() => {
@@ -224,14 +253,18 @@ function VideoSessionLogic() {
         socket?.on('peer:nego-needed', handlePeerNegoNeeded)
         socket?.on('peer:nego-final', handlePeerNegoFinal)
         socket?.on('session:terminate', handleTermination)
+        peerService.getPeerConnection()?.addEventListener('icecandidate', handleIceCandidate)
+
         return () => {
 
             socket?.off('incomming:call', handleIncommingCall)
             socket?.off('call:accepted', handleCallAccepted)
             socket?.off('peer:nego-needed', handlePeerNegoNeeded)
             socket?.off('peer:nego-final', handlePeerNegoFinal)
+            socket?.off('peer:ice-candidate', handleIncommingIceC)
+
         }
-    }, [handleCallAccepted, handleIncommingCall, handlePeerNegoFinal, handlePeerNegoNeeded, handleTermination, socket])
+    }, [handleCallAccepted, handleIceCandidate, handleIncommingCall, handleIncommingIceC, handlePeerNegoFinal, handlePeerNegoNeeded, handleTermination, socket])
 
 
     return (
