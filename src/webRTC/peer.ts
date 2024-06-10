@@ -25,18 +25,29 @@ class PeerService implements IPeerService{
     }
 
     async getOffer(){
+       try {
         if(!this.peer) return
         const offer = await this.peer.createOffer()
         await this.peer.setLocalDescription( new RTCSessionDescription(offer))
         return offer;
+       } catch (error) {
+        console.log('error generation offer');
+        
+       }
     }
 
     async getAnswer(offer:RTCSessionDescriptionInit){
+      try {
         if(!this.peer) return 
         await this.peer.setRemoteDescription(offer)
         const ans = await this.peer.createAnswer()
         await this.peer.setLocalDescription( new RTCSessionDescription(ans))
         return ans
+      } catch (error) {
+        console.log('error creating answer');
+        
+      }
+        
 
     }
 
