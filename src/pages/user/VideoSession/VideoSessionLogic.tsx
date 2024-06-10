@@ -138,7 +138,8 @@ function VideoSessionLogic() {
             stream = await navigator.mediaDevices.getUserMedia({ video, audio })
             setLocalStream(stream)
         }
-
+        console.log('sending stream');
+        
         for (const track of stream.getTracks()) {
             peerService.addTrack(track, stream);
         }
