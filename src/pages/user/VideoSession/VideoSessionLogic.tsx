@@ -21,8 +21,6 @@ function VideoSessionLogic() {
     const { userData, wallet } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
-    console.log(localStream?.getAudioTracks(), 'localStream,', remoteStream?.getAudioTracks(), 'remoteStream');
-
 
     const location = useLocation();
     const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type, startTime, isMonetized } = location.state;
@@ -41,44 +39,44 @@ function VideoSessionLogic() {
     //HANDLE VOLATILE CHAT DURING VIDEO SESSION
     const { handleSendMessage, messages } = useLiveChat(data?.data);
 
+    useEffect(() => {
+        const getLocalStream = async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: audio,
+                video: video
+            })
+            setLocalStream(stream)
+            for (const track of stream.getTracks()) {
+                peerService.addTrack(track, stream);
+            }
+        }
+        getLocalStream()
+    }, [audio, video])
+
+
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: audio,
-            video: video
-        })
-        setLocalStream(stream)
 
         const offer = await peerService.getOffer()
 
         socket?.emit('session:call-user', { from: userData?.id, to: remoteUserId, offer })
 
-    }, [audio, socket, userData?.id, video])
+    }, [socket, userData?.id])
 
     const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
         handleCallUser({ remoteUserId: userId })
     }, [handleCallUser])
 
-    const handleNegoNeeded = useCallback(async () => {
+    const handleNegoNeeded= useCallback(async () => {
         if (role.current == 'host') {
-            role.current = 'client'
             return
-            // console.log('handleNegoNeeded by host');
-
         }
-
-        const offer = await peerService.getOffer();
-        socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
-    }, [remoteUserId, socket, userData?.id])
+    
+        handleCallUser({remoteUserId})
+    }, [handleCallUser, remoteUserId])
 
     //SETTING REMOTE STREAM
     const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
         const remoteStream = ev.streams;
-
-        // const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
-        // if (remoteVideo && remoteStream[0]) {
-
-        //     remoteVideo.srcObject = remoteStream[0];
-        // }
         setRemoteStream(remoteStream[0]);
     }, [])
 
@@ -96,18 +94,9 @@ function VideoSessionLogic() {
         }
     }, [sessionId, socket])
 
-    const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
+ 
 
 
-        const ans = await peerService.getAnswer(offer)
-        socket?.emit('peer:nego-done', { to: from, ans })
-    }, [socket])
-
-    const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
-
-
-        await peerService.setRemoteDescription(ans)
-    }, [])
 
 
     const handleTermination = useCallback(({ coinExchange }: { coinExchange: number }) => {
@@ -136,45 +125,22 @@ function VideoSessionLogic() {
     }, [dispatch, isMonetized, localStream, navigate, remoteStream, sessionId, type, wallet])
 
 
-    const sendStreams = useCallback(async () => {
-        let stream = null
-        if (localStream) {
-            stream = localStream
-        } else {
-            stream = await navigator.mediaDevices.getUserMedia({ video, audio })
-            setLocalStream(stream)
-        }
-
-
-        for (const track of stream.getTracks()) {
-            peerService.addTrack(track, stream);
-        }
-
-        setLocalStream(stream)
-
-    }, [audio, localStream, video]);
-
 
     const handleIncommingCall = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
-
-
-
+     
         const ans = await peerService.getAnswer(offer)
 
         setRemoteUserId(from)
-        socket?.emit('call:accepted', { ans, to: from, from: userData?.id })
-        sendStreams();
+        socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
 
-
-    }, [sendStreams, socket, userData?.id])
+    }, [remoteUserId, socket, userData?.id])
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
 
 
         peerService.setRemoteDescription(ans)
-        sendStreams()
 
-    }, [sendStreams])
+    }, [])
 
 
     useEffect(() => {
@@ -201,16 +167,14 @@ function VideoSessionLogic() {
 
     const handleIceCandidate = useCallback((event: RTCPeerConnectionIceEvent) => {
         if (event.candidate && remoteUserId) {
-            console.log("New ICE candidate:", event.candidate);
+           
             socket?.emit('peer:ice-candidate', { candidate: event.candidate, to: remoteUserId, from: userData?.id });
 
         }
     }, [remoteUserId, socket, userData?.id])
 
     const handleIncommingIceC = useCallback(({ candidate, from }: { candidate: RTCIceCandidate, from: string }) => {
-        console.log('from handleIncommingIceC', candidate, from);
-
-
+      
         const pc = peerService.getPeerConnection();
         if (pc) {
             pc.addIceCandidate(new RTCIceCandidate(candidate))
@@ -225,11 +189,12 @@ function VideoSessionLogic() {
 
 
     }, [])
+
+
     useEffect(() => {
         peerService.getPeerConnection()?.addEventListener('negotiationneeded', handleNegoNeeded)
         peerService.getPeerConnection()?.addEventListener('track', handleAddTrack)
         peerService.getPeerConnection()?.addEventListener('icecandidate', handleIceCandidate)
-
         window.addEventListener('unload', handleWindowUnload)
 
 
@@ -248,24 +213,20 @@ function VideoSessionLogic() {
 
         socket?.on('incomming:call', handleIncommingCall)
         socket?.on('call:accepted', handleCallAccepted)
-        socket?.on('peer:nego-needed', handlePeerNegoNeeded)
-        socket?.on('peer:nego-final', handlePeerNegoFinal)
+    
         socket?.on('session:terminate', handleTermination)
         socket?.on('peer:ice-candidate', handleIncommingIceC)
-
-
         return () => {
 
             socket?.off('incomming:call', handleIncommingCall)
             socket?.off('call:accepted', handleCallAccepted)
-            socket?.off('peer:nego-needed', handlePeerNegoNeeded)
-            socket?.off('peer:nego-final', handlePeerNegoFinal)
+
             socket?.off('session:terminate', handleTermination)
+
             socket?.off('peer:ice-candidate', handleIncommingIceC)
 
-
         }
-    }, [handleCallAccepted, handleIceCandidate, handleIncommingCall, handleIncommingIceC, handlePeerNegoFinal, handlePeerNegoNeeded, handleTermination, socket])
+    }, [handleCallAccepted, handleIncommingCall, handleIncommingIceC, handleTermination, socket])
 
 
     return (
