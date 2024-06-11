@@ -99,18 +99,18 @@ function VideoSessionLogic() {
         }
     }, [sessionId, socket])
 
-    const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
+    // const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
 
 
-        const ans = await peerService.getAnswer(offer)
-        socket?.emit('peer:nego-done', { to: from, ans })
-    }, [socket])
+    //     const ans = await peerService.getAnswer(offer)
+    //     socket?.emit('peer:nego-done', { to: from, ans })
+    // }, [socket])
 
-    const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
+    // const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
 
 
-        await peerService.setRemoteDescription(ans)
-    }, [])
+    //     await peerService.setRemoteDescription(ans)
+    // }, [])
 
 
     const handleTermination = useCallback(({ coinExchange }: { coinExchange: number }) => {
@@ -251,8 +251,8 @@ function VideoSessionLogic() {
 
         socket?.on('incomming:call', handleIncommingCall)
         socket?.on('call:accepted', handleCallAccepted)
-        socket?.on('peer:nego-needed', handlePeerNegoNeeded)
-        socket?.on('peer:nego-final', handlePeerNegoFinal)
+        // socket?.on('peer:nego-needed', handlePeerNegoNeeded)
+        // socket?.on('peer:nego-final', handlePeerNegoFinal)
         socket?.on('session:terminate', handleTermination)
         socket?.on('peer:ice-candidate', handleIncommingIceC)
 
@@ -261,14 +261,14 @@ function VideoSessionLogic() {
 
             socket?.off('incomming:call', handleIncommingCall)
             socket?.off('call:accepted', handleCallAccepted)
-            socket?.off('peer:nego-needed', handlePeerNegoNeeded)
-            socket?.off('peer:nego-final', handlePeerNegoFinal)
+            // socket?.off('peer:nego-needed', handlePeerNegoNeeded)
+            // socket?.off('peer:nego-final', handlePeerNegoFinal)
             socket?.off('session:terminate', handleTermination)
             socket?.off('peer:ice-candidate', handleIncommingIceC)
 
 
         }
-    }, [handleCallAccepted, handleIceCandidate, handleIncommingCall, handleIncommingIceC, handlePeerNegoFinal, handlePeerNegoNeeded, handleTermination, socket])
+    }, [handleCallAccepted, handleIceCandidate, handleIncommingCall, handleIncommingIceC, handleTermination, socket])
 
 
     return (
