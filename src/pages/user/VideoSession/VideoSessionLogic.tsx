@@ -61,13 +61,13 @@ function VideoSessionLogic() {
         if (role.current == 'host') {
             // role.current = 'client'
             // return
-            handleCallUser()
+            handleCallUser({remoteUserId})
 
         }
 
         // const offer = await peerService.getOffer();
         // socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
-    }, [handleCallUser])
+    }, [handleCallUser, remoteUserId])
 
     //SETTING REMOTE STREAM
     const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
