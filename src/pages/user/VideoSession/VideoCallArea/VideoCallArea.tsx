@@ -124,7 +124,7 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
 
             </div>
             {/* bottom area */}
-            <div className="h-20 bg-white dark:bg-[#0e1c34] flex justify-center items-center" >
+            <div className="h-20 bg-white dark:bg-[#0e1c34] flex justify-center items-center relative" >
                 <div className="flex gap-5 items-center">
                     <Button onClick={toggleAudio} >
 
