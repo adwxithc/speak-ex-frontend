@@ -1,4 +1,4 @@
-import { MessageSquareText, Mic, MicOff, PhoneOff, Video, VideoOff } from "lucide-react"
+import { MessageSquareText, Mic, MicOff, PhoneOff} from "lucide-react"
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../../redux/store"
 import IUser from "../../../../types/database"
 import SessionDuration from "../SessionDuration/SessionDuration"
+import VideoButton from "../Media/VideoButton"
 
 
 
@@ -18,10 +19,12 @@ interface IVideoCallArea {
     remoteStream: MediaStream | null;
     setChating: Dispatch<SetStateAction<boolean>>
     remoteUser: Required<IUser> | null
-    startTime: number
+    startTime: number;
+    changeVideoDevice: (deviceId: string) => Promise<void>
+
 }
 
-function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, startTime }: IVideoCallArea) {
+function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, startTime, changeVideoDevice }: IVideoCallArea) {
   
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
@@ -130,14 +133,7 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
                             : <span className=" dark:bg-red-500 text-white p-2 rounded-full cursor-pointer "><MicOff /></span>
                         }
                     </Button>
-                    <Button onClick={toggleVideo} >
-                        {
-                            videoEnabled ?
-                                <span className="dark:bg-white p-2 rounded-full cursor-pointer"><Video /> </span>
-                                :
-                                <span className="dark:bg-red-600 text-white p-2 rounded-full cursor-pointer"><VideoOff /> </span>
-                        }
-                    </Button>
+                    <VideoButton {...{changeVideoDevice,toggleVideo,videoEnabled}} />
                     <Button onClick={terminate} className="bg-red-500 text-white " size={'md'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
                     <Button onClick={() => setChating(true)}><span className="dark:bg-white p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
                 </div>

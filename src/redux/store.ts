@@ -3,7 +3,7 @@ import userReducer from './features/user/user/userSlice';
 import adminReducer from './features/admin/auth/adminSlice';
 import coinPurchaseReducer from './features/user/coinPurchase/coinPurchaseSlice'
 import notificationReducer from './features/user/notification/notificationSlice'
-
+import sessionReducer from './features/user/session/sessionSlice'
 import {apiSlice} from './apiSlice'
 
 
@@ -14,6 +14,7 @@ const store = configureStore({
         admin:adminReducer,
         coinPurchase:coinPurchaseReducer,
         notification:notificationReducer,
+        session:sessionReducer,
         [apiSlice.reducerPath]:apiSlice.reducer,
         
         

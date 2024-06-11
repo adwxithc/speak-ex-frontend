@@ -10,12 +10,16 @@ import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileAp
 import useLiveChat from "./LiveChat/useLiveChat";
 import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler";
 import { setWallet } from "../../../redux/features/user/user/userSlice";
+import { setSession } from "../../../redux/features/user/session/sessionSlice";
 
 
 
 
 
 function VideoSessionLogic() {
+
+    const { audioDevice } = useSelector((state: RootState) => state.session)
+
 
     const socket = useSocket()
     const { userData, wallet } = useSelector((state: RootState) => state.user)
@@ -39,6 +43,45 @@ function VideoSessionLogic() {
 
     //HANDLE VOLATILE CHAT DURING VIDEO SESSION
     const { handleSendMessage, messages } = useLiveChat(data?.data);
+
+    const changeVideoDevice = async (deviceId: string) => {
+
+
+
+        //2. we need to getUserMedia (permission)
+        const newConstraints = {
+            audio: audioDevice === "default" ? true : { deviceId: { exact: audioDevice } },
+            video: { deviceId: { exact: deviceId } }
+        }
+        const stream = await navigator.mediaDevices.getUserMedia(newConstraints)
+        // //3. update Redux with that videoDevice, and that video is enabled
+        dispatch(setSession({ 'videoDevice': deviceId }));
+        dispatch(setSession({ 'video': true }))
+
+
+        setLocalStream(stream)
+        //6. add tracks
+        const [videoTrack] = stream.getVideoTracks();
+        
+        const pc = peerService.getPeerConnection();
+        if (!pc) return
+        const senders = pc.getSenders()
+        //find the sender that is in charge of the video track
+        const sender = senders.find(s => {
+            if (s.track) {
+                //if this track matches the videoTrack kind, return it
+                return s.track.kind === videoTrack.kind
+            } else {
+                return false;
+            }
+        })
+        if (sender) {
+            //sender is RTCRtpSender, so it can replace the track
+            sender.replaceTrack(videoTrack)
+        }
+
+    }
+
 
     useEffect(() => {
         const getLocalStream = async () => {
@@ -258,7 +301,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime() }} />
+        <VideoSession {...{ localStream, remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime(), changeVideoDevice }} />
     )
 }
 export default VideoSessionLogic
