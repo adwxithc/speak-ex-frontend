@@ -21,7 +21,6 @@ function VideoSessionLogic() {
     const { userData, wallet } = useSelector((state: RootState) => state.user)
     const [localStream, setLocalStream] = useState<MediaStream | null>(null)
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
-    console.log(localStream?.getAudioTracks(), 'localStream,', remoteStream?.getAudioTracks(), 'remoteStream');
 
 
     const location = useLocation();
@@ -60,25 +59,20 @@ function VideoSessionLogic() {
 
     const handleNegoNeeded = useCallback(async () => {
         if (role.current == 'host') {
-            role.current = 'client'
-            return
-            // console.log('handleNegoNeeded by host');
+            // role.current = 'client'
+            // return
+            handleCallUser()
 
         }
 
-        const offer = await peerService.getOffer();
-        socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
-    }, [remoteUserId, socket, userData?.id])
+        // const offer = await peerService.getOffer();
+        // socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
+    }, [handleCallUser])
 
     //SETTING REMOTE STREAM
     const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
         const remoteStream = ev.streams;
 
-        // const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
-        // if (remoteVideo && remoteStream[0]) {
-
-        //     remoteVideo.srcObject = remoteStream[0];
-        // }
         setRemoteStream(remoteStream[0]);
     }, [])
 
@@ -201,21 +195,21 @@ function VideoSessionLogic() {
 
     const handleIceCandidate = useCallback((event: RTCPeerConnectionIceEvent) => {
         if (event.candidate && remoteUserId) {
-            console.log("New ICE candidate:", event.candidate);
+         
             socket?.emit('peer:ice-candidate', { candidate: event.candidate, to: remoteUserId, from: userData?.id });
 
         }
     }, [remoteUserId, socket, userData?.id])
 
     const handleIncommingIceC = useCallback(({ candidate, from }: { candidate: RTCIceCandidate, from: string }) => {
-        console.log('from handleIncommingIceC', candidate, from);
+      
 
 
         const pc = peerService.getPeerConnection();
         if (pc) {
             pc.addIceCandidate(new RTCIceCandidate(candidate))
                 .then(() => {
-                    console.log("ICE candidate added successfully");
+                  
                     setRemoteUserId(from)
                 })
                 .catch(error => {
