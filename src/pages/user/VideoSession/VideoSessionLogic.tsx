@@ -46,7 +46,10 @@ function VideoSessionLogic() {
                 audio: audio,
                 video: video
             })
+            
             setLocalStream(stream)
+            const remoteStream = new MediaStream()
+            setRemoteStream(remoteStream)
             for (const track of stream.getTracks()) {
                 peerService.addTrack(track, stream);
             }
@@ -54,8 +57,7 @@ function VideoSessionLogic() {
         getLocalStream()
     }, [audio, video])
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
-      
-
+    
         const offer = await peerService.getOffer()
 
         socket?.emit('session:call-user', { from: userData?.id, to: remoteUserId, offer })
@@ -68,14 +70,9 @@ function VideoSessionLogic() {
 
     const handleNegoNeeded = useCallback(async () => {
         if (role.current == 'host') {
-            // role.current = 'client'
-            // return
             handleCallUser({remoteUserId})
-
         }
 
-        // const offer = await peerService.getOffer();
-        // socket?.emit('peer:nego-needed', { offer, to: remoteUserId, from: userData?.id })
     }, [handleCallUser, remoteUserId])
 
     //SETTING REMOTE STREAM
@@ -99,18 +96,7 @@ function VideoSessionLogic() {
         }
     }, [sessionId, socket])
 
-    // const handlePeerNegoNeeded = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
 
-
-    //     const ans = await peerService.getAnswer(offer)
-    //     socket?.emit('peer:nego-done', { to: from, ans })
-    // }, [socket])
-
-    // const handlePeerNegoFinal = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
-
-
-    //     await peerService.setRemoteDescription(ans)
-    // }, [])
 
 
     const handleTermination = useCallback(({ coinExchange }: { coinExchange: number }) => {

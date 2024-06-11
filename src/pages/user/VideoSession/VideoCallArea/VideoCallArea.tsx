@@ -100,7 +100,7 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
                                 <video ref={remotevideoRef} id="remoteVideo" autoPlay style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
                                 : <div>oops something went wrong...</div>
                         }
-                        <span className="text-white absolute top-5 right-5 bg-[#0000002c] p-1 rounded-full">{remoteStream?.getAudioTracks()[0].enabled ? <Mic /> : <MicOff />}</span>
+                        <span className="text-white absolute top-5 right-5 bg-[#0000002c] p-1 rounded-full">{remoteStream?.getAudioTracks()[0]?.enabled ? <Mic /> : <MicOff />}</span>
                         <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute bottom-5 left-5 text-sm font-semibold"> {remoteUser?.firstName + " " + remoteUser?.lastName}</span>
                         <span className="bg-[#0000002c] text-white px-4 py-2 rounded-full absolute top-5 left-5 text-sm font-semibold"> <SessionDuration  {...{ terminate, startTime }} /> </span>
 
