@@ -40,18 +40,27 @@ function VideoSessionLogic() {
     //HANDLE VOLATILE CHAT DURING VIDEO SESSION
     const { handleSendMessage, messages } = useLiveChat(data?.data);
 
+    useEffect(() => {
+        const getLocalStream = async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: audio,
+                video: video
+            })
+            setLocalStream(stream)
+            for (const track of stream.getTracks()) {
+                peerService.addTrack(track, stream);
+            }
+        }
+        getLocalStream()
+    }, [audio, video])
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: audio,
-            video: video
-        })
-        setLocalStream(stream)
+      
 
         const offer = await peerService.getOffer()
 
         socket?.emit('session:call-user', { from: userData?.id, to: remoteUserId, offer })
 
-    }, [audio, socket, userData?.id, video])
+    }, [socket, userData?.id])
 
     const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
         handleCallUser({ remoteUserId: userId })
@@ -130,23 +139,23 @@ function VideoSessionLogic() {
     }, [dispatch, isMonetized, localStream, navigate, remoteStream, sessionId, type, wallet])
 
 
-    const sendStreams = useCallback(async () => {
-        let stream = null
-        if (localStream) {
-            stream = localStream
-        } else {
-            stream = await navigator.mediaDevices.getUserMedia({ video, audio })
-            setLocalStream(stream)
-        }
+    // const sendStreams = useCallback(async () => {
+    //     let stream = null
+    //     if (localStream) {
+    //         stream = localStream
+    //     } else {
+    //         stream = await navigator.mediaDevices.getUserMedia({ video, audio })
+    //         setLocalStream(stream)
+    //     }
 
 
-        for (const track of stream.getTracks()) {
-            peerService.addTrack(track, stream);
-        }
+    //     for (const track of stream.getTracks()) {
+    //         peerService.addTrack(track, stream);
+    //     }
 
-        setLocalStream(stream)
+    //     setLocalStream(stream)
 
-    }, [audio, localStream, video]);
+    // }, [audio, localStream, video]);
 
 
     const handleIncommingCall = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
@@ -157,18 +166,18 @@ function VideoSessionLogic() {
 
         setRemoteUserId(from)
         socket?.emit('call:accepted', { ans, to: from, from: userData?.id })
-        sendStreams();
+        // sendStreams();
 
 
-    }, [sendStreams, socket, userData?.id])
+    }, [ socket, userData?.id])
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
 
 
         peerService.setRemoteDescription(ans)
-        sendStreams()
+        // sendStreams()
 
-    }, [sendStreams])
+    }, [])
 
 
     useEffect(() => {
