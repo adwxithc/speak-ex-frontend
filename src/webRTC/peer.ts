@@ -46,7 +46,7 @@ class PeerService implements IPeerService{
         await this.peer.setLocalDescription( new RTCSessionDescription(ans))
         return ans
       } catch (error) {
-        console.log('error creating answer');
+        console.log('error creating answer',error);
         
       }
         
