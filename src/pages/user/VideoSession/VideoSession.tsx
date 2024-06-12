@@ -6,17 +6,18 @@ import IUser, { IMessage } from "../../../types/database";
 import { AnimatePresence } from "framer-motion";
 
 interface IVideoSessionProps {
-  localStream: MediaStream | null,
+
   remoteStream: MediaStream | null,
   remoteUser: Required<IUser> | null
   messages: IMessage[],
   handleSendMessage: (text: string, cb: () => void) => Promise<void>
   startTime: number;
   changeVideoDevice: (deviceId: string) => Promise<void>
+
 }
 
 
-export default function VideoSession({ localStream, remoteStream, remoteUser, handleSendMessage, messages, startTime,changeVideoDevice }: IVideoSessionProps) {
+export default function VideoSession({ remoteStream, remoteUser, handleSendMessage, messages, startTime, changeVideoDevice }: IVideoSessionProps) {
 
   const [isMobile, setIsMobile] = useState(true);
   const [chating, setChating] = useState(false)
@@ -52,14 +53,14 @@ export default function VideoSession({ localStream, remoteStream, remoteUser, ha
             )
               : (
                 <div className="flex-1">
-                  <VideoCallArea {...{ localStream, remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
+                  <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
                 </div>
               )
           )
             : (
               <>
                 <div className="flex-1">
-                  <VideoCallArea {...{ localStream, remoteStream, setChating, remoteUser, startTime , changeVideoDevice}} />
+                  <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
                 </div>
 
                 <div className="w-96 border-l dark:border-l-[#091220]">

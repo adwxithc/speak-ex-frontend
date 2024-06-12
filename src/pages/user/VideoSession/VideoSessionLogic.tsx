@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { RootState } from "../../../redux/store";
 import { useSocket } from "../../../context/SocketProvider";
-import peerService from '../../../webRTC/peer'
 import VideoSession from "./VideoSession";
 import { useGetUserByIdQuery } from "../../../redux/features/user/user/profileApiSlice";
 import useLiveChat from "./LiveChat/useLiveChat";
+import { setSession } from "../../../redux/features/user/session/sessionSlice";
+import getPeerConnection, { resetPeerConnection } from "../../../webRTC/peer";
 import endPeerConnectionHandler from "../../../webRTC/endPeerConnectionHandler";
 import { setWallet } from "../../../redux/features/user/user/userSlice";
-import { setSession } from "../../../redux/features/user/session/sessionSlice";
 
 
 
@@ -18,35 +18,32 @@ import { setSession } from "../../../redux/features/user/session/sessionSlice";
 
 function VideoSessionLogic() {
 
-    const { audioDevice } = useSelector((state: RootState) => state.session)
-
-
     const socket = useSocket()
     const { userData, wallet } = useSelector((state: RootState) => state.user)
-    const [localStream, setLocalStream] = useState<MediaStream | null>(null)
+ 
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
-
+    const [negoneeded, setNegoneeded] = useState(false)
+    const [clientReady, setClientReady] = useState(false)
 
     const location = useLocation();
-    const { remoteUserId: remoteUserIdFromLink, audioEnabled: audio, videoEnabled: video, type, startTime, isMonetized } = location.state;
-    const [remoteUserId, setRemoteUserId] = useState(remoteUserIdFromLink)
+    const { remoteUserId, type, startTime, isMonetized } = location.state;
+
 
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { sessionId = '' } = useParams()
 
-
-    const role = useRef(type)
     const { data } = useGetUserByIdQuery({ userId: remoteUserId })
 
 
     //HANDLE VOLATILE CHAT DURING VIDEO SESSION
     const { handleSendMessage, messages } = useLiveChat(data?.data);
 
+    const { audioDevice } = useSelector((state: RootState) => state.session)
+
+
     const changeVideoDevice = async (deviceId: string) => {
-
-
 
         //2. we need to getUserMedia (permission)
         const newConstraints = {
@@ -59,11 +56,12 @@ function VideoSessionLogic() {
         dispatch(setSession({ 'video': true }))
 
 
-        setLocalStream(stream)
+        
         //6. add tracks
         const [videoTrack] = stream.getVideoTracks();
-        
-        const pc = peerService.getPeerConnection();
+        const peerConnection = getPeerConnection()
+
+        const pc = peerConnection.getPeerConnection();
         if (!pc) return
         const senders = pc.getSenders()
         //find the sender that is in charge of the video track
@@ -77,46 +75,48 @@ function VideoSessionLogic() {
         })
         if (sender) {
             //sender is RTCRtpSender, so it can replace the track
+            
             sender.replaceTrack(videoTrack)
-        }
 
+        }
     }
 
 
-    useEffect(() => {
-        const getLocalStream = async () => {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                audio: audio,
-                video: video
-            })
-            
-            setLocalStream(stream)
-            const remoteStream = new MediaStream()
-            setRemoteStream(remoteStream)
-            for (const track of stream.getTracks()) {
-                peerService.addTrack(track, stream);
-            }
-        }
-        getLocalStream()
-    }, [audio, video])
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
-    
-        const offer = await peerService.getOffer()
+        const peerConnection = getPeerConnection()
+
+        if (!peerConnection) return
+
+        const offer = await peerConnection.getOffer()
 
         socket?.emit('session:call-user', { from: userData?.id, to: remoteUserId, offer })
 
     }, [socket, userData?.id])
 
-    const handleUserJoin = useCallback(({ userId }: { userId: string }) => {
-        handleCallUser({ remoteUserId: userId })
-    }, [handleCallUser])
 
     const handleNegoNeeded = useCallback(async () => {
-        if (role.current == 'host') {
-            handleCallUser({remoteUserId})
-        }
+        setNegoneeded(true)
+    }, [])
 
-    }, [handleCallUser, remoteUserId])
+    console.log(negoneeded, clientReady, 'negoneeded,clientReady,');
+
+    useEffect(() => {
+        if (negoneeded && clientReady) {
+            handleCallUser({ remoteUserId })
+            setNegoneeded(false)
+        }
+    }, [clientReady, dispatch, handleCallUser, negoneeded, remoteUserId])
+
+    useEffect(() => {
+
+        socket?.emit('session:client-ready', { sessionCode: sessionId, role: type, to: remoteUserId })
+
+    }, [dispatch, remoteUserId, sessionId, socket, type])
+
+    const handleClientReady = useCallback(() => {
+
+        setClientReady(true)
+    }, [])
 
     //SETTING REMOTE STREAM
     const handleAddTrack = useCallback((ev: RTCTrackEvent) => {
@@ -130,7 +130,7 @@ function VideoSessionLogic() {
     }, [sessionId, socket])
 
     const handlePeerDisconnect = useCallback(() => {
-        const pc = peerService.getPeerConnection();
+        const pc = getPeerConnection().getPeerConnection();
         if (!pc) return
         const connectionState = pc.iceConnectionState;
         if (connectionState === 'disconnected' || connectionState === 'failed') {
@@ -141,11 +141,11 @@ function VideoSessionLogic() {
 
 
 
-
     const handleTermination = useCallback(({ coinExchange }: { coinExchange: number }) => {
-
-        endPeerConnectionHandler({ localStream, peerService: peerService, remoteStream })
-        if (type == 'host') {
+        const pc =getPeerConnection()
+        endPeerConnectionHandler({ localStream:pc.getLocalStream(), peerService:pc, remoteStream })
+        resetPeerConnection()
+        if (type == 'helper') {
 
             if (isMonetized) {
                 dispatch(setWallet({ money: (wallet?.money || 0) + coinExchange }))
@@ -165,143 +165,97 @@ function VideoSessionLogic() {
             }
 
         }
-    }, [dispatch, isMonetized, localStream, navigate, remoteStream, sessionId, type, wallet])
+    }, [dispatch, isMonetized, navigate, remoteStream, sessionId, type, wallet])
 
-
-    // const sendStreams = useCallback(async () => {
-    //     let stream = null
-    //     if (localStream) {
-    //         stream = localStream
-    //     } else {
-    //         stream = await navigator.mediaDevices.getUserMedia({ video, audio })
-    //         setLocalStream(stream)
-    //     }
-
-
-    //     for (const track of stream.getTracks()) {
-    //         peerService.addTrack(track, stream);
-    //     }
-
-    //     setLocalStream(stream)
-
-    // }, [audio, localStream, video]);
 
 
     const handleIncommingCall = useCallback(async ({ from, offer }: { from: string, offer: RTCSessionDescriptionInit }) => {
 
+        const peerConnection = getPeerConnection()
 
+        if (!peerConnection) return
+        const ans = await peerConnection.getAnswer(offer)
 
-        const ans = await peerService.getAnswer(offer)
+        dispatch(setSession({ remoteUserId: from }))
+        socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
 
-        setRemoteUserId(from)
-        socket?.emit('call:accepted', { ans, to: from, from: userData?.id })
-        // sendStreams();
-
-
-    }, [ socket, userData?.id])
+    }, [dispatch, remoteUserId, socket, userData?.id])
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
+        console.log('handleCallAccepted');
+
+        const peerConnection = getPeerConnection()
+
+        if (!peerConnection) return
 
 
-        peerService.setRemoteDescription(ans)
-        // sendStreams()
+        peerConnection.setRemoteDescription(ans)
 
     }, [])
 
 
-    useEffect(() => {
-        if (type == 'host') {
-
-            handleUserJoin({ userId: remoteUserId })
-        }
-    }, [handleUserJoin, remoteUserId, type])
-
-
-
-    useEffect(() => {
-        const pc = peerService.getPeerConnection();
-        if (pc) {
-            pc.addEventListener('iceconnectionstatechange', handlePeerDisconnect);
-        }
-
-        return () => {
-            if (pc) {
-                pc.removeEventListener('iceconnectionstatechange', handlePeerDisconnect);
-            }
-        };
-    }, [handlePeerDisconnect]);
 
     const handleIceCandidate = useCallback((event: RTCPeerConnectionIceEvent) => {
         if (event.candidate && remoteUserId) {
-         
+
             socket?.emit('peer:ice-candidate', { candidate: event.candidate, to: remoteUserId, from: userData?.id });
 
         }
     }, [remoteUserId, socket, userData?.id])
 
-    const handleIncommingIceC = useCallback(({ candidate, from }: { candidate: RTCIceCandidate, from: string }) => {
-      
+    const handleIncommingIceC = useCallback(async({ candidate }: { candidate: RTCIceCandidate }) => {
+        const peerConnection = getPeerConnection()
 
-
-        const pc = peerService.getPeerConnection();
+        if (!peerConnection) return
+        const pc = peerConnection.getPeerConnection();
         if (pc) {
-            pc.addIceCandidate(new RTCIceCandidate(candidate))
-                .then(() => {
-                  
-                    setRemoteUserId(from)
-                })
-                .catch(error => {
-                    console.error("Error adding received ICE candidate", error);
-                });
+            await pc.addIceCandidate(new RTCIceCandidate(candidate))       
         }
 
-
     }, [])
-    useEffect(() => {
-        peerService.getPeerConnection()?.addEventListener('negotiationneeded', handleNegoNeeded)
-        peerService.getPeerConnection()?.addEventListener('track', handleAddTrack)
-        peerService.getPeerConnection()?.addEventListener('icecandidate', handleIceCandidate)
 
+
+    useEffect(() => {
+        const peerConnection = getPeerConnection()
+        const pc = peerConnection.getPeerConnection()
+        if (!pc) return
+        pc.addEventListener('negotiationneeded', handleNegoNeeded)
+        pc.addEventListener('track', handleAddTrack)
+        pc.addEventListener('icecandidate', handleIceCandidate)
+        pc.addEventListener('iceconnectionstatechange', handlePeerDisconnect);
         window.addEventListener('unload', handleWindowUnload)
 
-
         return () => {
-            peerService.getPeerConnection()?.removeEventListener('negotiationneeded', handleNegoNeeded)
-            peerService.getPeerConnection()?.removeEventListener('track', handleAddTrack)
-            peerService.getPeerConnection()?.removeEventListener('icecandidate', handleIceCandidate)
-
+            pc.removeEventListener('negotiationneeded', handleNegoNeeded)
+            pc.removeEventListener('track', handleAddTrack)
+            pc.removeEventListener('icecandidate', handleIceCandidate)
+            pc.removeEventListener('iceconnectionstatechange', handlePeerDisconnect);
             window.removeEventListener('unload', handleWindowUnload)
 
         }
-    }, [handleAddTrack, handleIceCandidate, handleNegoNeeded, handleWindowUnload])
+    }, [handleAddTrack, handleIceCandidate, handleNegoNeeded, handlePeerDisconnect, handleWindowUnload])
 
 
     useEffect(() => {
 
         socket?.on('incomming:call', handleIncommingCall)
         socket?.on('call:accepted', handleCallAccepted)
-        // socket?.on('peer:nego-needed', handlePeerNegoNeeded)
-        // socket?.on('peer:nego-final', handlePeerNegoFinal)
+        socket?.on('session:client-ready', handleClientReady)
         socket?.on('session:terminate', handleTermination)
         socket?.on('peer:ice-candidate', handleIncommingIceC)
-
-
         return () => {
 
             socket?.off('incomming:call', handleIncommingCall)
             socket?.off('call:accepted', handleCallAccepted)
-            // socket?.off('peer:nego-needed', handlePeerNegoNeeded)
-            // socket?.off('peer:nego-final', handlePeerNegoFinal)
+            socket?.off('session:client-ready', handleClientReady)
             socket?.off('session:terminate', handleTermination)
             socket?.off('peer:ice-candidate', handleIncommingIceC)
-
-
         }
-    }, [handleCallAccepted, handleIceCandidate, handleIncommingCall, handleIncommingIceC, handleTermination, socket])
+    }, [handleCallAccepted, handleClientReady, handleIncommingCall, handleIncommingIceC, handleTermination, socket])
 
 
     return (
-        <VideoSession {...{ localStream, remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime(), changeVideoDevice }} />
+        <VideoSession {...{  remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime(), changeVideoDevice }} />
     )
 }
 export default VideoSessionLogic

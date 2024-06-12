@@ -1,4 +1,4 @@
-import { MessageSquareText, Mic, MicOff, PhoneOff} from "lucide-react"
+import { MessageSquareText, Mic, MicOff, PhoneOff } from "lucide-react"
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 
@@ -11,21 +11,20 @@ import { RootState } from "../../../../redux/store"
 import IUser from "../../../../types/database"
 import SessionDuration from "../SessionDuration/SessionDuration"
 import VideoButton from "../Media/VideoButton"
+import getPeerConnection from "../../../../webRTC/peer"
 
 
 
 interface IVideoCallArea {
-    localStream: MediaStream | null;
     remoteStream: MediaStream | null;
     setChating: Dispatch<SetStateAction<boolean>>
     remoteUser: Required<IUser> | null
     startTime: number;
     changeVideoDevice: (deviceId: string) => Promise<void>
-
 }
 
-function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, startTime, changeVideoDevice }: IVideoCallArea) {
-  
+function VideoCallArea({  remoteStream, setChating, remoteUser, startTime, changeVideoDevice }: IVideoCallArea) {
+
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
 
@@ -41,46 +40,47 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
 
 
     useEffect(() => {
-        if (localvideoRef.current && localStream) {
-            localvideoRef.current.srcObject = localStream;
+      
+        const peerConnection = getPeerConnection()        
+
+        if (localvideoRef.current && peerConnection && peerConnection.getLocalStream()) {
+         
+            localvideoRef.current.srcObject = peerConnection.getLocalStream();
         }
         
-    }, [localStream]);
+    }, [videoEnabled]);
 
     useEffect(() => {
-     
-        
-       
         const remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
         if (remoteVideo) {
-            
+
             remoteVideo.srcObject = remoteStream;
         }
-       
     }, [remoteStream]);
 
     const toggleVideo = () => {
+        const localStream = getPeerConnection().getLocalStream();
         if (!localStream) return
         toogleVideoTrack(localStream)
         setVideoEnabled(prev => !prev)
     }
     const toggleAudio = () => {
+        const localStream = getPeerConnection().getLocalStream();
+
         if (!localStream) return
         toogleAudioTrack(localStream)
         setAudioEnabled(prev => !prev)
 
     }
     const terminate = useCallback(() => {
+        socket?.emit('session:terminate', { sessionCode: sessionId, endingTime: new Date() })
 
-       
-        socket?.emit('session:terminate', { sessionCode: sessionId,endingTime:new Date()})
-       
-    },[sessionId, socket])
+    }, [sessionId, socket])
 
 
 
 
- 
+
     return (
 
         <div className="h-screen   flex flex-col">
@@ -111,12 +111,11 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
                     {
                         true &&
                         <div className="aspect-video w-52 sm:w-72 bg-[#0a1426]    absolute bottom-10 right-5 sm:right-10 overflow-hidden rounded-xl drop-shadow">
-                            {
-                                localStream ?
+                            
 
-                                    <video ref={localvideoRef} autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
-                                    : <div>oops something went wrong...</div>
-                            }
+                                    <video ref={localvideoRef} id='localVideo' autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
+                                 
+                            
                             <span className="bg-[#0000002c] text-white px-3 py-2 rounded-full absolute bottom-3 left-3 text-xs font-semibold"> {userData?.firstName + " " + userData?.lastName}</span>
                         </div>
                     }
@@ -125,7 +124,8 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
             </div>
             {/* bottom area */}
             <div className="h-20 bg-white dark:bg-[#0e1c34] flex justify-center items-center relative" >
-                <div className="flex gap-5 items-center">
+                <div className="flex gap-5 items-center ">
+
                     <Button onClick={toggleAudio} >
 
                         {audioEnabled ?
@@ -133,7 +133,7 @@ function VideoCallArea({ localStream, remoteStream, setChating, remoteUser, star
                             : <span className=" dark:bg-red-500 text-white p-2 rounded-full cursor-pointer "><MicOff /></span>
                         }
                     </Button>
-                    <VideoButton {...{changeVideoDevice,toggleVideo,videoEnabled}} />
+                    <VideoButton {...{ toggleVideo, videoEnabled, changeVideoDevice }} />
                     <Button onClick={terminate} className="bg-red-500 text-white " size={'md'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
                     <Button onClick={() => setChating(true)}><span className="dark:bg-white p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
                 </div>

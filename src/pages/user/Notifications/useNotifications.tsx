@@ -8,6 +8,8 @@ import { useGetNotificationsQuery, useGetSingleNotificationMutation, useMarkAsRe
 import { IBackendResponse } from "../../../types/queryResults";
 import { INotificationDetails } from "../../../types/database";
 import { addNewNotification, pushNotifications, setHasMore, setNotifications, setPage, setUnreadedNotificationCount } from "../../../redux/features/user/notification/notificationSlice";
+import getPeerConnection from "../../../webRTC/peer";
+import { setSession } from "../../../redux/features/user/session/sessionSlice";
 
 
 export interface INotification {
@@ -25,7 +27,7 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
 
 
     const { userData, isAuth } = useSelector((state: RootState) => state.user)
-    const { page, nextPage, notifications,unreadedNotifications } = useSelector((state: RootState) => state.notification)
+    const { page, nextPage, notifications, unreadedNotifications } = useSelector((state: RootState) => state.notification)
     const [markAsRead] = useMarkAsReadMutation()
 
     const dispatch = useDispatch()
@@ -40,13 +42,13 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
 
     useEffect(() => {
         const newNotifications = data?.data?.notifications as INotification[];
-    
+
 
         if (!newNotifications) return
 
         dispatch(pushNotifications([...newNotifications]))
         dispatch(setPage(data?.data?.currentPage || 0))
-        dispatch(setUnreadedNotificationCount(data?.data?.totalUnReadedNotifications||0))
+        dispatch(setUnreadedNotificationCount(data?.data?.totalUnReadedNotifications || 0))
         dispatch(setHasMore(data?.data?.lastPage > data?.data?.currentPage))
 
 
@@ -64,16 +66,32 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
     }
 
 
-    const handleJoinSession = useCallback(({ sessionId, allowed, message, startTime, isMonetized }: { sessionId: string, allowed: boolean, session: string, message: string, startTime: string, isMonetized: boolean }) => {
+    const handleJoinSession = useCallback(async ({ sessionId, allowed, message, startTime, isMonetized, offer, remoteUserId }: { sessionId: string, allowed: boolean, session: string, message: string, startTime: string, isMonetized: boolean, offer: RTCSessionDescriptionInit, remoteUserId: string }) => {
 
         if (allowed) {
+            const peer = getPeerConnection()
 
-            navigate(`/video-session/${sessionId}`, { state: { remoteUserId: '', audioEnabled: true, videoEnabled: true, startTime, isMonetized } })
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: true
+            });
+            const ans = await peer.getAnswer(offer)
+
+
+            socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
+
+
+            dispatch(setSession({ remoteUserId }))
+            for (const track of stream.getTracks()) {
+                peer.addTrack(track, stream);
+            }
+
+            navigate(`/video-session/${sessionId}`, { state: { remoteUserId, audioEnabled: true, videoEnabled: true, startTime, type: 'learner', isMonetized } })
         } else {
             toast.error(message, { position: 'top-right' })
             navigate(`/`)
         }
-    }, [navigate])
+    }, [dispatch, navigate, socket, userData?.id])
 
     const handleClose = async () => {
         setOpenNotification(false)
@@ -91,11 +109,11 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
     const handleNewNotification = useCallback(async ({ notificationId }: { notificationId: string }) => {
 
         const notification = await getSingleNotification({ notificationId }).unwrap() as IBackendResponse<INotificationDetails>
-        if (notification.data){
+        if (notification.data) {
             dispatch(addNewNotification(notification.data))
             dispatch(setUnreadedNotificationCount(unreadedNotifications + 1))
         }
-            
+
     }, [dispatch, getSingleNotification, unreadedNotifications])
 
 

@@ -5,11 +5,15 @@ import { Mic, MicOff, Video, VideoOff } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSocket } from "../../../../context/SocketProvider"
 import { useNavigate, useParams } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setSession } from "../../../../redux/features/user/session/sessionSlice"
+import getPeerConnection from "../../../../webRTC/peer"
 
 
 function WaitForLearner() {
+  const dispatch = useDispatch()
 
-  const [localStream, setLocalStream] = useState<MediaStream | null>(null)
+
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -18,35 +22,12 @@ function WaitForLearner() {
   const navigate = useNavigate()
   const socket = useSocket()
 
-  const handleUserJoin = useCallback(({ userId,startTime }: { userId: string,startTime:string }) => {
-    console.log(userId,'<- this is remote user');
-    if(userId)
-    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'host',startTime } })
-  }, [audioEnabled, navigate, sessionId, videoEnabled])
+  const handleUserJoin = useCallback(({ userId, startTime }: { userId: string, startTime: string }) => {
+    dispatch(setSession({ remoteUserId: userId }))
+    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'helper', startTime } })
+  }, [audioEnabled, dispatch, navigate, sessionId, videoEnabled])
 
-  useEffect(() => {
 
-    const getLocalStream = async () => {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: videoEnabled
-      })
-
-      setLocalStream(stream)
-      return stream
-    }
-    const stream = getLocalStream()
-
-    return () => {
-
-      stream.then(s => {
-        s?.getTracks().forEach(track => {
-          track.stop()
-        })
-      })
-    }
-
-  }, [videoEnabled])
 
   useEffect(() => {
     const timeOut = setInterval(() => {
@@ -78,12 +59,13 @@ function WaitForLearner() {
     setVideoEnabled(prev => !prev)
   }
 
-
   useEffect(() => {
-    if (videoRef.current && localStream) {
-      videoRef.current.srcObject = localStream;
+    const peerConnection = getPeerConnection()
+    if (videoRef.current && peerConnection && peerConnection.getLocalStream()) {
+      videoRef.current.srcObject = peerConnection.getLocalStream();
     }
-  }, [localStream]);
+
+  }, []);
   return (
 
     <div className='h-full  bg-secondary  dark:bg-[#152B52] '>
