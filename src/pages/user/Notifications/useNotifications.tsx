@@ -8,8 +8,8 @@ import { useGetNotificationsQuery, useGetSingleNotificationMutation, useMarkAsRe
 import { IBackendResponse } from "../../../types/queryResults";
 import { INotificationDetails } from "../../../types/database";
 import { addNewNotification, pushNotifications, setHasMore, setNotifications, setPage, setUnreadedNotificationCount } from "../../../redux/features/user/notification/notificationSlice";
-import getPeerConnection from "../../../webRTC/peer";
 import { setSession } from "../../../redux/features/user/session/sessionSlice";
+import getPeerConnection from "../../../webRTC/peer";
 
 
 export interface INotification {
@@ -19,11 +19,9 @@ export interface INotification {
 
 function useNotifications({ setOpenNotification }: { setOpenNotification: Dispatch<SetStateAction<boolean>> }) {
 
-    // const [notifications, setNotification] = useState<INotification[]>([])
+  
     const [openSessionOffer, setOpenSessionOffer] = useState(false)
     const [sessionId, setSessionId] = useState('')
-
-
 
 
     const { userData, isAuth } = useSelector((state: RootState) => state.user)
@@ -58,7 +56,7 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
     const notifyUser = useCallback(({ sessionId }: { sessionId: string }) => {
         setOpenSessionOffer(true)
         setSessionId(sessionId)
-        // setNotification(prev => [...prev, { message: "Sesion available let's talk", sessionId }])
+       
     }, [])
 
     const handleRejectOffer = () => {
@@ -66,27 +64,27 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
     }
 
 
-    const handleJoinSession = useCallback(async ({ sessionId, allowed, message, startTime, isMonetized, offer, remoteUserId }: { sessionId: string, allowed: boolean, session: string, message: string, startTime: string, isMonetized: boolean, offer: RTCSessionDescriptionInit, remoteUserId: string }) => {
+    const handleJoinSession = useCallback(async ({ sessionId, allowed, message, startTime, isMonetized, offer,remoteUserId }: { sessionId: string, allowed: boolean, session: string, message: string, startTime: string, isMonetized: boolean, offer: RTCSessionDescriptionInit,remoteUserId:string }) => {
 
         if (allowed) {
             const peer = getPeerConnection()
-
+          
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: true
             });
             const ans = await peer.getAnswer(offer)
-
-
+           
+            
             socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
 
 
-            dispatch(setSession({ remoteUserId }))
+            dispatch(setSession({ remoteUserId}))
             for (const track of stream.getTracks()) {
                 peer.addTrack(track, stream);
             }
 
-            navigate(`/video-session/${sessionId}`, { state: { remoteUserId, audioEnabled: true, videoEnabled: true, startTime, type: 'learner', isMonetized } })
+            navigate(`/video-session/${sessionId}`, { state: { remoteUserId, audioEnabled: true, videoEnabled: true, startTime,type:'learner', isMonetized } })
         } else {
             toast.error(message, { position: 'top-right' })
             navigate(`/`)
