@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -27,7 +27,7 @@ function VideoSessionLogic() {
 
     const location = useLocation();
     const { remoteUserId, type, startTime, isMonetized } = location.state;
-
+    const sendedPendingAns =useRef(false)
 
 
     const dispatch = useDispatch()
@@ -100,6 +100,13 @@ function VideoSessionLogic() {
     }, [])
 
     console.log(negoneeded, clientReady, 'negoneeded,clientReady,');
+    useEffect(()=>{
+        if(type=='learner' && clientReady && !sendedPendingAns.current){
+            const ans = getPeerConnection().getPeerConnection()?.localDescription
+            socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
+            sendedPendingAns.current=true
+        }
+    },[clientReady, remoteUserId, socket, type, userData?.id])
 
     useEffect(() => {
         if (negoneeded && clientReady) {
@@ -184,7 +191,7 @@ function VideoSessionLogic() {
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
         console.log('handleCallAccepted');
-alert('call accepted')
+
         const peerConnection = getPeerConnection()
 
         if (!peerConnection) return

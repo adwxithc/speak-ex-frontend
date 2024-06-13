@@ -73,10 +73,10 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
                 audio: true,
                 video: true
             });
-            const ans = await peer.getAnswer(offer)
+            await peer.getAnswer(offer)
            
             
-            socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
+            // socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
 
 
             dispatch(setSession({ remoteUserId}))
