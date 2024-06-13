@@ -15,19 +15,18 @@ import { setWallet } from "../../../redux/features/user/user/userSlice";
 
 
 
-
 function VideoSessionLogic() {
 
     const socket = useSocket()
     const { userData, wallet } = useSelector((state: RootState) => state.user)
- 
+
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null)
     const [negoneeded, setNegoneeded] = useState(false)
     const [clientReady, setClientReady] = useState(false)
 
     const location = useLocation();
     const { remoteUserId, type, startTime, isMonetized } = location.state;
-    const sendedPendingAns =useRef(false)
+    const sendedPendingAns = useRef(false)
 
 
     const dispatch = useDispatch()
@@ -56,7 +55,7 @@ function VideoSessionLogic() {
         dispatch(setSession({ 'video': true }))
 
 
-        
+
         //6. add tracks
         const [videoTrack] = stream.getVideoTracks();
         const peerConnection = getPeerConnection()
@@ -75,7 +74,7 @@ function VideoSessionLogic() {
         })
         if (sender) {
             //sender is RTCRtpSender, so it can replace the track
-            
+
             sender.replaceTrack(videoTrack)
 
         }
@@ -95,18 +94,18 @@ function VideoSessionLogic() {
 
 
     const handleNegoNeeded = useCallback(async () => {
-      
+
         setNegoneeded(true)
     }, [])
 
     console.log(negoneeded, clientReady, 'negoneeded,clientReady,');
-    useEffect(()=>{
-        if(type=='learner' && clientReady && !sendedPendingAns.current){
+    useEffect(() => {
+        if (type == 'learner' && clientReady && !sendedPendingAns.current) {
             const ans = getPeerConnection().getPeerConnection()?.localDescription
             socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
-            sendedPendingAns.current=true
+            sendedPendingAns.current = true
         }
-    },[clientReady, remoteUserId, socket, type, userData?.id])
+    }, [clientReady, remoteUserId, socket, type, userData?.id])
 
     useEffect(() => {
         if (negoneeded && clientReady) {
@@ -150,8 +149,8 @@ function VideoSessionLogic() {
 
 
     const handleTermination = useCallback(({ coinExchange }: { coinExchange: number }) => {
-        const pc =getPeerConnection()
-        endPeerConnectionHandler({ localStream:pc.getLocalStream(), peerService:pc, remoteStream })
+        const pc = getPeerConnection()
+        endPeerConnectionHandler({ localStream: pc.getLocalStream(), peerService: pc, remoteStream })
         resetPeerConnection()
         if (type == 'helper') {
 
@@ -211,13 +210,13 @@ function VideoSessionLogic() {
         }
     }, [remoteUserId, socket, userData?.id])
 
-    const handleIncommingIceC = useCallback(async({ candidate }: { candidate: RTCIceCandidate }) => {
+    const handleIncommingIceC = useCallback(async ({ candidate }: { candidate: RTCIceCandidate }) => {
         const peerConnection = getPeerConnection()
 
         if (!peerConnection) return
         const pc = peerConnection.getPeerConnection();
         if (pc) {
-            await pc.addIceCandidate(new RTCIceCandidate(candidate))       
+            await pc.addIceCandidate(new RTCIceCandidate(candidate))
         }
 
     }, [])
@@ -263,7 +262,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{  remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime(), changeVideoDevice }} />
+        <VideoSession {...{ remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime(), changeVideoDevice }} />
     )
 }
 export default VideoSessionLogic

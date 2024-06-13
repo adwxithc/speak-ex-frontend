@@ -19,7 +19,7 @@ export interface INotification {
 
 function useNotifications({ setOpenNotification }: { setOpenNotification: Dispatch<SetStateAction<boolean>> }) {
 
-  
+
     const [openSessionOffer, setOpenSessionOffer] = useState(false)
     const [sessionId, setSessionId] = useState('')
 
@@ -56,7 +56,7 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
     const notifyUser = useCallback(({ sessionId }: { sessionId: string }) => {
         setOpenSessionOffer(true)
         setSessionId(sessionId)
-       
+
     }, [])
 
     const handleRejectOffer = () => {
@@ -64,27 +64,27 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
     }
 
 
-    const handleJoinSession = useCallback(async ({ sessionId, allowed, message, startTime, isMonetized, offer,remoteUserId }: { sessionId: string, allowed: boolean, session: string, message: string, startTime: string, isMonetized: boolean, offer: RTCSessionDescriptionInit,remoteUserId:string }) => {
+    const handleJoinSession = useCallback(async ({ sessionId, allowed, message, startTime, isMonetized, offer, remoteUserId }: { sessionId: string, allowed: boolean, session: string, message: string, startTime: string, isMonetized: boolean, offer: RTCSessionDescriptionInit, remoteUserId: string }) => {
 
         if (allowed) {
             const peer = getPeerConnection()
-          
+
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
                 video: true
             });
             await peer.getAnswer(offer)
-           
-            
+
+
             // socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
 
 
-            dispatch(setSession({ remoteUserId}))
+            dispatch(setSession({ remoteUserId }))
             for (const track of stream.getTracks()) {
                 peer.addTrack(track, stream);
             }
 
-            navigate(`/video-session/${sessionId}`, { state: { remoteUserId, audioEnabled: true, videoEnabled: true, startTime,type:'learner', isMonetized } })
+            navigate(`/video-session/${sessionId}`, { state: { remoteUserId, audioEnabled: true, videoEnabled: true, startTime, type: 'learner', isMonetized } })
         } else {
             toast.error(message, { position: 'top-right' })
             navigate(`/`)
