@@ -9,6 +9,9 @@ export interface IPeerService {
     destroyPeerConnection(): void;
     getLocalStream(): MediaStream | null;
 }
+const VITE_TURN_USERNAME = import.meta.env.VITE_TURN_USERNAME
+const VITE_TURN_CREDENTIAL = import.meta.env.VITE_TURN_CREDENTIAL
+
 
 class PeerService implements IPeerService {
     private peer: RTCPeerConnection | null;
@@ -31,8 +34,8 @@ class PeerService implements IPeerService {
                     "turns:bn-turn1.xirsys.com:443?transport=tcp",
                     "turns:bn-turn1.xirsys.com:5349?transport=tcp"
                 ],
-                username: "7ldb-FW-0yJLeK2iruHFlaiVcXFrWQy98ssbKo0eHFUK38QeWEokJm4-BmOW9Fg6AAAAAGZqg6ZhZHdhaXRo",
-                credential: "dcca5490-2945-11ef-a433-0242ac140004",
+                username: VITE_TURN_USERNAME,
+                credential: VITE_TURN_CREDENTIAL,
                 },
             ],
         });
