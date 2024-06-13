@@ -95,7 +95,7 @@ function VideoSessionLogic() {
 
 
     const handleNegoNeeded = useCallback(async () => {
-        alert('nego needed')
+      
         setNegoneeded(true)
     }, [])
 
