@@ -5,12 +5,14 @@ import { Mic, MicOff, Video, VideoOff } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useSocket } from "../../../../context/SocketProvider"
 import { useNavigate, useParams } from "react-router-dom"
+
+import getPeerConnection from "../../../../webRTC/peer"
 import { useDispatch } from "react-redux"
 import { setSession } from "../../../../redux/features/user/session/sessionSlice"
-import getPeerConnection from "../../../../webRTC/peer"
 
 
 function WaitForLearner() {
+
   const dispatch = useDispatch()
 
 
@@ -58,6 +60,7 @@ function WaitForLearner() {
   const toggleVideo = () => {
     setVideoEnabled(prev => !prev)
   }
+
 
   useEffect(() => {
     const peerConnection = getPeerConnection()
