@@ -95,6 +95,7 @@ function VideoSessionLogic() {
 
 
     const handleNegoNeeded = useCallback(async () => {
+        alert('nego needed')
         setNegoneeded(true)
     }, [])
 
@@ -183,7 +184,7 @@ function VideoSessionLogic() {
 
     const handleCallAccepted = useCallback(async ({ ans }: { ans: RTCSessionDescriptionInit }) => {
         console.log('handleCallAccepted');
-
+alert('call accepted')
         const peerConnection = getPeerConnection()
 
         if (!peerConnection) return
