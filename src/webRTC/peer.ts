@@ -113,7 +113,7 @@ class PeerService implements IPeerService {
 let peer:IPeerService|null= null
 
 const getPeerConnection = ()=>{
-  console.log('gotted peer',peer);
+
   
   if(peer!==null)return peer
   peer = new PeerService()
