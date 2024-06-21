@@ -23,10 +23,10 @@ function ProfileInfo() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { data, isLoading, self } = useContext(ProfileContext)
+  const { data, self } = useContext(ProfileContext)
   const { userData } = useSelector((state: RootState) => state.user)
   const [isFollowing, setIsFollowing] = useState(data?.followers?.includes(userData?.id || ''))
-console.log(data);
+
 
 
   const [upload] = useUploadProfileMutation()
@@ -121,6 +121,7 @@ console.log(data);
       position: 'top-center'
     })
   }
+
   return (
     <>
       <div className="">
