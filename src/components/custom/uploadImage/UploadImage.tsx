@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Square } from 'lucide-react';
+import { useState } from 'react'
+import { LucideIcon } from 'lucide-react';
 
 import FileInput from '../FileInput/FileInput'
 import ImageCroper, { ICropArea } from '../ImageCroper/ImageCroper';
@@ -7,13 +7,15 @@ import CroppedImage from '../ImageCroper/CroppedImage';
 import { dataURLtoFile } from '../../../services/dataURLtoFile';
 import Button from '../../ui/Button/Button';
 
+interface IUploadImageProps{
+  handleImageUpload:(image:File) => Promise<void>
+  aspectRatios:{ratio: number;label: string;icon: LucideIcon;}[]
+}
 
 
-function UploadProfile({handleImageUpload}:{handleImageUpload:(image:File) => Promise<void>}) {
+function UploadImage({handleImageUpload,aspectRatios}:IUploadImageProps) {
 
-  const aspectRatios=useMemo(()=>[
-    {ratio:1 / 1,label:'1:1',icon:Square},
-],[])
+
 
     const [currentPage,setCurrentPage] = useState('choose-img')
     const [newProfile, setNewProfile] = useState('')
@@ -96,4 +98,4 @@ function UploadProfile({handleImageUpload}:{handleImageUpload:(image:File) => Pr
   )
 }
 
-export default UploadProfile
+export default UploadImage

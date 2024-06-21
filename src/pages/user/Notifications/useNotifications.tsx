@@ -75,10 +75,6 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
             });
             await peer.getAnswer(offer)
 
-
-            // socket?.emit('call:accepted', { ans, to: remoteUserId, from: userData?.id })
-
-
             dispatch(setSession({ remoteUserId }))
             for (const track of stream.getTracks()) {
                 peer.addTrack(track, stream);
@@ -89,7 +85,7 @@ function useNotifications({ setOpenNotification }: { setOpenNotification: Dispat
             toast.error(message, { position: 'top-right' })
             navigate(`/`)
         }
-    }, [dispatch, navigate, socket, userData?.id])
+    }, [dispatch, navigate])
 
     const handleClose = async () => {
         setOpenNotification(false)
