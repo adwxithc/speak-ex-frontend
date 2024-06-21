@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../Modal/Modal.tsx';
 import { AnimatePresence } from 'framer-motion';
-import UploadProfile from '../UploadProfile/UploadProfile.tsx';
+import UploadProfile from '../uploadImage/UploadImage.tsx';
 import { useUploadProfileMutation } from '../../../redux/features/user/user/profileApiSlice.ts';
 import { updateCridentials } from '../../../redux/features/user/user/userSlice.ts';
 import toast from 'react-hot-toast';

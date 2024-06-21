@@ -14,7 +14,7 @@ export interface IUser{
     following: string[],
     isMonetized:boolean;
     requestedForMonetization:boolean
-   
+    coverPic?:string
 }
 
    

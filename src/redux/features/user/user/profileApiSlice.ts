@@ -11,6 +11,13 @@ export const profileApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        uploadCoverPic: builder.mutation({
+            query: (data) => ({
+                url: `${USER_URL}/cover-pic`,
+                method: 'PUT',
+                body: data,
+            }),
+        }),
         updateUserInfo: builder.mutation({
             query: (data) => ({
                 url: `${USER_URL}/`,
@@ -53,5 +60,6 @@ export const {
     useGetAllLanguagesMutation,
     useSearchUsersMutation,
     useGetUserQuery,
-    useGetUserByIdQuery
+    useGetUserByIdQuery,
+    useUploadCoverPicMutation
 } = profileApiSlice;
