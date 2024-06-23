@@ -1,37 +1,79 @@
 import { cn } from "../../../utils/style-utils";
-import Container from "../../layout/Container/Container";
+import {  motion } from 'framer-motion'
 import Image from '../../ui/Image/Image'
 
 interface SectionProps {
-    title: string;
-    blurHash:string;
-    description: string;
-    imageUrl: string;
-    imagePosition?: 'left' | 'right';
-    className?: string
-  }
+  title: string;
+  blurHash: string;
+  description: string;
+  imageUrl: string;
+  imagePosition?: 'left' | 'right';
+  className?: string
+}
 
-function Section({title, blurHash, description, imageUrl, imagePosition, className }:SectionProps) {
-   
+const fadeInAnimationVarientTop = {
+  initial: {
+    opacity: 0,
+    y: 200
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+     
+    }
+  },
+}
+const fadeInAnimationVarientBottom = {
+  initial: {
+    opacity: 0,
+    y: -200
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+     
+    }
+  },
+}
+
+function Section({ blurHash, description, imageUrl, imagePosition, className }: SectionProps) {
+
 
   return (
-    <Container>
-    <section className={cn("flex flex-col md:flex-row items-center py-2 ",className)}>
 
-    {/* image */}
-      <div className={cn(`md:w-1/2 mb-4 md:mb-0 order-1 md:order-1 `,imagePosition === 'right' && 'order-1 md:order-2')}>
+    <section className={cn("flex flex-col md:flex-row flex-wrap gap-10 p-2 overflow-hidden md:px-10 h-96 md:h-72 ", className)}>
+
+      {/* image */}
+      <motion.div
+        variants={fadeInAnimationVarientTop}
+        initial='initial'
         
-        <Image height={300} width={500}  src={imageUrl} alt={title} className="w-full h-auto max-h-[350px] rounded-lg object-contain" blurHash={blurHash} />
-      </div>
+        whileInView='animate'
+        viewport={{ once: true }}
+        className={cn(` p-1 flex-1 h-full w-full overflow-hidden bg-yellow-50/80 rounded-xl `, imagePosition === 'right' && 'md:order-2')}
+      >
 
-    {/* text */}
-      <div className={cn(`md:w-1/2 order-1 md:order-2  px-4`,imagePosition === 'right' &&'order-2 md:order-1')}>
-        <h2 className="text-2xl sm:text-4xl font-bold mb-6">{title}</h2>
-        <p >{`"${description}"`}</p>
-      </div>
+        <Image className="h-full w-full object-contain" height={300} width={500} src={imageUrl} alt={description} blurHash={blurHash} />
+      </motion.div>
+
+      {/* text */}
+      <motion.div 
+      variants={fadeInAnimationVarientBottom}
+      initial='initial'
+      
+      whileInView='animate'
+      viewport={{ once: true }}
+      className='  flex-1 flex items-center  '>
+        <h2 className="text-black/80 px-14 italic  font-semibold text-center md:text-left text-2xl mb-5 leading-relaxed ">"{description}"</h2>
+
+      </motion.div>
 
     </section>
-    </Container>
+
   )
 }
 

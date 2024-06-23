@@ -1,22 +1,37 @@
 {
-    "header": "Nous nous occupons de votre langue",
-    "description": "Nous nous soucions de votre progression et nous serons toujours là",
+    "header": "Nous prenons soin de votre langue",
+    "description": "nous nous soucions de votre progrès et nous serons toujours",
     "workflow": {
-        "step1": {
-            "title": "Inscription et choix de la langue",
-            "description": "Commencez par vous inscrire et choisir la langue que vous souhaitez apprendre. Vous pouvez également choisir les langues que vous maîtrisez déjà lors de l'inscription. Ne vous inquiétez pas, c'est facile !"
-        },
-        "step2": {
-            "title": "Gagner des crédits de conversation supplémentaires",
-            "description": "En participant à des conversations avec d'autres personnes qui veulent apprendre les langues que vous maîtrisez, vous gagnerez des crédits de conversation supplémentaires. C'est comme gagner des récompenses pour discuter !"
-        },
-        "step3": {
-            "title": "Utiliser des crédits pour apprendre",
-            "description": "Utilisez vos crédits gagnés pour discuter avec des utilisateurs qui connaissent la langue que vous souhaitez apprendre. C'est comme débloquer des conversations précieuses !"
-        },
-        "step4": {
-            "title": "Heures gratuites et crédits supplémentaires",
-            "description": "Obtenez 5 heures gratuites lorsque vous vous inscrivez pour discuter avec d'autres personnes. Aidez-les à apprendre pour gagner plus de crédits pour votre voyage linguistique."
-        }
-    }
-}
+      "step1": {
+        "description": "Créez un compte, choisissez la langue que vous souhaitez apprendre et indiquez les langues que vous maîtrisez."
+      },
+      "step2": {
+        "description": "Discutez avec des utilisateurs qui veulent apprendre vos langues maîtrisées pour gagner des pièces d'argent."
+      },
+      "step3": {
+        "description": "Dépensez vos pièces d'argent pour discuter avec des utilisateurs qui connaissent la langue que vous voulez apprendre."
+      },
+      "step4": {
+        "description": "Recevez 100 pièces d'argent lors de l'inscription pour commencer à discuter et apprendre immédiatement."
+      }
+    },
+    "alumnis": [
+      {
+        "feedback": "Je n'aurais jamais pensé pouvoir atteindre la maîtrise de l'espagnol si rapidement ! Cette plateforme a rendu l'apprentissage amusant et engageant. Les exercices de parole interactifs et les retours en temps réel étaient exactement ce dont j'avais besoin pour gagner en confiance dans mes compétences conversationnelles.",
+        "name": "Sarah L"
+      },
+      {
+        "feedback": "Apprendre le mandarin semblait décourageant au début, mais les leçons structurées et la communauté de soutien sur cette plateforme ont fait toute la différence. Je peux maintenant avoir des conversations avec mes collègues en Chine, ce qui a été un changement radical pour ma carrière.",
+        "name": "John M."
+      },
+      {
+        "feedback": "Ce qui distingue cette plateforme, c'est son accent sur les compétences orales pratiques. Les scénarios de jeu de rôle et la technologie de reconnaissance vocale m'ont aidé à perfectionner mon français pour les réunions d'affaires. Je me sens beaucoup plus confiant pour présenter à mes clients francophones maintenant.",
+        "name": "Javad Pk"
+      },
+      {
+        "feedback": "L'expansion de mon entreprise aux États-Unis nécessitait de solides compétences en communication en anglais. Cette plateforme m'a fourni exactement ce dont j'avais besoin. Les leçons de langue orientées vers les affaires et l'accent mis sur l'application dans le monde réel ont été inestimables. Je négocie et réseau maintenant avec confiance.",
+        "name": "June W"
+      }
+    ]
+  }
+  

@@ -3,20 +3,41 @@
     "description":"we care about you progress and we wil always",
     "workflow":{
         "step1":{
-            "title":"Sign Up and Language Selection",
-            "description":"Get started by signing up and selecting the language you want to learn. You can also choose the languages you're already good at during sign-up. Don't worry, it's easy! "
+           
+            "description":" Create an account, choose the language you want to learn, and indicate the languages you’re proficient in."
         },
         "step2":{
-                "title":"Earn Extra Talking Credits",
-                "description":"As you engage in conversations with others who want to learn the languages you're good at, you'll earn extra talking credits. It's like earning rewards for chatting!"
+                
+                "description":"Chat with users who want to learn your proficient languages to earn silver coins."
         },
         "step3":{
-            "title":"Use Credits to Learn",
-            "description":"Use your earned credits to chat with users who know the language you want to learn. It's like unlocking valuable conversations!"
+           
+            "description":"Spend your silver coins to chat with users who know the language you want to learn."
         },
        "step4": {
-            "title":"Free Hours and Additional Credits",
-            "description":"Get 5 free hours when you sign up to chat with others. Help them learn to earn more credits for your language journey."
+       
+            "description":"Receive 100 silver coins upon signing up to start chatting and learning immediately."
         }
-    }
+    },
+    "alumnis":[
+        {
+          "feedback": "I never thought I could achieve fluency in Spanish so quickly! This platform made learning engaging and fun. The interactive speaking exercises and real-time feedback were exactly what I needed to gain confidence in my conversational skills.",
+          "name": "Sarah L"
+        },
+        {
+          "feedback": "Learning Mandarin seemed daunting at first, but the structured lessons and supportive community on this platform made all the difference. I can now hold conversations with my colleagues in China, which has been a game-changer for my career",
+          "name": "John M."
+        },
+        {
+          "feedback": "This platform's focus on practical speaking skills is what sets it apart. The role-playing scenarios and voice recognition technology helped me polish my French for business meetings. I feel much more confident presenting to my French-speaking clients now.",
+          "name": "Javad Pk"
+          
+        },
+        {
+          "feedback": "Expanding my business to the US required strong English communication skills. This platform provided exactly what I needed. The business-oriented language lessons and emphasis on real-world application were invaluable. I now negotiate and network with confidence.",
+          "name": "June W"
+         
+        }
+      ]
+      
 }

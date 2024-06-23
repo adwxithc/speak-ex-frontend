@@ -1,27 +1,43 @@
+import { Globe } from "lucide-react"
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 
 function Test() {
-  return <div>test</div>
+  const { i18n } = useTranslation();
+  const languages = [
+    { code: 'en', lang: 'English' },
+    { code: 'fr', lang: 'French' },
+    { code: 'hi', lang: 'Hindi' },
+    { code: 'ar', lang: 'Arabic' },
+    { code: 'ml', lang: 'Malayalam' }
+  ];
+
+  const changeLanguage = (langCode: string) => {
+  
+    i18n.changeLanguage(langCode);
+  };
+
+  const [open, setOpen] = useState(false)
+  const language= languages.find(l=>l.code==i18n.language);
+
+  return (
+    <div className="bg-secondary h-screen flex  justify-center items-center ">
+
+      <div className="relative" onBlur={()=>setOpen(false)}>
+        <button  onClick={()=>setOpen(true)} className="border-2 bg-white mb-1 border-black p-1 px-2 font-semibold rounded-full flex items-center "><span>{language?.lang}</span><Globe className="ml-1" size={20} /></button>
+        {
+          open &&
+          <ul className="shadow-md bg-white rounded p-1 absolute  -left-2 -right-2">
+            {languages.map((lang: { code: string; lang: string; }) => (<li onMouseDown={()=>changeLanguage(lang.code)} className="mb-1  hover:bg-black/10 rounded cursor-pointer text-center font-semibold text-black/80" key={lang.code}>{lang.lang}</li>))}
+          </ul>
+        }
+      </div>
+
+
+    </div>
+  )
 }
 
 export default Test
-{/* <div className="flex justify-center ">
-<span className="  text-yellow-500 font-semibold  stroke-black  text-with-stroke">Chest of coins</span>
-</div> */}
-
-{/* <div className=" rounded overflow-hidden  ">
-  <div className="aspect-square  w-40 flex justify-center items-center  shadow-inner  bg-[#545454]" style={{ background: 'radial-gradient(circle, #545454, #000)' }}>
-    <img className="h-32" src="/coi-removebg-preview.png" alt="" />
-  </div>
-  <div className="bg-[#000] p-2 ">
-    <div className="flex items-center justify-center gap-2 mb-1">
-      <img className="h-5 w-5" src="src/assets/Images/menuIcon/gold.png" alt="" />
-      <span className="text-yellow-500 font-bold text-lg ">5000</span>
-    </div>
-    <div className="flex justify-center">
-      <Button className="rounded border w-full  shadow-md  shadow-white/10 hover:shadow-white/60" ><span className="text-white font-bold py-1">Buy 5000 rs</span></Button>
-    </div>
-
-  </div>
-</div> */}
