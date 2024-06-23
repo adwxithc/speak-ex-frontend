@@ -130,7 +130,7 @@ function UserDetails({ userId }: { userId: string }) {
                                             {
 
                                                 Array.from({ length: 5 }, (_, i) => (
-                                                    i + 1 < userData?.session?.rating ? <Star size={17} color={'orange'} fill={'orange'} key={i} /> : userData.session.rating % 1 !== 0 && Math.floor(userData.session.rating) == i ? <span className="relative"><StarHalf className="absolute" size={17} color={'orange'} fill={'orange'} /><Star size={17} color={'gray'} fill={'gray'} key={i} /></span> : <Star size={17} color={'gray'} fill={'gray'} key={i} />
+                                                    i + 1 <= userData?.session?.rating ? <Star size={17} color={'orange'} fill={'orange'} key={i} /> : userData.session.rating % 1 !== 0 && Math.floor(userData.session.rating) == i ? <span className="relative"><StarHalf className="absolute" size={17} color={'orange'} fill={'orange'} /><Star size={17} color={'gray'} fill={'gray'} key={i} /></span> : <Star size={17} color={'gray'} fill={'gray'} key={i} />
 
                                                 ))
 

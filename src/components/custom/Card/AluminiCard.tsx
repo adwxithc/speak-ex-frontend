@@ -1,20 +1,48 @@
+import { Star, StarHalf } from "lucide-react"
 import Avatar from "../../ui/Avatar/Avatar"
 
+export interface AluminiCardProps{
+  name:string,
+  feedback:string,
+  profile:string,
+  rating:number,
+  userName:string
+}
 
-function AluminiCard() {
+function AluminiCard({feedback,userName,name,profile,rating}:AluminiCardProps) {
   return (
-    <div className="bg-white drop-shadow-lg my-5 p-7 min-w-full sm:min-w-[50%] lg:min-w-[33%]  rounded-xl">
-        <div className="md:flex gap-5 p-3">
-            
-        <Avatar src='src/assets/Images/peoples/person3.jpg' size={24} className="mx-auto mb-3" />
-            
-        
-        <div className="max-w-90 m- text-xs">
-            
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod distinctio excepturi laudantium eius sit adipisci pariatur dolorem recusandae alias voluptatibus sint libero explicabo sed voluptatum corrupti, dolores ducimus exercitationem perspiciatis!
+    <>
+    <div className="bg-white shadow-lg my-5 p-5  rounded-xl border cursor-pointer">
+      <blockquote className="italic">
+      <p className=" line-clamp-3 mb-5 text-sm text-black/50">
+        "{feedback}"
+      </p>
+      </blockquote>
+      <div className="flex justify-between ">
+
+        <div className="flex gap-3 w-[200px]">
+          <Avatar className="h-10 w-10" src={profile} />
+          <div >
+            <span className="font-semibold text-sm block text-black/90">{name}</span>
+            <span className="text-black/60 block text-xs">{userName}</span>
+          </div>
+
         </div>
-        </div>
+        <span className="flex">
+          {
+
+            Array.from({ length: 5 }, (_, i) => (
+              i + 1 <= rating ? <Star size={15} color={'orange'} fill={'orange'} key={i} /> : rating % 1 !== 0 && Math.floor(rating) == i ? <span className="relative"><StarHalf className="absolute" size={15} color={'orange'} fill={'orange'} /><Star size={15} color={'gray'} fill={'gray'} key={i} /></span> : <Star size={15} color={'gray'} fill={'gray'} key={i} />
+
+            ))
+
+          }
+        </span>
+
+      </div>
     </div>
+    
+    </>
   )
 }
 

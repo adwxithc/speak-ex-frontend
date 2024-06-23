@@ -61,7 +61,7 @@ function Hero() {
         <div className="lg:max-w-[50%]   mx-auto">
           <div className=" pt-11 sm:pt-24 px-7 text-center ">
 
-            <p className="lg:text-6xl  text-4xl font-bold">
+            <p className="lg:text-6xl text-center  text-3xl font-bold">
               {t('header',{ns:'landingPage'})}
             </p>
             <p className="text-sm sm:text-lg mt-5">
@@ -74,8 +74,9 @@ function Hero() {
               </div>
               : <div className="sm:flex items-center justify-center gap-1 mt-4">
               <Input type="tex" className="rounded-3xl drop-shadow-md mb-5 sm:mb-0  " />
+             
               <Button varient={"primary"} size={"lg"} onClick={()=>navigate('/signup')}>{t('getStarted',{ns:'common'})}</Button>
-              <span>testing spans..</span>
+             
             </div>
             }
            

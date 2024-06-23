@@ -91,7 +91,7 @@ export default function Navbar() {
                     </div>
                   </div>
                 </div>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div className="absolute inset-y-0 -right-5 sm:right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
                   {isAuth ?
                     <>
 
@@ -114,7 +114,7 @@ export default function Navbar() {
 
                     </>
                     :
-                    <Button varient={'primary-outline'} size={'sm'} onClick={() => navigate('/signin')}>{t('login', { ns: 'common' })}</Button>
+                    <Button className=' text-xs sm:text-base px-2 sm:px-4'  varient={'primary-outline'} size={'sm'} onClick={() => navigate('/signin')}>{t('login', { ns: 'common' })}</Button>
                   }
                 </div>
               </div>
