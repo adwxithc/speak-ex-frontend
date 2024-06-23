@@ -1,5 +1,5 @@
 import {  DisclosureButton } from '@headlessui/react'
-import LanguageSelector from '../../../../custom/languageSelector/LanguageSelector'
+import LanguageSelector from '../../../../custom/LanguageSelector/LanguageSelector'
 import { classNames } from '../../../../../utils/style-utils'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../../redux/store'
