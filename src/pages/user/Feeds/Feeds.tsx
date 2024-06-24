@@ -4,7 +4,7 @@ import Container from "../../../components/layout/Container/Container"
 import useGetFeeds from "./useGetFeeds"
 import { useCallback, useRef, useState } from "react"
 import PostPreview from "./PostPreview"
-import { FadeLoader } from "react-spinners"
+import FeedSkeleton from "./FeedSkeleton"
 
 
 function Feeds() {
@@ -45,7 +45,7 @@ function Feeds() {
 
                     <ul>
                     { isLoading?
-                        <FadeLoader/>
+                        <FeedSkeleton/>
                         :
                        
                         feeds.map((post, index)=><li key={post.title+index} ref={ feeds.length==index+1 ?lastPostRef:null}> <PostPreview post={post} /> </li>)

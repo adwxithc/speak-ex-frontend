@@ -9,13 +9,14 @@ import usePostDataFetcher from "./usePostDataFetcher"
 import PostActions from "./PostActions"
 
 import PostAuther from "./PostAuther"
+import PostSkeleton from "./PostSkeleton"
 
 
 function Post() {
     const {postId=''} = useParams()
-    const {post} = usePostDataFetcher({postId})
+    const {post,isLoading} = usePostDataFetcher({postId})
 
- 
+    if(isLoading) return <PostSkeleton />
     return (
         <>
         {
