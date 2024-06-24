@@ -17,6 +17,7 @@ import Modal from "../../../components/custom/Modal/Modal"
 import UploadImage from "../../../components/custom/uploadImage/UploadImage"
 import { IBackendResponse } from "../../../types/queryResults"
 import { IChatRoom, ILanguage } from "../../../types/database"
+import Image from "../../../components/ui/Image/Image"
 
 function ProfileInfo() {
 
@@ -130,7 +131,7 @@ function ProfileInfo() {
         <div className="h-32 md:h-52  overflow-hidden  relative bg-black/30">
           {
             data?.coverPic &&
-            <img className="w-full h-full object-cover object-center" src={self?userData?.coverPic:data?.coverPic} alt="cover picture" />
+            <Image className="w-full h-full object-cover object-center" src={(self?userData?.coverPic:data?.coverPic)||''} alt="cover picture" />
           }
 
           {
@@ -143,7 +144,7 @@ function ProfileInfo() {
           <div className=" flex h-16  relative justify-end mb-2 ">
 
             <div className={`absolute bottom-0 left-0 ${self && 'cursor-pointer'} `} onClick={() => { self && setShowModal(true) }}>
-              <Avatar src={(userData?.id == data?.id ? userData?.profile : data?.profile) || 'src/assets/Images/placeholder/nopic.jpg'} className="h-32 w-32 border-4 border-white " />
+              <Avatar src={(userData?.id == data?.id ? userData?.profile : data?.profile)} initials='src/assets/Images/placeholder/nopic.jpg' className="h-32 w-32 border-4 border-white " />
             </div>
             <div className=" flex items-center ">
               <span className="flex gap-1 mr-3">

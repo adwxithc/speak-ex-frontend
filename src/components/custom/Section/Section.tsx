@@ -4,7 +4,6 @@ import Image from '../../ui/Image/Image'
 
 interface SectionProps {
   title: string;
-  blurHash: string;
   description: string;
   imageUrl: string;
   imagePosition?: 'left' | 'right';
@@ -40,7 +39,7 @@ const fadeInAnimationVarientBottom = {
   },
 }
 
-function Section({ blurHash, description, imageUrl, imagePosition, className }: SectionProps) {
+function Section({  description, imageUrl, imagePosition, className }: SectionProps) {
 
 
   return (
@@ -57,7 +56,7 @@ function Section({ blurHash, description, imageUrl, imagePosition, className }: 
         className={cn(` p-1 flex-1 h-full w-full overflow-hidden bg-yellow-50/80 rounded-xl `, imagePosition === 'right' && 'md:order-2')}
       >
 
-        <Image className="h-full w-full object-contain" height={300} width={500} src={imageUrl} alt={description} blurHash={blurHash} />
+        <Image className="h-full w-full object-contain" height={300} width={500} src={imageUrl} alt={description} />
       </motion.div>
 
       {/* text */}

@@ -30,25 +30,26 @@ function Intro() {
             title: step1.title,
             description: step1.description,
             imageUrl: "/Images/walkthrough/login1.webp",
-            blurHash: "L6K1|7M^00%gT}WZbdRN4T%M5HD%"
+           
 
         },
         {
             title: step2.title,
             description: step2.description,
             imageUrl: "/Images/walkthrough/session2.webp",
-            blurHash: "LAIY8[Mc0G.SGKt8-,IAOttR#iR5"
+         
         },
         {
             title: step3.title,
-            description: step3.description, imageUrl: "/Images/walkthrough/learn3.webp",
-            blurHash: "LEHVF_n$0%NG*0j?RPWCkno#NfjE"
+            description: step3.description, 
+            imageUrl: "/Images/walkthrough/learn3.webp",
+       
         },
         {
             title: step4.title,
             description: step4.description,
             imageUrl: "/Images/walkthrough/gain4.webp",
-            blurHash: "LAIY8[Mc0G.SGKt8-,IAOttR#iR5"
+       
         }
     ], [step1, step2, step3, step4])
 
