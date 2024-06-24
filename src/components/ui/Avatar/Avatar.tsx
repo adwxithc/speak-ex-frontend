@@ -8,7 +8,7 @@ export interface AvatarProps {
   className?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ src, className }) => {
+const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   if (src) {
     // Render image avatar
@@ -17,12 +17,15 @@ const Avatar: React.FC<AvatarProps> = ({ src, className }) => {
         {!imageLoaded && (
 
           <Skeleton
-           
+            width={size}
+            height={size}
             className={cn(className)}
           />)
         }
         <img
-          src={src||'src/assets/Images/placeholder/nopic.jpg'}
+          width={size}
+          height={size}
+          src={src || 'src/assets/Images/placeholder/nopic.jpg'}
           alt="Avatar"
           className={cn(`w-24 h-24 rounded-full object-cover `, className)}
           onLoad={() => setImageLoaded(true)}
