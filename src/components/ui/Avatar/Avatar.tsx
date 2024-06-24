@@ -8,7 +8,7 @@ export interface AvatarProps {
   className?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
+const Avatar: React.FC<AvatarProps> = ({ src, className }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   if (src) {
     // Render image avatar
