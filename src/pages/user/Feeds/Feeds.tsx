@@ -58,8 +58,7 @@ function Feeds() {
                 </main>
 
                 <aside className=" lg:w-80 -z-10  hidden lg:block h-full border-l sticky top-16 p-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, vero! Dolores aspernatur vero voluptatem velit doloremque labore facere eos id autem, fugiat amet adipisci dignissimos aliquid doloribus rerum itaque ullam!
-
+                <span className="font-semibold italic text-lg">"The limits of my language mean the limits of my world."</span>
                 </aside>
             </div>
 
