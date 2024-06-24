@@ -17,8 +17,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
         {!imageLoaded && (
 
           <Skeleton
-            width={size}
-            height={size}
+           
             className={cn(className)}
           />)
         }
