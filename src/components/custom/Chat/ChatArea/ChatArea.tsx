@@ -37,12 +37,11 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
-        // Set the textarea's height based on its content
         e.target.style.height = 'auto';
         e.target.style.height = e.target.scrollHeight < 150 ? `${e.target.scrollHeight}px` : '150px';
     };
 
-    const handleSeenMessage =useCallback( async () => {
+    const handleSeenMessage = useCallback(async () => {
 
         try {
             socket.current?.emit("setMessageSeen", {
@@ -53,7 +52,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             toast.error('something went wrong');
 
         }
-    },[currentChat,setMessageSeen,socket])
+    }, [currentChat, setMessageSeen, socket])
 
     const [getMessages, { isLoading }] = useGetMessagesMutation()
     const observer = useRef<IntersectionObserver | null>(null)
@@ -67,6 +66,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             if (entries[0].isIntersecting && hasMore && !isFirstRender.current) {
                 setPage(prev => prev + 1)
             }
+
         })
         if (node) observer.current.observe(node)
 
@@ -96,12 +96,13 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
 
     useEffect(() => {
         if (isFirstRender.current) {
+            if (!scrollRef?.current) return
+            scrollRef.current.scrollIntoView({ behavior: 'smooth' })
 
             setTimeout(() => {
-                if (!scrollRef?.current) return
-                scrollRef.current.scrollIntoView({ behavior: 'smooth' })
+                isFirstRender.current = false
             }, 500)
-            isFirstRender.current = false
+
         } else {
 
             if (!scrollRef?.current) return
@@ -109,34 +110,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
         }
 
     }, [messages, page,])
-   
-    
 
-    useEffect(() => {
-
-        socket.current?.on("getMessage", (data) => {
-            // alert('recieve getMessage')
-            setArrivalMessage({
-                id: '',
-                senderId: data.senderId,
-                text: data.text,
-                createdAt: new Date().toString(),
-                updatedAt: new Date().toString(),
-                seen: true,
-                roomId: currentChat.id
-            });
-        });
-
-        socket.current?.on("getMessageSeen", () => {
-            // alert('recieve getMessageSeen')
-
-            setTimeout(() => {
-                setMessages(prev => [...prev.map(msg => ({ ...msg, seen: true }))])
-            }, 1000)
-
-
-        });
-    }, [socket, currentChat]);
 
     useEffect(() => {
         arrivalMessage &&
@@ -144,7 +118,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             setMessages((prev) => [...prev, arrivalMessage]);
 
         handleSeenMessage()
-    }, [arrivalMessage, currentChat,handleSeenMessage]);
+    }, [arrivalMessage, currentChat, handleSeenMessage]);
 
     const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -155,21 +129,65 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
                 (member) => member !== userData?.id
             );
 
+
+            const id = (Math.random() * 10000).toString()
+            const newMessage = {
+                id,
+                createdAt: new Date().toString(),
+                updatedAt: new Date().toString(),
+                roomId: currentChat.id,
+                senderId: userData?.id || '',
+                text,
+                seen: false,
+            }
+
+            setMessages(prev => [...prev, newMessage])
+
             socket.current?.emit("sendMessage", {
                 senderId: userData?.id,
                 receiverId,
                 text: text,
             });
-
-            const res = await sendMessage({ roomId: currentChat?.id, messageData: { text, senderId: userData?.id } }).unwrap()
-
-            setMessages(prev => [...prev, res.data])
             setText('')
+            await sendMessage({ roomId: currentChat?.id, messageData: { text, senderId: userData?.id } })
+
+
 
         } catch (error) {
             toast.error('something went wrong');
         }
     }
+
+    const handleGetMessage = useCallback((data: { senderId: string, text: string }) => {
+        setArrivalMessage({
+            id: '',
+            senderId: data.senderId,
+            text: data.text,
+            createdAt: new Date().toString(),
+            updatedAt: new Date().toString(),
+            seen: true,
+            roomId: currentChat.id
+        });
+    }, [currentChat.id])
+
+    const handleGetMessageSeen = useCallback(() => {
+        setMessages(prev => [...prev.map(msg => ({ ...msg, seen: true }))])
+    }, [])
+
+    useEffect(() => {
+        const socketEvent = socket.current
+        if (socketEvent) {
+            socketEvent.on("getMessage", handleGetMessage)
+            socketEvent.on("getMessageSeen", handleGetMessageSeen)
+        }
+        return () => {
+            if (socketEvent) {
+                socketEvent.off("getMessage", handleGetMessage)
+                socketEvent.off("getMessageSeen", handleGetMessageSeen)
+            }
+
+        }
+    }, [handleGetMessage, handleGetMessageSeen, socket])
     return (
 
         <motion.div
@@ -181,7 +199,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             <div className=" h-16 bg-[#152b52] text-white flex items-center ">
                 <div className="flex items-center gap-3 ml-5">
                     <MoveLeft className='cursor-pointer' onClick={() => setCurrentChat(null)} />
-                    <Avatar src={currentChat.user.profile || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s"} className="h-10 w-10" />
+                    <Avatar src={currentChat.user.profile || 'src/assets/Images/placeholder/nopic.jpg'} className="h-10 w-10" />
                     <div className="flex flex-col">
                         <span>{currentChat.user.userName}</span>
                         <span className="text-gray-300 text-sm">{isOnline ? 'Online' : 'Offline'}</span>

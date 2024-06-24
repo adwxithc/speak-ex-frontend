@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ChatArea from "../../../components/custom/Chat/ChatArea/ChatArea"
 import Conversations from '../../../components/custom/Chat/Conversations/Conversations'
 import { useGetChatRoomsQuery } from "../../../redux/features/user/user/chatApiSlice";
@@ -17,8 +17,8 @@ function Chat() {
 
 
   const [conversations, setConversations] = useState<IChatRoom[]>([])
-  const [directedRoom,setDirectedRoom] = useState(location?.state?.roomId||'')
-  
+  const [directedRoom, setDirectedRoom] = useState(location?.state?.roomId || '')
+
   const [currentChat, setCurrentChat] = useState<IChatRoom | null>(null)
   const [onlineUsers, setOnlineUsers] = useState<{ userId: string, socketId: string }[]>([])
   const [page, setPage] = useState(1)
@@ -30,50 +30,19 @@ function Chat() {
 
   useEffect(() => {
     setConversations([...data?.data as IChatRoom[] || []])
-    if(directedRoom){
-      const room = data?.data.find((room:IChatRoom) => room.id === directedRoom)
-      if(room){
+    if (directedRoom) {
+      const room = data?.data.find((room: IChatRoom) => room.id === directedRoom)
+      if (room) {
         setCurrentChat(room)
         setDirectedRoom('')
       }
     }
   }, [data, directedRoom])
 
-  
-
 
 
   useEffect(() => {
-
-    socket.current?.emit('addUser', {
-      userId: userData?.id
-    })
-    socket.current?.on('getUsers', (data) => {
-      setOnlineUsers(data);
-
-    })
-
-    socket.current?.on("getMessage", (data) => {
-
-
-      setConversations(prev => {
-        const updatedConv = prev.find(c => c.otherUserId == data.senderId)
-        if (!updatedConv || currentChat && currentChat.id == data.roomId) return prev
-
-        return prev.map(c => {
-          if (c.id == updatedConv.id && currentChat?.id !== updatedConv.id) {
-
-
-            const unseenMessageCount = c.unseenMessageCount + 1;
-            const lastMessage = { text: data.text, createdAt: new Date().toISOString(), senderId: data.senderId }
-            return { ...c, unseenMessageCount, lastMessage }
-          }
-          return c
-        })
-      })
-    })
-
-
+    socket.current?.emit('addUser',{userId:userData?.id})
     setConversations(prev => {
       return prev.map(c => {
         if (currentChat?.id == c.id) {
@@ -86,7 +55,51 @@ function Chat() {
     })
 
 
-  }, [currentChat, userData])
+  }, [currentChat?.id, userData?.id])
+
+  const handleNewMessage = useCallback((data:{senderId:string,roomId:string,text:string}) => {
+    setConversations(prev => {
+      const updatedConv = prev.find(c => c.otherUserId == data.senderId)
+      if (!updatedConv || currentChat && currentChat.id == data.roomId) return prev
+
+
+      return prev.map(c => {
+        if (c.id == updatedConv.id && currentChat?.id !== updatedConv.id) {
+
+
+          const unseenMessageCount = c.unseenMessageCount + 1;
+          const lastMessage = { text: data.text, createdAt: new Date().toISOString(), senderId: data.senderId }
+          return { ...c, unseenMessageCount, lastMessage }
+        }
+        return c
+      }).sort((a, b) => new Date(b.lastMessage.createdAt).getTime() - new Date(a.lastMessage.createdAt).getTime());
+
+
+
+    })
+  },[currentChat])
+
+  const handleOnlineUsers=useCallback((data:{ userId: string, socketId: string }[])=>{
+    console.log(data);
+    
+    setOnlineUsers(data);
+  },[])
+
+  useEffect(() => {
+    const socketEvent = socket.current;
+    if (socketEvent) {
+      socketEvent.on("getMessage", handleNewMessage)
+      socketEvent.on('getUsers', handleOnlineUsers)
+    }
+
+    return () => {
+      if (socketEvent) {
+        socketEvent.off("getMessage", handleNewMessage)
+      socketEvent.off('getUsers', handleOnlineUsers)
+
+      }
+    }
+  }, [handleNewMessage, handleOnlineUsers])
 
   useEffect(() => {
     const handleResize = () => {
