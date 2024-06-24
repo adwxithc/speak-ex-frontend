@@ -43,7 +43,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Disclosure as="nav" className='bg-white border-b-secondary sticky top-0 w-full z-10 drop-shadow-sm'>
+      <Disclosure as="nav" className='bg-whit border-b-secondary sticky top-0 w-full z-10 drop-shadow-sm '>
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -91,7 +91,7 @@ export default function Navbar() {
                     </div>
                   </div>
                 </div>
-                <div className="absolute inset-y-0 -right-5 sm:right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
+                <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6  ">
                   {isAuth ?
                     <>
 
