@@ -1,5 +1,4 @@
 import Skeleton from "react-loading-skeleton"
-import 'react-loading-skeleton/dist/skeleton.css'
 import PostWraper from "../../../components/layout/PostWraper/PostWraper"
 
 function PostSkeleton() {
