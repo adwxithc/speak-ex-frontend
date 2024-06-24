@@ -3,7 +3,7 @@ import { RouteObject } from 'react-router-dom';
 import UserPrivateRoute from '../pages/user/UserPrivateRoute/UserPrivateRoute';
 
 const UserLayout =  lazy(()=>import('../components/layout/UserLayout/UserLayout'));
-const Chat = lazy(() => import('../pages/user/chat/Chat'));
+const Chat = lazy(() => import('../pages/user/Chat/Chat'));
 const FollowAndFollowers = lazy(() => import('../pages/user/FollowAndFollowers/FollowAndFollowers'));
 const LandingPage = lazy(() => import('../pages/user/LandingPage/LandingPage'));
 const Monetization = lazy(() => import('../pages/user/Monetization/Monetization'));
