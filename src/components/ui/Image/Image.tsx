@@ -17,15 +17,10 @@ function Image({ src, width = 100, height = 100, alt = "", className = "" }: IIm
   return (
     <>
       {!imageLoaded && (
-
-        <span className={cn(className)}>
           <Skeleton
-            className="h-full w-full"
+          className={cn('rounded-none',className)}
           />
-        </span>
-
-
-
+        
       )}
       <img
         width={width}
