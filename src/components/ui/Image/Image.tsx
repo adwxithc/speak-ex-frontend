@@ -1,48 +1,42 @@
-import { useState, useEffect } from "react";
-import { Blurhash } from "react-blurhash";
+import { useState } from "react";
 import { cn } from "../../../utils/style-utils";
-interface IImageProps{
-    src:string;
-    blurHash: string;
-    width?: number;
-    height?: number;
-    alt?: string;
-    className?:string;
+import Skeleton from "react-loading-skeleton";
 
+
+interface IImageProps {
+  src: string;
+  width?: number;
+  height?: number;
+  alt?: string;
+  className?: string;
 }
-function Image({src,blurHash, width, height,alt, className}:IImageProps) {
-    const [imageLoaded, setImageLoaded] = useState(false)
 
-    useEffect(()=>{
-        const img = document.createElement('img');
-        img.onload=()=>{
-            setImageLoaded(true)
-        }
-        img.src=src
-    },[src])
+function Image({ src, width = 100, height = 100, alt = "", className = "" }: IImageProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <>
-    <div style={{display:imageLoaded?'none':'inline'}}>
-        <Blurhash
-        hash={blurHash}
+      {!imageLoaded && (
+  
+          <Skeleton
+          width={width}
+          height={height}
+          className={cn(className)}
+        />
+        
+        
+      )}
+      <img
         width={width}
         height={height}
-        resolutionX={32}
-        resolutionY={32}
-        punch={1}
         className={cn(className)}
-         />
-    </div>
-    <img 
-    width={width}
-    height={height}
-    className={cn(className)}
-    src={src}
-     alt={alt}
-     style={{display:!imageLoaded?'none':'inline'}}
+        src={src}
+        alt={alt}
+        onLoad={() => setImageLoaded(true)}
+        style={{ display: imageLoaded ? "inline" : "none" }}
       />
     </>
-  )
+  );
 }
 
-export default Image
+export default Image;
