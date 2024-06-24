@@ -4,12 +4,11 @@ import Skeleton from 'react-loading-skeleton';
 
 export interface AvatarProps {
   src?: string;
-  initials?: string;
   size?: number;
   className?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ src, initials, size = 24, className }) => {
+const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   if (src) {
     // Render image avatar
@@ -24,7 +23,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, initials, size = 24, className }) 
           />)
         }
         <img
-          src={src}
+          src={src||'src/assets/Images/placeholder/nopic.jpg'}
           alt="Avatar"
           className={cn(`w-24 h-24 rounded-full object-cover `, className)}
           onLoad={() => setImageLoaded(true)}
@@ -34,14 +33,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, initials, size = 24, className }) 
     );
   }
 
-  // Render initials avatar as fallback
-  return (
-    <div
-      className={cn(`w-${size} h-${size} rounded-full bg-gray-300 text-white text-lg font-bold flex justify-center items-center`, className)}
-    >
-      {initials}
-    </div>
-  );
+
 };
 
 export default Avatar;
