@@ -38,7 +38,7 @@ export default function VideoSession({ remoteStream, remoteUser, handleSendMessa
 
   return (
 
-    <div className="flex bg-[#0e1c34]">
+    <div className="flex h-screen bg-[#222222]">
       <AnimatePresence
         initial={false}
         mode="wait"
@@ -47,23 +47,23 @@ export default function VideoSession({ remoteStream, remoteUser, handleSendMessa
         {
           isMobile ? (
             chating ? (
-              <div className="w-full border-l dark:border-l-[#091220]">
+              <div className="w-full  h-full">
                 <LiveChat {...{ remoteUser, messages, handleSendMessage, setChating }} />
               </div>
             )
               : (
-                <div className="flex-1">
+                <div className="flex-1 h-full">
                   <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
                 </div>
               )
           )
             : (
               <>
-                <div className="flex-1">
+                <div className="flex-1 h-full">
                   <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
                 </div>
 
-                <div className="w-96 border-l dark:border-l-[#091220]">
+                <div className="w-96 h-full">
                   <LiveChat {...{ remoteUser, messages, handleSendMessage, setChating }} />
                 </div>
               </>

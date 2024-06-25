@@ -41,9 +41,9 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
     transition={{ type: 'spring', damping: 75, stiffness: 800 }}
     className="h-full flex flex-col">
 
-    <div className="h-screen  flex flex-col ">
+    <div className="h-full  flex flex-col md:pt-2">
     {/* top area */}
-    <div className="h-16 bg-white dark:bg-[#0e1c34] flex items-center  ">
+    <div className="h-16 bg-white  flex items-center  ">
         <ArrowLeft onClick={()=>setChating(false)} color='white' className='mx-3 cursor-pointer' />
         <div className="flex  dark:text-white items-center  gap-3  ">
             <Avatar src={userData?.profile} className="h-8 w-8" />
@@ -55,7 +55,7 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
         </div>
     </div>
     {/* chat area */}
-    <div className="flex-1 bg-[#ebeaea] overflow-auto flex flex-col dark:bg-[#0F2440]">
+    <div className="flex-1 md:rounded-b-md  md:mb-2 bg-[#ebeaea] overflow-auto flex flex-col ">
 
         <div className='flex-1 overflow-auto pretty-scrollbar'>
           {
@@ -67,8 +67,8 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
 
         <div className='p-2'>
 
-            <div className='flex bg-white dark:bg-[#152B52] rounded-xl items-center overflow-hidden mx-2'>
-            <textarea onChange={handleChange} value={text} placeholder='type something..' className='w-full text-white pl-3 py-2 resize-none bg-inherit outline-none pretty-scrollbar' name="" id=""></textarea>
+            <div className='flex bg-white  rounded-xl items-center overflow-hidden mx-2'>
+            <textarea onChange={handleChange} value={text} placeholder='type something..' className='w-full text-black/80 pl-3 py-2 resize-none bg-inherit outline-none pretty-scrollbar' name="" id=""></textarea>
             <Button onClick={()=>handleSendMessage(text,()=>setText(''))} className='mr-3 dark:text-white mt-auto mb-5'><SendHorizontal   /></Button>
             
             </div>
@@ -78,7 +78,7 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
 
     </div>
     {/* bottom area */}
-    <div className="h-20 bg-white  dark:bg-[#0e1c34]" ></div>
+    <div className="h-20 bg-white  md:bg-black/30" ></div>
     </div>
     </motion.div>
   )
