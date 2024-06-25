@@ -83,16 +83,14 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime, chang
 
     return (
 
-        <div className="h-screen   flex flex-col">
-            {/* top area */}
-            <div className="h-16 bg-white  dark:bg-[#0e1c34] flex items-center">
-            </div>
+        <div className="h-full   flex flex-col">
+         
             {/* chat area */}
-            <div className="flex-1 bg-secondary  dark:bg-[#152B52]  overflow-hidden">
+            <div className="flex-1 overflow-hidden">
 
                 <div className="h-full w-full p-1 md:p-5 xl:px-20 relative overflow-hidd  ">
 
-                    <div className={`${'aspect-square xl:aspect-video'} bg-[#0a1426]   rounded-xl drop-shadow-md relative mt-20 sm:m-0 overflow-hidden`}>
+                    <div className={`${'aspect-square xl:aspect-video'}  bg-black    rounded-xl drop-shadow-md relative mt-20 sm:m-0 overflow-hidden`}>
 
                         <span className="text-gray-700 absolute top-5 right-5 cursor-pointer">
 
@@ -110,7 +108,7 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime, chang
                     </div>
                     {
                         true &&
-                        <div className="aspect-video w-52 sm:w-72 bg-[#0a1426]    absolute bottom-10 right-5 sm:right-10 overflow-hidden rounded-xl drop-shadow">
+                        <div className="aspect-video w-52 sm:w-72 bg-black   absolute bottom-10 right-5 sm:right-10 overflow-hidden rounded-xl drop-shadow">
                             
 
                                     <video ref={localvideoRef} id='localVideo' autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
@@ -123,19 +121,17 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime, chang
 
             </div>
             {/* bottom area */}
-            <div className="h-20 bg-white dark:bg-[#0e1c34] flex justify-center items-center relative" >
+            <div className="h-20 bg-black/30 flex justify-center items-center relative" >
                 <div className="flex gap-5 items-center ">
 
-                    <Button onClick={toggleAudio} >
+                    <Button onClick={toggleAudio} className={` p-2 rounded-none h-full flex-1 shadow-white/10  px-1  transition-colors text-white  ${videoEnabled ? 'bg-[#444444] hover:bg-gray-700/20' : 'bg-red-600  hover:bg-red-700/20'}`} >
 
-                        {audioEnabled ?
-                            <span className=" dark:bg-white p-2 rounded-full cursor-pointer "><Mic /></span>
-                            : <span className=" dark:bg-red-500 text-white p-2 rounded-full cursor-pointer "><MicOff /></span>
+                        {audioEnabled ?<Mic />:<MicOff />
                         }
                     </Button>
                     <VideoButton {...{ toggleVideo, videoEnabled, changeVideoDevice }} />
-                    <Button onClick={terminate} className="bg-red-500 text-white " size={'md'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
-                    <Button onClick={() => setChating(true)}><span className="dark:bg-white p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
+                    <Button onClick={terminate} className="bg-red-500 text-white " size={'lg'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
+                    <Button onClick={() => setChating(true)}><span className="bg-white text-black/70 p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
                 </div>
             </div>
         </div>
