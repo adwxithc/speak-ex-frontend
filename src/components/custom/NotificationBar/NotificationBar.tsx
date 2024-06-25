@@ -21,7 +21,7 @@ const  Modal:FC<ModalProp> = ({ handleClose} ) =>{
         
          <Backdrop onClick={handleClose}>
             <motion.div
-                className={`w-[90vw] sm:w-96 h-screen py-2  flex flex-col items-center bg-white absolute right-0`}
+                className={`w-[90vw] sm:w-96 h-full py-2  flex flex-col items-center bg-white absolute right-0`}
                 onClick={(e) => e.stopPropagation()}
                 initial={{ x: '100vw' }}
                 exit={{ x: '100vw' }} // ANIMATE  TO  RIGHT WHEN UNMOUNTING
