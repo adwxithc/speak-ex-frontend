@@ -12,7 +12,7 @@ function Footer() {
                 <Container>
                     <div className="flex flex-col justify-center items-center p-3">
                         <div className="w-40 mb-2 ">
-                            <img className="h-full w-full" src="/Images/logo/logo.webp" alt="" />
+                            <img className="h-full w-full" src="/Images/logo/logo-white.webp" alt="" />
                         </div>
 
                         <p >
