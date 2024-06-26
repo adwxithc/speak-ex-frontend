@@ -73,9 +73,9 @@ export default function Navbar() {
                   <div className="hidden sm:ml-16 sm:block">
                     <div className="flex space-x-5 items-center gap-2 sm:gap-0">
                       {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
-                        <div key={item.name} className='relative group py-2'>
+                        <div key={item.name} className='relative group py-2 md:px-3'>
                           <a
-                            className={'text-sm font-medium cursor-pointer'}
+                            className={'text-sm lg:text-base font-medium cursor-pointer'}
                             
                             onClick={item.action}
                           >

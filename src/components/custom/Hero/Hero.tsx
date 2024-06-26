@@ -60,7 +60,7 @@ function Hero() {
       <div className=" bg-[url('/src/assets/Images/ad.png')] h-[100vh] object-contain bg-no-repeat bg-center " >
         <div className="lg:max-w-[50%]   mx-auto">
           <div className=" pt-11 sm:pt-24 px-7 text-center ">
-
+testttttt...
             <p className="lg:text-6xl text-center  text-3xl font-bold">
               {t('header',{ns:'landingPage'})}
             </p>

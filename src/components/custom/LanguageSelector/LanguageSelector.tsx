@@ -28,7 +28,7 @@ function LanguageSelector({className}:{className?:string}) {
   
 
       <div className="relative w-full text-sm" onBlur={() => setOpen(false)}>
-        <button onClick={() => setOpen(true)} className={cn("focus:ring-2 border-2 bg-white mb-1 border-primary text-primary p-0.5  px-2 font-semibold rounded-full flex items-center ",className)}><span>{language?.lang}</span><Globe className="ml-1" size={17} /></button>
+        <button onClick={() => setOpen(true)} className={cn("focus:ring-2 border-2 bg-white mb-1 border-primary text-primary p-0.5  px-2 font-semibold rounded-full flex items-center ",className)}><span>{language?.lang||'English'}</span><Globe className="ml-1" size={17} /></button>
         {
           open &&
           <ul className="shadow-md bg-white rounded p-1 absolute  -left-2 -right-2">

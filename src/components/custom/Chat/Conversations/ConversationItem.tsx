@@ -15,7 +15,7 @@ interface ConversationItemProps {
 
 function ConversationItem({ conversation, onlineUsers }: ConversationItemProps) {
   const isOnline = Boolean(onlineUsers.find(user => user.userId == conversation.otherUserId))
-
+  const lastMessageTime = conversation?.lastMessage?.createdAt ? moment(new Date(conversation.lastMessage.createdAt.toString())).fromNow() : null
 
 
   return (
@@ -43,7 +43,7 @@ function ConversationItem({ conversation, onlineUsers }: ConversationItemProps) 
         </div>
 
         <div className='flex flex-col items-end gap-2 ml-auto'>
-          <span className='text-xs text-gray-400'>{moment(new Date(conversation.lastMessage.createdAt.toString())).fromNow()}</span>
+          <span className='text-xs text-gray-400'>{lastMessageTime}</span>
           {conversation.unseenMessageCount > 0 &&
             <div className='h-5 w-5 rounded-full bg-white flex items-center justify-center text-primary font-semibold'>{conversation.unseenMessageCount}</div>
           }
