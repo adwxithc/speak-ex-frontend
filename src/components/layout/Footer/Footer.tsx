@@ -1,69 +1,47 @@
 
 import Container from "../Container/Container"
 import Button from "../../ui/Button/Button";
-import { Github, Instagram, Linkedin } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Footer() {
-  return (
-    <footer className='bg-primary  text-white'>
-        <div className="  w-full overflow-hidden">
+    return (
+        <footer className='bg-primary  text-white'>
+            <div className="  w-full overflow-hidden">
 
-            <Container>
-            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 p-20">
-                <div className="flex flex-col  ">
-                    <h2 className="text-2xl uppercase font-semibold  "> Creativity</h2>
-                    <ul>
-                        <li className="my-4 list-none">one to one session</li>
-                        <li className="my-4 list-none">speak with experties</li>
-                        <li className="my-4 list-none">real trainers</li>
-                        <li className="my-4 list-none">one to one session</li>
-                        <li className="my-4 list-none">speak with experties</li>
-                        <li className="my-4 list-none">real trainers</li>
-                    </ul>
-                </div>
-                <div className="flex flex-col  ">
-                    <h2 className="text-2xl uppercase font-semibold  "> Creativity</h2>
-                    <ul>
-                        <li className="my-4 list-none">one to one session</li>
-                        <li className="my-4 list-none">speak with experties</li>
-                        <li className="my-4 list-none">real trainers</li>
-                    </ul>
-                </div>
-                <div className="flex flex-col  ">
-                    <h2 className="text-2xl uppercase font-semibold  "> Creativity</h2>
-                    <ul>
-                        <li className="my-4 list-none">one to one session</li>
-                        <li className="my-4 list-none">speak with experties</li>
-                        <li className="my-4 list-none">real trainers</li>
-                    </ul>
-                </div>
-                <div className="flex flex-col  ">
-                    <h2 className="text-2xl uppercase font-semibold  "> Contact</h2>
-                    <ul>
-                        <li className="my-4 list-none">adwaithjanardhanan0@gmail.com</li>
-                        <li className="my-4 list-none">+91 7902248441</li>
-                        
-                    </ul>
-                    <div> 
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><Instagram /></Button>
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><Github /></Button>
-                        {/* <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><RiTwitterXLine /></Button> */}
-                        <Button className="text-xl hover:scale-150 hover:text-white text-secondary mx-2"><Linkedin /></Button>
+                <Container>
+                    <div className="flex flex-col justify-center items-center p-3">
+                        <div className="w-40 mb-2 ">
+                            <img className="h-full w-full" src="/Images/logo/logo.png" alt="" />
+                        </div>
+
+                        <p >
+                            designed and developed by
+                            <Link className="cursor-pointer hover:bg-white/10 rounded px-1" target="_blank" to={'https://www.linkedin.com/in/adwaith-c-25b5a0218/'}>Adwaith C</Link>
+                        </p>
+
+
+                        <div className=" flex justify-center gap-3  ">
+                            <Link to={'https://www.instagram.com/adwxith.c/'}  target="_blank"><Button className="text-xl hover:scale-150 hover:text-white text-secondary  p-2"><Instagram size={20} /></Button></Link>
+                            <Link to={'https://github.com/adwxithc/speak-ex-frontend'}  target="_blank"><Button className="text-xl hover:scale-150 hover:text-white text-secondary  p-2"><Github size={20} /></Button></Link>
+
+                            <Link to={'https://www.linkedin.com/in/adwaith-c-25b5a0218/'}  target="_blank"><Button className="text-xl hover:scale-150 hover:text-white text-secondary  p-2"><Linkedin size={20} /></Button></Link>
+                            <Link to={'mailto:adwaithjanardhanan0@gmail.com'}  target="_blank"><Button className="text-xl hover:scale-150 hover:text-white text-secondary  p-2" ><Mail size={20} /></Button></Link>
+                        </div>
+
                     </div>
-                </div>
-               
+
+
+                    <div className="w-full border-t-2 border-white p-3">
+                        <p className="text-sm">© 2024 speak exe. All Rights Reserved.</p>
+                    </div>
+
+                </Container>
             </div>
 
-<div className="w-full border-t-2 border-white p-3">
-<p className="text-sm">© 2024 speak exe. All Rights Reserved.</p>
-</div>
 
-            </Container>
-        </div>
-        
-        
-    </footer>
-  )
+        </footer>
+    )
 }
 
 export default Footer

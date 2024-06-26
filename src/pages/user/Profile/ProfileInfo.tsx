@@ -130,7 +130,7 @@ function ProfileInfo() {
         {/* cover part */}
         <div className="h-32 md:h-52  overflow-hidden  relative bg-black/30">
           {
-            data?.coverPic &&
+            (data?.coverPic||(userData?.coverPic && self)) &&
             <Image className="w-full h-full object-cover object-center" src={(self?userData?.coverPic:data?.coverPic)||''} alt="cover picture" />
           }
 
