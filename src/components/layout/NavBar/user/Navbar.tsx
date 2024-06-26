@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { lazy, useState } from 'react'
 
-import { classNames } from '../../../../utils/style-utils.tsx'
+
 import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
 import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
 import useNavigation from './useNavigation.tsx'
@@ -75,10 +75,7 @@ export default function Navbar() {
                       {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
                         <div key={item.name} className='relative group px-3 py-2'>
                           <a
-                            className={classNames(
-                              item.current ? 'bg-gray-900 text-white' : 'text-black ',
-                              'text-sm font-medium cursor-pointer'
-                            )}
+                            className={'text-sm font-medium cursor-pointer'}
                             
                             onClick={item.action}
                           >
