@@ -1,4 +1,4 @@
-import {  DisclosureButton } from '@headlessui/react'
+import { DisclosureButton } from '@headlessui/react'
 import LanguageSelector from '../../../../custom/LanguageSelector/LanguageSelector'
 import { classNames } from '../../../../../utils/style-utils'
 import { useSelector } from 'react-redux'
@@ -19,24 +19,18 @@ function MobileMenu({ navigation }: { navigation: INavigationItem[] }) {
         <DisclosureButton
           key={item.name}
           onClick={item.action}
-          className={classNames(
-            item.current ? 'bg-gray-500 text-white' : 'text-black hover:bg-primary hover:text-white',
-            'block rounded-md px-3 py-2 text-base  '
-          )}
-          aria-current={item.current ? 'page' : undefined}
+          className={classNames('block rounded-md px-3 py-2 text-black/70 hover:text-black')}
+
         >
           <div className='flex items-center gap-3'>
-            <span className='text-gray-500'>
-              <item.icon size={20} />
+            <span >
+              <item.icon size={18} />
             </span>
 
             <span>
               {item.name}
             </span>
           </div>
-
-
-
 
         </DisclosureButton>
       ))}

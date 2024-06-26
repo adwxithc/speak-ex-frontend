@@ -1,10 +1,10 @@
-import { Disclosure, DisclosureButton, Transition } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { lazy, useState } from 'react'
 
-import { classNames } from '../../../../utils/style-utils.tsx'
+
 import ProfileDropdown from '../../../custom/ProfileDropdown/ProfileDropdown.tsx'
 import useScrollDetection from '../../../../hooks/useScrollDetection.tsx'
 import useNavigation from './useNavigation.tsx'
@@ -50,7 +50,7 @@ export default function Navbar() {
               <div className={`relative flex items-center justify-between ${isScrolled ? 'h-16 ' : 'h-24'} transition duration-300 ease`}>
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button */}
-                  <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-black hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-black hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -66,7 +66,7 @@ export default function Navbar() {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="h-8 w-auto"
-                      src="Images/logo/logo.png"
+                      src="/Images/logo/logo.webp"
                       alt="Speak Ex"
                     />
                   </div>
@@ -75,16 +75,13 @@ export default function Navbar() {
                       {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
                         <div key={item.name} className='relative group px-3 py-2'>
                           <a
-                            className={classNames(
-                              item.current ? 'bg-gray-900 text-white' : 'text-black ',
-                              'text-sm font-medium cursor-pointer'
-                            )}
-                            aria-current={item.current ? 'page' : undefined}
+                            className={'text-sm font-medium cursor-pointer'}
+                            
                             onClick={item.action}
                           >
                             {item.name}
                           </a>
-                          <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all ${item.current ? 'w-full' : 'group-hover:w-full'}`}></span>
+                          <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all group-hover:w-full`}></span>
                         </div>
                       ))}
                       <div className='mt-1.5'><LanguageSelector /></div>
@@ -122,7 +119,7 @@ export default function Navbar() {
 
                 {/* mobile view */}
             <Transition
-              as={Disclosure.Panel}
+              as={DisclosurePanel}
               enter="transition ease-out duration-200"
               enterFrom="opacity-0 transform -translate-y-1"
               enterTo="opacity-100 transform translate-y-0"

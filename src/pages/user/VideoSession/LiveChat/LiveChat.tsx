@@ -43,7 +43,7 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
 
     <div className="h-full  flex flex-col md:pt-2">
     {/* top area */}
-    <div className="h-16 bg-white  flex items-center  ">
+    <div className="h-16 md:rounded-t-md overflow-hidden bg-white  flex items-center  ">
         <ArrowLeft onClick={()=>setChating(false)} color='white' className='mx-3 cursor-pointer' />
         <div className="flex  dark:text-white items-center  gap-3  ">
             <Avatar src={userData?.profile} className="h-8 w-8" />
