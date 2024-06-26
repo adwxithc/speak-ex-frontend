@@ -20,10 +20,10 @@ interface IVideoCallArea {
     setChating: Dispatch<SetStateAction<boolean>>
     remoteUser: Required<IUser> | null
     startTime: number;
-    changeVideoDevice: (deviceId: string) => Promise<void>
+    
 }
 
-function VideoCallArea({  remoteStream, setChating, remoteUser, startTime, changeVideoDevice }: IVideoCallArea) {
+function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVideoCallArea) {
 
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
@@ -124,12 +124,12 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime, chang
             <div className="h-20 bg-black/30 flex justify-center items-center relative" >
                 <div className="flex gap-5 items-center ">
 
-                    <Button onClick={toggleAudio} className={` p-2 rounded-none h-full flex-1 shadow-white/10  px-1  transition-colors text-white  ${videoEnabled ? 'bg-[#444444] hover:bg-gray-700/20' : 'bg-red-600  hover:bg-red-700/20'}`} >
+                    <Button onClick={toggleAudio} className={` p-2 rounded-md h-full flex-1 shadow-white/10   transition-colors text-white  ${audioEnabled ? 'bg-[#444444] hover:bg-gray-700/20' : 'bg-red-600  hover:bg-red-700/20'}`} >
 
                         {audioEnabled ?<Mic />:<MicOff />
                         }
                     </Button>
-                    <VideoButton {...{ toggleVideo, videoEnabled, changeVideoDevice }} />
+                    <VideoButton {...{ toggleVideo, videoEnabled }} />
                     <Button onClick={terminate} className="bg-red-500 text-white " size={'lg'}> <span className="mr-2 font-semibold">End</span> <PhoneOff size={15} /></Button>
                     <Button onClick={() => setChating(true)}><span className="bg-white text-black/70 p-2 rounded-full cursor-pointer"><MessageSquareText /> </span></Button>
                 </div>

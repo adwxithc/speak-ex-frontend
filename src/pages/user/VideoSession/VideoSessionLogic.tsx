@@ -39,46 +39,7 @@ function VideoSessionLogic() {
     //HANDLE VOLATILE CHAT DURING VIDEO SESSION
     const { handleSendMessage, messages } = useLiveChat(data?.data);
 
-    const { audioDevice } = useSelector((state: RootState) => state.session)
-
-
-    const changeVideoDevice = async (deviceId: string) => {
-
-        //2. we need to getUserMedia (permission)
-        const newConstraints = {
-            audio: audioDevice === "default" ? true : { deviceId: { exact: audioDevice } },
-            video: { deviceId: { exact: deviceId } }
-        }
-        const stream = await navigator.mediaDevices.getUserMedia(newConstraints)
-        // //3. update Redux with that videoDevice, and that video is enabled
-        dispatch(setSession({ 'videoDevice': deviceId }));
-        dispatch(setSession({ 'video': true }))
-
-
-
-        //6. add tracks
-        const [videoTrack] = stream.getVideoTracks();
-        const peerConnection = getPeerConnection()
-
-        const pc = peerConnection.getPeerConnection();
-        if (!pc) return
-        const senders = pc.getSenders()
-        //find the sender that is in charge of the video track
-        const sender = senders.find(s => {
-            if (s.track) {
-                //if this track matches the videoTrack kind, return it
-                return s.track.kind === videoTrack.kind
-            } else {
-                return false;
-            }
-        })
-        if (sender) {
-            //sender is RTCRtpSender, so it can replace the track
-
-            sender.replaceTrack(videoTrack)
-
-        }
-    }
+   
 
 
     const handleCallUser = useCallback(async ({ remoteUserId }: { remoteUserId: string }) => {
@@ -98,7 +59,7 @@ function VideoSessionLogic() {
         setNegoneeded(true)
     }, [])
 
-    console.log(negoneeded, clientReady, 'negoneeded,clientReady,');
+   
     useEffect(() => {
         if (type == 'learner' && clientReady && !sendedPendingAns.current) {
             const ans = getPeerConnection().getPeerConnection()?.localDescription
@@ -262,7 +223,7 @@ function VideoSessionLogic() {
 
 
     return (
-        <VideoSession {...{ remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime(), changeVideoDevice }} />
+        <VideoSession {...{ remoteStream, remoteUser: data?.data, messages, handleSendMessage, startTime: new Date(startTime).getTime() }} />
     )
 }
 export default VideoSessionLogic

@@ -12,12 +12,12 @@ interface IVideoSessionProps {
   messages: IMessage[],
   handleSendMessage: (text: string, cb: () => void) => Promise<void>
   startTime: number;
-  changeVideoDevice: (deviceId: string) => Promise<void>
+
 
 }
 
 
-export default function VideoSession({ remoteStream, remoteUser, handleSendMessage, messages, startTime, changeVideoDevice }: IVideoSessionProps) {
+export default function VideoSession({ remoteStream, remoteUser, handleSendMessage, messages, startTime }: IVideoSessionProps) {
 
   const [isMobile, setIsMobile] = useState(true);
   const [chating, setChating] = useState(false)
@@ -53,14 +53,14 @@ export default function VideoSession({ remoteStream, remoteUser, handleSendMessa
             )
               : (
                 <div className="flex-1 h-full">
-                  <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
+                  <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime }} />
                 </div>
               )
           )
             : (
               <>
                 <div className="flex-1 h-full">
-                  <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime, changeVideoDevice }} />
+                  <VideoCallArea {...{ remoteStream, setChating, remoteUser, startTime }} />
                 </div>
 
                 <div className="w-96 h-full">
