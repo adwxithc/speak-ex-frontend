@@ -28,7 +28,6 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
     const { userData } = useSelector((state: RootState) => state.user)
     const [text, setText] = useState('')
     const [messages, setMessages] = useState<IMessage[]>([])
-    const [arrivalMessage, setArrivalMessage] = useState<IMessage | null>(null);
     const [hasMore, setHasMore] = useState(false)
     const scrollRef = useRef<HTMLDivElement | null>(null)
     const [setMessageSeen] = useSetMessageSeenMutation()
@@ -97,7 +96,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
     useEffect(() => {
         if (isFirstRender.current) {
             if (!scrollRef?.current) return
-            scrollRef.current.scrollIntoView({ behavior: 'smooth' })
+            scrollRef.current.scrollIntoView()
 
             setTimeout(() => {
                 isFirstRender.current = false
@@ -112,13 +111,7 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
     }, [messages, page,])
 
 
-    useEffect(() => {
-        arrivalMessage &&
-            currentChat?.members.includes(arrivalMessage.senderId) &&
-            setMessages((prev) => [...prev, arrivalMessage]);
 
-        handleSeenMessage()
-    }, [arrivalMessage, currentChat, handleSeenMessage]);
 
     const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -151,15 +144,13 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             setText('')
             await sendMessage({ roomId: currentChat?.id, messageData: { text, senderId: userData?.id } })
 
-
-
         } catch (error) {
             toast.error('something went wrong');
         }
     }
 
     const handleGetMessage = useCallback((data: { senderId: string, text: string }) => {
-        setArrivalMessage({
+        const newMessage = {
             id: '',
             senderId: data.senderId,
             text: data.text,
@@ -167,8 +158,13 @@ function ChatArea({ setCurrentChat, currentChat, socket, onlineUsers, page, setP
             updatedAt: new Date().toString(),
             seen: true,
             roomId: currentChat.id
-        });
-    }, [currentChat.id])
+        };
+
+        currentChat?.members.includes(newMessage.senderId) &&
+            setMessages((prev) => [...prev, newMessage]);
+
+        handleSeenMessage()
+    }, [currentChat.id, currentChat?.members, handleSeenMessage])
 
     const handleGetMessageSeen = useCallback(() => {
         setMessages(prev => [...prev.map(msg => ({ ...msg, seen: true }))])
