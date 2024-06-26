@@ -71,9 +71,9 @@ export default function Navbar() {
                     />
                   </div>
                   <div className="hidden sm:ml-16 sm:block">
-                    <div className="flex space-x-5">
+                    <div className="flex space-x-5 items-center gap-2 sm:gap-0">
                       {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
-                        <div key={item.name} className='relative group px-3 py-2'>
+                        <div key={item.name} className='relative group py-2'>
                           <a
                             className={'text-sm font-medium cursor-pointer'}
                             
@@ -81,7 +81,7 @@ export default function Navbar() {
                           >
                             {item.name}
                           </a>
-                          <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all group-hover:w-full`}></span>
+                          <span className={`absolute bottom-2 left-0 w-0 h-0.5 bg-black transition-all group-hover:w-full`}></span>
                         </div>
                       ))}
                       <div className='mt-1.5'><LanguageSelector /></div>
