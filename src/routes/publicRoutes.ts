@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
-const Test = lazy(()=> import('../pages/Test/Test')) ;
+
 const SignIn = lazy(()=> import('../pages/user/auth/SignIn')) ;
 const SignUp = lazy(()=> import('../pages/user/auth/SignUp')) ;
 const ForgotPassword = lazy(()=> import('../pages/user/auth/forgot-password/ForgotPassword')) ;
@@ -18,7 +18,6 @@ const publicRoutes:RouteObject[] = [
     { path: '/verify-otp', Component: VerifyOtp },
     { path: '/forgot-password', Component: ForgotPassword },
     { path: '/forgot-password/reset-password', Component: ResetPassword },
-    { path: '/test', Component: Test },
 ];
 
 export default publicRoutes;
