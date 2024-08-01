@@ -39,23 +39,23 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
     exit={{ x: '100vw' }}
     
     transition={{ type: 'spring', damping: 75, stiffness: 800 }}
-    className="h-full flex flex-col">
+    className="h-full flex flex-col ">
 
     <div className="h-full  flex flex-col md:pt-2">
     {/* top area */}
-    <div className="h-16 md:rounded-t-md overflow-hidden bg-white  flex items-center  ">
-        <ArrowLeft onClick={()=>setChating(false)} color='white' className='mx-3 cursor-pointer' />
-        <div className="flex  dark:text-white items-center  gap-3  ">
+    <div className="h-16 md:rounded-t-md overflow-hidden bg-white  flex items-center md:mr-5 ">
+        <ArrowLeft onClick={()=>setChating(false)} color='black' className='mx-3 cursor-pointer md:hidden inline' />
+        <div className="flex  text-neutral-800 items-center  gap-3  md:ml-5">
             <Avatar src={userData?.profile} className="h-8 w-8" />
             <div className="flex flex-col">
-            <span >{userData?.firstName+' '+userData?.lastName}</span>
-            <span className="text-xs text-gray-800 dark:text-gray-300   truncate">{userData?.email}</span>
+            <span className='font-semibold' >{userData?.firstName+' '+userData?.lastName}</span>
+            <span className="text-xs text-neutral-500   truncate">{userData?.email}</span>
             </div>
             
         </div>
     </div>
     {/* chat area */}
-    <div className="flex-1 md:rounded-b-md  md:mb-2 bg-[#ebeaea] overflow-auto flex flex-col ">
+    <div className="flex-1 md:rounded-b-md  md:mb-2 bg-secondary overflow-auto flex flex-col md:mr-5">
 
         <div className='flex-1 overflow-auto pretty-scrollbar'>
           {
@@ -69,7 +69,7 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
 
             <div className='flex bg-white  rounded-xl items-center overflow-hidden mx-2'>
             <textarea onChange={handleChange} value={text} placeholder='type something..' className='w-full text-black/80 pl-3 py-2 resize-none bg-inherit outline-none pretty-scrollbar' name="" id=""></textarea>
-            <Button onClick={()=>handleSendMessage(text,()=>setText(''))} className='mr-3 dark:text-white mt-auto mb-5'><SendHorizontal   /></Button>
+            <Button onClick={()=>handleSendMessage(text,()=>setText(''))} className='mr-3 dark:text-neutral-900 mt-auto mb-5'><SendHorizontal   /></Button>
             
             </div>
             

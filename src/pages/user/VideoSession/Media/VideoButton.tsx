@@ -53,8 +53,7 @@ function VideoButton({ toggleVideo, videoEnabled }: { videoEnabled: boolean, tog
     }
     const changeLocalVideoDevice = async(deviceId:string)=>{
 
-        console.log(deviceId);
-      
+  
         setShowDevices(false)
         changeVideoDevice(deviceId)
 

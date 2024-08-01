@@ -6,9 +6,11 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { useSocket } from "../../../../context/SocketProvider"
 import { useNavigate, useParams } from "react-router-dom"
 
-import getPeerConnection from "../../../../webRTC/peer"
+import getPeerConnection, { resetPeerConnection } from "../../../../webRTC/peer"
 import { useDispatch } from "react-redux"
 import { setSession } from "../../../../redux/features/user/session/sessionSlice"
+import { toggleVideoTrack } from "../../../../webRTC/streamToggle"
+import endPeerConnectionHandler from "../../../../webRTC/endPeerConnectionHandler"
 
 
 function WaitForLearner() {
@@ -26,7 +28,7 @@ function WaitForLearner() {
 
   const handleUserJoin = useCallback(({ userId, startTime }: { userId: string, startTime: string }) => {
     dispatch(setSession({ remoteUserId: userId }))
-    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'helper', startTime } })
+    navigate(`/video-session/${sessionId}`, { state: { remoteUserId: userId, audioEnabled, videoEnabled, type: 'helper', startTime }, replace: true })
   }, [audioEnabled, dispatch, navigate, sessionId, videoEnabled])
 
 
@@ -59,6 +61,10 @@ function WaitForLearner() {
 
   const toggleVideo = () => {
     setVideoEnabled(prev => !prev)
+    const localStream = getPeerConnection().getLocalStream();
+    if (!localStream) return
+    toggleVideoTrack(localStream)
+    
   }
 
 
@@ -69,10 +75,17 @@ function WaitForLearner() {
     }
 
   }, []);
+
+  const cancelSession =()=>{
+    const pc = getPeerConnection()
+        endPeerConnectionHandler({ localStream: pc.getLocalStream(), peerService: pc, remoteStream:null })
+        resetPeerConnection()
+        navigate('/', { replace: true })
+  }
   return (
 
-    <div className='h-full  bg-secondary  dark:bg-[#152B52] '>
-      <div className="h-16 bg-white  dark:bg-[#0e1c34]"></div>
+    <div className='h-full  bg-neutral-800 '>
+      <div className="h-16 bg-neutral-900"></div>
       <Container className="h-[calc(100vh-3rem)]">
 
         <div className="flex flex-col md:flex-row items-center justify-center h-full  md:mx-28">
@@ -81,7 +94,7 @@ function WaitForLearner() {
             <iframe src="https://lottie.host/embed/ce720426-7f3c-46ea-95b1-924e22564ae1/JMlzMCpwqN.json"></iframe>
             <div className=" mt-5 flex flex-col gap-5">
               <span className="sm:text-3xl  text-white font-bold ">Matching Chat Partners</span>
-              <Button onClick={() => navigate('/')} className="dark:hover:bg-white dark:hover:text-primary" varient={'secondary-outline'} size={'lg'} >Cancel</Button>
+              <Button onClick={cancelSession} className="dark:hover:bg-white dark:hover:text-primary" varient={'secondary-outline'} size={'lg'} >Cancel</Button>
             </div>
           </div>
 

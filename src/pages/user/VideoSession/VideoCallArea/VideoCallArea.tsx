@@ -1,9 +1,9 @@
 import { MessageSquareText, Mic, MicOff, PhoneOff } from "lucide-react"
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 
 
-import { toogleVideoTrack, toogleAudioTrack } from '../../../../webRTC/streamToggle'
+import { toggleVideoTrack, toggleAudioTrack } from '../../../../webRTC/streamToggle'
 import Button from "../../../../components/ui/Button/Button"
 import { useSocket } from "../../../../context/SocketProvider"
 import { useSelector } from "react-redux"
@@ -20,16 +20,19 @@ interface IVideoCallArea {
     setChating: Dispatch<SetStateAction<boolean>>
     remoteUser: Required<IUser> | null
     startTime: number;
-    
+
 }
 
-function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVideoCallArea) {
+function VideoCallArea({ remoteStream, setChating, remoteUser, startTime }: IVideoCallArea) {
+
+    const location = useLocation();
+    const { videoEnabled: video } = location.state;
 
     const localvideoRef = useRef<HTMLVideoElement>(null);
     const remotevideoRef = useRef<HTMLVideoElement>(null);
 
     const [audioEnabled, setAudioEnabled] = useState<boolean>(true)
-    const [videoEnabled, setVideoEnabled] = useState<boolean>(true)
+    const [videoEnabled, setVideoEnabled] = useState<boolean>(video || false)
 
     const { userData } = useSelector((state: RootState) => state.user)
 
@@ -40,14 +43,14 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVi
 
 
     useEffect(() => {
-      
-        const peerConnection = getPeerConnection()        
+
+        const peerConnection = getPeerConnection()
 
         if (localvideoRef.current && peerConnection && peerConnection.getLocalStream()) {
-         
+
             localvideoRef.current.srcObject = peerConnection.getLocalStream();
         }
-        
+
     }, [videoEnabled]);
 
     useEffect(() => {
@@ -61,14 +64,14 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVi
     const toggleVideo = () => {
         const localStream = getPeerConnection().getLocalStream();
         if (!localStream) return
-        toogleVideoTrack(localStream)
+        toggleVideoTrack(localStream)
         setVideoEnabled(prev => !prev)
     }
     const toggleAudio = () => {
         const localStream = getPeerConnection().getLocalStream();
 
         if (!localStream) return
-        toogleAudioTrack(localStream)
+        toggleAudioTrack(localStream)
         setAudioEnabled(prev => !prev)
 
     }
@@ -84,7 +87,7 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVi
     return (
 
         <div className="h-full   flex flex-col">
-         
+
             {/* chat area */}
             <div className="flex-1 overflow-hidden">
 
@@ -109,11 +112,11 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVi
                     {
                         true &&
                         <div className="aspect-video w-52 sm:w-72 bg-black   absolute bottom-10 right-5 sm:right-10 overflow-hidden rounded-xl drop-shadow">
-                            
 
-                                    <video ref={localvideoRef} id='localVideo' autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
-                                 
-                            
+
+                            <video ref={localvideoRef} id='localVideo' autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
+
+
                             <span className="bg-[#0000002c] text-white px-3 py-2 rounded-full absolute bottom-3 left-3 text-xs font-semibold"> {userData?.firstName + " " + userData?.lastName}</span>
                         </div>
                     }
@@ -126,7 +129,7 @@ function VideoCallArea({  remoteStream, setChating, remoteUser, startTime }: IVi
 
                     <Button onClick={toggleAudio} className={` p-2 rounded-md h-full flex-1 shadow-white/10   transition-colors text-white  ${audioEnabled ? 'bg-[#444444] hover:bg-gray-700/20' : 'bg-red-600  hover:bg-red-700/20'}`} >
 
-                        {audioEnabled ?<Mic />:<MicOff />
+                        {audioEnabled ? <Mic /> : <MicOff />
                         }
                     </Button>
                     <VideoButton {...{ toggleVideo, videoEnabled }} />

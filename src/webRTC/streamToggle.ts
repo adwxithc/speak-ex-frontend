@@ -1,14 +1,14 @@
-const toogleVideoTrack = (stream:MediaStream) => {
+const toggleVideoTrack = (stream:MediaStream) => {
 
     const mutedStatus = stream.getVideoTracks()[0].enabled;
     stream.getVideoTracks()[0].enabled = !mutedStatus;
   };
   
-  const toogleAudioTrack = (stream:MediaStream) => {
+  const toggleAudioTrack = (stream:MediaStream) => {
   
     const mutedStatus = stream.getAudioTracks()[0].enabled;
     stream.getAudioTracks()[0].enabled = !mutedStatus;
   };
   
-  export { toogleVideoTrack, toogleAudioTrack };
+  export { toggleVideoTrack, toggleAudioTrack };
   

@@ -117,18 +117,18 @@ function VideoSessionLogic() {
 
             if (isMonetized) {
                 dispatch(setWallet({ money: (wallet?.money || 0) + coinExchange }))
-                navigate('/session-over', { state: { coinExchange } })
+                navigate('/session-over', { state: { coinExchange },replace:true })
             } else {
                 dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) + coinExchange }))
-                navigate('/session-over', { state: { coinExchange } })
+                navigate('/session-over', { state: { coinExchange }, replace:true })
             }
 
         } else {
             if (isMonetized) {
-                navigate(`/session-feedback/${sessionId}`, { state: { coinExchange } })
+                navigate(`/session-feedback/${sessionId}`, { state: { coinExchange }, replace:true })
                 dispatch(setWallet({ goldCoins: (wallet?.goldCoins || 0) - coinExchange }))
             } else {
-                navigate(`/session-feedback/${sessionId}`, { state: { coinExchange } })
+                navigate(`/session-feedback/${sessionId}`, { state: { coinExchange }, replace:true })
                 dispatch(setWallet({ silverCoins: (wallet?.silverCoins || 0) - coinExchange }))
             }
 
