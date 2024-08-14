@@ -103,7 +103,7 @@ We welcome contributions to SpeakEx! To get started:
 4. Push to the branch (`git push origin feature/your-feature`).
 5. Create a new Pull Request.
 
-Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
+
 
 ## Links
 
