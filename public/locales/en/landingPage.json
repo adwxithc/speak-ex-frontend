@@ -8,19 +8,19 @@
     },
     "workflow":{
         "step1":{
-           
-            "description":" Create an account, choose the language you want to learn, and indicate the languages you’re proficient in."
+            "title": "Create Your Profile",
+            "description":" Create an account, choose the language you want to learn, and indicate the languages you're proficient in."
         },
         "step2":{
-                
-                "description":"Chat with users who want to learn your proficient languages to earn silver coins."
+            "title": "Start Teaching",
+            "description":"Chat with users who want to learn your proficient languages to earn silver coins."
         },
         "step3":{
-           
+            "title": "Book Learning Sessions",
             "description":"Spend your silver coins to chat with users who know the language you want to learn."
         },
        "step4": {
-       
+            "title": "Get Free Coins",
             "description":"Receive 100 silver coins upon signing up to start chatting and learning immediately."
         }
     },

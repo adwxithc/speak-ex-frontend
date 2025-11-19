@@ -1,0 +1,46 @@
+{
+  "hero": {
+    "title": "About SpeakEx",
+    "subtitle": "Breaking language barriers through authentic conversations and cultural exchange"
+  },
+  "mission": {
+    "title": "Our Mission",
+    "paragraph1": "SpeakEx is a revolutionary language learning platform that connects people from around the world to practice languages through real, meaningful conversations. We believe that the best way to learn a language is by speaking it with native speakers and fellow learners.",
+    "paragraph2": "Our platform creates a unique ecosystem where everyone can be both a teacher and a learner, fostering cultural exchange while earning rewards for helping others master new languages."
+  },
+  "features": {
+    "title": "What Makes Us Different",
+    "realConversations": {
+      "title": "Real Conversations",
+      "description": "Connect with native speakers and language learners through live video sessions for authentic practice."
+    },
+    "earnWhileLearn": {
+      "title": "Earn While You Learn",
+      "description": "Help others learn your native language and earn silver coins to book sessions in languages you want to learn."
+    },
+    "globalCommunity": {
+      "title": "Global Community",
+      "description": "Join a diverse community of language enthusiasts from every corner of the world."
+    },
+    "trackProgress": {
+      "title": "Track Progress",
+      "description": "Monitor your learning journey with session logs, feedback, and achievement tracking."
+    },
+    "personalizedLearning": {
+      "title": "Personalized Learning",
+      "description": "Choose your topics, find partners matching your interests, and learn at your own pace."
+    },
+    "culturalExchange": {
+      "title": "Cultural Exchange",
+      "description": "Learn not just the language, but also the culture, customs, and perspectives of different communities."
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works"
+  },
+  "cta": {
+    "title": "Ready to Start Your Language Journey?",
+    "subtitle": "Join thousands of language learners and start having real conversations today.",
+    "button": "Get Started Now"
+  }
+}
