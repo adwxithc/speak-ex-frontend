@@ -66,9 +66,9 @@ function TagInput({updateFields}:ITagInput) {
     
   return (
     <div className=''>
-        <Input value={text} className='text-blue-600 font-semibold' onChange={handleChange} onFocus={()=>serShowSuggesion(true)} />
-        <div className={` ${showSuggesion?'h-full':'h-0'} overflow-hidden transition-all duration-1000`}>
-            <div className={`max-h-52 h-full transition-all   mt-1 p-3 border rounded overflow-y-auto pretty-scrollbar`}>
+        <Input value={text} className='text-blue-600 font-semibold border-neutral-200' onChange={handleChange} onFocus={()=>serShowSuggesion(true)} />
+        <div className={` ${showSuggesion?'h-full':'h-0'} overflow-hidden transition-all duration-1000 `}>
+            <div className={`max-h-52 h-full transition-all   mt-1 p-3 border rounded overflow-y-auto pretty-scrollbar bg-white`}>
                 {
                     <ul>
                         {

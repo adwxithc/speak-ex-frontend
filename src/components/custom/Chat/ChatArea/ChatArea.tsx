@@ -2,11 +2,11 @@ import { Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, use
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
+import { MoveLeft } from 'lucide-react'
 
 import Message from '../Message/Message'
 import Avatar from '../../../ui/Avatar/Avatar'
 import Button from '../../../ui/Button/Button'
-import { MoveLeft } from 'lucide-react'
 import { IChatRoom, IMessage } from '../../../../types/database';
 import { useGetMessagesMutation, useSendMessageMutation, useSetMessageSeenMutation } from '../../../../redux/features/user/user/chatApiSlice';
 import { RootState } from '../../../../redux/store';

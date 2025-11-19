@@ -15,7 +15,7 @@ function Wallet() {
 
     const { data } = useGetTransactionsQuery({type,page:currentPage+1})
     const [transactions, setTransactions] = useState<ITransaction[]>([])
-    console.log(data);
+   
 
     useEffect(() => {
         const transactions = data?.data?.transactions as ITransaction[]

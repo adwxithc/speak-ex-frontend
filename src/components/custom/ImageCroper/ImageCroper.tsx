@@ -41,7 +41,7 @@ function ImageCroper({ image, onCropDone, onCropCancel,aspectRatios,rounded=fals
     }
     return (
         <>
-            <div className='relative h-[50vh] w-[60vw] sm:w-[50vw] border rounded-t-md overflow-hidden flex items-center justify-center'>
+            <div className='relative h-[50vh] w-[60vw] sm:w-[50vw] border border-neutral-400 rounded-t-md overflow-hidden flex items-center justify-center'>
 
                 {/* image cropper component */}
                 <Cropper
@@ -66,7 +66,7 @@ function ImageCroper({ image, onCropDone, onCropCancel,aspectRatios,rounded=fals
 
             </div>
             <div className=''>
-                <div onChange={onAspectRationChange} className='flex gap-5 justify-center p-3  border border-t-0'>
+                <div onChange={onAspectRationChange} className='flex gap-5 justify-center p-3  border border-neutral-400 border-t-0'>
                     
                     {
                         aspectRatios.map(ratio=>(<div key={ratio.ratio}> <input className='hidden' id={ratio.label} type="radio" value={ratio.ratio} name="ratio" /><label htmlFor={ratio.label}><span className='flex flex-col items-center'>{<ratio.icon />} {ratio.label}</span>  </label></div>))

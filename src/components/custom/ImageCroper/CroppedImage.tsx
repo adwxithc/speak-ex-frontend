@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import Button from '../../ui/Button/Button';
+import Image from '../../ui/Image/Image';
 
 interface ICroppedImage{
     imageAfterCrop:string;
@@ -13,7 +14,7 @@ function CroppedImage({imageAfterCrop,setCurrentPage,setpic,setShowNext}:ICroppe
   return (
     <div>
         <div className=' max-w-[600px]'>
-        <img src={imageAfterCrop} alt="" />
+        <Image width={500} height={500} src={imageAfterCrop} alt="" />
         </div>
         <div className='flex justify-center mt-3'>
         <Button varient={'primary-outline'} size={'md'} onClick={() => setCurrentPage('crop-img')} type="button" >Crop</Button>

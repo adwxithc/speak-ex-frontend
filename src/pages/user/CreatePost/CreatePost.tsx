@@ -9,6 +9,7 @@ import { useCreatePostMutation } from "../../../redux/features/user/post/postApi
 import { IPost } from "../../../types/database";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { MoveLeft, MoveRight } from "lucide-react";
 
 export type PostData = {
   title:string,
@@ -90,10 +91,14 @@ function CreatePost({setPosts,setLoading,setModalOpen}:ICreatePostProps) {
 
     <div className="h-full">
      
-      <div className="flex justify-end text-primary ">
-        {!isFirstStep && <Button  onClick={()=>{setShowNext(true);prev()}} >Previous</Button>}
-        {(showNext && !isLastStep) && <Button type="submit"  onClick={()=>{setShowNext(false);next()}}>Next</Button>}
+      <div className="flex justify-end mb-2">
+        {!isFirstStep && <Button varient={'secondary-square'} size={'sm'}  className="mr-auto" onClick={()=>{setShowNext(true);prev()}} > <MoveLeft size={20}  /> Previous</Button>}
+        {(showNext && !isLastStep) && <Button varient={'primary-square'} size={'sm'} className="ml-auto " type="submit"  onClick={()=>{setShowNext(false);next()}}>Next <MoveRight className="ml-1" size={20} /></Button>}
         
+      </div>
+      <div>
+        <h2 className="font-semibold text-2xl text-neutral-800 mb-3 ml-3 text-center"> Create A Blog</h2>
+       
       </div>
  
       <form onSubmit={handleSubmit} className="h-full w-full ">
