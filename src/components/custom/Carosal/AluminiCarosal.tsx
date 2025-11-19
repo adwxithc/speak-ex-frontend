@@ -38,6 +38,7 @@ const feedbacks = [
 function Carosal() {
 
   const { t } = useTranslation(['landingPage'])
+  const heading = t('alumniHeading', { returnObjects: true }) as {part1: string, highlight: string, part2: string}
   const arr = t('alumnis', { returnObjects: true }) as {name:string,feedback:string}[]
   const updatedFeedBack =  useMemo(()=>{
     return arr.map((item,index)=>({...item,...feedbacks[index]}))
@@ -53,9 +54,11 @@ function Carosal() {
 
   return (
     <>
-      <div className='mb-10 relative -top-20'>
-        <h1 className='text-3xl ml-5 font-semibold'>What Our   <span className='text-primary/50'>Alumni</span> Say</h1>
-        <div className='flex gap-5 overflow-scroll  hide-scrollbar'>
+      <div className='mb-16 md:mb-20'>
+        <h1 className='text-3xl sm:text-4xl lg:text-5xl ml-5 md:ml-8 font-bold text-gray-900 mb-8'>
+          {heading.part1} <span className='text-primary bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent'>{heading.highlight}</span> {heading.part2}
+        </h1>
+        <div className='flex gap-5 md:gap-6 overflow-scroll hide-scrollbar px-5 md:px-8'>
 
           {
             updatedFeedBack.map((item) => <div onClick={() => handleClick(item)}><AluminiCard {...{ feedback: item.feedback, name: item.name, profile: item.profile, rating: item.rating, userName: item.userName }} /></div>)

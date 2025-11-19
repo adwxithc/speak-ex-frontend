@@ -1,6 +1,11 @@
 {
     "header": "We Take Care Of Your Language",
     "description":"we care about you progress and we wil always",
+    "alumniHeading": {
+        "part1": "What Our",
+        "highlight": "Alumni",
+        "part2": "Say"
+    },
     "workflow":{
         "step1":{
            

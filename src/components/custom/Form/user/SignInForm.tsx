@@ -11,7 +11,6 @@ import { IformValue, schema } from './Schema/SignInSchema'
 import Button from "../../../ui/Button/Button";
 import { setCridentials } from "../../../../redux/features/user/user/userSlice";
 import { useLoginMutation } from "../../../../redux/features/user/user/userApiSlice";
-import { Trans, useTranslation } from "react-i18next";
 import { Input } from "../../../ui/Input/Input";
 import { Eye, EyeOff } from "lucide-react";
 import { isHttpError } from '../../../../utils/isHttpError';
@@ -21,7 +20,6 @@ import { isHttpError } from '../../../../utils/isHttpError';
 
 
 function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolean>> }) {
-    const { t } = useTranslation(['common', 'auth'])
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -67,7 +65,7 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
     return (
         <div className="w-full p-5 sm:p-8 md:p-12 text-center max-w-[540px] mx-auto">
             <div className="mb-6 md:mb-10">
-                <h2 className='text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2 md:mb-3'>{t('SignInHeader', { ns: 'auth' })}</h2>
+                <h2 className='text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2 md:mb-3'>Sign In</h2>
                 <p className="text-gray-500 text-sm">Welcome back! Please enter your details</p>
             </div>
 
@@ -119,7 +117,7 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
                         className="text-primary hover:text-primary/80 font-medium text-sm transition-colors duration-200 hover:underline" 
                         to={'/forgot-password'}
                     >
-                        {t('forgotPassword', { ns: 'auth' })}
+                        Forgot Password?
                     </NavLink>
                 </div>
 
@@ -134,11 +132,7 @@ function SignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
 
                 {/* Sign Up Link */}
                 <div className="text-gray-600 text-sm pt-2">
-                    <Trans
-                        ns={'auth'}
-                        i18nKey={"createAccountDescription"}
-                        components={{ 1: <b className="cursor-pointer text-primary hover:text-primary/80 font-semibold transition-colors duration-200" onClick={() => navigate('/signup')} /> }}
-                    />
+                    Don't have an account? <b className="cursor-pointer text-primary hover:text-primary/80 font-semibold transition-colors duration-200" onClick={() => navigate('/signup')}>Sign up</b>
                 </div>
 
             </form>

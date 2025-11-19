@@ -1,7 +1,6 @@
 import { ReactNode } from "react"
 import { cn } from "../../../utils/style-utils";
 import { RiseLoader } from 'react-spinners';
-import i18n from 'i18next';
 
 
 interface SignUpProps {
@@ -13,7 +12,6 @@ interface SignUpProps {
 
 }
 function SignUpContainer({ children, className, title, description, loading = false }: SignUpProps) {
-const dir =i18n.dir()
 
   return (
 
@@ -34,11 +32,11 @@ const dir =i18n.dir()
         </div>
 
         {/* Right side - Form section with enhanced styling */}
-        <div className={`w-full flex-1 md:w-3/5 md:h-screen order-2 md:overflow-y-scroll hide-scrollbar pt-8 sm:pt-10 md:pt-0 rounded-t-[70px] md:rounded-none ${dir=='ltr'?'md:rounded-l-full md:pl-20':'md:rounded-r-full md:pr-20'} bg-white flex items-center shadow-2xl relative`}>
+        <div className="w-full flex-1 md:w-3/5 md:h-screen order-2 md:overflow-y-scroll hide-scrollbar pt-8 sm:pt-10 md:pt-0 rounded-t-[70px] md:rounded-none md:rounded-l-full md:pl-20 bg-white flex items-center shadow-2xl relative">
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-blue-50/30 to-transparent pointer-events-none rounded-t-[70px] md:rounded-none"></div>
           
-          <div className={`w-full ${dir=='ltr'?'md:ml-5':'md:mr-5'} relative z-10 pb-8 md:pb-0`}>
+          <div className="w-full md:ml-5 relative z-10 pb-8 md:pb-0">
             {children}
           </div>
         </div>
