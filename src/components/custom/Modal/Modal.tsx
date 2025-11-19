@@ -40,7 +40,7 @@ const Modal: FC<ModalProp> = ({ handleClose, children, position = '', loading = 
         <>
             <Backdrop onClick={handleClose}>
                 <motion.div
-                    className={cn(`w-auto rounded-2xl   h-auto max-h-[100vh] m-auto p-1.5 flex flex-col items-center bg-white absolute ${position}`, className)}
+                    className={cn(`w-auto rounded-3xl h-auto max-h-[95vh] m-auto p-2 flex flex-col items-center bg-white absolute shadow-2xl ${position}`, className)}
                     onClick={(e) => e.stopPropagation()}
                     variants={dropIn}
                     initial="hidden"
@@ -49,11 +49,17 @@ const Modal: FC<ModalProp> = ({ handleClose, children, position = '', loading = 
                     onAnimationComplete={handleModalShowed}
 
                 >
-                    <div className='bg-gradient-to-b from-sky-200 via-white  to-white rounded-2xl shadow-inner border h-full flex flex-col overflow-hidden'>
-                        <div className='  w-full p-1'>
-                            <X className='ml-auto  cursor-pointer' onClick={handleClose} />
+                    <div className='bg-gradient-to-br from-blue-50/50 via-white to-white rounded-3xl shadow-lg border-2 border-gray-100 h-full flex flex-col overflow-hidden backdrop-blur-sm'>
+                        <div className='w-full p-2 flex justify-end items-center bg-gradient-to-r from-transparent to-gray-50/50'>
+                            <button 
+                                onClick={handleClose}
+                                className='p-2 rounded-full hover:bg-gray-200 transition-all duration-200 group'
+                                aria-label="Close modal"
+                            >
+                                <X className='text-gray-600 group-hover:text-gray-900 transition-colors' size={24} />
+                            </button>
                         </div>
-                        <div className='px-5  h-full overflow-x-hidden overflow-y-scroll pretty-scrollbar'>
+                        <div className='px-3 sm:px-5 md:px-6 h-full overflow-x-hidden overflow-y-scroll pretty-scrollbar'>
                             {children}
                         </div>
                     </div>
@@ -63,8 +69,8 @@ const Modal: FC<ModalProp> = ({ handleClose, children, position = '', loading = 
                 </motion.div>
                 {
                     loading &&
-                    <div className="h-full w-full absolute flex items-center justify-center  bg-[#0000006d] top-0" onClick={(e) => e.stopPropagation()}>
-                        <DotLoader color='white' />
+                    <div className="h-full w-full absolute flex items-center justify-center bg-black/60 backdrop-blur-sm top-0" onClick={(e) => e.stopPropagation()}>
+                        <DotLoader color='white' size={60} />
                     </div>
 
                 }
