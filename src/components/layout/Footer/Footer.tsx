@@ -27,7 +27,7 @@ function Footer() {
                         </div>
                     </div>
                     <div className="w-full border-t-2 border-white/90 p-3">
-                        <p className="text-xs">© 2024 speak exe. All Rights Reserved.</p>
+                        <p className="text-xs">© 2023 speak exe. All Rights Reserved.</p>
                     </div>
 
                 </Container>
