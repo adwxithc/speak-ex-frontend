@@ -19,7 +19,7 @@ import MobileMenu from './MobileMenu/MobileMenu.tsx'
 import useGetWallet from './useGetWallet.tsx'
 import { Bell, Menu, X } from 'lucide-react'
 import SessionOffer from '../../../custom/SessionOffer/SessionOffer.tsx'
-const SearchUser =lazy(()=>import('../../../../pages/user/SearchUser/SearchUser.tsx')) 
+const SearchUser = lazy(() => import('../../../../pages/user/SearchUser/SearchUser.tsx'))
 
 
 
@@ -28,14 +28,14 @@ export default function Navbar() {
 
   const { isAuth } = useSelector((state: RootState) => state.user)
   const { unreadedNotifications } = useSelector((state: RootState) => state.notification)
- 
+
   const navigate = useNavigate()
   const [openSearch, setOpenSearch] = useState(false)
   const [openNotification, setOpenNotification] = useState(false)
 
   const navigation = useNavigation({ setOpenSearch })
 
-  const { handleJoinSession, handleRejectOffer, openSessionOffer,handleClose } = useNotifications({setOpenNotification})
+  const { handleJoinSession, handleRejectOffer, openSessionOffer, handleClose } = useNotifications({ setOpenNotification })
   useGetWallet()
 
   const isScrolled: boolean = useScrollDetection(0)
@@ -55,15 +55,15 @@ export default function Navbar() {
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <X className="block h-6 w-6" aria-hidden="true" />
-                      
+
                     ) : (
-                     
-                      <Menu className="block h-6 w-6" aria-hidden="true"  />
+
+                      <Menu className="block h-6 w-6" aria-hidden="true" />
                     )}
                   </DisclosureButton>
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0 items-center">
+                  <div className="flex flex-shrink-0 items-center cursor-pointer" onClick={() => navigate('/')}>
                     <img
                       className="h-8 w-auto"
                       src="/Images/logo/logo.webp"
@@ -72,11 +72,12 @@ export default function Navbar() {
                   </div>
                   <div className="hidden sm:ml-16 sm:block">
                     <div className="flex space-x-5 items-center gap-2 sm:gap-0">
+                      <div className='mt-1.5'><LanguageSelector /></div>
                       {navigation.filter(item => (!item.isPrivate || (item.isPrivate && isAuth))).map((item) => (
                         <div key={item.name} className='relative group py-2 md:px-3'>
                           <a
                             className={'text-sm lg:text-base font-medium cursor-pointer'}
-                            
+
                             onClick={item.action}
                           >
                             {item.name}
@@ -84,7 +85,7 @@ export default function Navbar() {
                           <span className={`absolute bottom-2 left-0 w-0 h-0.5 bg-black transition-all group-hover:w-full`}></span>
                         </div>
                       ))}
-                      <div className='mt-1.5'><LanguageSelector /></div>
+
                     </div>
                   </div>
                 </div>
@@ -99,25 +100,25 @@ export default function Navbar() {
                       >
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">View notifications</span>
-                        
+
                         <Bell className="h-6 w-6" aria-hidden="true" />
-                        { unreadedNotifications!==0&&
-                        <span className='h-4 w-4 top-0 -left-2 absolute bg-red-500 rounded-full text-xs text-white flex justify-center items-center'>{unreadedNotifications}</span>
+                        {unreadedNotifications !== 0 &&
+                          <span className='h-4 w-4 top-0 -left-2 absolute bg-red-500 rounded-full text-xs text-white flex justify-center items-center'>{unreadedNotifications}</span>
 
                         }
                       </button>
-                      
+
                       <ProfileDropdown />
 
                     </>
                     :
-                    <Button className=' text-xs sm:text-base px-2 sm:px-4'  varient={'primary-outline'} size={'sm'} onClick={() => navigate('/signin')}>{t('login', { ns: 'common' })}</Button>
+                    <Button className=' text-xs sm:text-base px-2 sm:px-4' varient={'primary-outline'} size={'sm'} onClick={() => navigate('/signin')}>{t('login', { ns: 'common' })}</Button>
                   }
                 </div>
               </div>
             </div>
 
-                {/* mobile view */}
+            {/* mobile view */}
             <Transition
               as={DisclosurePanel}
               enter="transition ease-out duration-200"
@@ -143,7 +144,7 @@ export default function Navbar() {
         {openSearch && <Modal position='top-20' loading={false} handleClose={() => { setOpenSearch(false) }} ><SearchUser {...{ setOpenSearch }} /></Modal>}
         {openSessionOffer && <Modal position='top-20' loading={false} handleClose={handleRejectOffer} ><SessionOffer {...{ handleJoinSession, handleRejectOffer }} /></Modal>}
         {openNotification &&
-          <NotificationBar {...{ notifications:[], handleJoinSession,handleClose }}  />
+          <NotificationBar {...{ notifications: [], handleJoinSession, handleClose }} />
         }
       </AnimatePresence>
     </>
