@@ -84,40 +84,43 @@ function WaitForLearner() {
   }
   return (
 
-    <div className='h-full  bg-neutral-800 '>
-      <div className="h-16 bg-neutral-900"></div>
-      <Container className="h-[calc(100vh-3rem)]">
+    <div className='min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black'>
+      <div className="h-16 bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-lg border-b border-gray-700/50"></div>
+      <Container className="h-[calc(100vh-4rem)] py-8">
 
-        <div className="flex flex-col md:flex-row items-center justify-center h-full  md:mx-28">
+        <div className="flex flex-col md:flex-row items-center justify-center h-full gap-8 md:gap-12 px-4 md:px-8 lg:px-20">
 
-          <div className="md:order-2 flex flex-col items-center justify-center w-full md:w-1/2 ml-8">
-            <iframe src="https://lottie.host/embed/ce720426-7f3c-46ea-95b1-924e22564ae1/JMlzMCpwqN.json"></iframe>
-            <div className=" mt-5 flex flex-col gap-5">
-              <span className="sm:text-3xl  text-white font-bold ">Matching Chat Partners</span>
-              <Button onClick={cancelSession} className="dark:hover:bg-white dark:hover:text-primary" varient={'secondary-outline'} size={'lg'} >Cancel</Button>
+          <div className="md:order-2 flex flex-col items-center justify-center w-full md:w-1/2">
+            <div className="w-full max-w-md">
+              <iframe src="https://lottie.host/embed/ce720426-7f3c-46ea-95b1-924e22564ae1/JMlzMCpwqN.json" className="w-full h-64 md:h-80"></iframe>
+            </div>
+            <div className="mt-8 flex flex-col gap-6 items-center">
+              <div className="text-center">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl text-white font-bold mb-2">Matching Chat Partners</h2>
+                <p className="text-gray-400 text-sm md:text-base">Please wait while we find the perfect match for you...</p>
+              </div>
+              <Button onClick={cancelSession} className="bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border-2 border-gray-600 text-white shadow-lg transition-all duration-200" size={'lg'}>Cancel Session</Button>
             </div>
           </div>
 
-          <div className="relative aspect-video rounded-xl border dark:border-black overflow-hidden bg-black w-full md:w-1/2 ">
+          <div className="relative aspect-video rounded-2xl border-2 border-gray-700/50 overflow-hidden bg-gradient-to-br from-gray-950 to-black w-full md:w-1/2 shadow-2xl">
 
             <video ref={videoRef} autoPlay muted style={{ position: "absolute", top: "1", left: "1", width: "100%", height: "100%" }} />
 
 
 
-            <div className="absolute bottom-5  w-full  flex justify-center gap-2">
-              <Button onClick={toggleAudio} >
-                {audioEnabled ?
-                  <span className="border-2 dark:border-white  hover:border-gray-100 hover:text-gray-100 p-2 rounded-full text-white"><Mic /></span>
-                  : <span className="  bg-red-600 hover:bg-red-500 p-2 rounded-full text-white"><MicOff /></span>
-                }
-
+            <div className="absolute bottom-6 w-full flex justify-center gap-4">
+              <Button 
+                onClick={toggleAudio} 
+                className={`p-3 rounded-xl shadow-lg transition-all duration-200 ${audioEnabled ? 'bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border-2 border-gray-600' : 'bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border-2 border-red-500'}`}
+              >
+                {audioEnabled ? <Mic className="text-white" size={22} /> : <MicOff className="text-white" size={22} />}
               </Button>
-              <Button onClick={toggleVideo} >
-                {videoEnabled ?
-                  <span className="border-2 dark:border-white  hover:border-gray-400 hover:text-gray-400  p-2 rounded-full dark:text-white"><Video /></span>
-                  : <span className="  bg-red-600 hover:bg-red-500 p-2 rounded-full text-white"><VideoOff /></span>
-                }
-
+              <Button 
+                onClick={toggleVideo} 
+                className={`p-3 rounded-xl shadow-lg transition-all duration-200 ${videoEnabled ? 'bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border-2 border-gray-600' : 'bg-gradient-to-br from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border-2 border-red-500'}`}
+              >
+                {videoEnabled ? <Video className="text-white" size={22} /> : <VideoOff className="text-white" size={22} />}
               </Button>
             </div>
 

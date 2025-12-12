@@ -19,8 +19,8 @@ function VideoDevices({changeVideoDevice}:{changeVideoDevice: (deviceId: string)
    
 
     return (
-        <ul className='inline-flex flex-col  shadow-md p-1 rounded-md text-xs font-semibold bg-white text-black/70 absolute -top-10 max-h-20 pretty-scrollbar overflow-y-auto '>
-            {videoDevices.map((device, index) => (<li onClick={()=>changeVideoDevice(device.deviceId)} className='hover:bg-black/10 cursor-pointer rounded-md p-1' key={index} value={device.deviceId}>{device.label}</li>))
+        <ul className='inline-flex flex-col shadow-2xl p-2 rounded-xl text-sm font-semibold bg-gray-800 text-white absolute -top-12 max-h-32 pretty-scrollbar overflow-y-auto border border-gray-600/60 backdrop-blur-2xl z-10'>
+            {videoDevices.map((device, index) => (<li onClick={()=>changeVideoDevice(device.deviceId)} className='hover:bg-indigo-600 cursor-pointer rounded-lg px-3 py-2 transition-all duration-200 whitespace-nowrap' key={index} value={device.deviceId}>{device.label}</li>))
             }
             
         </ul>
