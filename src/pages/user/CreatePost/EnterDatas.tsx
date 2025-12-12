@@ -30,38 +30,54 @@ function EnterDatas({ title, content, image, updateFields, setShowNext }: IEnter
   }
 
   return (
-    <div className=" w-[80vw] sm:w-[90vw] px-3 flex md:flex-row flex-col  ">
+    <div className="w-full flex md:flex-row flex-col gap-6">
   
-
-      <div className='md:w-2/3 order-2 md:order-1'>
+      <div className='md:w-2/3 order-2 md:order-1 space-y-4'>
         <div>
-          <label className='font-semibold text-neutral-800' htmlFor="title">Title</label>
-          <Input id='title' className='border-neutral-200' onChange={(e) => updateFields({ title: e.target.value })} value={title} />
-        </div>
-        <div>
-          <label className='font-semibold text-neutral-800' htmlFor="tags">Add tags</label>
-          <TagInput  updateFields={updateFields} />
-        </div>
-
-        <div className='mt-5'>
-          <label htmlFor="description" className='font-semibold text-neutral-800'>
-            Description
+          <label className='font-bold text-gray-800 text-sm' htmlFor="title">
+            Post Title
           </label>
-          <Tiptap content={content} onEditerContentSave={handleEditorContentSave} />
+          <Input 
+            id='title' 
+            placeholder='Enter an engaging title...'
+            className='mt-1 border-indigo-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 bg-white' 
+            onChange={(e) => updateFields({ title: e.target.value })} 
+            value={title} 
+          />
         </div>
-
-      </div>
-      {
-        image &&
-        <div className='md:w-1/3 p-4 w-full order-1 '>
-          <div className=' flex justify-center max-h-96 p-3   border border-neutral-200  rounded-2xl bg-white'>
-            <Image height={500} width={500}  className='object-contain ' src={URL.createObjectURL(image)} alt="" />
+        
+        <div>
+          <label className='font-bold text-gray-800 text-sm' htmlFor="tags">
+            Tags
+          </label>
+          <div className="mt-1">
+            <TagInput updateFields={updateFields} />
           </div>
         </div>
 
+        <div>
+          <label htmlFor="description" className='font-bold text-gray-800 text-sm'>
+            Content
+          </label>
+          <div className='mt-1'>
+            <Tiptap content={content} onEditerContentSave={handleEditorContentSave} />
+          </div>
+        </div>
+      </div>
+      
+      {
+        image &&
+        <div className='md:w-1/3 w-full order-1 md:order-2'>
+          <div className='sticky top-4 bg-white rounded-xl p-3 border border-indigo-200 shadow-sm'>
+            <h4 className='font-bold text-gray-800 text-sm mb-2'>
+              Cover Image
+            </h4>
+            <div className='flex justify-center rounded-lg overflow-hidden'>
+              <Image height={500} width={500} className='object-contain' src={URL.createObjectURL(image)} alt="Cover" />
+            </div>
+          </div>
+        </div>
       }
-
-
     </div>
   )
 }

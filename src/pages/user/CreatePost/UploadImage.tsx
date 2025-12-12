@@ -76,23 +76,24 @@ function UploadImage({ image, updateFields,setShowNext }: IUploadImage) {
  
 
     return (
-        <div className=" w-full  p-3 flex justify-center items-center ">
-            <div className="pb-5 px-3">
-            {
-
+        <div className="w-full flex justify-center items-center py-4">
+            <div className="w-full max-w-3xl">
+                <div className="text-center mb-4">
+                    <h3 className="text-lg font-bold text-gray-800 mb-1">Upload Your Cover Image</h3>
+                    <p className="text-xs text-gray-500">Choose an eye-catching image for your blog post</p>
+                </div>
                 
-            currentPage == 'choose-img' ? <FileInput onImageSelected={handleImageSelected} />
-            : (currentPage == 'crop-img' ?
-                <ImageCroper
-                aspectRatios={aspectRatios}
-                    onCropDone={handleCropDone}
-                    onCropCancel={handleCropCanceled}
-                    image={pic} />
-                :<CroppedImage setShowNext={setShowNext} imageAfterCrop={imageAfterCrop}  setpic={setpic} setCurrentPage={setCurrentPage}/>)
-            }
+                {
+                    currentPage == 'choose-img' ? <FileInput onImageSelected={handleImageSelected} />
+                    : (currentPage == 'crop-img' ?
+                        <ImageCroper
+                            aspectRatios={aspectRatios}
+                            onCropDone={handleCropDone}
+                            onCropCancel={handleCropCanceled}
+                            image={pic} />
+                        :<CroppedImage setShowNext={setShowNext} imageAfterCrop={imageAfterCrop} setpic={setpic} setCurrentPage={setCurrentPage}/>)
+                }
             </div>
-
-            
         </div>
 
     )
