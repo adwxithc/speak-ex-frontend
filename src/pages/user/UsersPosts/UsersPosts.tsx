@@ -81,7 +81,7 @@ function UsersPosts() {
         initial={false}
         mode="wait"
         >
-        {modalOpen && <Modal {...{loading}}  handleClose={()=>{setModalOpen(false)}} ><CreatePost {...{setLoading,setPosts,setModalOpen}} /></Modal>}
+        {modalOpen && <Modal  {...{loading}}  handleClose={()=>{setModalOpen(false)}} ><CreatePost {...{setLoading,setPosts,setModalOpen}} /></Modal>}
         </AnimatePresence>
     </div>
 

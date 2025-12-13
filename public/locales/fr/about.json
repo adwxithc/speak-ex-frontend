@@ -1,0 +1,46 @@
+{
+  "hero": {
+    "title": "À propos de SpeakEx",
+    "subtitle": "Briser les barrières linguistiques grâce à des conversations authentiques et des échanges culturels"
+  },
+  "mission": {
+    "title": "Notre Mission",
+    "paragraph1": "SpeakEx est une plateforme révolutionnaire d'apprentissage des langues qui met en relation des personnes du monde entier pour pratiquer les langues à travers de vraies conversations significatives. Nous croyons que la meilleure façon d'apprendre une langue est de la parler avec des locuteurs natifs et d'autres apprenants.",
+    "paragraph2": "Notre plateforme crée un écosystème unique où chacun peut être à la fois enseignant et apprenant, favorisant l'échange culturel tout en gagnant des récompenses pour aider les autres à maîtriser de nouvelles langues."
+  },
+  "features": {
+    "title": "Ce qui nous rend différents",
+    "realConversations": {
+      "title": "Vraies Conversations",
+      "description": "Connectez-vous avec des locuteurs natifs et des apprenants via des sessions vidéo en direct pour une pratique authentique."
+    },
+    "earnWhileLearn": {
+      "title": "Gagner en Apprenant",
+      "description": "Aidez les autres à apprendre votre langue maternelle et gagnez des pièces d'argent pour réserver des sessions dans les langues que vous souhaitez apprendre."
+    },
+    "globalCommunity": {
+      "title": "Communauté Mondiale",
+      "description": "Rejoignez une communauté diversifiée de passionnés de langues des quatre coins du monde."
+    },
+    "trackProgress": {
+      "title": "Suivre les Progrès",
+      "description": "Surveillez votre parcours d'apprentissage avec les journaux de session, les commentaires et le suivi des réalisations."
+    },
+    "personalizedLearning": {
+      "title": "Apprentissage Personnalisé",
+      "description": "Choisissez vos sujets, trouvez des partenaires correspondant à vos intérêts et apprenez à votre rythme."
+    },
+    "culturalExchange": {
+      "title": "Échange Culturel",
+      "description": "Apprenez non seulement la langue, mais aussi la culture, les coutumes et les perspectives de différentes communautés."
+    }
+  },
+  "howItWorks": {
+    "title": "Comment ça marche"
+  },
+  "cta": {
+    "title": "Prêt à commencer votre voyage linguistique ?",
+    "subtitle": "Rejoignez des milliers d'apprenants de langues et commencez à avoir de vraies conversations aujourd'hui.",
+    "button": "Commencer maintenant"
+  }
+}

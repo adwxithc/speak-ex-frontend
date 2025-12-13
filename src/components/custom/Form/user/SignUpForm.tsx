@@ -49,53 +49,108 @@ function SignUpForm({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
   }
 
   return (
-    <div className="w-full p-5 text-center">
-      <h2 className='text-2xl font-serif font-semibold mb-10'>Set  Personal info</h2>
+    <div className="w-full p-5 sm:p-8 md:p-12 text-center max-w-[680px] mx-auto">
+      <div className="mb-6 md:mb-10">
+        <h2 className='text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-2 md:mb-3'>Create Your Account</h2>
+        <p className="text-gray-500 text-sm hidden lg:block">Join our community and start your language learning journey</p>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="md:flex gap-1 lg:gap-3  mb-3">
-        
-          <div className=" w-full">
-          <label htmlFor="firstName" className={`flex text-sm  mx-4 ${errors.firstName ? 'text-red-600 ' : 'text-black/60 '} `}>FirstName</label>
-          <Input id="firstName"  {...register('firstName')} error={errors?.firstName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="firstName" />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-5">
+        {/* Name Fields Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          <div className="text-left">
+            <label htmlFor="firstName" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${errors.firstName ? 'text-red-600' : 'text-gray-700'}`}>
+              First Name
+            </label>
+            <Input 
+              id="firstName" 
+              {...register('firstName')} 
+              error={errors?.firstName?.message?.toString()} 
+              placeholder="Enter first name" 
+            />
           </div>
-          <div className=" w-full">
-          <label htmlFor="lastName" className={`flex text-sm  mx-4 ${errors.lastName ? 'text-red-600 ' : 'text-black/60 '} `}>LastName</label>
-          <Input id="lastName"  {...register('lastName')} error={errors?.lastName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="lastName" />
+          
+          <div className="text-left">
+            <label htmlFor="lastName" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${errors.lastName ? 'text-red-600' : 'text-gray-700'}`}>
+              Last Name
+            </label>
+            <Input 
+              id="lastName" 
+              {...register('lastName')} 
+              error={errors?.lastName?.message?.toString()} 
+              placeholder="Enter last name" 
+            />
           </div>
-         
         </div>
 
-        <div className="md:flex gap-1 lg:gap-3   mb-3">
-        
-          <div className=" w-full">
-          <label htmlFor="email" className={`flex text-sm  mx-4 ${errors.email ? 'text-red-600 ' : 'text-black/60 '} `}>Email</label>
-          <Input id="email"  {...register('email')} error={errors?.email?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="email" />
+        {/* Email and Username Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          <div className="text-left">
+            <label htmlFor="email" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${errors.email ? 'text-red-600' : 'text-gray-700'}`}>
+              Email Address
+            </label>
+            <Input 
+              id="email" 
+              {...register('email')} 
+              error={errors?.email?.message?.toString()} 
+              placeholder="Enter your email" 
+            />
           </div>
        
-           <div className=" w-full">
-          <label htmlFor="userName" className={`flex text-sm  mx-4 ${errors.userName ? 'text-red-600 ' : 'text-black/60 '} `}>UserName</label>
-          <Input id="userName"  {...register('userName')} error={errors?.userName?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="userName" />
+          <div className="text-left">
+            <label htmlFor="userName" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${errors.userName ? 'text-red-600' : 'text-gray-700'}`}>
+              Username
+            </label>
+            <Input 
+              id="userName" 
+              {...register('userName')} 
+              error={errors?.userName?.message?.toString()} 
+              placeholder="Choose a username" 
+            />
           </div>
         </div>
 
-        <div className="mb-3">
-
-         
-          <label htmlFor="password" className={`flex text-sm  mx-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>Password</label>
-          <Input type='password' id="password"  {...register('password')} error={errors?.password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="password" />
-          
+        {/* Password Field */}
+        <div className="text-left">
+          <label htmlFor="password" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${errors.password ? 'text-red-600' : 'text-gray-700'}`}>
+            Password
+          </label>
+          <Input 
+            type='password' 
+            id="password" 
+            {...register('password')} 
+            error={errors?.password?.message?.toString()} 
+            placeholder="Create a strong password" 
+          />
         </div>
 
-        <div className="my-5">
-
-         
-          <label htmlFor="confirm_password" className={`flex text-sm  mx-4 ${errors.confirm_password ? 'text-red-600 ' : 'text-black/60 '} `}>Confirm Password</label>
-          <Input type="password" id="confirm_password"  {...register('confirm_password')} error={errors?.confirm_password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="Confirm Password" />
-          
+        {/* Confirm Password Field */}
+        <div className="text-left">
+          <label htmlFor="confirm_password" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${errors.confirm_password ? 'text-red-600' : 'text-gray-700'}`}>
+            Confirm Password
+          </label>
+          <Input 
+            type="password" 
+            id="confirm_password" 
+            {...register('confirm_password')} 
+            error={errors?.confirm_password?.message?.toString()} 
+            placeholder="Re-enter your password" 
+          />
         </div>
-        <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
-        <p className="mt-3">Already have an account? <b className="cursor-pointer" onClick={() => navigate('/signin')}>signin</b></p>
+
+        {/* Submit Button */}
+        <Button 
+          type="submit" 
+          varient={'primary-full'} 
+          size={"lg"}
+        >
+          Create Account
+        </Button>
+
+        {/* Sign In Link */}
+        <p className="text-gray-600 text-sm pt-2">
+          Already have an account? <b className="cursor-pointer text-primary hover:text-primary/80 font-semibold transition-colors duration-200" onClick={() => navigate('/signin')}>Sign in</b>
+        </p>
       </form>
       <DevTool control={control} />
     </div>

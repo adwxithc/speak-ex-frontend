@@ -38,7 +38,7 @@ export default function VideoSession({ remoteStream, remoteUser, handleSendMessa
 
   return (
 
-    <div className="flex h-screen bg-[#222222]">
+    <div className="flex h-screen bg-gray-950">
       <AnimatePresence
         initial={false}
         mode="wait"

@@ -98,16 +98,16 @@ function SessionDuration({ startTime, terminate }: ISessionDurationProps) {
                 leaveFrom="opacity-100 transform-[scale(100%)]"
                 leaveTo="opacity-0 transform-[scale(95%)]"
               >
-                <DialogPanel className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
-                  <DialogTitle as="h3" className="text-base/7 font-medium text-white">
-                    Session Timeout
+                <DialogPanel className="w-full max-w-md rounded-2xl bg-gradient-to-br from-white to-gray-50 p-8 shadow-2xl border-2 border-gray-200">
+                  <DialogTitle as="h3" className="text-xl font-bold text-gray-900 mb-2">
+                    ⚠️ Session Timeout Warning
                   </DialogTitle>
-                  <p className="mt-2 text-sm/6 text-white/60">
-                    You've used majority of your chat coins for this session, and this sesssion is about to terminate due to lack of coins.
+                  <p className="mt-3 text-base text-gray-700 leading-relaxed">
+                    You've used the majority of your chat coins for this session. This session will terminate soon due to insufficient coins.
                   </p>
-                  <div className="mt-4">
+                  <div className="mt-6">
                     <Button
-                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-primary to-blue-900 hover:from-blue-600 hover:to-blue-800 py-2.5 px-6 text-sm font-semibold text-white shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
                       onClick={close}
                     >
                       Got it!

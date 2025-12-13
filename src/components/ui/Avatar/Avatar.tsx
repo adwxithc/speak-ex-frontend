@@ -10,7 +10,7 @@ export interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-  if (src) {
+  
     // Render image avatar
     return (
       <>
@@ -21,10 +21,11 @@ const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
             className={cn(`h-24 w-24 rounded-full`,className)}
           />)
         }
+        
         <img
           width={size}
           height={size}
-          src={src || 'src/assets/Images/placeholder/nopic.jpg'}
+          src={src || '/src/assets/Images/placeholder/nopic.jpg'}
           alt="Avatar"
           className={cn(`w-24 h-24 rounded-full object-cover `, className)}
           onLoad={() => setImageLoaded(true)}
@@ -32,7 +33,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, size = 24, className }) => {
         />
       </>
     );
-  }
+  
 
 
 };

@@ -61,43 +61,70 @@ function AdminSignInForm({ setLoading }: { setLoading: Dispatch<SetStateAction<b
         }
     }
     return (
-        <div className="w-full p-5 text-center max-w-[500px] mx-auto">
-            <h2 className='text-2xl font-serif font-semibold mb-10'>Admin Login</h2>
+        <div className="w-full p-5 sm:p-8 md:p-12 text-center max-w-[540px] mx-auto">
+            <div className="mb-6 md:mb-10">
+                <h2 className='text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2 md:mb-3'>Admin Login</h2>
+                <p className="text-gray-500 text-sm">Access the admin dashboard</p>
+            </div>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
 
-
-
-                <div className="my-2">
-
-                    <label htmlFor="email" className={`flex  ml-4 ${errors.email ? 'text-red-600 ' : 'text-black/60 '} `}>email</label>
-                    <Input id="email" {...register('email')} error={errors?.email?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="email" />
+                {/* Email Input */}
+                <div className="text-left">
+                    <label htmlFor="email" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${
+                        errors.email ? 'text-red-600' : 'text-gray-700'
+                    }`}>
+                        Email Address
+                    </label>
+                    <Input 
+                        id="email" 
+                        {...register('email')} 
+                        error={errors?.email?.message?.toString()} 
+                        placeholder="Enter your email" 
+                    />
                 </div>
 
-
-
-                <div className="my-2">
-
-
-                    <label htmlFor="password" className={`flex  ml-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>password</label>
-                    <div className={`border rounded-3xl  flex overflow-hidden items-center pr-4 focus:border-2  ${errors.password ? 'border-red-600' : 'border-black/30 hover:border-black'}`}>
-                        <input {...register('password')} placeholder="Password" id="password" type={showPassword ? 'text' : 'password'} className="h-full w-full flex-1 outline-none py-4 px-5" />
-                        <Button type='button' size={'icon'} className={`${errors.password ? 'text-red-600' : 'text-black/70'} hover:bg-black/5 transition-colors duration-500`} onClick={handleClickShowPassword}>
-                            {
-                                showPassword ? <EyeOff /> : <Eye />
-                            }
-
-
+                {/* Password Input */}
+                <div className="text-left">
+                    <label htmlFor="password" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${
+                        errors.password ? 'text-red-600' : 'text-gray-700'
+                    }`}>
+                        Password
+                    </label>
+                    <div className={`border-2 rounded-xl flex overflow-hidden items-center pr-3 transition-all duration-200 ${
+                        errors.password ? 'border-red-500 focus-within:border-red-600' : 'border-gray-300 hover:border-gray-400 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20'
+                    }`}>
+                        <input 
+                            {...register('password')} 
+                            placeholder="Enter your password" 
+                            id="password" 
+                            type={showPassword ? 'text' : 'password'} 
+                            className="h-full w-full flex-1 outline-none py-4 px-5 text-base bg-transparent" 
+                        />
+                        <Button 
+                            type='button' 
+                            size={'icon'} 
+                            className={`${
+                                errors.password ? 'text-red-600 hover:bg-red-50' : 'text-gray-600 hover:bg-gray-100'
+                            } transition-all duration-200 rounded-lg`} 
+                            onClick={handleClickShowPassword}
+                        >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </Button>
-
                     </div>
                     {errors.password && (
-                        <span className="text-red-500 text-xs ml-4 flex flex-1">{errors.password.message}</span>
+                        <span className="text-red-500 text-xs ml-1 flex flex-1 mt-1">{errors.password.message}</span>
                     )}
                 </div>
 
-
-                <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
+                {/* Submit Button */}
+                <Button 
+                    type="submit" 
+                    varient={'primary-full'} 
+                    size={"lg"}
+                >
+                    Sign In
+                </Button>
 
             </form>
             <DevTool control={control} />

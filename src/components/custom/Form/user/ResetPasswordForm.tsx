@@ -44,32 +44,63 @@ function ResetPasswordForm({ setLoading }: { setLoading: Dispatch<SetStateAction
 
 
     return (
-        <div className="w-full text-center">
-            <h1 className='text-2xl font-serif font-semibold mb-5'>Reset New Password</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="max-w-[500px] mx-auto">
-                <p className='mb-5 text-sm text-gray-600'>Please provide a new strong password for you account.</p>
+        <div className="w-full p-5 sm:p-8 md:p-12 text-center max-w-[580px] mx-auto">
+            <div className="mb-6 md:mb-10">
+                <h1 className='text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-3 md:mb-4'>Reset Your Password</h1>
+                <p className='text-gray-600 leading-relaxed text-sm md:text-base'>
+                    Please provide a new strong password for your account.
+                </p>
+            </div>
 
-                <div className="my-3">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
 
-                 
-
-                    <label htmlFor="password" className={`flex  ml-4 ${errors.password ? 'text-red-600 ' : 'text-black/60 '} `}>Password</label>
-                    <Input id="password" {...register('password')} error={errors?.password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="password" />
-
+                {/* Password Field */}
+                <div className="text-left">
+                    <label htmlFor="password" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${
+                        errors.password ? 'text-red-600' : 'text-gray-700'
+                    }`}>
+                        New Password
+                    </label>
+                    <Input 
+                        type="password" 
+                        id="password" 
+                        {...register('password')} 
+                        error={errors?.password?.message?.toString()} 
+                        placeholder="Create a strong password" 
+                    />
                 </div>
 
-                <div className="my-3 mb-5">
-
-                  
-
-                    <label htmlFor="confirm_password" className={`flex  ml-4 ${errors.confirm_password ? 'text-red-600 ' : 'text-black/60 '} `}>Confirm Password</label>
-                    <Input id="confirm_password" {...register('confirm_password')} error={errors?.confirm_password?.message?.toString()} className="rounded-3xl py-7 hover:border-black " placeholder="Confirm Password" />
-
-
+                {/* Confirm Password Field */}
+                <div className="text-left">
+                    <label htmlFor="confirm_password" className={`block mb-2 ml-1 font-medium text-sm transition-colors ${
+                        errors.confirm_password ? 'text-red-600' : 'text-gray-700'
+                    }`}>
+                        Confirm Password
+                    </label>
+                    <Input 
+                        type="password" 
+                        id="confirm_password" 
+                        {...register('confirm_password')} 
+                        error={errors?.confirm_password?.message?.toString()} 
+                        placeholder="Re-enter your password" 
+                    />
                 </div>
 
-                <Button type="submit" varient={'primary-full'} size={"lg"} >Submit</Button>
-                <p>don't have an account.! <b className="cursor-pointer text-primary" onClick={() => navigate('/signup')}>Create one</b></p>
+                {/* Submit Button */}
+                <Button 
+                    type="submit" 
+                    varient={'primary-full'} 
+                    size={"lg"}
+                >
+                    Reset Password
+                </Button>
+
+                {/* Sign Up Link */}
+                <div className="text-center pt-2">
+                    <p className="text-gray-600 text-sm">
+                        Don't have an account? <b className="cursor-pointer text-primary hover:text-primary/80 font-semibold transition-colors duration-200" onClick={() => navigate('/signup')}>Create one</b>
+                    </p>
+                </div>
             </form>
         </div>
     )

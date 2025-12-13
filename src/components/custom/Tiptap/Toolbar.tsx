@@ -21,10 +21,9 @@ import {
   AlignCenter,
   AlignRight,
   AlignJustify,
-  ImagePlus
 } from "lucide-react";
 import ToolTip from "../../ui/ToolTip/ToolTip";
-import { useCallback } from "react";
+
 
 
 type Props = {
@@ -34,22 +33,7 @@ type Props = {
 const Toolbar = ({ editor }: Props) => {
 
 
-  const addImage = useCallback(() => {
-    const url = window.prompt('URL')
-    const width = '200px';
-    const height = 'auto';
-    const options = {
-      width,
-      height,
-      alt: 'Enter image alt text here',
-      attrs: {
-        className: 'w-[200px]', // Apply a CSS class for sizing
-      },
-    };
-    if (url && editor) {
-      editor.chain().focus().setImage({ src: url, ...options }).run();
-    }
-  }, [editor])
+
 
 
   if (!editor) {
@@ -59,14 +43,12 @@ const Toolbar = ({ editor }: Props) => {
   return (
     <div
       className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start
-    gap-5 w-full flex-wrap border border-input"
+    gap-5 w-full flex-wrap border "
     >
-      <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
+      <div className="flex justify-start items-center gap-5 w-full  flex-wrap  ">
 
 
-        {/* upload image */}
-       
-          <button type="button"  onClick={addImage}><ImagePlus /></button>
+    
   
         {/* bold */}
 

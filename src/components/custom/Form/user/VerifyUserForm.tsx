@@ -46,16 +46,28 @@ function VerifyUser({ setLoading }: { setLoading: Dispatch<SetStateAction<boolea
   }
 
   return (
-    <div className="w-full p-5 text-center">
-      <h2 className='text-2xl font-serif font-semibold mb-10'>Verify User</h2>
+    <div className="w-full p-5 sm:p-8 md:p-12 text-center max-w-[580px] mx-auto">
+      <div className="mb-6 md:mb-10">
+        <h2 className='text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-3 md:mb-4'>Verify Your Email</h2>
+        <p className='text-gray-600 leading-relaxed text-sm md:text-base'>
+          We've sent a 6-digit verification code to your email. Please enter it below to complete your registration.
+        </p>
+      </div>
 
-      <div className='max-w-[450px] mx-auto'>
-        <p className='mb-5 text-sm text-gray-600'>we have send a verification code to your email please enter the OTP for user verification</p>
-        <form className='flex flex-col gap-3' onSubmit={onSubmit}>
+      <div className='max-w-[500px] mx-auto'>
+        <form className='flex flex-col gap-4 md:gap-6' onSubmit={onSubmit}>
+          <div className='bg-gray-50 rounded-2xl p-5 sm:p-8 shadow-sm'>
+            <OtpInput onOtpChange={handleOtpChange} />
+            {error && <span className='text-red-500 text-sm font-medium mt-3 block'>{error}</span>}
+          </div>
 
-          <OtpInput onOtpChange={handleOtpChange} />
-          <span className='text-red-500'>{error}</span>
-          <Button varient={'primary'} size={'md'} >verify</Button>
+          <Button 
+            varient={'primary'} 
+            size={'lg'} 
+            className='w-full'
+          >
+            Verify Email
+          </Button>
         </form>
       </div>
 

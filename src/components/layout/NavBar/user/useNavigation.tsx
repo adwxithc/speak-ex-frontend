@@ -25,7 +25,7 @@ function useNavigation({ setOpenSearch }: navigationProps) {
       { name: 'Home', action: () => navigate('/'), isPrivate: true, icon: Home },
       { name: 'Search', action: () => setOpenSearch(true), isPrivate: true, icon: Search },
       { name: 'Store', isPrivate: true, action: () => { dispatch(setOpenStore(true)) }, icon: ShoppingCart },
-      { name: 'About', isPrivate: true, icon: Info },
+      { name: 'About', action: () => navigate('/about'), isPrivate: false, icon: Info },
     ]
   }, [dispatch, navigate, setOpenSearch])
   return navigation

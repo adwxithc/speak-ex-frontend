@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom';
 import UserPrivateRoute from '../pages/user/UserPrivateRoute/UserPrivateRoute';
 
 const UserLayout =  lazy(()=>import('../components/layout/UserLayout/UserLayout'));
+const About = lazy(() => import('../pages/user/About/About'));
 const Chat = lazy(() => import('../pages/user/Chat/Chat'));
 const FollowAndFollowers = lazy(() => import('../pages/user/FollowAndFollowers/FollowAndFollowers'));
 const LandingPage = lazy(() => import('../pages/user/LandingPage/LandingPage'));
@@ -25,6 +26,7 @@ const userRoutes:RouteObject[] = [
         Component: UserLayout,
         children: [
             { index: true, Component: LandingPage },
+            { path: 'about', Component: About },
             {
                 path: '',
                 Component: UserPrivateRoute,

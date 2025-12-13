@@ -1,17 +1,26 @@
 {
     "header": "Nous prenons soin de votre langue",
     "description": "nous nous soucions de votre progrès et nous serons toujours",
+    "alumniHeading": {
+        "part1": "Ce que disent nos",
+        "highlight": "anciens élèves",
+        "part2": ""
+    },
     "workflow": {
       "step1": {
+        "title": "Créez votre profil",
         "description": "Créez un compte, choisissez la langue que vous souhaitez apprendre et indiquez les langues que vous maîtrisez."
       },
       "step2": {
+        "title": "Commencez à enseigner",
         "description": "Discutez avec des utilisateurs qui veulent apprendre vos langues maîtrisées pour gagner des pièces d'argent."
       },
       "step3": {
+        "title": "Réservez des sessions d'apprentissage",
         "description": "Dépensez vos pièces d'argent pour discuter avec des utilisateurs qui connaissent la langue que vous voulez apprendre."
       },
       "step4": {
+        "title": "Obtenez des pièces gratuites",
         "description": "Recevez 100 pièces d'argent lors de l'inscription pour commencer à discuter et apprendre immédiatement."
       }
     },

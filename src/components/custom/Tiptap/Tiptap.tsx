@@ -41,10 +41,10 @@ const Tiptap = ({ onEditerContentSave,content }: {onEditerContentSave:(html: str
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white mb-5">
       <Toolbar editor={editor} />
       
-      <EditorContent style={{ whiteSpace: "pre-line" }} editor={editor}  />
+      <EditorContent style={{ whiteSpace: "pre-line"}} editor={editor}  />
     </div>
   );
 };

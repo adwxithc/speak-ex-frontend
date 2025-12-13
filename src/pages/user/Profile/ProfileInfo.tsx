@@ -144,6 +144,7 @@ function ProfileInfo() {
           <div className=" flex h-16  relative justify-end mb-2 ">
 
             <div className={`absolute bottom-0 left-0 ${self && 'cursor-pointer'} `} onClick={() => { self && setShowModal(true) }}>
+              
               <Avatar src={(userData?.id == data?.id ? userData?.profile : data?.profile)} className="h-32 w-32 border-4 border-white " />
             </div>
             <div className=" flex items-center ">

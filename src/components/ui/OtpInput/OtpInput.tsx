@@ -42,7 +42,7 @@ const OtpInput = ({ className,onOtpChange}:OtpInputProps) => {
     return (
       <div 
       className={cn(
-        "flex justify-center items-center space-x-3",
+        "flex justify-center items-center space-x-2 md:space-x-3",
         className
     )}
       >
@@ -53,7 +53,7 @@ const OtpInput = ({ className,onOtpChange}:OtpInputProps) => {
                 ref={activeOTPIndex === index ? inputRef : null}
                 type="number"
                 className={
-                  "w-8 h-8 md:w-12 md:h-12 border-2 rounded bg-transparent outline-none text-center font-semibold text-xl spin-button-none border-gray-400 focus:border-gray-700 focus:text-gray-700 text-gray-400 transition"
+                  "w-10 h-12 md:w-14 md:h-16 border-2 rounded-xl bg-white outline-none text-center font-bold text-xl md:text-2xl spin-button-none border-gray-300 hover:border-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 text-gray-700 transition-all duration-200 shadow-sm"
                 }
                 onChange={handleOnChange}
                 onKeyDown={(e) => handleOnKeyDown(e, index)}

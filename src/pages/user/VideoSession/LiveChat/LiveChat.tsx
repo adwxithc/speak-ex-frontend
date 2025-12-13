@@ -39,25 +39,25 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
     exit={{ x: '100vw' }}
     
     transition={{ type: 'spring', damping: 75, stiffness: 800 }}
-    className="h-full flex flex-col">
+    className="h-full flex flex-col ">
 
     <div className="h-full  flex flex-col md:pt-2">
     {/* top area */}
-    <div className="h-16 md:rounded-t-md overflow-hidden bg-white  flex items-center  ">
-        <ArrowLeft onClick={()=>setChating(false)} color='white' className='mx-3 cursor-pointer' />
-        <div className="flex  dark:text-white items-center  gap-3  ">
-            <Avatar src={userData?.profile} className="h-8 w-8" />
+    <div className="h-20 md:rounded-t-2xl overflow-hidden bg-gray-900/95 backdrop-blur-2xl shadow-xl flex items-center md:mr-5 border-b border-gray-700/50">
+        <ArrowLeft onClick={()=>setChating(false)} className='mx-4 cursor-pointer md:hidden inline hover:bg-gray-700 rounded-xl p-1.5 transition-colors text-white' size={28} />
+        <div className="flex text-white items-center gap-4 md:ml-5">
+            <Avatar src={userData?.profile} className="h-11 w-11 shadow-lg border-2 border-gray-600/60 ring-2 ring-violet-500/40" />
             <div className="flex flex-col">
-            <span >{userData?.firstName+' '+userData?.lastName}</span>
-            <span className="text-xs text-gray-800 dark:text-gray-300   truncate">{userData?.email}</span>
+            <span className='font-bold text-base tracking-wide' >{userData?.firstName+' '+userData?.lastName}</span>
+            <span className="text-xs text-gray-400 truncate">{userData?.email}</span>
             </div>
             
         </div>
     </div>
     {/* chat area */}
-    <div className="flex-1 md:rounded-b-md  md:mb-2 bg-[#ebeaea] overflow-auto flex flex-col ">
+    <div className="flex-1 md:rounded-b-2xl md:mb-2 bg-gray-950 overflow-auto flex flex-col md:mr-5 shadow-inner">
 
-        <div className='flex-1 overflow-auto pretty-scrollbar'>
+        <div className='flex-1 overflow-auto pretty-scrollbar p-2'>
           {
             messages?.map(msg=>(<div key={msg.id}><Message user={remoteUser} message={msg} /></div>))
 
@@ -65,11 +65,13 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
      
         </div>
 
-        <div className='p-2'>
+        <div className='p-4'>
 
-            <div className='flex bg-white  rounded-xl items-center overflow-hidden mx-2'>
-            <textarea onChange={handleChange} value={text} placeholder='type something..' className='w-full text-black/80 pl-3 py-2 resize-none bg-inherit outline-none pretty-scrollbar' name="" id=""></textarea>
-            <Button onClick={()=>handleSendMessage(text,()=>setText(''))} className='mr-3 dark:text-white mt-auto mb-5'><SendHorizontal   /></Button>
+            <div className='flex bg-gray-900/90 rounded-2xl items-center overflow-hidden mx-2 shadow-2xl border border-gray-700/50 focus-within:border-violet-500/60 focus-within:ring-2 focus-within:ring-violet-500/30 transition-all backdrop-blur-xl'>
+            <textarea onChange={handleChange} value={text} placeholder='Type a message...' className='w-full text-white pl-5 py-3.5 resize-none bg-transparent outline-none pretty-scrollbar placeholder:text-gray-400' name="" id=""></textarea>
+            <Button onClick={()=>handleSendMessage(text,()=>setText(''))} className='mr-3 bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg mt-auto mb-3 rounded-2xl px-4 py-3 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed border border-indigo-500/50' disabled={!text.trim()}>
+                <SendHorizontal size={22} />
+            </Button>
             
             </div>
             
@@ -78,7 +80,7 @@ function LiveChat({remoteUser,messages, handleSendMessage, setChating}:ILiveChat
 
     </div>
     {/* bottom area */}
-    <div className="h-20 bg-white  md:bg-black/30" ></div>
+    <div className="h-20 bg-gray-900/95 backdrop-blur-2xl border-t border-gray-700/50" ></div>
     </div>
     </motion.div>
   )
